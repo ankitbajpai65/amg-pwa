@@ -13,12 +13,13 @@ type Inputs = {
 const Login = () => {
   const [theme, setTheme] = useState<boolean>(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>();
-  const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     console.log({ data });

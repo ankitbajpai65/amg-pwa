@@ -1,18 +1,13 @@
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const Home = () => {
   console.log("hjey");
   return (
-    <>
+    <div className="p-2">
       <div>Welcome, User</div>
-      <div>
-        <Card className="w-[250px] h-[350px] ">
-          <CardHeader className="bg-red-600">
+      <div className="p-10">
+        <Card className="w-[250px] h-[350px]  ">
+          <CardHeader className="bg-red-600 ">
             <CardTitle>GEN-AI</CardTitle>
           </CardHeader>
           <CardContent>
@@ -23,7 +18,7 @@ const Home = () => {
           </CardContent>
         </Card>
       </div>
-    </>
+    </div>
   );
 };
 export default Home;
