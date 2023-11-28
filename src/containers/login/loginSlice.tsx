@@ -2,9 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 
 interface ThemeState {
   theme: string;
+  isLoggedIn: boolean;
 }
 const initialState: ThemeState = {
   theme: "",
+  isLoggedIn: false,
 };
 
 export const loginSlice = createSlice({
@@ -15,9 +17,13 @@ export const loginSlice = createSlice({
       const themes = action.payload;
       state.theme = themes;
     },
+    setIsLoggedIn: (state, action) => {
+      const isLoggedIn = action.payload;
+      state.isLoggedIn = isLoggedIn;
+    },
   },
 });
 
-export const { addTheme } = loginSlice.actions;
+export const { addTheme, setIsLoggedIn } = loginSlice.actions;
 
 export default loginSlice.reducer;
