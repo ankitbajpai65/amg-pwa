@@ -8,14 +8,26 @@ import {
   Route,
 } from "react-router-dom";
 import { RouterProvider } from "react-router";
-import Layout from "./Layout.tsx";
+import Layout from "./layout/Layout.tsx";
 import { Provider } from "react-redux";
 import { store } from "./store/store.tsx";
+import Home from "./containers/home/Home.tsx";
+import { ProtectedRoutes } from "./lib/ProtectedRoutes.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<Layout />}>
+    <Route path="/">
       <Route path="" element={<App />} />
+      <Route path="" element={<Layout />}>
+        <Route
+          path="home"
+          element={
+            <ProtectedRoutes>
+              <Home />
+            </ProtectedRoutes>
+          }
+        />
+      </Route>
     </Route>
   )
 );
