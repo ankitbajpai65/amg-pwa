@@ -1,14 +1,24 @@
+import { useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 type Inputs = {
   pin: string;
 };
 const ForgotPass = () => {
+  const root = document.querySelector(":root");
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>();
+
+  useEffect(() => {
+    const value = localStorage.getItem("theme");
+    console.log("local storage", value);
+    if (value === "dark") root?.classList.add("dark");
+    else root?.classList.remove("dark");
+  });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     console.log({ data });

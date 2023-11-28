@@ -11,7 +11,7 @@ type Inputs = {
 };
 
 const Login = () => {
-  const [theme, setTheme] = useState<boolean>(false);
+  const [theme, setTheme] = useState<boolean>(localStorage.getItem('theme')==='dark');
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

@@ -6,7 +6,7 @@ interface ThemeState {
 }
 const initialState: ThemeState = {
   theme: "",
-  isLoggedIn: false,
+  isLoggedIn: true,
 };
 
 export const loginSlice = createSlice({
