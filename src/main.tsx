@@ -16,6 +16,7 @@ import { ProtectedRoutes } from "./lib/ProtectedRoutes.tsx";
 import ChangePass from "./containers/login/ChangePass/ChangePass.tsx";
 import ForgotPass from "./containers/login/ForgotPass/ForgotPass.tsx";
 
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/">

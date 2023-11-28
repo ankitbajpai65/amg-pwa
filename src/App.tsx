@@ -18,7 +18,7 @@ function App() {
     console.log("local storage", value);
     if (value === "dark") root?.classList.add("dark");
     else root?.classList.remove("dark");
-  }, []);
+  },[]);
 
   useEffect(() => {
     console.log(loginReducerData);
