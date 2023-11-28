@@ -13,11 +13,15 @@ import { Provider } from "react-redux";
 import { store } from "./store/store.tsx";
 import Home from "./containers/home/Home.tsx";
 import { ProtectedRoutes } from "./lib/ProtectedRoutes.tsx";
+import ChangePass from "./containers/login/ChangePass/ChangePass.tsx";
+import ForgotPass from "./containers/login/ForgotPass/ForgotPass.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/">
       <Route path="" element={<App />} />
+      <Route path="changePassword" element={<ChangePass />} />
+      <Route path="forgotPassword" element={<ForgotPass />} />
       <Route path="" element={<Layout />}>
         <Route
           path="home"

@@ -113,7 +113,7 @@ const Login = () => {
           <div className="flex flex-col m-2">
             <a
               className="text-blue-600 underline transition duration-150 ease-in-out hover:text-red-600 focus:text-red-600 active:text-red-700"
-              href=""
+              href="/changePassword"
             >
               Change Password
             </a>
@@ -121,7 +121,7 @@ const Login = () => {
             <a
               className="text-blue-600 underline transition duration-150 ease-in-out
         hover:text-red-600 focus:text-red-600 active:text-red-700"
-              href=""
+              href="/forgotPassword"
             >
               Forgot Password
             </a>
