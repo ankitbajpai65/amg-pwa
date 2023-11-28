@@ -9,18 +9,23 @@ interface loginState {
 }
 function App() {
   const root = document.querySelector(":root");
-  const reduxTheme = useSelector(
-    (state: loginState) => state?.loginReducer.theme
+  const loginReducerData = useSelector(
+    (state: loginState) => state?.loginReducer
   );
 
-  console.log(reduxTheme);
-
-  const value = localStorage.getItem("theme");
   useEffect(() => {
-    console.log(value);
+    const value = localStorage.getItem("theme");
+    console.log("local storage", value);
     if (value === "dark") root?.classList.add("dark");
     else root?.classList.remove("dark");
-  });
+  }, []);
+
+  useEffect(() => {
+    console.log(loginReducerData);
+    const value = loginReducerData.theme;
+    if (value === "dark") root?.classList.add("dark");
+    else root?.classList.remove("dark");
+  }, [loginReducerData]);
 
   return (
     <div className="border-box m-2 h-screen flex items-center">

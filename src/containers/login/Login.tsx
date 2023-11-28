@@ -1,8 +1,9 @@
 import { Switch } from "@/components/ui/switch";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { addTheme } from "./loginSlice";
+import { addTheme, setIsLoggedIn } from "./loginSlice";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 type Inputs = {
   email: string;
@@ -11,11 +12,13 @@ type Inputs = {
 
 const Login = () => {
   const [theme, setTheme] = useState<boolean>(false);
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>();
+  const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     console.log({ data });
@@ -34,15 +37,21 @@ const Login = () => {
         }),
       }
     );
-    const data1 = await res.json();
-    console.log("auth", data1);
+    const loginAPIResData = await res.json();
+    console.log("auth", loginAPIResData.status);
+    if (loginAPIResData.status === true) {
+      dispatch(setIsLoggedIn(true));
+      navigate("/home");
+    } else {
+      dispatch(setIsLoggedIn(false));
+      alert("ERROR Logging in");
+    }
   };
   // {
   //   "customer": "AMGDEMO",
   // "user": "rajat.khandelwal@datapartners.ch",
   // "pass": "RLpDgADH"
   // }
-  const dispatch = useDispatch();
 
   useEffect(() => {
     handleSetTheme();
@@ -105,7 +114,7 @@ const Login = () => {
               className="text-blue-600 underline transition duration-150 ease-in-out hover:text-red-600 focus:text-red-600 active:text-red-700"
               href=""
             >
-              change password
+              Change Password
             </a>
 
             <a
