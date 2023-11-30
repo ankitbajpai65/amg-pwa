@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 
-export const errorAlert = (time:number, alertText:string) => {
+export const errorAlert = (time:number|3000, alertText:string) => {
   toast.error(alertText, {
     position: "top-center",
     autoClose: time,

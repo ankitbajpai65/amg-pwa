@@ -30,11 +30,12 @@ const ForgotPass = () => {
     console.error(errors);
     if (data.email !== "") {
       const res = await fetch(
-        "https://amg.datapartners.ch/Amg/Amg/ws/AMG_Security/Login/CreatePassword",
+        "https://amg.datapartners.ch/Amg/ws/AMG_Security/Login/CreatePassword",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
           },
           body: JSON.stringify({
             customer: "AMGDEMO",

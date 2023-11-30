@@ -4,8 +4,8 @@ import { useDispatch } from "react-redux";
 import { addTheme, setIsLoggedIn } from "./loginSlice";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import image from "../../assets/loghi-03.png";
+import { errorAlert } from "@/components/appComponents/appAlert";
 
 type Inputs = {
   email: string;
@@ -48,30 +48,14 @@ const Login = () => {
       if (loginAPIResData.status === true) {
         dispatch(setIsLoggedIn(true));
         navigate("/home");
+      } else if (loginAPIResData.status === 400) {
+        errorAlert(5000, loginAPIResData.title);
       } else {
         dispatch(setIsLoggedIn(false));
-        toast.error(loginAPIResData.title, {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: localStorage.getItem("theme") === "dark" ? "dark" : "light",
-        });
+        errorAlert(5000, loginAPIResData.error);
       }
     } else {
-      toast.error('Empty Input fields', {
-        position: "top-center",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: localStorage.getItem("theme") === "dark" ? "dark" : "light",
-      });
+      errorAlert(3000, "Empty Input fields");
     }
   };
   // {
