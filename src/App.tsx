@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import Login from "./containers/login/Login";
 import { useEffect } from "react";
 
+
 interface loginState {
   loginReducer: {
     theme: string;
@@ -29,6 +30,7 @@ function App() {
 
   return (
     <div className="border-box m-2 h-screen flex items-center">
+     
       <Login />
     </div>
   );

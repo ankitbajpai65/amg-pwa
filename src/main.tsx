@@ -15,7 +15,8 @@ import Home from "./containers/home/Home.tsx";
 import { ProtectedRoutes } from "./lib/ProtectedRoutes.tsx";
 import ChangePass from "./containers/login/ChangePass/ChangePass.tsx";
 import ForgotPass from "./containers/login/ForgotPass/ForgotPass.tsx";
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -40,6 +41,7 @@ const router = createBrowserRouter(
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Provider store={store}>
+      <ToastContainer />
       <RouterProvider router={router} />
     </Provider>
   </React.StrictMode>

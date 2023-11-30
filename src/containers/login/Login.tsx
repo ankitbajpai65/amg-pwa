@@ -4,6 +4,8 @@ import { useDispatch } from "react-redux";
 import { addTheme, setIsLoggedIn } from "./loginSlice";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import image from "../../assets/loghi-03.png";
 
 type Inputs = {
   email: string;
@@ -11,7 +13,9 @@ type Inputs = {
 };
 
 const Login = () => {
-  const [theme, setTheme] = useState<boolean>(localStorage.getItem('theme')==='dark');
+  const [theme, setTheme] = useState<boolean>(
+    localStorage.getItem("theme") === "dark"
+  );
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -24,28 +28,50 @@ const Login = () => {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     console.log({ data });
     console.error(errors);
-    const res = await fetch(
-      "https://amg.datapartners.ch/Amg/ws/AMG_Security/Login/CheckUser",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          customer: "AMGDEMO",
-          user: data.email,
-          pass: data.password,
-        }),
+    if (data.email !== "" && data.password !== "") {
+      const res = await fetch(
+        "https://amg.datapartners.ch/Amg/ws/AMG_Security/Login/CheckUser",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            customer: "AMGDEMO",
+            user: data.email,
+            pass: data.password,
+          }),
+        }
+      );
+      const loginAPIResData = await res.json();
+      console.log("auth", loginAPIResData);
+      if (loginAPIResData.status === true) {
+        dispatch(setIsLoggedIn(true));
+        navigate("/home");
+      } else {
+        dispatch(setIsLoggedIn(false));
+        toast.error(loginAPIResData.title, {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: localStorage.getItem("theme") === "dark" ? "dark" : "light",
+        });
       }
-    );
-    const loginAPIResData = await res.json();
-    console.log("auth", loginAPIResData.status);
-    if (loginAPIResData.status === true) {
-      dispatch(setIsLoggedIn(true));
-      navigate("/home");
     } else {
-      dispatch(setIsLoggedIn(false));
-      alert("ERROR Logging in");
+      toast.error('Empty Input fields', {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: localStorage.getItem("theme") === "dark" ? "dark" : "light",
+      });
     }
   };
   // {
@@ -72,8 +98,8 @@ const Login = () => {
         <div className=" mobile:w-full max-w-md min-w-min w-3/6 m-2 p-2 flex flex-col items-center mx-auto m-2 p-2 bg-bkg border rounded-md ">
           <div className="bg-red-600 rounded text-white font-semibold mb-2 w-full text-center">
             <div className="flex justify-around ">
-              <p>AMG</p>
-              <img src="/"></img>
+              <p className="text-2xl">AMG</p>
+              <img className="h-10" src={image}></img>
             </div>
             <p>Login</p>
           </div>
@@ -104,9 +130,6 @@ const Login = () => {
           <button
             className="rounded-xl bg-red-600 p-2 m-2 border text-white font-medium mb-2 hover:bg-red-500 hover:border hover:border-black focus:bg-red-500 active:bg-red-700"
             type="submit"
-            // onClick={() => {
-            //   console.log("login");
-            // }}
           >
             Confirm
           </button>
