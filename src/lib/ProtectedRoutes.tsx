@@ -1,3 +1,4 @@
+import { errorAlert } from "@/components/appComponents/appAlert";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 interface loginState {
@@ -17,7 +18,7 @@ export const ProtectedRoutes: React.FC<{ children: JSX.Element }> = ({
   if (user === true) {
     return children;
   } else {
-    alert("Unauthorised");
+    errorAlert(3000,"Un-Authorised");
     return <Navigate to="/" />;
   }
 };
