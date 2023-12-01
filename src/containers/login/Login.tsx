@@ -1,11 +1,11 @@
 import { Switch } from "@/components/ui/switch";
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { addTheme, setIsLoggedIn } from "./loginSlice";
+import { addTheme } from "./loginSlice";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 import image from "../../assets/loghi-03.png";
 import { errorAlert } from "@/components/appComponents/appAlert";
+import useCheckUserApi from "@/hooks/useCheckUserApi";
+import { useDispatch } from "react-redux";
 
 type Inputs = {
   email: string;
@@ -13,11 +13,12 @@ type Inputs = {
 };
 
 const Login = () => {
+  const dispatch = useDispatch();
   const [theme, setTheme] = useState<boolean>(
     localStorage.getItem("theme") === "dark"
   );
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+
+  const { userLoginStatus, getUserLoginStatus } = useCheckUserApi();
 
   const {
     register,
@@ -29,40 +30,16 @@ const Login = () => {
     console.log({ data });
     console.error(errors);
     if (data.email !== "" && data.password !== "") {
-      const res = await fetch(
-        "https://amg.datapartners.ch/Amg/ws/AMG_Security/Login/CheckUser",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            customer: "AMGDEMO",
-            user: data.email,
-            pass: data.password,
-          }),
-        }
-      );
-      const loginAPIResData = await res.json();
-      console.log("auth", loginAPIResData);
-      if (loginAPIResData.status === true) {
-        dispatch(setIsLoggedIn(true));
-        navigate("/home");
-      } else if (loginAPIResData.status === 400) {
-        errorAlert(5000, loginAPIResData.title);
-      } else {
-        dispatch(setIsLoggedIn(false));
-        errorAlert(5000, loginAPIResData.error);
-      }
+      getUserLoginStatus({
+        user: data.email,
+        pass: data.password,
+      });
+
+      console.log("auth", typeof userLoginStatus);
     } else {
       errorAlert(3000, "Empty Input fields");
     }
   };
-  // {
-  //   "customer": "AMGDEMO",
-  // "user": "rajat.khandelwal@datapartners.ch",
-  // "pass": "RLpDgADH"
-  // }
 
   useEffect(() => {
     handleSetTheme();

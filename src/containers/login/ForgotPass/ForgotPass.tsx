@@ -1,16 +1,16 @@
 import { useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import image from "../../../assets/loghi-03.png";
-import { errorAlert, warnAlert } from "@/components/appComponents/appAlert";
-import { useNavigate } from "react-router-dom";
+import { errorAlert } from "@/components/appComponents/appAlert";
+import useCreatePassApi from "@/hooks/useCreatePassApi";
 
 type Inputs = {
   pin: string;
   email: string;
 };
 const ForgotPass = () => {
+  const { createPassStatus, getCreatePassStatus } = useCreatePassApi();
   const root = document.querySelector(":root");
-  const navigate = useNavigate();
 
   const {
     register,
@@ -20,7 +20,6 @@ const ForgotPass = () => {
 
   useEffect(() => {
     const value = localStorage.getItem("theme");
-    console.log("local storage", value);
     if (value === "dark") root?.classList.add("dark");
     else root?.classList.remove("dark");
   });
@@ -29,39 +28,14 @@ const ForgotPass = () => {
     console.log({ data });
     console.error(errors);
     if (data.email !== "") {
-      const res = await fetch(
-        "https://amg.datapartners.ch/Amg/ws/AMG_Security/Login/CreatePassword",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-          },
-          body: JSON.stringify({
-            customer: "AMGDEMO",
-            user: data.email,
-          }),
-          // {
-          // customer: "AMGDEMO",
-          // "user": "rajat.khandelwal@datapartners.ch",
-          // "pass": "RLpDgADH"
-          // }
-        }
-      );
-      const createPassAPIResData = await res.json();
-      console.log("ChangePass", createPassAPIResData);
-      if (createPassAPIResData.status === true) {
-        warnAlert(3000, "New Password created, Please check registered Email");
-        navigate("/");
-      } else if (createPassAPIResData.status === 400) {
-        errorAlert(5000, createPassAPIResData.title);
-      } else {
-        errorAlert(5000, createPassAPIResData.error);
-      }
+      getCreatePassStatus({
+        user: data.email,
+      });
     } else {
       errorAlert(3000, "Empty Input fields");
     }
   };
+  console.log("ChangePass", createPassStatus);
   return (
     <div className="w-screen h-screen flex items-center justify-center">
       <form

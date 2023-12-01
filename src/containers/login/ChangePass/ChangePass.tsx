@@ -2,8 +2,8 @@ import { useEffect } from "react";
 
 import { useForm, SubmitHandler } from "react-hook-form";
 import image from "../../../assets/loghi-03.png";
-import { errorAlert, warnAlert } from "@/components/appComponents/appAlert";
-import { useNavigate } from "react-router-dom";
+import { errorAlert } from "@/components/appComponents/appAlert";
+import useChangePassApi from "@/hooks/useChangePassApi";
 
 type Inputs = {
   email: string;
@@ -12,7 +12,7 @@ type Inputs = {
   newPass2: string;
 };
 const ChangePass = () => {
-  const navigate = useNavigate();
+  const { userChangePassStatus, getChangePassStatus } = useChangePassApi();
 
   const root = document.querySelector(":root");
 
@@ -39,45 +39,18 @@ const ChangePass = () => {
       data.newPass2 !== ""
     ) {
       if (data.newPass === data.newPass2) {
-        const res = await fetch(
-          "https://amg.datapartners.ch/Amg/ws/AMG_Security/Login/ChangePassword",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              customer: "AMGDEMO",
-              user: data.email,
-              passold: data.oldPass,
-              passnew: data.newPass,
-            }),
-            // {
-            // customer: "AMGDEMO",
-            // user: data.email,
-            // passold: data.password,
-            // passnew:""
-            // }
-          }
-        );
-        const changePassAPIResData = await res.json();
-        console.log("ChangePass", changePassAPIResData);
-        if (changePassAPIResData.status === true) {
-          warnAlert(3000, "Password Change Success");
-          navigate("/");
-        }else if(changePassAPIResData.status===400){
-          errorAlert(5000, changePassAPIResData.title);
-        } 
-        else {
-          
-          errorAlert(5000, changePassAPIResData.title);
-        }
+        getChangePassStatus({
+          email: data.email,
+          passold: data.oldPass,
+          passnew: data.newPass,
+        });
       } else {
         errorAlert(3000, "New Passwords do not match");
       }
     } else {
       errorAlert(3000, "Empty Input fields");
     }
+    console.log("ChangePass", userChangePassStatus);
   };
   return (
     <div className="w-screen h-screen flex items-center justify-center">
