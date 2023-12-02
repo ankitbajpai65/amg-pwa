@@ -1,13 +1,41 @@
 import { useState } from "react";
+import axios from "axios";
 
 type apidatatype = {
-  userDetails: string | undefined;
+  userDetails: userDetailsType | undefined;
   getUserDetails: (reqBody: string) => Promise<void>;
 };
-
+type userDetailsType = {
+  error: string;
+  startList: {
+    baseData: string;
+    branches: string;
+    cards: {
+      backcolor: string;
+      code: string;
+      description: string;
+      forecolor: string;
+      html: string;
+      rif1: string;
+      rif2: string;
+      rif3: string;
+      title: string;
+    }[];
+    companies: string;
+    groups: string;
+    roles: string;
+    tables: string;
+    users: [
+      {
+        email: string;
+        nickName: string;
+      }
+    ];
+  };
+  status: string;
+};
 export default function useAmgStartApi(): apidatatype {
-
-  const [data, setData] = useState<string | undefined>();
+  const [data, setData] = useState<userDetailsType | undefined>();
   const url = "https://amg.datapartners.ch/Amg/ws/AMG_WS/AMG_start/";
   //   {
   //     "customer": "cust01",
@@ -17,21 +45,18 @@ export default function useAmgStartApi(): apidatatype {
   const getUserDetails = async (reqBody: string) => {
     if (reqBody) {
       console.log("yo");
-      const urlRes = await fetch(url, {
-        method: "POST",
+
+      const urlRes = await axios.post(url, {
         headers: {
-          "Content-Type": "application/json",
+          content: "application/json",
         },
-        body: JSON.stringify({
-          customer: "AMGDEMO",
-          user: reqBody,
-        }),
+        customer: "AMGDEMO",
+        user: reqBody,
       });
 
-      const resData = await urlRes.json();
-      setData(resData);
+      setData(urlRes.data);
 
-      console.log(resData);
+      console.log(urlRes);
     }
   };
   return { userDetails: data, getUserDetails };

@@ -2,6 +2,7 @@ import { errorAlert, warnAlert } from "@/components/appComponents/appAlert";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useSendMailApi from "./useSendMailApi";
+import axios from "axios";
 
 type apidatatype = {
   createPassStatus: resDataType | undefined;
@@ -23,16 +24,10 @@ export default function useCreatePassApi(): apidatatype {
 
   const getCreatePassStatus = async (reqBody: { user: string }) => {
     if (reqBody) {
-      const createPassRes = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-        body: JSON.stringify({
-          customer: "AMGDEMO",
-          user: reqBody.user,
-        }),
+      const createPassRes = await axios.post(url, {
+        customer: "AMGDEMO",
+        user: reqBody.user,
+
         // {
         // customer: "AMGDEMO",
         // "user": "rajat.khandelwal@datapartners.ch",
@@ -40,18 +35,17 @@ export default function useCreatePassApi(): apidatatype {
         // }
       });
 
-      const resData = await createPassRes.json();
+      const resData = createPassRes.data;
       console.log(resData);
       setData(resData);
       if (resData?.status === true) {
         warnAlert(3000, "New Password created, Please check registered Email");
         getSendMailStatus({
-          user:reqBody.user,
-          cc:'',
-          sub:'DATAPARTNERS - NEW PASSWORD',
-          body:`The new password is - ${resData.psw}`,
-
-        })
+          user: reqBody.user,
+          cc: "",
+          sub: "DATAPARTNERS - NEW PASSWORD",
+          body: `The new password is - ${resData.psw}`,
+        });
         navigate("/");
       } else if (resData?.status === 400) {
         errorAlert(5000, resData?.title);

@@ -8,17 +8,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useDispatch } from "react-redux";
-import { setIsLoggedIn } from "@/containers/login/loginSlice";
 import { useNavigate } from "react-router-dom";
 
 const Header = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleLogout = () => {
     navigate("/");
-    dispatch(setIsLoggedIn(false));
+    sessionStorage.setItem("isLoggedIn", "false");
   };
   return (
     <>
@@ -27,13 +24,16 @@ const Header = () => {
           <h2 className="text-2xl">AMG</h2>
           <div className="flex w-1/6 justify-around p-1">
             <IoIosNotificationsOutline size={25} />
-            <DropdownMenu>
+            <DropdownMenu >
               <DropdownMenuTrigger>
                 <FaRegUser size={25} />
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuLabel>Menu</DropdownMenuLabel>
                 <DropdownMenuSeparator></DropdownMenuSeparator>
+                <DropdownMenuItem onClick={() => navigate('/setting')}>
+                  Setting
+                </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => handleLogout()}>
                   Logout
                 </DropdownMenuItem>

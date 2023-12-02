@@ -56,9 +56,9 @@ const ChangePass = () => {
     <div className="w-screen h-screen flex items-center justify-center">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="mobile:w-full max-w-md min-w-min w-3/6 mx-auto "
+        className="mobile:w-full mobile:h-screen sm:h-fit max-w-md min-w-min w-3/6 mx-auto "
       >
-        <div className=" mobile:w-full max-w-md min-w-min w-3/6 m-2 p-2 flex flex-col items-center mx-auto m-2 p-2 bg-bkg border rounded-md ">
+        <div className=" mobile:w-full mobile:h-screen sm:h-min mobile:m-0  max-w-md min-w-min w-3/6 m-2 p-2 flex flex-col items-center mx-auto m-2 p-2 bg-bkg border rounded-md ">
           <div className="bg-red-600 h-fit rounded text-white font-semibold mb-2 w-full text-center">
             <div className="flex justify-around items-center">
               <p className="text-2xl">AMG</p>
@@ -66,13 +66,13 @@ const ChangePass = () => {
             </div>
             <p>Login</p>
           </div>
-          <div className="m-2">
+          <div className="mobile:mt-10 sm:m-2">
             <div className="mb-1 flex flex-col">
               <label htmlFor="email" className="pr-2">
                 Enter Email
               </label>
               <input
-                className="rounded border-2 border-slate-600 hover:border-yellow-500 focus:outline-none focus:border-blue-500"
+                className="rounded border-2 border-slate-600 hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
                 type="email"
                 id="email"
                 {...register("email")}
@@ -83,7 +83,7 @@ const ChangePass = () => {
                 Enter Old Password
               </label>
               <input
-                className="rounded border-2 border-slate-600 hover:border-yellow-500 focus:outline-none focus:border-blue-500"
+                className="rounded border-2 border-slate-600 hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
                 type="password"
                 id="oldpass"
                 {...register("oldPass")}
@@ -94,7 +94,7 @@ const ChangePass = () => {
                 Enter NEW Password
               </label>
               <input
-                className="rounded border-2 border-slate-600 hover:border-yellow-500 focus:outline-none focus:border-blue-500"
+                className="rounded border-2 border-slate-600 hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
                 type="password"
                 id="password"
                 minLength={8}
@@ -106,7 +106,7 @@ const ChangePass = () => {
                 Confirm NEW Password
               </label>
               <input
-                className="rounded border-2 border-slate-600 hover:border-yellow-500 focus:outline-none focus:border-blue-500"
+                className="rounded border-2 border-slate-600 hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
                 type="password"
                 id="newpass2"
                 minLength={8}
@@ -124,7 +124,7 @@ const ChangePass = () => {
             Confirm
           </button>
 
-          <div className="rounded bg-red-600 h-8 w-full"></div>
+          <div className="rounded bg-red-600 h-8 w-full mobile:sticky mobile:top-[100vh]"></div>
         </div>
       </form>
     </div>

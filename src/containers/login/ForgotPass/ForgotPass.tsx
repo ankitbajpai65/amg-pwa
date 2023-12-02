@@ -57,7 +57,7 @@ const ForgotPass = () => {
                 Enter Email
               </label>
               <input
-                className="rounded border-2 border-slate-600 hover:border-yellow-500 focus:outline-none focus:border-blue-500"
+                className="rounded border-2 border-slate-600 hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
                 type="email"
                 id="email"
                 {...register("email")}

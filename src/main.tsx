@@ -9,14 +9,14 @@ import {
 } from "react-router-dom";
 import { RouterProvider } from "react-router";
 import Layout from "./layout/Layout.tsx";
-import { Provider } from "react-redux";
-import { store } from "./store/store.tsx";
 import Home from "./containers/home/Home.tsx";
 import { ProtectedRoutes } from "./lib/ProtectedRoutes.tsx";
 import ChangePass from "./containers/login/ChangePass/ChangePass.tsx";
 import ForgotPass from "./containers/login/ForgotPass/ForgotPass.tsx";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import AppSetting from "./containers/appSetting/AppSetting.tsx";
+import ThemeContextProvider from "./lib/context/themeContext.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -26,10 +26,18 @@ const router = createBrowserRouter(
       <Route path="forgotPassword" element={<ForgotPass />} />
       <Route path="" element={<Layout />}>
         <Route
-          path="home"
+          path="home/:userEmail"
           element={
             <ProtectedRoutes>
               <Home />
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="setting"
+          element={
+            <ProtectedRoutes>
+              <AppSetting />
             </ProtectedRoutes>
           }
         />
@@ -40,9 +48,9 @@ const router = createBrowserRouter(
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <Provider store={store}>
-      <ToastContainer />
+    <ToastContainer />
+    <ThemeContextProvider>
       <RouterProvider router={router} />
-    </Provider>
+    </ThemeContextProvider>
   </React.StrictMode>
 );

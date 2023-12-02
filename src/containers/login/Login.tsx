@@ -1,11 +1,8 @@
-import { Switch } from "@/components/ui/switch";
-import { useState, useEffect } from "react";
-import { addTheme } from "./loginSlice";
+
 import { useForm, SubmitHandler } from "react-hook-form";
 import image from "../../assets/loghi-03.png";
 import { errorAlert } from "@/components/appComponents/appAlert";
 import useCheckUserApi from "@/hooks/useCheckUserApi";
-import { useDispatch } from "react-redux";
 
 type Inputs = {
   email: string;
@@ -13,12 +10,9 @@ type Inputs = {
 };
 
 const Login = () => {
-  const dispatch = useDispatch();
-  const [theme, setTheme] = useState<boolean>(
-    localStorage.getItem("theme") === "dark"
-  );
 
   const { userLoginStatus, getUserLoginStatus } = useCheckUserApi();
+
 
   const {
     register,
@@ -41,22 +35,15 @@ const Login = () => {
     }
   };
 
-  useEffect(() => {
-    handleSetTheme();
-  }, [theme]);
-
-  const handleSetTheme = () => {
-    localStorage.setItem("theme", theme ? "dark" : "light");
-    dispatch(addTheme(theme ? "dark" : "light"));
-  };
+  
 
   return (
     <>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="mobile:w-full max-w-md min-w-min w-3/6 mx-auto "
+        className="mobile:w-full mobile:h-screen sm:h-fit max-w-md min-w-min w-3/6 mx-auto"
       >
-        <div className=" mobile:w-full max-w-md min-w-min w-3/6 m-2 p-2 flex flex-col items-center mx-auto m-2 p-2 bg-bkg border rounded-md ">
+        <div className=" mobile:w-full mobile:h-screen sm:h-min mobile:m-0 max-w-md min-w-min w-3/6 m-2 p-2 flex flex-col items-center mx-auto m-2 p-2 bg-bkg border rounded-md ">
           <div className="bg-red-600 rounded text-white font-semibold mb-2 w-full text-center">
             <div className="flex justify-around ">
               <p className="text-2xl">AMG</p>
@@ -64,13 +51,13 @@ const Login = () => {
             </div>
             <p>Login</p>
           </div>
-          <div className="m-2">
+          <div className="mobile:mt-10 sm:m-2 ">
             <div className="mb-1 flex flex-col">
               <label htmlFor="email" className="pr-2">
                 Email
               </label>
               <input
-                className="rounded border-2 border-slate-600 hover:border-yellow-500 focus:outline-none focus:border-blue-500"
+                className="rounded border-2 border-slate-600 hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
                 type="email"
                 id="email"
                 {...register("email")}
@@ -81,7 +68,7 @@ const Login = () => {
                 Password
               </label>
               <input
-                className="rounded border-2 border-slate-600 hover:border-yellow-500 focus:outline-none focus:border-blue-500"
+                className="rounded border-2 border-slate-600 hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
                 type="password"
                 id="Password"
                 {...register("password")}
@@ -110,13 +97,8 @@ const Login = () => {
               Forgot Password
             </a>
           </div>
-          <Switch
-            checked={theme}
-            onClick={() => {
-              setTheme(!theme);
-            }}
-          />
-          <div className="rounded bg-red-600 h-8 w-full"></div>
+          
+          <div className="rounded bg-red-600 h-8 w-full mobile:sticky mobile:top-[100vh] sm:static sm:top-0"></div>
         </div>
       </form>
     </>

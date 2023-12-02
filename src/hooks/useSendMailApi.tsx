@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState } from "react";
 
 type apidatatype = {
@@ -37,24 +38,18 @@ export default function useSendMailApi(): apidatatype {
   }) => {
     if (reqBody) {
       console.log("yo");
-      const urlRes = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          customer: "AMGDEMO",
-          from: "noreply@datapartners.ch",
-          to: reqBody.user,
-          cc: reqBody.cc,
-          sub: reqBody.sub,
-          body: reqBody.body,
-          sendType: "MAIL",
-        }),
+      const urlRes = await axios.post(url, {
+        customer: "AMGDEMO",
+        from: "noreply@datapartners.ch",
+        to: reqBody.user,
+        cc: reqBody.cc,
+        sub: reqBody.sub,
+        body: reqBody.body,
+        sendType: "MAIL",
       });
 
-      const resData = await urlRes.json();
-      console.log('EMAIL',resData);
+      const resData = await urlRes.data;
+      console.log("EMAIL", resData);
       setData(resData);
     }
   };

@@ -1,4 +1,5 @@
 import { errorAlert, warnAlert } from "@/components/appComponents/appAlert";
+import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -29,17 +30,16 @@ export default function useChangePassApi(): apidatatype {
     passnew: string;
   }) => {
     if (reqBody) {
-      const changePassRes = await fetch(url, {
-        method: "POST",
+      const changePassRes = await axios.post(url, {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
+        
           customer: "AMGDEMO",
           user: reqBody.email,
           passold: reqBody.passold,
           passnew: reqBody.passnew,
-        }),
+        
         // {
         // customer: "AMGDEMO",
         // user: data.email,
@@ -48,17 +48,17 @@ export default function useChangePassApi(): apidatatype {
         // }
       });
 
-      const resData = await changePassRes.json();
+      const resData = changePassRes.data;
       console.log(resData);
       setData(resData);
-        if (resData?.status === true) {
-          warnAlert(3000, "Password Change Success");
-          navigate("/");
-        } else if (resData?.status === 400) {
-          errorAlert(5000, resData?.title);
-        } else {
-          errorAlert(5000, resData?.title);
-        }
+      if (resData?.status === true) {
+        warnAlert(3000, "Password Change Success");
+        navigate("/");
+      } else if (resData?.status === 400) {
+        errorAlert(5000, resData?.title);
+      } else {
+        errorAlert(5000, resData?.title);
+      }
     }
   };
   return { userChangePassStatus: data, getChangePassStatus };
