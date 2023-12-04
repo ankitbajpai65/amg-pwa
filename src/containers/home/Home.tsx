@@ -7,8 +7,6 @@ import { useParams } from "react-router-dom";
 const Home = () => {
   const { userDetails, getUserDetails } = useAmgStartApi();
   const { userEmail } = useParams();
-
-  console.log("HOME");
   console.log(userDetails?.startList?.cards);
   useEffect(() => {
     if (userEmail) getUserDetails(userEmail);

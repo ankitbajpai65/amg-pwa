@@ -49,7 +49,6 @@ export default function useChangePassApi(): apidatatype {
       });
 
       const resData = changePassRes.data;
-      console.log(resData);
       setData(resData);
       if (resData?.status === true) {
         warnAlert(3000, "Password Change Success");

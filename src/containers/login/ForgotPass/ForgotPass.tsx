@@ -22,7 +22,7 @@ const ForgotPass = () => {
     const value = localStorage.getItem("theme");
     if (value === "dark") root?.classList.add("dark");
     else root?.classList.remove("dark");
-  });
+  },[]);
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     console.log({ data });
@@ -57,7 +57,7 @@ const ForgotPass = () => {
                 Enter Email
               </label>
               <input
-                className="rounded border-2 border-slate-600 hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
+                className="rounded-xl border-2 p-1 px-2  border-slate-600 hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
                 type="email"
                 id="email"
                 {...register("email")}

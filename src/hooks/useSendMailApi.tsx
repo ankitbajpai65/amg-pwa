@@ -37,7 +37,6 @@ export default function useSendMailApi(): apidatatype {
     body: string;
   }) => {
     if (reqBody) {
-      console.log("yo");
       const urlRes = await axios.post(url, {
         customer: "AMGDEMO",
         from: "noreply@datapartners.ch",

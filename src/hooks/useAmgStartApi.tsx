@@ -44,8 +44,6 @@ export default function useAmgStartApi(): apidatatype {
 
   const getUserDetails = async (reqBody: string) => {
     if (reqBody) {
-      console.log("yo");
-
       const urlRes = await axios.post(url, {
         headers: {
           content: "application/json",
@@ -55,8 +53,6 @@ export default function useAmgStartApi(): apidatatype {
       });
 
       setData(urlRes.data);
-
-      console.log(urlRes);
     }
   };
   return { userDetails: data, getUserDetails };

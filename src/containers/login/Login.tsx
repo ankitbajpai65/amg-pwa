@@ -1,4 +1,3 @@
-
 import { useForm, SubmitHandler } from "react-hook-form";
 import image from "../../assets/loghi-03.png";
 import { errorAlert } from "@/components/appComponents/appAlert";
@@ -10,9 +9,7 @@ type Inputs = {
 };
 
 const Login = () => {
-
-  const { userLoginStatus, getUserLoginStatus } = useCheckUserApi();
-
+  const { getUserLoginStatus } = useCheckUserApi();
 
   const {
     register,
@@ -28,14 +25,10 @@ const Login = () => {
         user: data.email,
         pass: data.password,
       });
-
-      console.log("auth", typeof userLoginStatus);
     } else {
       errorAlert(3000, "Empty Input fields");
     }
   };
-
-  
 
   return (
     <>
@@ -57,9 +50,10 @@ const Login = () => {
                 Email
               </label>
               <input
-                className="rounded border-2 border-slate-600 hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
+                className="rounded-xl border-2 p-1 px-2 border-slate-600 hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
                 type="email"
                 id="email"
+                placeholder="Please enter Email"
                 {...register("email")}
               />
             </div>
@@ -68,9 +62,10 @@ const Login = () => {
                 Password
               </label>
               <input
-                className="rounded border-2 border-slate-600 hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
+                className="rounded-xl border-2  p-1 px-2 border-slate-600 hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
                 type="password"
                 id="Password"
+                placeholder="Please enter Password"
                 {...register("password")}
               />
             </div>
@@ -97,7 +92,7 @@ const Login = () => {
               Forgot Password
             </a>
           </div>
-          
+
           <div className="rounded bg-red-600 h-8 w-full mobile:sticky mobile:top-[100vh] sm:static sm:top-0"></div>
         </div>
       </form>

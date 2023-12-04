@@ -15,7 +15,7 @@ const Header = () => {
 
   const handleLogout = () => {
     navigate("/");
-    sessionStorage.setItem("isLoggedIn", "false");
+    sessionStorage.removeItem("isLoggedIn");
   };
   return (
     <>

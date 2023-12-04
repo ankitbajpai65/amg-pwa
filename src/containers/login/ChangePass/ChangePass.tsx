@@ -24,10 +24,9 @@ const ChangePass = () => {
 
   useEffect(() => {
     const value = localStorage.getItem("theme");
-    console.log("local storage", value);
     if (value === "dark") root?.classList.add("dark");
     else root?.classList.remove("dark");
-  });
+  }, []);
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     console.log({ data });
@@ -72,7 +71,7 @@ const ChangePass = () => {
                 Enter Email
               </label>
               <input
-                className="rounded border-2 border-slate-600 hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
+                className="rounded-xl p-1 px-2 border-2 border-slate-600 hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
                 type="email"
                 id="email"
                 {...register("email")}
@@ -83,7 +82,7 @@ const ChangePass = () => {
                 Enter Old Password
               </label>
               <input
-                className="rounded border-2 border-slate-600 hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
+                className="rounded-xl p-1 px-2 border-2 border-slate-600 hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
                 type="password"
                 id="oldpass"
                 {...register("oldPass")}
@@ -94,7 +93,7 @@ const ChangePass = () => {
                 Enter NEW Password
               </label>
               <input
-                className="rounded border-2 border-slate-600 hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
+                className="rounded-xl p-1 px-2 border-2 border-slate-600 hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
                 type="password"
                 id="password"
                 minLength={8}
@@ -106,7 +105,7 @@ const ChangePass = () => {
                 Confirm NEW Password
               </label>
               <input
-                className="rounded border-2 border-slate-600 hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
+                className="rounded-xl p-1 px-2 border-2 border-slate-600 hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
                 type="password"
                 id="newpass2"
                 minLength={8}

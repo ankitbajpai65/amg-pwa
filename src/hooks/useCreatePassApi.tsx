@@ -36,7 +36,6 @@ export default function useCreatePassApi(): apidatatype {
       });
 
       const resData = createPassRes.data;
-      console.log(resData);
       setData(resData);
       if (resData?.status === true) {
         warnAlert(3000, "New Password created, Please check registered Email");
@@ -54,6 +53,5 @@ export default function useCreatePassApi(): apidatatype {
       }
     }
   };
-  console.log(data);
   return { createPassStatus: data, getCreatePassStatus };
 }

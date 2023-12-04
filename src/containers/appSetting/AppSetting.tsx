@@ -1,20 +1,22 @@
 import { useEffect, useState } from "react";
 import { Switch } from "@/components/ui/switch";
+import { useThemeContext } from "@/lib/context/themeContext";
 
 const AppSetting = () => {
-  const [theme, setTheme] = useState<boolean>(
+  const [themeState, setThemeState] = useState<boolean>(
     localStorage.getItem("theme") === "dark"
   );
   const root = document.querySelector(":root");
+  const { setTheme } = useThemeContext();
 
   useEffect(() => {
     handleSetTheme();
-  }, [theme]);
+  }, [themeState]);
 
   const handleSetTheme = () => {
-    localStorage.setItem("theme", theme ? "dark" : "light");
-    console.log("local storage", theme ? "dark" : "light");
-    if (theme) root?.classList.add("dark");
+    localStorage.setItem("theme", themeState ? "dark" : "light");
+    setTheme(themeState ? "dark" : "light");
+    if (themeState) root?.classList.add("dark");
     else root?.classList.remove("dark");
   };
 
@@ -23,9 +25,9 @@ const AppSetting = () => {
       <label htmlFor="theme-switch">Dark Mode</label>
       <Switch
         id="theme-switch"
-        checked={theme}
+        checked={themeState}
         onClick={() => {
-          setTheme(!theme);
+          setThemeState(!themeState);
         }}
       />
     </div>

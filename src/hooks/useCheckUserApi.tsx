@@ -32,7 +32,6 @@ export default function useCheckUserApi(): apidatatype {
     pass: string;
   }) => {
     if (reqBody) {
-      console.log("yo");
       const urlRes = await axios.post(url, {
         
        
@@ -43,7 +42,6 @@ export default function useCheckUserApi(): apidatatype {
       });
 
       const resData = await urlRes.data;
-      console.log(resData);
       setData(resData);
       if (resData?.status === true) {
         sessionStorage.setItem("isLoggedIn", "true");
