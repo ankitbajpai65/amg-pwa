@@ -17,6 +17,9 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AppSetting from "./containers/appSetting/AppSetting.tsx";
 import ThemeContextProvider from "./lib/context/themeContext.tsx";
+import PrivacyPolicy from "./containers/privacyPolicy/PrivacyPolicy.tsx";
+import PrivacyPolicy2 from "./containers/privacyPolicy/PrivacyPolicy2.tsx";
+import PrivacyPolicy3 from "./containers/privacyPolicy/PrivacyPolicy3.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -33,6 +36,31 @@ const router = createBrowserRouter(
             </ProtectedRoutes>
           }
         />
+        <Route
+          path="privacy/"
+          element={
+            <ProtectedRoutes>
+              <PrivacyPolicy />
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="privacy/step2"
+          element={
+            <ProtectedRoutes>
+              <PrivacyPolicy2 />
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="privacy/step3"
+          element={
+            <ProtectedRoutes>
+              <PrivacyPolicy3 />
+            </ProtectedRoutes>
+          }
+        />
+
         <Route
           path="setting"
           element={

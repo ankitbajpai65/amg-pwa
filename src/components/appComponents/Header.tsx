@@ -8,30 +8,44 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const Header = () => {
+  const [headerTitle, setHeaderTitle] = useState("");
   const navigate = useNavigate();
-
+  const { pathname } = useLocation();
+  console.log(pathname);
   const handleLogout = () => {
     navigate("/");
     sessionStorage.removeItem("isLoggedIn");
   };
+  useEffect(() => {
+    if (pathname.includes("privacy")) {
+      setHeaderTitle("Privacy Policy");
+    } else if (pathname.includes("home")) {
+      setHeaderTitle("Home");
+    } else if (pathname.includes("setting")) {
+      setHeaderTitle("Setting");
+    } else {
+      setHeaderTitle("404");
+    }
+  }, [pathname]);
   return (
     <>
-      <div className="bg-red-600 rounded text-white font-semibold pt-1 mb-2 w-full text-center">
+      <div className="sticky top-0 bg-red-600 rounded text-white font-semibold pt-1 mb-2 w-full text-center">
         <div className="flex justify-around ">
           <h2 className="text-2xl">AMG</h2>
           <div className="flex w-1/6 justify-around p-1">
             <IoIosNotificationsOutline size={25} />
-            <DropdownMenu >
+            <DropdownMenu>
               <DropdownMenuTrigger>
                 <FaRegUser size={25} />
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuLabel>Menu</DropdownMenuLabel>
                 <DropdownMenuSeparator></DropdownMenuSeparator>
-                <DropdownMenuItem onClick={() => navigate('/setting')}>
+                <DropdownMenuItem onClick={() => navigate("/setting")}>
                   Setting
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => handleLogout()}>
@@ -41,7 +55,7 @@ const Header = () => {
             </DropdownMenu>
           </div>
         </div>
-        <p>Home</p>
+        <p>{headerTitle}</p>
       </div>
     </>
   );

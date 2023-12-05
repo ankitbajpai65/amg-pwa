@@ -47,7 +47,9 @@ export default function useCheckUserApi(): apidatatype {
         sessionStorage.setItem("isLoggedIn", "true");
         sessionStorage.setItem("email", reqBody.user);
         console.log(sessionStorage.getItem('isLoggedIn'));
-        navigate(`/home/${reqBody?.user}`);
+        // navigate(`/home/${reqBody?.user}`);
+        navigate(`/privacy`);
+
       } else if (resData?.status === 400) {
         errorAlert(5000, resData?.title);
       } else {
