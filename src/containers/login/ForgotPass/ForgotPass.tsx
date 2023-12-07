@@ -42,13 +42,13 @@ const ForgotPass = () => {
         onSubmit={handleSubmit(onSubmit)}
         className="mobile:w-full max-w-md min-w-min w-3/6 mx-auto "
       >
-        <div className=" mobile:w-full max-w-md min-w-min w-3/6 m-2 p-2 flex flex-col items-center mx-auto m-2 p-2 bg-bkg border rounded-md ">
+        <div className=" mobile:w-full mobile:p-0 max-w-md min-w-min w-3/6 m-2 p-2 flex flex-col items-center mx-auto m-2 p-2 bg-bkg border rounded-md ">
           <div className="bg-red-600 rounded text-white font-semibold mb-2 w-full text-center">
             <div className="flex justify-around">
               <p className="text-2xl">AMG</p>
               <img className="h-10" src={image}></img>
             </div>
-            <p>Login</p>
+            <p>Forgot Password</p>
           </div>
 
           <div className="m-2">

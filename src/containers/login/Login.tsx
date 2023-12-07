@@ -2,7 +2,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import image from "../../assets/loghi-03.png";
 import { errorAlert } from "@/components/appComponents/appAlert";
 import useCheckUserApi from "@/hooks/useCheckUserApi";
-
+import { GoogleLogin } from "@react-oauth/google";
 type Inputs = {
   email: string;
   password: string;
@@ -36,7 +36,7 @@ const Login = () => {
         onSubmit={handleSubmit(onSubmit)}
         className="mobile:w-full mobile:h-screen sm:h-fit max-w-md min-w-min w-3/6 mx-auto"
       >
-        <div className=" mobile:w-full mobile:h-screen sm:h-min mobile:m-0 max-w-md min-w-min w-3/6 m-2 p-2 flex flex-col items-center mx-auto m-2 p-2 bg-bkg border rounded-md ">
+        <div className=" mobile:w-full mobile:h-screen sm:h-min mobile:m-0 mobile:p-0 max-w-md min-w-min w-3/6 m-2 p-2 flex flex-col items-center mx-auto m-2 p-2 bg-bkg border rounded-md ">
           <div className="bg-red-600 rounded text-white font-semibold mb-2 w-full text-center">
             <div className="flex justify-around ">
               <p className="text-2xl">AMG</p>
@@ -76,6 +76,12 @@ const Login = () => {
           >
             Confirm
           </button>
+          <div className="rounded-full">
+            <GoogleLogin
+              onSuccess={(res) => console.log(res)}
+              onError={() => console.error()}
+            />
+          </div>
           <div className="flex flex-col m-2">
             <a
               className="text-blue-600 underline transition duration-150 ease-in-out hover:text-red-600 focus:text-red-600 active:text-red-700"
