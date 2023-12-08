@@ -16,7 +16,7 @@ function App() {
     console.log(theme);
     if (theme === "dark") root?.classList.add("dark");
     else root?.classList.remove("dark");
-    console.log(import.meta.env.VITE_GOOGLE_CLIENT_ID);
+    // console.log(import.meta.env.VITE_GOOGLE_CLIENT_ID);
   }, [theme]);
   return (
     <div className="border-box sm:m-2 h-screen flex items-center mobile:m-0">

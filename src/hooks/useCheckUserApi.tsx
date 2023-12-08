@@ -1,7 +1,7 @@
 import { errorAlert } from "@/components/appComponents/appAlert";
 import axios from "axios";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import useAmgStartApi from "./useAmgStartApi";
 
 type apidatatype = {
   userLoginStatus: resDataType | undefined;
@@ -18,7 +18,7 @@ type resDataType = {
 };
 
 export default function useCheckUserApi(): apidatatype {
-  const navigate = useNavigate();
+  const { getUserDetails } = useAmgStartApi();
   const [data, setData] = useState<resDataType | undefined>();
   const url = "https://amg.datapartners.ch/Amg/ws/AMG_Security/Login/CheckUser";
   // {
@@ -33,12 +33,9 @@ export default function useCheckUserApi(): apidatatype {
   }) => {
     if (reqBody) {
       const urlRes = await axios.post(url, {
-        
-       
-          customer: "AMGDEMO",
-          user: reqBody.user,
-          pass: reqBody.pass,
-      
+        customer: "AMGDEMO",
+        user: reqBody.user,
+        pass: reqBody.pass,
       });
 
       const resData = await urlRes.data;
@@ -46,10 +43,7 @@ export default function useCheckUserApi(): apidatatype {
       if (resData?.status === true) {
         sessionStorage.setItem("isLoggedIn", "true");
         sessionStorage.setItem("email", reqBody.user);
-        console.log(sessionStorage.getItem('isLoggedIn'));
-        // navigate(`/home/${reqBody?.user}`);
-        navigate(`/privacy`);
-
+        getUserDetails(reqBody.user);
       } else if (resData?.status === 400) {
         errorAlert(5000, resData?.title);
       } else {

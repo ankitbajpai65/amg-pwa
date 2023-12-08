@@ -18,8 +18,7 @@ import "react-toastify/dist/ReactToastify.css";
 import AppSetting from "./containers/appSetting/AppSetting.tsx";
 import ThemeContextProvider from "./lib/context/themeContext.tsx";
 import PrivacyPolicy from "./containers/privacyPolicy/PrivacyPolicy.tsx";
-import PrivacyPolicy2 from "./containers/privacyPolicy/PrivacyPolicy2.tsx";
-import PrivacyPolicy3 from "./containers/privacyPolicy/PrivacyPolicy3.tsx";
+import UserDetailsProvider from "./lib/context/userDetailsContext.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -44,22 +43,6 @@ const router = createBrowserRouter(
             </ProtectedRoutes>
           }
         />
-        <Route
-          path="privacy/step2"
-          element={
-            <ProtectedRoutes>
-              <PrivacyPolicy2 />
-            </ProtectedRoutes>
-          }
-        />
-        <Route
-          path="privacy/step3"
-          element={
-            <ProtectedRoutes>
-              <PrivacyPolicy3 />
-            </ProtectedRoutes>
-          }
-        />
 
         <Route
           path="setting"
@@ -78,7 +61,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <ToastContainer />
     <ThemeContextProvider>
-      <RouterProvider router={router} />
+      <UserDetailsProvider>
+        <RouterProvider router={router} />
+      </UserDetailsProvider>
     </ThemeContextProvider>
   </React.StrictMode>
 );

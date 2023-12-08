@@ -12,7 +12,7 @@ function Layout() {
     else root?.classList.remove("dark");
   });
   return (
-    <div className="w-screen h-screen">
+    <div className="w-screen h-screen border-box">
       <Header />
       <Outlet />
       <Footer />

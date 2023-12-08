@@ -1,17 +1,42 @@
+import useAmgUsersApi from "@/hooks/useAmgUsersApi";
+import { useUserDetails } from "@/lib/context/userDetailsContext";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const PrivacyPolicy = () => {
-  const [btnAccess, setBtnAccess] = useState(false);
+  const [btnAccess, setBtnAccess] = useState(true);
+  const { setUserUpdate } = useAmgUsersApi();
   const navigate = useNavigate();
-  const handleScroll = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
+  const { userDetails } = useUserDetails();
+
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const bottom =
-      e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
+      (e.target as HTMLInputElement).scrollHeight -
+        (e.target as HTMLInputElement).scrollTop ===
+      (e.target as HTMLInputElement).clientHeight;
     if (bottom) {
       setBtnAccess(true);
     } else {
       setBtnAccess(false);
     }
+  };
+  const handleSubmit = () => {
+    setUserUpdate({
+      user: userDetails?.startList.users[0].email as string,
+      key: `email|${userDetails?.startList.users[0].email}`,
+      data: `PrivacyDate|${Date.now()}`,
+    });
+    navigate(`/home/${sessionStorage.getItem("email")}`);
+  };
+  const privacyPolicyText = () => {
+    return userDetails?.startList.baseData.map((item) => {
+      if (
+        item.code === `PRIVACYTEXT${userDetails?.startList.users[0].language}`
+      ) {
+        console.log(item.itemValue);
+        return item.itemValue;
+      }
+    });
   };
 
   return (
@@ -20,43 +45,7 @@ const PrivacyPolicy = () => {
         className="my-5 mx-10 p-10 text-xl h-3/4 border overflow-auto"
         onScroll={(e) => handleScroll(e)}
       >
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi totam, et,
-        excepturi repellendus reiciendis voluptates dolores eum maxime vel in,
-        dolor omnis a quidem beatae vitae assumenda consequuntur minus facilis?
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde neque
-        commodi ex quas? Animi, dolor repudiandae ex a quos veniam, autem
-        perferendis possimus esse dolorum eligendi asperiores accusantium
-        voluptate odit?Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        In eligendi nesciunt voluptatum! Laboriosam veniam quisquam quos
-        consequatur officiis, quia iste porro reiciendis ea dolore nesciunt
-        sapiente necessitatibus sit aliquid odio. Lorem ipsum dolor sit amet
-        consectetur adipisicing elit. Modi labore maiores aliquam unde autem.
-        Libero adipisci sit blanditiis ipsa fuga commodi, quos optio aut sed
-        dolorem, fugiat nulla architecto sapiente! Lorem ipsum dolor sit amet
-        consectetur adipisicing elit. Modi totam, et, excepturi repellendus
-        reiciendis voluptates dolores eum maxime vel in, dolor omnis a quidem
-        beatae vitae assumenda consequuntur minus facilis? Lorem ipsum dolor sit
-        amet consectetur adipisicing elit. Unde neque commodi ex quas? Animi,
-        dolor repudiandae ex a quos veniam, autem perferendis possimus esse
-        dolorum eligendi asperiores accusantium voluptate odit?Lorem ipsum dolor
-        sit amet consectetur adipisicing elit. In eligendi nesciunt voluptatum!
-        Laboriosam veniam quisquam quos consequatur officiis, quia iste porro
-        autem perferendis possimus esse dolorum eligendi asperiores accusantium
-        maiores aliquam unde autem. Libero adipisci sit blanditiis ipsa fuga
-        commodi, quos optio aut sed dolorem, fugiat nulla architecto
-        sapiente!Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi
-        totam, et, excepturi repellendus reiciendis voluptates dolores eum
-        maxime vel in, dolor omnis a quidem beatae vitae assumenda consequuntur
-        minus facilis? Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        Unde neque commodi ex quas? Animi, dolor repudiandae ex a quos veniam,
-        autem perferendis possimus esse dolorum eligendi asperiores accusantium
-        voluptate odit?Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        In eligendi nesciunt voluptatum! Laboriosam veniam quisquam quos
-        consequatur officiis, quia iste porro reiciendis ea dolore nesciunt
-        sapiente necessitatibus sit aliquid odio. Lorem ipsum dolor sit amet
-        consectetur adipisicing elit. Modi labore maiores aliquam unde autem.
-        Libero adipisci sit blanditiis ipsa fuga commodi, quos optio aut sed
-        dolorem, fugiat nulla architecto sapiente!
+        {privacyPolicyText()}
       </div>
 
       <button
@@ -64,7 +53,7 @@ const PrivacyPolicy = () => {
       mb-2 hover:bg-red-500 hover:border hover:border-black focus:bg-red-500
       active:bg-red-700 text-2xl px-5 disabled:pointer-events-none disabled:bg-slate-300"
         disabled={!btnAccess}
-        onClick={() => navigate("/privacy/step2")}
+        onClick={() => handleSubmit()}
       >
         AGREE
       </button>
