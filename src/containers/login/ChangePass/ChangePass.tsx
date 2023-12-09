@@ -12,7 +12,7 @@ type Inputs = {
   newPass2: string;
 };
 const ChangePass = () => {
-  const { userChangePassStatus, getChangePassStatus } = useChangePassApi();
+  const { getChangePassStatus } = useChangePassApi();
 
   const root = document.querySelector(":root");
 

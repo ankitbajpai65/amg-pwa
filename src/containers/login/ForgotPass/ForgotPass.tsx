@@ -9,7 +9,7 @@ type Inputs = {
   email: string;
 };
 const ForgotPass = () => {
-  const { createPassStatus, getCreatePassStatus } = useCreatePassApi();
+  const { getCreatePassStatus } = useCreatePassApi();
   const root = document.querySelector(":root");
 
   const {
