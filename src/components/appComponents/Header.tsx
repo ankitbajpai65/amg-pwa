@@ -15,7 +15,7 @@ const Header = () => {
   const [headerTitle, setHeaderTitle] = useState("");
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  console.log(pathname);
+ 
   const handleLogout = () => {
     navigate("/");
     sessionStorage.removeItem("isLoggedIn");

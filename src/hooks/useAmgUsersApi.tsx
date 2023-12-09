@@ -40,7 +40,6 @@ export default function useAmgUsersApi(): apidatatype {
         keyc: reqBody.key,
         data: reqBody.data,
       });
-      console.log({ urlRes });
       setData(urlRes.data);
     }
   };

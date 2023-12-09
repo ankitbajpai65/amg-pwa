@@ -48,7 +48,6 @@ export default function useSendMailApi(): apidatatype {
       });
 
       const resData = await urlRes.data;
-      console.log("EMAIL", resData);
       setData(resData);
     }
   };

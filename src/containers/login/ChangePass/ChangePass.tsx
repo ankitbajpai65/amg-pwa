@@ -29,7 +29,6 @@ const ChangePass = () => {
   }, []);
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log({ data });
     console.error(errors);
     if (
       data.email !== "" &&
@@ -49,7 +48,6 @@ const ChangePass = () => {
     } else {
       errorAlert(3000, "Empty Input fields");
     }
-    console.log("ChangePass", userChangePassStatus);
   };
   return (
     <div className="w-screen h-screen flex items-center justify-center">

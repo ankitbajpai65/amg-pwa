@@ -25,7 +25,6 @@ const ForgotPass = () => {
   },[]);
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log({ data });
     console.error(errors);
     if (data.email !== "") {
       getCreatePassStatus({
@@ -35,7 +34,6 @@ const ForgotPass = () => {
       errorAlert(3000, "Empty Input fields");
     }
   };
-  console.log("ChangePass", createPassStatus);
   return (
     <div className="w-screen h-screen flex items-center justify-center">
       <form
@@ -69,9 +67,7 @@ const ForgotPass = () => {
             <button
               className="rounded-3xl text-xl bg-red-600 py-2 px-4 m-2 border text-white font-medium mb-2 hover:bg-red-500 hover:border hover:border-black focus:bg-red-500 active:bg-red-700"
               type="submit"
-              // onClick={() => {
-              //   console.log("login");
-              // }}
+              
             >
               Confirm
             </button>

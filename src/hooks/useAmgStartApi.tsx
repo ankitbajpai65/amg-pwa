@@ -29,12 +29,10 @@ export default function useAmgStartApi(): apidatatype {
         customer: "AMGDEMO",
         user: reqBody,
       });
-      console.log({ urlRes });
       setData(urlRes.data);
       setUserDetails(urlRes.data); //? setting user details context
       if (urlRes?.data) {
         if (urlRes?.data.startList.users[0].privacyDate === "") {
-          console.log(urlRes?.data.startList.users[0].language);
           navigate("/privacy");
         } else {
           navigate(`/home/${urlRes?.data.startList.users[0].email}`);

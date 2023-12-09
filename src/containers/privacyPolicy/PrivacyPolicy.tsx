@@ -33,7 +33,6 @@ const PrivacyPolicy = () => {
       if (
         item.code === `PRIVACYTEXT${userDetails?.startList.users[0].language}`
       ) {
-        console.log(item.itemValue);
         return item.itemValue;
       }
     });

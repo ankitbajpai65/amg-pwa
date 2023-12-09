@@ -14,7 +14,6 @@ const Home = () => {
     if (!userDetails) getUserDetails(userEmail as string);
   }, [userDetails]);
 
-  console.log(userDetails?.startList?.cards);
 
   return (
     <div className="p-2 h-max pb-14">

@@ -9,7 +9,6 @@ const PrivacyPolicy3 = () => {
   const handleSwitch = () => {
     setBtnAccess((prev) => !prev);
   };
-  console.log(btnAccess);
   return (
     <div className="flex flex-col items-center h-3/4 overflow-hidden">
       <h1>YOYO</h1>

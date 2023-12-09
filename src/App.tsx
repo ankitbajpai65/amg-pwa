@@ -13,7 +13,7 @@ function App() {
     setTheme(getLocalStorageTheme === "dark" ? "dark" : "light");
   }, []);
   useEffect(() => {
-    console.log(theme);
+
     if (theme === "dark") root?.classList.add("dark");
     else root?.classList.remove("dark");
     // console.log(import.meta.env.VITE_GOOGLE_CLIENT_ID);

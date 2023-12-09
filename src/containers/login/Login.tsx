@@ -20,7 +20,6 @@ const Login = () => {
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log({ data });
     if(errors) console.error(errors);
     if (data.email !== "" && data.password !== "") {
       getUserLoginStatus({
