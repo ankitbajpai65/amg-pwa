@@ -2,7 +2,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import image from "../../assets/loghi-03.png";
 import { errorAlert } from "@/components/appComponents/appAlert";
 import useCheckUserApi from "@/hooks/useCheckUserApi";
-// import { GoogleLogin } from "@react-oauth/google";
+import { GoogleLogin } from "@react-oauth/google";
 
 type Inputs = {
   email: string;
@@ -78,10 +78,10 @@ const Login = () => {
             Confirm
           </button>
           <div className="rounded-full">
-            {/* <GoogleLogin
+            <GoogleLogin
               onSuccess={(res) => console.log(res)}
               onError={() => console.error()}
-            /> */}
+            />
           </div>
           <div className="flex flex-col m-2 mt-10 text-l">
             <a

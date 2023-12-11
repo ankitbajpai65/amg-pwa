@@ -8,48 +8,44 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useUserDetails } from "@/lib/context/userDetailsContext";
 
 const Header = () => {
-  const [headerTitle, setHeaderTitle] = useState("");
   const navigate = useNavigate();
-  const { pathname } = useLocation();
- 
+  const { userDetails } = useUserDetails();
   const handleLogout = () => {
     navigate("/");
     sessionStorage.removeItem("isLoggedIn");
   };
-  useEffect(() => {
-    if (pathname.includes("privacy")) {
-      setHeaderTitle("Privacy Policy");
-    } else if (pathname.includes("home")) {
-      setHeaderTitle("Home");
-    } else if (pathname.includes("setting")) {
-      setHeaderTitle("Setting");
-    } else {
-      setHeaderTitle("404");
-    }
-  }, [pathname]);
+
   return (
     <>
       <div className="sticky top-0 bg-red-600 rounded-b-xl text-white font-semibold pt-1 mb-2 w-full text-center">
-        <div className="flex justify-around ">
-          <h2 className="text-2xl">AMG</h2>
-          <div className="flex w-1/6 justify-around p-1 gap-2">
+        <div className="flex justify-between px-5">
+          <h2 className="text-2xl border rounded-full p-1 px-3 m-1 bg-gray-100 text-black">
+            {userDetails?.startList.users[0].nickName.slice(0, 1).toUpperCase()}
+          </h2>
+          <div className="flex w-1/6 justify-around p-2 gap-2 mx-5 w-fit">
             <div className="border border-transparent">
-              <IoIosNotificationsOutline size={25} />
+              <IoIosNotificationsOutline size={35} />
             </div>
             <DropdownMenu>
               <DropdownMenuTrigger>
-                <FaRegUser size={25} />
+                <FaRegUser size={30} />
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuLabel>Menu</DropdownMenuLabel>
                 <DropdownMenuSeparator></DropdownMenuSeparator>
-                <DropdownMenuItem onClick={() => navigate("/setting")}>
-                  Setting
+
+                <DropdownMenuItem onClick={() => navigate("/profile")}>
+                  Profile
                 </DropdownMenuItem>
+                <DropdownMenuItem>Privacy</DropdownMenuItem>
+                <DropdownMenuItem>Change Password</DropdownMenuItem>
+                <DropdownMenuItem>Map</DropdownMenuItem>
+                <DropdownMenuItem>Notifications</DropdownMenuItem>
+                <DropdownMenuItem>Sicurezze</DropdownMenuItem>
                 <DropdownMenuItem onClick={() => handleLogout()}>
                   Logout
                 </DropdownMenuItem>
@@ -57,7 +53,6 @@ const Header = () => {
             </DropdownMenu>
           </div>
         </div>
-        <p>{headerTitle}</p>
       </div>
     </>
   );
