@@ -67,6 +67,7 @@ const UserProfile = () => {
   },[userDetails])
   
 
+  console.log({userDetails})
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
     console.log({ profileData });

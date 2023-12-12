@@ -26,7 +26,7 @@ const router = createBrowserRouter(
       <Route path="" element={<App />} />
       <Route path="changePassword" element={<ChangePass />} />
       <Route path="forgotPassword" element={<ForgotPass />} />
-      <Route path="" element={<Layout />}>
+      <Route path="pwa/" element={<Layout />}>
         <Route
           path="home/:userEmail"
           element={

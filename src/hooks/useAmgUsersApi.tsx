@@ -48,7 +48,7 @@ export default function useAmgUsersApi(): apidatatype {
       setData(urlRes.data);
       if (urlRes?.data.status === "I") {
         warnAlert(2000, "Privacy Policy accepted");
-        navigate(`/home/${sessionStorage.getItem("email")}`);
+        navigate(`/pwa/home/${sessionStorage.getItem("email")}`);
       } else {
         errorAlert(2000, "Policy not Accepted");
         navigate("/");

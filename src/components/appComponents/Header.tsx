@@ -1,5 +1,12 @@
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { FaRegUser } from "react-icons/fa";
+import { FaUser } from "react-icons/fa";
+import { MdPrivacyTip } from "react-icons/md";
+import { RiLockPasswordFill } from "react-icons/ri";
+import { FaMapLocation } from "react-icons/fa6";
+import { IoMdNotifications } from "react-icons/io";
+import { RiNotificationBadgeFill } from "react-icons/ri";
+import { RiLogoutBoxFill } from "react-icons/ri";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,10 +20,12 @@ import { useUserDetails } from "@/lib/context/userDetailsContext";
 
 const Header = () => {
   const navigate = useNavigate();
-  const { userDetails } = useUserDetails();
+  const { userDetails, setUserDetails } = useUserDetails();
   const handleLogout = () => {
     navigate("/");
     sessionStorage.removeItem("isLoggedIn");
+    sessionStorage.removeItem("email");
+    setUserDetails(null);
   };
 
   return (
@@ -38,15 +47,44 @@ const Header = () => {
                 <DropdownMenuLabel>Menu</DropdownMenuLabel>
                 <DropdownMenuSeparator></DropdownMenuSeparator>
 
-                <DropdownMenuItem onClick={() => navigate("/profile")}>
+                <DropdownMenuItem onClick={() => navigate("/pwa/profile")}>
+                  <FaUser style={{ "padding-right": "5px" }} size={22} />
                   Profile
                 </DropdownMenuItem>
-                <DropdownMenuItem>Privacy</DropdownMenuItem>
-                <DropdownMenuItem>Change Password</DropdownMenuItem>
-                <DropdownMenuItem>Map</DropdownMenuItem>
-                <DropdownMenuItem>Notifications</DropdownMenuItem>
-                <DropdownMenuItem>Sicurezze</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => navigate("/pwa/privacy")}>
+                  <MdPrivacyTip style={{ "padding-right": "5px" }} size={25} />
+                  Privacy
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => navigate("/changePassword")}>
+                  <RiLockPasswordFill
+                    style={{ "padding-right": "5px" }}
+                    size={25}
+                  />
+                  Change Password
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <FaMapLocation style={{ "padding-right": "5px" }} size={25} />
+                  Map
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <IoMdNotifications
+                    style={{ "padding-right": "5px" }}
+                    size={25}
+                  />
+                  Notifications
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <RiNotificationBadgeFill
+                    style={{ "padding-right": "5px" }}
+                    size={25}
+                  />
+                  Sicurezze
+                </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => handleLogout()}>
+                  <RiLogoutBoxFill
+                    style={{ "padding-right": "5px" }}
+                    size={25}
+                  />
                   Logout
                 </DropdownMenuItem>
               </DropdownMenuContent>

@@ -1,9 +1,8 @@
-import { useForm, SubmitHandler } from "react-hook-form";
 import image from "../../assets/loghi-03.png";
 import { errorAlert } from "@/components/appComponents/appAlert";
 import useCheckUserApi from "@/hooks/useCheckUserApi";
 import { GoogleLogin } from "@react-oauth/google";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUserDetails } from "@/lib/context/userDetailsContext";
 
@@ -14,31 +13,38 @@ type Inputs = {
 
 const Login = () => {
   const { getUserLoginStatus } = useCheckUserApi();
+  const [loginData, setLoginData] = useState<Inputs>({
+    email: "",
+    password: "",
+  });
   const { userDetails } = useUserDetails();
   const navigate = useNavigate();
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<Inputs>();
 
   useEffect(() => {
     if (userDetails) {
       if (userDetails?.startList.users[0].privacyDate === "") {
-        navigate("/privacy");
+        navigate("/pwa/privacy");
       } else {
-        navigate(`/home/${userDetails?.startList.users[0].email}`);
+        navigate(`/pwa/home/${userDetails?.startList.users[0].email}`);
       }
     }
   }, [userDetails]);
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    if (errors) console.error(errors);
-    if (data.email !== "" && data.password !== "") {
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLoginData((prev) => ({
+      ...prev,
+      [e.target.id]: e.target.value,
+    }));
+  };
+  
+  const handleSubmit = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    console.log({loginData})
+    if (loginData.email !== "" && loginData.password !== "") {
       getUserLoginStatus({
-        user: data.email,
-        pass: data.password,
+        user: loginData.email,
+        pass: loginData.password,
       });
     } else {
       errorAlert(3000, "Empty Input fields");
@@ -48,7 +54,7 @@ const Login = () => {
   return (
     <>
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit}
         className="mobile:w-full mobile:h-screen sm:h-fit max-w-md min-w-min w-3/6 mx-auto"
       >
         <div className=" mobile:w-full mobile:h-screen sm:h-min mobile:m-0 mobile:p-0 max-w-md min-w-min w-3/6 m-2 p-2 flex flex-col items-center mx-auto m-2 p-2 bg-bkg border rounded-md ">
@@ -69,7 +75,7 @@ const Login = () => {
                 type="email"
                 id="email"
                 placeholder="Please enter Email"
-                {...register("email")}
+                onChange={(e) => handleInputChange(e)}
               />
             </div>
             <div className="mb-2 flex flex-col">
@@ -79,9 +85,9 @@ const Login = () => {
               <input
                 className="rounded-xl border-2  p-1 px-2 border-gray-300 hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
                 type="password"
-                id="Password"
+                id="password"
                 placeholder="Please enter Password"
-                {...register("password")}
+                onChange={(e) => handleInputChange(e)}
               ></input>
             </div>
           </div>
