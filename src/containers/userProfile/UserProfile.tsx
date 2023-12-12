@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
 import { Switch } from "@/components/ui/switch";
 import { useThemeContext } from "@/lib/context/themeContext";
-import { errorAlert } from "@/components/appComponents/appAlert";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useUserDetails } from "@/lib/context/userDetailsContext";
 
 type Inputs = {
   name: string;
-  nickname: string;
-  tele1: number;
-  tele2: number;
-  cell: number;
+  nickName: string;
+  phone: string;
+  phone2: string;
+  phoneCell: string;
   language: string;
 };
 
@@ -19,24 +18,58 @@ const UserProfile = () => {
   );
   const root = document.querySelector(":root");
   const { setTheme } = useThemeContext();
+  const { userDetails } = useUserDetails();
+  const [btnDisabled, setBtnDisabled] = useState(true);
+  const [profileData, setProfileData] = useState<Inputs>({
+    name: "",
+    nickName: userDetails?.startList.users[0].nickName
+      ? userDetails?.startList.users[0].nickName
+      : "",
+    phone: userDetails?.startList.users[0].phone
+      ? userDetails?.startList.users[0].phone
+      : "",
+    phone2: userDetails?.startList.users[0].phone2
+      ? userDetails?.startList.users[0].phone2
+      : "",
+    phoneCell: userDetails?.startList.users[0].phoneCell
+      ? userDetails?.startList.users[0].phoneCell
+      : "",
+    language: userDetails?.startList.users[0].language
+      ? userDetails?.startList.users[0].language
+      : "",
+  });
 
   useEffect(() => {
     handleSetTheme();
   }, [themeState]);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<Inputs>();
+  useEffect(() => {
+   if(userDetails){
+    setProfileData({
+      name: "",
+      nickName: userDetails?.startList.users[0].nickName
+        ? userDetails?.startList.users[0].nickName
+        : "",
+      phone: userDetails?.startList.users[0].phone
+        ? userDetails?.startList.users[0].phone
+        : "",
+      phone2: userDetails?.startList.users[0].phone2
+        ? userDetails?.startList.users[0].phone2
+        : "",
+      phoneCell: userDetails?.startList.users[0].phoneCell
+        ? userDetails?.startList.users[0].phoneCell
+        : "",
+      language: userDetails?.startList.users[0].language
+        ? userDetails?.startList.users[0].language
+        : "",
+    });
+   }
+  },[userDetails])
+  
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    if (errors) console.error(errors);
-    if (data) {
-      console.log({ data });
-    } else {
-      errorAlert(3000, "Empty Input fields");
-    }
+  const handleSubmit = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    console.log({ profileData });
   };
 
   const handleSetTheme = () => {
@@ -46,10 +79,18 @@ const UserProfile = () => {
     else root?.classList.remove("dark");
   };
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setProfileData((prev) => ({
+      ...prev,
+      [e.target.id]: e.target.value,
+    }));
+    setBtnDisabled(false);
+  };
+
   return (
     <>
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit}
         className="mobile:w-full mobile:h-screen sm:h-fit max-w-md min-w-min w-3/6 mx-auto"
       >
         <div className="mobile:mt-2 sm:m-2  w-full p-2 text-l">
@@ -62,19 +103,21 @@ const UserProfile = () => {
               type="name"
               id="name"
               placeholder="Please enter name"
-              {...register("name")}
+              value={profileData.name}
+              onChange={(e) => handleInputChange(e)}
             />
           </div>
           <div className="mb-2 flex flex-col">
-            <label htmlFor="nickname" className="pr-2 font-semibold">
+            <label htmlFor="nickName" className="pr-2 font-semibold">
               NickName
             </label>
             <input
               className="rounded-xl border-2  p-1 px-2 border-gray-300 hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
-              type="nickname"
-              id="nickname"
-              placeholder="Please enter nickname"
-              {...register("nickname")}
+              type="nickName"
+              id="nickName"
+              placeholder="Please enter nickName"
+              value={profileData.nickName}
+              onChange={(e) => handleInputChange(e)}
             ></input>
           </div>
           <div className="mb-2 flex flex-col">
@@ -83,10 +126,11 @@ const UserProfile = () => {
             </label>
             <input
               className="rounded-xl border-2  p-1 px-2 border-gray-300 hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
-              type="tele1"
-              id="tele1"
+              type="phone"
+              id="phone"
               placeholder="Please enter Telephone number"
-              {...register("tele1")}
+              value={profileData.phone}
+              onChange={(e) => handleInputChange(e)}
             ></input>
           </div>
           <div className="mb-2 flex flex-col">
@@ -95,10 +139,11 @@ const UserProfile = () => {
             </label>
             <input
               className="rounded-xl border-2  p-1 px-2 border-gray-300 hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
-              type="tele2"
-              id="tele2"
+              type="phone2"
+              id="phone2"
               placeholder="Please enter Telephone number"
-              {...register("tele2")}
+              value={profileData.phone2}
+              onChange={(e) => handleInputChange(e)}
             ></input>
           </div>
           <div className="mb-2 flex flex-col">
@@ -107,10 +152,11 @@ const UserProfile = () => {
             </label>
             <input
               className="rounded-xl border-2  p-1 px-2 border-gray-300 hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
-              type="cell"
-              id="cell"
+              type="phoneCell"
+              id="phoneCell"
               placeholder="Please enter Telephone number"
-              {...register("cell")}
+              value={profileData.phoneCell}
+              onChange={(e) => handleInputChange(e)}
             ></input>
           </div>
           <div className="mb-2 flex flex-col">
@@ -122,7 +168,8 @@ const UserProfile = () => {
               type="Language"
               id="Language"
               placeholder="Please enter Language"
-              {...register("language")}
+              value={profileData.language}
+              onChange={(e) => handleInputChange(e)}
             ></input>
           </div>
           <div className="mb-2 flex">
@@ -138,8 +185,9 @@ const UserProfile = () => {
         </div>
         <div className="text-center">
           <button
-            className="rounded-3xl text-xl bg-red-600 py-2 px-4 m-2 border text-white font-medium mb-2 hover:bg-red-500 hover:border hover:border-black focus:bg-red-500 active:bg-red-700"
+            className="rounded-3xl text-xl bg-red-600 py-2 px-4 m-2 border text-white font-medium mb-2 hover:bg-red-500 hover:border hover:border-black focus:bg-red-500 active:bg-red-700 disabled:pointer-events-none disabled:bg-slate-300"
             type="submit"
+            disabled={btnDisabled}
           >
             Confirm
           </button>

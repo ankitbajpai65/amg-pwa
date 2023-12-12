@@ -29,6 +29,9 @@ export type userDetailsType = {
         nickName: string;
         language: string;
         privacyDate: string;
+        phone: string;
+        phone2: string;
+        phoneCell: string;
       }
     ];
   };

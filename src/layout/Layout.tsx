@@ -8,20 +8,29 @@ import useAmgStartApi from "@/hooks/useAmgStartApi";
 
 function Layout() {
   const root = document.querySelector(":root");
-  const { theme } = useThemeContext();
+  const { theme, setTheme } = useThemeContext();
   const { userDetails } = useUserDetails();
 
   const { getUserDetails } = useAmgStartApi();
-  const  userEmail  = sessionStorage.getItem('email');
+  const userEmail = sessionStorage.getItem("email");
+
+  useEffect(() => {
+    const getLocalStorageTheme = localStorage.getItem("theme");
+    if (getLocalStorageTheme === "dark") root?.classList.add("dark");
+    else root?.classList.remove("dark");
+    setTheme(getLocalStorageTheme === "dark" ? "dark" : "light");
+  }, []);
 
   useEffect(() => {
     if (theme === "dark") root?.classList.add("dark");
     else root?.classList.remove("dark");
-  });
+  }, [theme]);
+
   useEffect(() => {
-    console.log({userDetails})
-    if (!userDetails) getUserDetails(userEmail as string);
-  }, []);
+    if (!userDetails) {
+      getUserDetails(userEmail as string);
+    }
+  }, [userDetails]);
 
   return (
     <div className="w-screen h-screen border-box">
