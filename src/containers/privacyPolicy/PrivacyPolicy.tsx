@@ -6,7 +6,6 @@ const PrivacyPolicy = () => {
   const [btnAccess, setBtnAccess] = useState(true);
   const { setUserUpdate } = useAmgUsersApi();
   const { userDetails } = useUserDetails();
-
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const bottom =
       (e.target as HTMLInputElement).scrollHeight -
@@ -18,11 +17,21 @@ const PrivacyPolicy = () => {
       setBtnAccess(false);
     }
   };
+const handleDate=()=>{
+  const date = new Date();
+  const month = date.getMonth()+1;
+  const day = date.getDate()+1;
+  const year = date.getFullYear();
+  
+  const formatDate = `${month<10?('0'+month):month}/${day<10?('0'+day):day}/${year}`
+  return formatDate
+}
+
   const handleSubmit = () => {
     setUserUpdate({
       user: userDetails?.startList.users[0].email as string,
       key: `email|'${userDetails?.startList.users[0].email}'`,
-      data: `PrivacyDate|'${Date.now()}'`,
+      data: `PrivacyDate|'${handleDate()}'`,
     });
   };
 

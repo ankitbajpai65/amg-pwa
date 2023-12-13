@@ -19,10 +19,13 @@ const Login = () => {
   });
   const { userDetails } = useUserDetails();
   const navigate = useNavigate();
-
+  console.log({ userDetails });
   useEffect(() => {
     if (userDetails) {
-      if (userDetails?.startList.users[0].privacyDate === "") {
+      if (
+        userDetails?.startList.users[0].privacyDate === "" ||
+        userDetails?.startList.users[0].privacyDate === "01/01/1900 00:00:00"
+      ) {
         navigate("/pwa/privacy");
       } else {
         navigate(`/pwa/home/${userDetails?.startList.users[0].email}`);
@@ -30,17 +33,16 @@ const Login = () => {
     }
   }, [userDetails]);
 
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLoginData((prev) => ({
       ...prev,
       [e.target.id]: e.target.value,
     }));
   };
-  
+
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    console.log({loginData})
+    console.log({ loginData });
     if (loginData.email !== "" && loginData.password !== "") {
       getUserLoginStatus({
         user: loginData.email,

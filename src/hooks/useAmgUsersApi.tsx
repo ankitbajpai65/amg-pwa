@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { errorAlert, warnAlert } from "@/components/appComponents/appAlert";
 import { useNavigate } from "react-router-dom";
+import { useUserDetails } from "@/lib/context/userDetailsContext";
 
 type apidatatype = {
   userPolicy: resDataType | undefined;
@@ -19,6 +20,7 @@ type resDataType = {
 export default function useAmgUsersApi(): apidatatype {
   const [data, setData] = useState<resDataType | undefined>();
   const navigate = useNavigate();
+  const{setUserDetails}= useUserDetails()
 
   const url = "https://amg.datapartners.ch/Amg/ws/AMG_WS/AMG_Users/";
   //   {
@@ -53,6 +55,8 @@ export default function useAmgUsersApi(): apidatatype {
         errorAlert(2000, "Policy not Accepted");
         navigate("/");
         sessionStorage.removeItem("isLoggedIn");
+        sessionStorage.removeItem("email");
+        setUserDetails(null);
       }
     } else {
       console.error("Req body empty useAmgUsersApi");
