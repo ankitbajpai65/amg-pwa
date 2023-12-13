@@ -25,6 +25,7 @@ export type userDetailsType = {
     tables: string;
     users: [
       {
+        description: string;
         email: string;
         nickName: string;
         language: string;
@@ -32,6 +33,7 @@ export type userDetailsType = {
         phone: string;
         phone2: string;
         phoneCell: string;
+        darkLight: string;
       }
     ];
   };

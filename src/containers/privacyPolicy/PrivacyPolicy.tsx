@@ -1,11 +1,12 @@
-import useAmgUsersApi from "@/hooks/useAmgUsersApi";
 import { useUserDetails } from "@/lib/context/userDetailsContext";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const PrivacyPolicy = () => {
   const [btnAccess, setBtnAccess] = useState(true);
-  const { setUserUpdate } = useAmgUsersApi();
+  const navigate = useNavigate();
   const { userDetails } = useUserDetails();
+
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const bottom =
       (e.target as HTMLInputElement).scrollHeight -
@@ -16,23 +17,6 @@ const PrivacyPolicy = () => {
     } else {
       setBtnAccess(false);
     }
-  };
-const handleDate=()=>{
-  const date = new Date();
-  const month = date.getMonth()+1;
-  const day = date.getDate()+1;
-  const year = date.getFullYear();
-  
-  const formatDate = `${month<10?('0'+month):month}/${day<10?('0'+day):day}/${year}`
-  return formatDate
-}
-
-  const handleSubmit = () => {
-    setUserUpdate({
-      user: userDetails?.startList.users[0].email as string,
-      key: `email|'${userDetails?.startList.users[0].email}'`,
-      data: `PrivacyDate|'${handleDate()}'`,
-    });
   };
 
   const privacyPolicyText = () => {
@@ -59,7 +43,7 @@ const handleDate=()=>{
       mb-2 hover:bg-red-500 hover:border hover:border-black focus:bg-red-500
       active:bg-red-700 text-2xl px-5 disabled:pointer-events-none disabled:bg-slate-300"
         disabled={!btnAccess}
-        onClick={() => handleSubmit()}
+        onClick={() => navigate("/pwa/privacy2")}
       >
         AGREE
       </button>

@@ -7,6 +7,7 @@ import { FaMapLocation } from "react-icons/fa6";
 import { IoMdNotifications } from "react-icons/io";
 import { RiNotificationBadgeFill } from "react-icons/ri";
 import { RiLogoutBoxFill } from "react-icons/ri";
+import { CiBarcode } from "react-icons/ci";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -48,43 +49,47 @@ const Header = () => {
                 <DropdownMenuSeparator></DropdownMenuSeparator>
 
                 <DropdownMenuItem onClick={() => navigate("/pwa/profile")}>
-                  <FaUser style={{ "padding-right": "5px" }} size={22} />
+                  <FaUser style={{ paddingRight: "5px" }} size={25} />
                   Profile
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => navigate("/pwa/privacy")}>
-                  <MdPrivacyTip style={{ "padding-right": "5px" }} size={25} />
+                  <MdPrivacyTip style={{ paddingRight: "5px" }} size={25} />
                   Privacy
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => navigate("/changePassword")}>
                   <RiLockPasswordFill
-                    style={{ "padding-right": "5px" }}
+                    style={{ paddingRight: "5px" }}
                     size={25}
                   />
                   Change Password
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                  <FaMapLocation style={{ "padding-right": "5px" }} size={25} />
+                  <FaMapLocation style={{ paddingRight: "5px" }} size={25} />
                   Map
                 </DropdownMenuItem>
                 <DropdownMenuItem>
                   <IoMdNotifications
-                    style={{ "padding-right": "5px" }}
+                    style={{ paddingRight: "5px" }}
                     size={25}
                   />
                   Notifications
                 </DropdownMenuItem>
                 <DropdownMenuItem>
+                  <CiBarcode
+                    style={{ paddingRight: "5px" }}
+                    size={25}
+                  />
+                  Scanner
+                </DropdownMenuItem>
+                <DropdownMenuItem>
                   <RiNotificationBadgeFill
-                    style={{ "padding-right": "5px" }}
+                    style={{ paddingRight: "5px" }}
                     size={25}
                   />
                   Sicurezze
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => handleLogout()}>
-                  <RiLogoutBoxFill
-                    style={{ "padding-right": "5px" }}
-                    size={25}
-                  />
+                  <RiLogoutBoxFill style={{ paddingRight: "5px" }} size={25} />
                   Logout
                 </DropdownMenuItem>
               </DropdownMenuContent>

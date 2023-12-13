@@ -1,10 +1,11 @@
 import image from "../../assets/loghi-03.png";
 import { errorAlert } from "@/components/appComponents/appAlert";
 import useCheckUserApi from "@/hooks/useCheckUserApi";
-import { GoogleLogin } from "@react-oauth/google";
+import { useGoogleLogin } from "@react-oauth/google";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUserDetails } from "@/lib/context/userDetailsContext";
+import { FcGoogle } from "react-icons/fc";
 
 type Inputs = {
   email: string;
@@ -53,6 +54,28 @@ const Login = () => {
     }
   };
 
+  const HandleGoogleLogin = () => {
+    const googleLoginHook = useGoogleLogin({
+      onSuccess: (tokenResponse) => console.log(tokenResponse),
+    });
+    return (
+      <div className="rounded-full">
+        {/* <GoogleLogin
+              onSuccess={(res) => console.log(res)}
+              onError={() => console.error()}
+            /> */}
+        <button
+          className="flex items-center border border-red-600 text-xl p-2 m-2 rounded-3xl font-semibold"
+          type="button"
+          onClick={() => googleLoginHook()}
+        >
+          <FcGoogle size={25} style={{ paddingRight: "5px" }} /> Sign in with
+          Google
+        </button>
+      </div>
+    );
+  };
+
   return (
     <>
       <form
@@ -99,22 +122,19 @@ const Login = () => {
           >
             Confirm
           </button>
-          <div className="rounded-full">
-            <GoogleLogin
-              onSuccess={(res) => console.log(res)}
-              onError={() => console.error()}
-            />
-          </div>
+
+          <HandleGoogleLogin />
+
           <div className="flex flex-col m-2 mt-10 text-l">
             <a
-              className="text-blue-600 underline transition duration-150 ease-in-out hover:text-red-600 focus:text-red-600 active:text-red-700"
+              className="text-blue-600 border border-red-500 p-2 mb-2 rounded-xl transition duration-150 ease-in-out hover:text-red-600 focus:text-red-600 active:text-red-700"
               href="/changePassword"
             >
               Change Password
             </a>
 
             <a
-              className="text-blue-600 underline transition duration-150 ease-in-out
+              className="text-blue-600 border border-red-500 p-2 rounded-xl transition duration-150 ease-in-out
         hover:text-red-600 focus:text-red-600 active:text-red-700"
               href="/forgotPassword"
             >

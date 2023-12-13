@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Switch } from "@/components/ui/switch";
 import { useThemeContext } from "@/lib/context/themeContext";
 import { useUserDetails } from "@/lib/context/userDetailsContext";
+import useAmgUsersApi from "@/hooks/useAmgUsersApi";
+import { useNavigate } from "react-router-dom";
 
 type Inputs = {
   name: string;
@@ -10,9 +12,12 @@ type Inputs = {
   phone2: string;
   phoneCell: string;
   language: string;
+  theme: string;
 };
 
 const UserProfile = () => {
+  const navigate = useNavigate();
+  const { setUserUpdate } = useAmgUsersApi();
   const [themeState, setThemeState] = useState<boolean>(
     localStorage.getItem("theme") === "dark"
   );
@@ -21,7 +26,9 @@ const UserProfile = () => {
   const { userDetails } = useUserDetails();
   const [btnDisabled, setBtnDisabled] = useState(true);
   const [profileData, setProfileData] = useState<Inputs>({
-    name: "",
+    name: userDetails?.startList.users[0].description
+      ? userDetails?.startList.users[0].description
+      : "",
     nickName: userDetails?.startList.users[0].nickName
       ? userDetails?.startList.users[0].nickName
       : "",
@@ -37,6 +44,7 @@ const UserProfile = () => {
     language: userDetails?.startList.users[0].language
       ? userDetails?.startList.users[0].language
       : "",
+    theme: userDetails?.startList.users[0].darkLight ?? "",
   });
 
   useEffect(() => {
@@ -44,47 +52,89 @@ const UserProfile = () => {
   }, [themeState]);
 
   useEffect(() => {
-   if(userDetails){
-    setProfileData({
-      name: "",
-      nickName: userDetails?.startList.users[0].nickName
-        ? userDetails?.startList.users[0].nickName
-        : "",
-      phone: userDetails?.startList.users[0].phone
-        ? userDetails?.startList.users[0].phone
-        : "",
-      phone2: userDetails?.startList.users[0].phone2
-        ? userDetails?.startList.users[0].phone2
-        : "",
-      phoneCell: userDetails?.startList.users[0].phoneCell
-        ? userDetails?.startList.users[0].phoneCell
-        : "",
-      language: userDetails?.startList.users[0].language
-        ? userDetails?.startList.users[0].language
-        : "",
-    });
-   }
-  },[userDetails])
-  
+    if (userDetails) {
+      setProfileData({
+        name: userDetails?.startList.users[0].description ?? "",
+        nickName: userDetails?.startList.users[0].nickName
+          ? userDetails?.startList.users[0].nickName
+          : "",
+        phone: userDetails?.startList.users[0].phone
+          ? userDetails?.startList.users[0].phone
+          : "",
+        phone2: userDetails?.startList.users[0].phone2
+          ? userDetails?.startList.users[0].phone2
+          : "",
+        phoneCell: userDetails?.startList.users[0].phoneCell
+          ? userDetails?.startList.users[0].phoneCell
+          : "",
+        language: userDetails?.startList.users[0].language
+          ? userDetails?.startList.users[0].language
+          : "",
+        theme: userDetails?.startList.users[0].darkLight ?? "",
+      });
+    }
+  }, [userDetails]);
 
-  console.log({userDetails})
+  console.log({ profileData });
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
     console.log({ profileData });
+    setUserUpdate({
+      user: userDetails?.startList.users[0].email as string,
+      key: `email|'${userDetails?.startList.users[0].email}'`,
+      data: `description;nickName;phone;phone2;phoneCell;language;darkLight|'${profileData.name}';'${profileData.nickName}';'${profileData.phone}';'${profileData.phone2}';'${profileData.phoneCell}';'${profileData.language}';'${profileData.theme}';`,
+    });
+    setBtnDisabled(true);
+    navigate(`/pwa/home/${sessionStorage.getItem("email")}`);
+    setTimeout(()=>{
+      navigate(0);
+    },3000)
   };
 
+  // const handleUpdateContext = () => {
+  //   if (userDetails) {
+  //     setUserDetails((prev) => {
+  //       if(userDetails){
+  //        return prev
+
+  //       }
+  //     });
+  //   }
+  // };
+
   const handleSetTheme = () => {
-    localStorage.setItem("theme", themeState ? "dark" : "light");
-    setTheme(themeState ? "dark" : "light");
-    if (themeState) root?.classList.add("dark");
-    else root?.classList.remove("dark");
+    if (userDetails?.startList.users[0].darkLight) {
+      localStorage.setItem("theme", userDetails?.startList.users[0].darkLight);
+      setTheme(
+        userDetails?.startList.users[0].darkLight === "dark" ? "dark" : "light"
+      );
+      if (themeState) root?.classList.add("dark");
+      else root?.classList.remove("dark");
+    } else {
+      localStorage.setItem("theme", themeState ? "dark" : "light");
+      setTheme(themeState ? "dark" : "light");
+      if (themeState) root?.classList.add("dark");
+      else root?.classList.remove("dark");
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setProfileData((prev) => ({
-      ...prev,
-      [e.target.id]: e.target.value,
-    }));
+    if (e.target.name === "language") {
+      setProfileData((prev) => ({
+        ...prev,
+        [e.target.name]: e.target.value,
+      }));
+    } else if (e.target.name === "theme") {
+      setProfileData((prev) => ({
+        ...prev,
+        darkLight: e.target.value,
+      }));
+    } else {
+      setProfileData((prev) => ({
+        ...prev,
+        [e.target.id]: e.target.value,
+      }));
+    }
     setBtnDisabled(false);
   };
 
@@ -127,7 +177,7 @@ const UserProfile = () => {
             </label>
             <input
               className="rounded-xl border-2  p-1 px-2 border-gray-300 hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
-              type="phone"
+              type="number"
               id="phone"
               placeholder="Please enter Telephone number"
               value={profileData.phone}
@@ -140,7 +190,7 @@ const UserProfile = () => {
             </label>
             <input
               className="rounded-xl border-2  p-1 px-2 border-gray-300 hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
-              type="phone2"
+              type="number"
               id="phone2"
               placeholder="Please enter Telephone number"
               value={profileData.phone2}
@@ -153,30 +203,86 @@ const UserProfile = () => {
             </label>
             <input
               className="rounded-xl border-2  p-1 px-2 border-gray-300 hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
-              type="phoneCell"
+              type="number"
               id="phoneCell"
               placeholder="Please enter Telephone number"
               value={profileData.phoneCell}
               onChange={(e) => handleInputChange(e)}
             ></input>
           </div>
-          <div className="mb-2 flex flex-col">
-            <label htmlFor="Language" className="pr-2 font-semibold">
-              Language
-            </label>
-            <input
-              className="rounded-xl border-2  p-1 px-2 border-gray-300 hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
-              type="Language"
-              id="Language"
-              placeholder="Please enter Language"
-              value={profileData.language}
-              onChange={(e) => handleInputChange(e)}
-            ></input>
+          <div className="mb-2 flex flex-col accent-red-500">
+            <p className="pr-2 font-semibold">Language</p>
+            <div className="text-center">
+              <input
+                className=""
+                type="radio"
+                id="en"
+                name="language"
+                checked={profileData.language === "EN"}
+                value="EN"
+                onChange={(e) => handleInputChange(e)}
+              ></input>
+              <label htmlFor="en" className="pl-2 mr-4">
+                EN
+              </label>
+              <input
+                className=""
+                type="radio"
+                id="it"
+                name="language"
+                checked={profileData.language === "IT"}
+                value="IT"
+                onChange={(e) => handleInputChange(e)}
+              ></input>
+              <label htmlFor="it" className="pl-2 mr-4">
+                IT
+              </label>{" "}
+              <input
+                className=""
+                type="radio"
+                id="fr"
+                name="language"
+                placeholder="Please enter Language"
+                checked={profileData.language === "FR"}
+                value="FR"
+                onChange={(e) => handleInputChange(e)}
+              ></input>
+              <label htmlFor="fr" className="pl-2 mr-4">
+                FR
+              </label>{" "}
+              <input
+                className=""
+                type="radio"
+                id="sp"
+                name="language"
+                placeholder="Please enter Language"
+                checked={profileData.language === "SP"}
+                value="EN"
+                onChange={(e) => handleInputChange(e)}
+              ></input>
+              <label htmlFor="sp" className="pl-2 mr-4">
+                SP
+              </label>
+              <input
+                className=""
+                type="radio"
+                id="de"
+                name="language"
+                placeholder="Please enter Language"
+                checked={profileData.language === "DE"}
+                value="DE"
+                onChange={(e) => handleInputChange(e)}
+              ></input>
+              <label htmlFor="de" className="pl-2 mr-4">
+                DE
+              </label>
+            </div>
           </div>
           <div className="mb-2 flex">
             <label htmlFor="theme-switch">Dark Mode</label>
             <Switch
               id="theme-switch"
+              name="theme"
               checked={themeState}
               onClick={() => {
                 setThemeState(!themeState);

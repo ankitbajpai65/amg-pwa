@@ -1,11 +1,11 @@
 import { useState } from "react";
 import axios from "axios";
-import { errorAlert, warnAlert } from "@/components/appComponents/appAlert";
-import { useNavigate } from "react-router-dom";
+import { errorAlert, successAlert } from "@/components/appComponents/appAlert";
+// import { useNavigate } from "react-router-dom";
 import { useUserDetails } from "@/lib/context/userDetailsContext";
 
 type apidatatype = {
-  userPolicy: resDataType | undefined;
+  userUpdate: resDataType | undefined;
   setUserUpdate: (reqBody: {
     user: string;
     key: string;
@@ -19,8 +19,8 @@ type resDataType = {
 
 export default function useAmgUsersApi(): apidatatype {
   const [data, setData] = useState<resDataType | undefined>();
-  const navigate = useNavigate();
-  const{setUserDetails}= useUserDetails()
+  const { setUserDetails } = useUserDetails();
+
 
   const url = "https://amg.datapartners.ch/Amg/ws/AMG_WS/AMG_Users/";
   //   {
@@ -49,11 +49,9 @@ export default function useAmgUsersApi(): apidatatype {
       });
       setData(urlRes.data);
       if (urlRes?.data.status === "I") {
-        warnAlert(2000, "Privacy Policy accepted");
-        navigate(`/pwa/home/${sessionStorage.getItem("email")}`);
+        successAlert(2000, "UserDetails Updated");
       } else {
         errorAlert(2000, "Policy not Accepted");
-        navigate("/");
         sessionStorage.removeItem("isLoggedIn");
         sessionStorage.removeItem("email");
         setUserDetails(null);
@@ -62,5 +60,5 @@ export default function useAmgUsersApi(): apidatatype {
       console.error("Req body empty useAmgUsersApi");
     }
   };
-  return { userPolicy: data, setUserUpdate };
+  return { userUpdate: data, setUserUpdate };
 }
