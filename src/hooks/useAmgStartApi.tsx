@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { userDetailsType } from "@/lib/types";
 import { useUserDetails } from "@/lib/context/userDetailsContext";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 type apidatatype = {
   apiUserDetails: userDetailsType | undefined;
@@ -12,7 +12,7 @@ type apidatatype = {
 export default function useAmgStartApi(): apidatatype {
   const [data, setData] = useState<userDetailsType | undefined>();
   const { setUserDetails } = useUserDetails();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const url = "https://amg.datapartners.ch/Amg/ws/AMG_WS/AMG_start/";
   //   {
@@ -31,13 +31,13 @@ export default function useAmgStartApi(): apidatatype {
       });
       setData(urlRes.data);
       setUserDetails(urlRes.data); //? setting user details context
-      if (urlRes?.data) {
-        if (urlRes?.data.startList.users[0].privacyDate === "") {
-          navigate("/privacy");
-        } else {
-          navigate(`/home/${urlRes?.data.startList.users[0].email}`);
-        }
-      }
+      // if (urlRes?.data) {
+      //   if (urlRes?.data.startList.users[0].privacyDate === "") {
+      //     navigate("/privacy");
+      //   } else {
+      //     navigate(`/home/${urlRes?.data.startList.users[0].email}`);
+      //   }
+      // }
     }
   };
   return { apiUserDetails: data, getUserDetails };

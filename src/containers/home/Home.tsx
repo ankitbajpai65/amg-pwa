@@ -1,18 +1,18 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import useAmgStartApi from "@/hooks/useAmgStartApi";
+// import useAmgStartApi from "@/hooks/useAmgStartApi";
 import { useUserDetails } from "@/lib/context/userDetailsContext";
-import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+// import { useEffect } from "react";
+// import { useParams } from "react-router-dom";
 
 const Home = () => {
   const { userDetails } = useUserDetails();
 
-  const { getUserDetails } = useAmgStartApi();
-  const { userEmail } = useParams();
+  // const { getUserDetails } = useAmgStartApi();
+  // const { userEmail } = useParams();
 
-  useEffect(() => {
-    if (!userDetails) getUserDetails(userEmail as string);
-  }, [userDetails]);
+  // useEffect(() => {
+  //   if (!userDetails) getUserDetails(userEmail as string);
+  // }, [userDetails]);
 
 
   return (
@@ -26,7 +26,7 @@ const Home = () => {
               key={key}
             >
               <CardHeader className="bg-red-600">
-                <CardTitle>{item.title}</CardTitle>
+                <CardTitle className="text-white">{item.title}</CardTitle>
               </CardHeader>
               <CardContent>{item.description}</CardContent>
             </Card>

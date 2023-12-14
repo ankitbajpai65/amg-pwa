@@ -15,10 +15,10 @@ import ChangePass from "./containers/login/ChangePass/ChangePass.tsx";
 import ForgotPass from "./containers/login/ForgotPass/ForgotPass.tsx";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import AppSetting from "./containers/appSetting/AppSetting.tsx";
 import ThemeContextProvider from "./lib/context/themeContext.tsx";
 import PrivacyPolicy from "./containers/privacyPolicy/PrivacyPolicy.tsx";
 import UserDetailsProvider from "./lib/context/userDetailsContext.tsx";
+import UserProfile from "./containers/userProfile/UserProfile.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -45,10 +45,10 @@ const router = createBrowserRouter(
         />
 
         <Route
-          path="setting"
+          path="profile/"
           element={
             <ProtectedRoutes>
-              <AppSetting />
+              <UserProfile />
             </ProtectedRoutes>
           }
         />

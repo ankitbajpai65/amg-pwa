@@ -2,7 +2,10 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import image from "../../assets/loghi-03.png";
 import { errorAlert } from "@/components/appComponents/appAlert";
 import useCheckUserApi from "@/hooks/useCheckUserApi";
-// import { GoogleLogin } from "@react-oauth/google";
+import { GoogleLogin } from "@react-oauth/google";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useUserDetails } from "@/lib/context/userDetailsContext";
 
 type Inputs = {
   email: string;
@@ -11,7 +14,8 @@ type Inputs = {
 
 const Login = () => {
   const { getUserLoginStatus } = useCheckUserApi();
-
+  const { userDetails } = useUserDetails();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -19,8 +23,18 @@ const Login = () => {
     formState: { errors },
   } = useForm<Inputs>();
 
+  useEffect(() => {
+    if (userDetails) {
+      if (userDetails?.startList.users[0].privacyDate === "") {
+        navigate("/privacy");
+      } else {
+        navigate(`/home/${userDetails?.startList.users[0].email}`);
+      }
+    }
+  }, [userDetails]);
+
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    if(errors) console.error(errors);
+    if (errors) console.error(errors);
     if (data.email !== "" && data.password !== "") {
       getUserLoginStatus({
         user: data.email,
@@ -78,10 +92,10 @@ const Login = () => {
             Confirm
           </button>
           <div className="rounded-full">
-            {/* <GoogleLogin
+            <GoogleLogin
               onSuccess={(res) => console.log(res)}
               onError={() => console.error()}
-            /> */}
+            />
           </div>
           <div className="flex flex-col m-2 mt-10 text-l">
             <a

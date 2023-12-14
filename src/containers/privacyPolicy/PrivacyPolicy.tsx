@@ -1,12 +1,10 @@
 import useAmgUsersApi from "@/hooks/useAmgUsersApi";
 import { useUserDetails } from "@/lib/context/userDetailsContext";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 const PrivacyPolicy = () => {
   const [btnAccess, setBtnAccess] = useState(true);
   const { setUserUpdate } = useAmgUsersApi();
-  const navigate = useNavigate();
   const { userDetails } = useUserDetails();
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
@@ -23,11 +21,11 @@ const PrivacyPolicy = () => {
   const handleSubmit = () => {
     setUserUpdate({
       user: userDetails?.startList.users[0].email as string,
-      key: `email|${userDetails?.startList.users[0].email}`,
-      data: `PrivacyDate|${Date.now()}`,
+      key: `email|'${userDetails?.startList.users[0].email}'`,
+      data: `PrivacyDate|'${Date.now()}'`,
     });
-    navigate(`/home/${sessionStorage.getItem("email")}`);
   };
+
   const privacyPolicyText = () => {
     return userDetails?.startList.baseData.map((item) => {
       if (
