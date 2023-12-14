@@ -1,9 +1,8 @@
-import { Switch } from "@/components/ui/switch";
-import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { addTheme, setIsLoggedIn } from "./loginSlice";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import image from "../../assets/loghi-03.png";
+import { errorAlert } from "@/components/appComponents/appAlert";
+import useCheckUserApi from "@/hooks/useCheckUserApi";
+// import { GoogleLogin } from "@react-oauth/google";
 
 type Inputs = {
   email: string;
@@ -11,9 +10,8 @@ type Inputs = {
 };
 
 const Login = () => {
-  const [theme, setTheme] = useState<boolean>(localStorage.getItem('theme')==='dark');
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const { getUserLoginStatus } = useCheckUserApi();
+
 
   const {
     register,
@@ -22,95 +20,70 @@ const Login = () => {
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log({ data });
-    console.error(errors);
-    const res = await fetch(
-      "https://amg.datapartners.ch/Amg/ws/AMG_Security/Login/CheckUser",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          customer: "AMGDEMO",
-          user: data.email,
-          pass: data.password,
-        }),
-      }
-    );
-    const loginAPIResData = await res.json();
-    console.log("auth", loginAPIResData.status);
-    if (loginAPIResData.status === true) {
-      dispatch(setIsLoggedIn(true));
-      navigate("/home");
+    if(errors) console.error(errors);
+    if (data.email !== "" && data.password !== "") {
+      getUserLoginStatus({
+        user: data.email,
+        pass: data.password,
+      });
     } else {
-      dispatch(setIsLoggedIn(false));
-      alert("ERROR Logging in");
+      errorAlert(3000, "Empty Input fields");
     }
-  };
-  // {
-  //   "customer": "AMGDEMO",
-  // "user": "rajat.khandelwal@datapartners.ch",
-  // "pass": "RLpDgADH"
-  // }
-
-  useEffect(() => {
-    handleSetTheme();
-  }, [theme]);
-
-  const handleSetTheme = () => {
-    localStorage.setItem("theme", theme ? "dark" : "light");
-    dispatch(addTheme(theme ? "dark" : "light"));
   };
 
   return (
     <>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="mobile:w-full max-w-md min-w-min w-3/6 mx-auto "
+        className="mobile:w-full mobile:h-screen sm:h-fit max-w-md min-w-min w-3/6 mx-auto"
       >
-        <div className=" mobile:w-full max-w-md min-w-min w-3/6 m-2 p-2 flex flex-col items-center mx-auto m-2 p-2 bg-bkg border rounded-md ">
-          <div className="bg-red-600 rounded text-white font-semibold mb-2 w-full text-center">
-            <div className="flex justify-around ">
-              <p>AMG</p>
-              <img src="/"></img>
+        <div className=" mobile:w-full mobile:h-screen sm:h-min mobile:m-0 mobile:p-0 max-w-md min-w-min w-3/6 m-2 p-2 flex flex-col items-center mx-auto m-2 p-2 bg-bkg border rounded-md ">
+          <div className="bg-red-600 rounded h-20 text-white font-semibold mb-2 w-full text-center rounded-b-xl">
+            <div className="flex justify-center items-center ">
+              <p className="text-4xl font-bold">AMG</p>
+              <img className="h-16" src={image}></img>
             </div>
-            <p>Login</p>
+            {/* <p>Login</p> */}
           </div>
-          <div className="m-2">
+          <div className="mobile:mt-10 sm:m-2  w-full p-2 text-l">
             <div className="mb-1 flex flex-col">
-              <label htmlFor="email" className="pr-2">
+              <label htmlFor="email" className="pr-2 font-semibold">
                 Email
               </label>
               <input
-                className="rounded border-2 border-slate-600 hover:border-yellow-500 focus:outline-none focus:border-blue-500"
+                className="rounded-xl border-2 p-1 px-2 border-gray-300 hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
                 type="email"
                 id="email"
+                placeholder="Please enter Email"
                 {...register("email")}
               />
             </div>
             <div className="mb-2 flex flex-col">
-              <label htmlFor="password" className="pr-2">
+              <label htmlFor="password" className="pr-2 font-semibold">
                 Password
               </label>
               <input
-                className="rounded border-2 border-slate-600 hover:border-yellow-500 focus:outline-none focus:border-blue-500"
+                className="rounded-xl border-2  p-1 px-2 border-gray-300 hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
                 type="password"
                 id="Password"
+                placeholder="Please enter Password"
                 {...register("password")}
-              />
+              ></input>
             </div>
           </div>
           <button
-            className="rounded-xl bg-red-600 p-2 m-2 border text-white font-medium mb-2 hover:bg-red-500 hover:border hover:border-black focus:bg-red-500 active:bg-red-700"
+            className="rounded-3xl text-xl bg-red-600 py-2 px-4 m-2 border text-white font-medium mb-2 hover:bg-red-500 hover:border hover:border-black focus:bg-red-500 active:bg-red-700"
             type="submit"
-            // onClick={() => {
-            //   console.log("login");
-            // }}
           >
             Confirm
           </button>
-          <div className="flex flex-col m-2">
+          <div className="rounded-full">
+            {/* <GoogleLogin
+              onSuccess={(res) => console.log(res)}
+              onError={() => console.error()}
+            /> */}
+          </div>
+          <div className="flex flex-col m-2 mt-10 text-l">
             <a
               className="text-blue-600 underline transition duration-150 ease-in-out hover:text-red-600 focus:text-red-600 active:text-red-700"
               href="/changePassword"
@@ -126,13 +99,8 @@ const Login = () => {
               Forgot Password
             </a>
           </div>
-          <Switch
-            checked={theme}
-            onClick={() => {
-              setTheme(!theme);
-            }}
-          />
-          <div className="rounded bg-red-600 h-8 w-full"></div>
+
+          <div className="rounded-t-xl bg-red-600 h-8 w-full mobile:sticky mobile:top-[100vh] sm:static sm:top-0"></div>
         </div>
       </form>
     </>
