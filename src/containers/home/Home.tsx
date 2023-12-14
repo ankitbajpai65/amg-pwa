@@ -1,13 +1,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-// import useAmgStartApi from "@/hooks/useAmgStartApi";
 import { useUserDetails } from "@/lib/context/userDetailsContext";
-// import { useEffect } from "react";
-// import { useParams } from "react-router-dom";
 
 const Home = () => {
   const { userDetails } = useUserDetails();
 
   console.log(userDetails)
+  
 
 
   return (
