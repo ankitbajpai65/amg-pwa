@@ -7,12 +7,7 @@ import { useUserDetails } from "@/lib/context/userDetailsContext";
 const Home = () => {
   const { userDetails } = useUserDetails();
 
-  // const { getUserDetails } = useAmgStartApi();
-  // const { userEmail } = useParams();
-
-  // useEffect(() => {
-  //   if (!userDetails) getUserDetails(userEmail as string);
-  // }, [userDetails]);
+  console.log(userDetails)
 
 
   return (

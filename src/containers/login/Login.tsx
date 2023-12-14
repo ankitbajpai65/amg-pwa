@@ -1,11 +1,11 @@
-import { useForm, SubmitHandler } from "react-hook-form";
 import image from "../../assets/loghi-03.png";
 import { errorAlert } from "@/components/appComponents/appAlert";
 import useCheckUserApi from "@/hooks/useCheckUserApi";
-import { GoogleLogin } from "@react-oauth/google";
-import { useEffect } from "react";
+import { useGoogleLogin } from "@react-oauth/google";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUserDetails } from "@/lib/context/userDetailsContext";
+import { FcGoogle } from "react-icons/fc";
 
 type Inputs = {
   email: string;
@@ -14,41 +14,72 @@ type Inputs = {
 
 const Login = () => {
   const { getUserLoginStatus } = useCheckUserApi();
+  const [loginData, setLoginData] = useState<Inputs>({
+    email: "",
+    password: "",
+  });
   const { userDetails } = useUserDetails();
   const navigate = useNavigate();
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<Inputs>();
-
+  console.log({ userDetails });
   useEffect(() => {
     if (userDetails) {
-      if (userDetails?.startList.users[0].privacyDate === "") {
-        navigate("/privacy");
+      if (
+        userDetails?.startList.users[0].privacyDate === "" ||
+        userDetails?.startList.users[0].privacyDate === "01/01/1900 00:00:00"
+      ) {
+        navigate("/pwa/privacy");
       } else {
-        navigate(`/home/${userDetails?.startList.users[0].email}`);
+        navigate(`/pwa/home/${userDetails?.startList.users[0].email}`);
       }
     }
   }, [userDetails]);
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    if (errors) console.error(errors);
-    if (data.email !== "" && data.password !== "") {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLoginData((prev) => ({
+      ...prev,
+      [e.target.id]: e.target.value,
+    }));
+  };
+
+  const handleSubmit = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    console.log({ loginData });
+    if (loginData.email !== "" && loginData.password !== "") {
       getUserLoginStatus({
-        user: data.email,
-        pass: data.password,
+        user: loginData.email,
+        pass: loginData.password,
       });
     } else {
       errorAlert(3000, "Empty Input fields");
     }
   };
 
+  const HandleGoogleLogin = () => {
+    const googleLoginHook = useGoogleLogin({
+      onSuccess: (tokenResponse) => console.log(tokenResponse),
+    });
+    return (
+      <div className="rounded-full">
+        {/* <GoogleLogin
+              onSuccess={(res) => console.log(res)}
+              onError={() => console.error()}
+            /> */}
+        <button
+          className="flex items-center border border-red-600 text-xl p-2 m-2 rounded-3xl font-semibold"
+          type="button"
+          onClick={() => googleLoginHook()}
+        >
+          <FcGoogle size={25} style={{ paddingRight: "5px" }} /> Sign in with
+          Google
+        </button>
+      </div>
+    );
+  };
+
   return (
     <>
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit}
         className="mobile:w-full mobile:h-screen sm:h-fit max-w-md min-w-min w-3/6 mx-auto"
       >
         <div className=" mobile:w-full mobile:h-screen sm:h-min mobile:m-0 mobile:p-0 max-w-md min-w-min w-3/6 m-2 p-2 flex flex-col items-center mx-auto m-2 p-2 bg-bkg border rounded-md ">
@@ -69,7 +100,7 @@ const Login = () => {
                 type="email"
                 id="email"
                 placeholder="Please enter Email"
-                {...register("email")}
+                onChange={(e) => handleInputChange(e)}
               />
             </div>
             <div className="mb-2 flex flex-col">
@@ -79,9 +110,9 @@ const Login = () => {
               <input
                 className="rounded-xl border-2  p-1 px-2 border-gray-300 hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
                 type="password"
-                id="Password"
+                id="password"
                 placeholder="Please enter Password"
-                {...register("password")}
+                onChange={(e) => handleInputChange(e)}
               ></input>
             </div>
           </div>
@@ -91,22 +122,19 @@ const Login = () => {
           >
             Confirm
           </button>
-          <div className="rounded-full">
-            <GoogleLogin
-              onSuccess={(res) => console.log(res)}
-              onError={() => console.error()}
-            />
-          </div>
+
+          <HandleGoogleLogin />
+
           <div className="flex flex-col m-2 mt-10 text-l">
             <a
-              className="text-blue-600 underline transition duration-150 ease-in-out hover:text-red-600 focus:text-red-600 active:text-red-700"
+              className="text-blue-600 border border-red-500 p-2 mb-2 rounded-xl transition duration-150 ease-in-out hover:text-red-600 focus:text-red-600 active:text-red-700"
               href="/changePassword"
             >
               Change Password
             </a>
 
             <a
-              className="text-blue-600 underline transition duration-150 ease-in-out
+              className="text-blue-600 border border-red-500 p-2 rounded-xl transition duration-150 ease-in-out
         hover:text-red-600 focus:text-red-600 active:text-red-700"
               href="/forgotPassword"
             >

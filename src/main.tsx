@@ -19,6 +19,7 @@ import ThemeContextProvider from "./lib/context/themeContext.tsx";
 import PrivacyPolicy from "./containers/privacyPolicy/PrivacyPolicy.tsx";
 import UserDetailsProvider from "./lib/context/userDetailsContext.tsx";
 import UserProfile from "./containers/userProfile/UserProfile.tsx";
+import PrivacyPolicy2 from "./containers/privacyPolicy/PrivacyPolicy2.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -26,7 +27,7 @@ const router = createBrowserRouter(
       <Route path="" element={<App />} />
       <Route path="changePassword" element={<ChangePass />} />
       <Route path="forgotPassword" element={<ForgotPass />} />
-      <Route path="" element={<Layout />}>
+      <Route path="pwa/" element={<Layout />}>
         <Route
           path="home/:userEmail"
           element={
@@ -40,6 +41,14 @@ const router = createBrowserRouter(
           element={
             <ProtectedRoutes>
               <PrivacyPolicy />
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="privacy2/"
+          element={
+            <ProtectedRoutes>
+              <PrivacyPolicy2 />
             </ProtectedRoutes>
           }
         />

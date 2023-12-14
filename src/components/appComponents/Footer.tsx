@@ -5,7 +5,7 @@ const Footer = () => {
   const navigate = useNavigate();
   const handleClick = () => {
     if (sessionStorage.getItem("isLoggedIn") === "true") {
-      navigate(`home/${sessionStorage.getItem("email")}`);
+      navigate(`/pwa/home/${sessionStorage.getItem("email")}`);
     }
   };
   return (
