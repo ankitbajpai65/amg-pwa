@@ -20,7 +20,6 @@ const Login = () => {
   });
   const { userDetails } = useUserDetails();
   const navigate = useNavigate();
-  console.log({ userDetails });
   useEffect(() => {
     if (userDetails) {
       if (
@@ -43,7 +42,6 @@ const Login = () => {
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    console.log({ loginData });
     if (loginData.email !== "" && loginData.password !== "") {
       getUserLoginStatus({
         user: loginData.email,

@@ -73,9 +73,19 @@ const UserProfile = () => {
         theme: userDetails?.startList.users[0].darkLight ?? "",
       });
     }
+    if (userDetails?.startList.users[0].darkLight) {
+      setThemeState(
+        userDetails?.startList.users[0].darkLight === "dark" ? true : false
+      );
+      localStorage.setItem("theme", themeState ? "dark" : "light");
+    } else {
+      localStorage.setItem("theme", themeState ? "dark" : "light");
+      setTheme(themeState ? "dark" : "light");
+    }
   }, [userDetails]);
 
   console.log({ profileData });
+  console.log(themeState);
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
     console.log({ profileData });
@@ -85,10 +95,10 @@ const UserProfile = () => {
       data: `description;nickName;phone;phone2;phoneCell;language;darkLight|'${profileData.name}';'${profileData.nickName}';'${profileData.phone}';'${profileData.phone2}';'${profileData.phoneCell}';'${profileData.language}';'${profileData.theme}';`,
     });
     setBtnDisabled(true);
-    navigate(`/pwa/home/${sessionStorage.getItem("email")}`);
-    setTimeout(()=>{
+    // navigate(`/pwa/home/${sessionStorage.getItem("email")}`);
+    setTimeout(() => {
       navigate(0);
-    },3000)
+    }, 2000);
   };
 
   // const handleUpdateContext = () => {
@@ -103,19 +113,13 @@ const UserProfile = () => {
   // };
 
   const handleSetTheme = () => {
-    if (userDetails?.startList.users[0].darkLight) {
-      localStorage.setItem("theme", userDetails?.startList.users[0].darkLight);
-      setTheme(
-        userDetails?.startList.users[0].darkLight === "dark" ? "dark" : "light"
-      );
-      if (themeState) root?.classList.add("dark");
-      else root?.classList.remove("dark");
-    } else {
-      localStorage.setItem("theme", themeState ? "dark" : "light");
-      setTheme(themeState ? "dark" : "light");
-      if (themeState) root?.classList.add("dark");
-      else root?.classList.remove("dark");
-    }
+    if (themeState === true) root?.classList.add("dark");
+    else root?.classList.remove("dark");
+    setProfileData((prev) => ({
+      ...prev,
+      theme: themeState ? "dark" : "light",
+    }));
+    setBtnDisabled(false)
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -123,11 +127,6 @@ const UserProfile = () => {
       setProfileData((prev) => ({
         ...prev,
         [e.target.name]: e.target.value,
-      }));
-    } else if (e.target.name === "theme") {
-      setProfileData((prev) => ({
-        ...prev,
-        darkLight: e.target.value,
       }));
     } else {
       setProfileData((prev) => ({
