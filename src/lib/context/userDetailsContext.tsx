@@ -7,13 +7,13 @@ type useUserDetailsProviderType = {
 
 type userDetailsContextType = {
   userDetails: userDetailsType;
-  setUserDetails: React.Dispatch<React.SetStateAction<null>>;
+  setUserDetails: React.Dispatch<React.SetStateAction<userDetailsType>>;
 };
 
 export const userDetailsContext = createContext<userDetailsContextType|null>(null)
 
 export default function UserDetailsProvider({children}:useUserDetailsProviderType){
-const [userDetails, setUserDetails] = useState(null);
+const [userDetails, setUserDetails] = useState<userDetailsType>(null);
 
     return(
         <userDetailsContext.Provider value={{userDetails,setUserDetails}}>

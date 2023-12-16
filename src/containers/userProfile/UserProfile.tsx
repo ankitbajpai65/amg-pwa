@@ -3,7 +3,7 @@ import { Switch } from "@/components/ui/switch";
 import { useThemeContext } from "@/lib/context/themeContext";
 import { useUserDetails } from "@/lib/context/userDetailsContext";
 import useAmgUsersApi from "@/hooks/useAmgUsersApi";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 type Inputs = {
   name: string;
@@ -16,14 +16,14 @@ type Inputs = {
 };
 
 const UserProfile = () => {
-  const navigate = useNavigate();
-  const { setUserUpdate } = useAmgUsersApi();
+  // const navigate = useNavigate();
+  const { userUpdateRes, setUserUpdate } = useAmgUsersApi();
   const [themeState, setThemeState] = useState<boolean>(
     localStorage.getItem("theme") === "dark"
   );
   const root = document.querySelector(":root");
   const { setTheme } = useThemeContext();
-  const { userDetails } = useUserDetails();
+  const { userDetails, setUserDetails } = useUserDetails();
   const [btnDisabled, setBtnDisabled] = useState(true);
   const [profileData, setProfileData] = useState<Inputs>({
     name: userDetails?.startList.users[0].description
@@ -84,6 +84,36 @@ const UserProfile = () => {
     }
   }, [userDetails]);
 
+  useEffect(() => {
+    if (userUpdateRes?.status === "I") {
+     //!type error couldnt resolve.
+     // @ts-expect-error abba dabba jabba
+      setUserDetails((prev) => {
+        if (prev) {
+          return {
+            ...prev,
+            startList: {
+              ...prev.startList,
+              users: [
+                {
+                  description: profileData.name,
+                  email: prev.startList.users[0].email,
+                  nickName: profileData.nickName,
+                  language: profileData.language,
+                  privacyDate: prev.startList.users[0].privacyDate,
+                  phone: profileData.phone,
+                  phone2: profileData.phone2,
+                  phoneCell: profileData.phoneCell,
+                  darkLight: profileData.theme,
+                },
+              ],
+            },
+          };
+        }
+      });
+    }
+  }, [userUpdateRes]);
+
   console.log({ profileData });
   console.log(themeState);
   const handleSubmit = (e: React.SyntheticEvent) => {
@@ -96,21 +126,7 @@ const UserProfile = () => {
     });
     setBtnDisabled(true);
     // navigate(`/pwa/home/${sessionStorage.getItem("email")}`);
-    setTimeout(() => {
-      navigate(0);
-    }, 2000);
   };
-
-  // const handleUpdateContext = () => {
-  //   if (userDetails) {
-  //     setUserDetails((prev) => {
-  //       if(userDetails){
-  //        return prev
-
-  //       }
-  //     });
-  //   }
-  // };
 
   const handleSetTheme = () => {
     if (themeState === true) root?.classList.add("dark");
@@ -119,7 +135,7 @@ const UserProfile = () => {
       ...prev,
       theme: themeState ? "dark" : "light",
     }));
-    setBtnDisabled(false)
+    setBtnDisabled(false);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
