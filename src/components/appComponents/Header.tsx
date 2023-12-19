@@ -74,11 +74,8 @@ const Header = () => {
                   />
                   Notifications
                 </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <CiBarcode
-                    style={{ paddingRight: "5px" }}
-                    size={25}
-                  />
+                <DropdownMenuItem onClick={() => navigate("/pwa/qrScan")}>
+                  <CiBarcode style={{ paddingRight: "5px" }} size={25} />
                   Scanner
                 </DropdownMenuItem>
                 <DropdownMenuItem>

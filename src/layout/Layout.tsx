@@ -33,7 +33,7 @@ function Layout() {
   }, [userDetails]);
 
   return (
-    <div className="w-screen h-screen border-box">
+    <div className="w-screen h-screen border-box flex flex-col">
       <Header />
       <Outlet />
       <Footer />

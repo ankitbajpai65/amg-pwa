@@ -20,6 +20,7 @@ import PrivacyPolicy from "./containers/privacyPolicy/PrivacyPolicy.tsx";
 import UserDetailsProvider from "./lib/context/userDetailsContext.tsx";
 import UserProfile from "./containers/userProfile/UserProfile.tsx";
 import PrivacyPolicy2 from "./containers/privacyPolicy/PrivacyPolicy2.tsx";
+import QrCodeScan from "./containers/qrCodeScan/QrCodeScan.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -58,6 +59,14 @@ const router = createBrowserRouter(
           element={
             <ProtectedRoutes>
               <UserProfile />
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="qrScan/"
+          element={
+            <ProtectedRoutes>
+              <QrCodeScan />
             </ProtectedRoutes>
           }
         />
