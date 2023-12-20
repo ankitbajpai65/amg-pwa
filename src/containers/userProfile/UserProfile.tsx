@@ -86,8 +86,8 @@ const UserProfile = () => {
 
   useEffect(() => {
     if (userUpdateRes?.status === "I") {
-     //!type error couldnt resolve.
-     // @ts-expect-error abba dabba jabba
+      //!type error couldnt resolve.
+      // @ts-expect-error abba dabba jabba
       setUserDetails((prev) => {
         if (prev) {
           return {
@@ -135,7 +135,6 @@ const UserProfile = () => {
       ...prev,
       theme: themeState ? "dark" : "light",
     }));
-    setBtnDisabled(false);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -301,6 +300,7 @@ const UserProfile = () => {
               checked={themeState}
               onClick={() => {
                 setThemeState(!themeState);
+                setBtnDisabled(false);
               }}
             />
           </div>
