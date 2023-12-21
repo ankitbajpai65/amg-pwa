@@ -63,7 +63,7 @@ const Header = () => {
                   />
                   Change Password
                 </DropdownMenuItem>
-                <DropdownMenuItem>
+                <DropdownMenuItem onClick={() => navigate("/pwa/pwaMap")}>
                   <FaMapLocation style={{ paddingRight: "5px" }} size={25} />
                   Map
                 </DropdownMenuItem>

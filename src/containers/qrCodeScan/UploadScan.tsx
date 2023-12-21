@@ -4,9 +4,9 @@ import { useState } from "react";
 const UploadScan = () => {
   const [scanRes, setScanRes] = useState("");
 
-  const handleUpload = (e) => {
+  const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const scannerInstance = new Html5Qrcode("reader");
-    if (e.target.files.length > 0) {
+    if (e.target.files) {
       console.log(e.target.files[0]);
       const imageFile = e.target.files[0];
       scannerInstance
