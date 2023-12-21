@@ -18,7 +18,7 @@ const ScanNow = () => {
       Html5Qrcode.getCameras()
         .then((devices) => {
           if (devices && devices.length) {
-            cameraId = devices[0].id;
+            cameraId = devices[1].id;
             console.log({ cameraId });
             handleStart(cameraId, html5QrCode);
           }
