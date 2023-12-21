@@ -11,8 +11,6 @@ import "leaflet/dist/images/marker-shadow.png";
 import { useEffect, useState } from "react";
 import { errorAlert } from "@/components/appComponents/appAlert";
 
-
-
 const PwaMap = () => {
   const [userPos, setUserPos] = useState({ lat: 51.505, lng: -0.09 });
   const [locAcc, setLocAcc] = useState<number>(0);
@@ -29,7 +27,7 @@ const PwaMap = () => {
       setLocAcc(acc as number);
     }
 
-    function error(err:{code:number}) {
+    function error(err: { code: number }) {
       console.log(error);
       if (err.code === 1) {
         errorAlert(3000, "Please Allow access");
@@ -39,7 +37,7 @@ const PwaMap = () => {
     }
   }, []);
 
-  const RecenterAutomatically = (props:{lat: number, lng: number}) => {
+  const RecenterAutomatically = (props: { lat: number; lng: number }) => {
     const map = useMap();
     useEffect(() => {
       map.setView([props.lat, props.lng]);
@@ -62,7 +60,7 @@ const PwaMap = () => {
         {/* <LocationMarker/> */}
         <Marker position={userPos}>
           <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
+            You are here <br /> Current Location
           </Popup>
         </Marker>
         <Circle center={[userPos.lat, userPos.lng]} radius={locAcc} />
