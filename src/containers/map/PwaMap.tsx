@@ -27,7 +27,6 @@ const PwaMap = () => {
       const acc = position.coords.accuracy;
       setUserPos({ lat: lat, lng: lng });
       setLocAcc(acc as number);
-      console.log(acc);
     }
 
     function error(err:{code:number}) {

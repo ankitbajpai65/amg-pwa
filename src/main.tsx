@@ -24,6 +24,7 @@ import QrCodeScan from "./containers/qrCodeScan/QrCodeScan.tsx";
 import ScanNow from "./containers/qrCodeScan/ScanNow.tsx";
 import UploadScan from "./containers/qrCodeScan/UploadScan.tsx";
 import PwaMap from "./containers/map/PwaMap.tsx";
+import PrivacyDisplayOnly from "./containers/privacyPolicy/PrivacyDisplayOnly.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -53,6 +54,14 @@ const router = createBrowserRouter(
           element={
             <ProtectedRoutes>
               <PrivacyPolicy2 />
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="privacyDisplay/"
+          element={
+            <ProtectedRoutes>
+              <PrivacyDisplayOnly />
             </ProtectedRoutes>
           }
         />

@@ -37,12 +37,12 @@ const Header = () => {
             {userDetails?.startList.users[0].nickName.slice(0, 1).toUpperCase()}
           </h2>
           <div className="flex w-1/6 justify-around p-2 gap-2 mx-5 w-fit">
-            <div className="border border-transparent">
+            <div className="border border-transparent ">
               <IoIosNotificationsOutline size={35} />
             </div>
             <DropdownMenu>
               <DropdownMenuTrigger>
-                <FaRegUser size={30} />
+                <FaRegUser size={30}/>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuLabel>Menu</DropdownMenuLabel>
@@ -52,7 +52,7 @@ const Header = () => {
                   <FaUser style={{ paddingRight: "5px" }} size={25} />
                   Profile
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => navigate("/pwa/privacy")}>
+                <DropdownMenuItem onClick={() => navigate("/pwa/privacyDisplay")}>
                   <MdPrivacyTip style={{ paddingRight: "5px" }} size={25} />
                   Privacy
                 </DropdownMenuItem>

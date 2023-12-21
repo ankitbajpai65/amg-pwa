@@ -6,17 +6,18 @@ import useAmgUsersApi from "@/hooks/useAmgUsersApi";
 
 const PrivacyPolicy2 = () => {
   const [btnAccess, setBtnAccess] = useState(false);
-  const { userUpdate, setUserUpdate } = useAmgUsersApi();
+  const [privacyText, setPrivacyText] = useState("");
+  const { userUpdateRes, setUserUpdate } = useAmgUsersApi();
   const navigate = useNavigate();
   const { userDetails } = useUserDetails();
 
   useEffect(() => {
-    if (userUpdate) {
-      userUpdate?.status === "I"
+    if (userUpdateRes) {
+      userUpdateRes?.status === "I"
         ? navigate(`/pwa/home/${sessionStorage.getItem("email")}`)
         : navigate("/");
     }
-  }, [userUpdate]);
+  }, [userUpdateRes]);
 
   //   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
   //     const bottom =
@@ -29,6 +30,9 @@ const PrivacyPolicy2 = () => {
   //       setBtnAccess(false);
   //     }
   //   };
+  useEffect(() => {
+    privacyPolicyText();
+  }, [userDetails]);
 
   const handleDate = () => {
     const date = new Date();
@@ -55,11 +59,14 @@ const PrivacyPolicy2 = () => {
   };
 
   const privacyPolicyText = () => {
-    return userDetails?.startList.baseData.map((item) => {
+    userDetails?.startList.baseData.map((item) => {
+      console.log('yo');
       if (
-        item.code === `PRIVACYTEXT${userDetails?.startList.users[0].language}`
+        item.code === `PRIVACYTEXT2${userDetails?.startList.users[0].language}`
       ) {
-        return item.itemValue;
+        setPrivacyText(item.itemValue);
+      } else {
+        setPrivacyText("DEFAULT PRIVACY TEXT");
       }
     });
   };
@@ -67,7 +74,7 @@ const PrivacyPolicy2 = () => {
   return (
     <div className="flex flex-col items-center h-3/4 overflow-hidden">
       <div className="my-5 mx-10 p-10 text-xl  border overflow-auto">
-        {privacyPolicyText()}
+        {privacyText}
       </div>
       <div>
         <label htmlFor="theme-switch">Accept</label>

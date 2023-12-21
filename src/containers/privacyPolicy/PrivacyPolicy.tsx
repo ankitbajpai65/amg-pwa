@@ -3,8 +3,9 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const PrivacyPolicy = () => {
-  const [btnAccess, setBtnAccess] = useState(true);
+  const [btnAccess, setBtnAccess] = useState(false);
   const navigate = useNavigate();
+
   const { userDetails } = useUserDetails();
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
@@ -45,7 +46,7 @@ const PrivacyPolicy = () => {
         disabled={!btnAccess}
         onClick={() => navigate("/pwa/privacy2")}
       >
-        AGREE
+        Proceed
       </button>
     </div>
   );
