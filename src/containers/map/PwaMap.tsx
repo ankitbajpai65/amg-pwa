@@ -58,11 +58,11 @@ const PwaMap = () => {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         {/* <LocationMarker/> */}
-        <Marker position={userPos}>
+        {/* <Marker position={userPos}>
           <Popup>
             You are here <br /> Current Location
           </Popup>
-        </Marker>
+        </Marker> */}
         <Circle center={[userPos.lat, userPos.lng]} radius={locAcc} />
         <RecenterAutomatically lat={userPos.lat} lng={userPos.lng} />
       </MapContainer>
