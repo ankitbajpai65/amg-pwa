@@ -1,8 +1,8 @@
 import {
   MapContainer,
   TileLayer,
-  Marker,
-  Popup,
+  // Marker,
+  // Popup,
   Circle,
   useMap,
 } from "react-leaflet";
