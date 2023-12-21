@@ -20,6 +20,11 @@ import PrivacyPolicy from "./containers/privacyPolicy/PrivacyPolicy.tsx";
 import UserDetailsProvider from "./lib/context/userDetailsContext.tsx";
 import UserProfile from "./containers/userProfile/UserProfile.tsx";
 import PrivacyPolicy2 from "./containers/privacyPolicy/PrivacyPolicy2.tsx";
+import QrCodeScan from "./containers/qrCodeScan/QrCodeScan.tsx";
+import ScanNow from "./containers/qrCodeScan/ScanNow.tsx";
+import UploadScan from "./containers/qrCodeScan/UploadScan.tsx";
+import PwaMap from "./containers/map/PwaMap.tsx";
+import PrivacyDisplayOnly from "./containers/privacyPolicy/PrivacyDisplayOnly.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -52,12 +57,52 @@ const router = createBrowserRouter(
             </ProtectedRoutes>
           }
         />
+        <Route
+          path="privacyDisplay/"
+          element={
+            <ProtectedRoutes>
+              <PrivacyDisplayOnly />
+            </ProtectedRoutes>
+          }
+        />
 
         <Route
           path="profile/"
           element={
             <ProtectedRoutes>
               <UserProfile />
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="qrScan/"
+          element={
+            <ProtectedRoutes>
+              <QrCodeScan />
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="qrScan/scanNow"
+          element={
+            <ProtectedRoutes>
+              <ScanNow />
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="qrScan/uploadScan"
+          element={
+            <ProtectedRoutes>
+              <UploadScan />
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="pwaMap/"
+          element={
+            <ProtectedRoutes>
+              <PwaMap />
             </ProtectedRoutes>
           }
         />
