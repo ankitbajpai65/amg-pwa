@@ -60,7 +60,7 @@ export default function Gpt_prompt() {
   };
   return (
     <div className="flex flex-col grow mb-16 overflow-auto">
-      <h1 className="text-xl font-bold text-center">Gpt-Prompt</h1>
+      <h1 className="text-xl font-bold text-center">GPT-Prompt</h1>
       {/* <Divider className="my-2" /> */}
       <div className="grow py-1 px-2 overflow-auto text-ellipsis">
         {conversationEntries.length === 0 ? (
