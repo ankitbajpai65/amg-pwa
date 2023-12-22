@@ -1,11 +1,11 @@
 import image from "../../assets/loghi-03.png";
-import { errorAlert } from "@/components/appComponents/appAlert";
 import useCheckUserApi from "@/hooks/useCheckUserApi";
 import { useGoogleLogin } from "@react-oauth/google";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUserDetails } from "@/lib/context/userDetailsContext";
 import { FcGoogle } from "react-icons/fc";
+import { errorAlert } from "@/components/appComponents/appAlert";
 
 type Inputs = {
   email: string;
