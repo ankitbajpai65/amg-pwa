@@ -27,6 +27,8 @@ import PwaMap from "./containers/map/PwaMap.tsx";
 import PrivacyDisplayOnly from "./containers/privacyPolicy/PrivacyDisplayOnly.tsx";
 import AiBot from "./containers/aibot/AiBot.tsx";
 import { registerSW } from "virtual:pwa-register";
+import ChatWithYourFiles from "./containers/genAi/chatwithyourfiles/ChatWithYourFiles.tsx";
+import Gpt_prompt from "./containers/genAi/gpt-prompt/Gpt_prompt.tsx";
 
 
 const updateSW = registerSW({
@@ -125,6 +127,10 @@ const router = createBrowserRouter(
           }
         />
         <Route path="aibot/" element={<AiBot />} />
+        <Route path="gen-ai/">
+          <Route path="chat-with-your-files/" element={<ChatWithYourFiles />} />
+          <Route path="gpt-prompt/" element={<Gpt_prompt />} />
+        </Route>
       </Route>
     </Route>
   )
