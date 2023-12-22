@@ -17,7 +17,7 @@ const ScanNow = () => {
       } else {
         if (camRef.current.getState() === 2) {
           camRef.current.pause();
-          handleStop(camRef.current);
+          camRef.current.stop();
         }
       }
 
