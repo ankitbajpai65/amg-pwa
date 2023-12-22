@@ -12,25 +12,25 @@ const manifestForPlugin: Partial<VitePWAOptions> = {
     description: "A mobile app for AMG Datapartners.",
     icons: [
       {
-        src: "./public/android-chrome-192x192.png",
+        src: "/android-chrome-192x192.png",
         sizes: "192*192",
         type: "image/png",
         purpose: "favicon",
       },
       {
-        src: "./public/android-chrome-512x512.png",
+        src: "/android-chrome-512x512.png",
         sizes: "512x512",
         type: "image/png",
         purpose: "favicon",
       },
       {
-        src: "./public/apple-touch-icon.png",
+        src: "/apple-touch-icon.png",
         sizes: "180*180",
         type: "image/png",
         purpose: "apple touch icon",
       },
       {
-        src: "./public/logo/manifest-icon-512.maskable.png",
+        src: "/logo/manifest-icon-512.maskable.png",
         sizes: "512*512",
         type: "image/png",
         purpose: "any maskable",
