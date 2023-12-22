@@ -14,9 +14,15 @@ const ScanNow = () => {
       let cameraId: string = "";
       if (camRef.current === null) {
         camRef.current = new Html5Qrcode("reader");
+      } else {
+        if (camRef.current.getState() === 2) {
+          camRef.current.pause();
+          handleStop(camRef.current);
+        }
       }
 
       const html5QrCode = camRef.current;
+
       Html5Qrcode.getCameras()
         .then((devices) => {
           if (devices && devices.length) {
@@ -29,7 +35,7 @@ const ScanNow = () => {
           console.error(err);
         });
     }
-  }, [startScan]);
+  }, [startScan, camId]);
 
   const handleStart = (cameraId: string, scannerInstance: Html5Qrcode) => {
     console.log("START");
@@ -77,7 +83,7 @@ const ScanNow = () => {
   };
 
   return (
-    <div className="flex flex-col grow">
+    <div className="flex flex-col grow justify-around">
       <div className="h-3/5 text-center">
         {startScan ? (
           <div id="reader"></div>
@@ -87,7 +93,7 @@ const ScanNow = () => {
           <div>{scanRes}</div>
         )}
       </div>
-      <div className="flex justify-center">
+      <div className="flex justify-center p-5">
         <button
           className={`${
             startScan ? "hidden" : "block"
@@ -99,7 +105,7 @@ const ScanNow = () => {
           Re-Scan
         </button>
         <button onClick={() => handleCamId()}>
-          <IoCameraReverse size={45}/>
+          <IoCameraReverse size={45} />
         </button>
       </div>
     </div>
