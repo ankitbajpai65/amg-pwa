@@ -84,7 +84,7 @@ const ScanNow = () => {
 
   return (
     <div className="flex flex-col grow justify-around">
-      <div className="h-3/5 text-center">
+      <div className="grow text-center">
         {startScan ? (
           <div id="reader"></div>
         ) : scanRes === "" ? (
