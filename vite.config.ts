@@ -5,7 +5,11 @@ import { VitePWA, VitePWAOptions } from "vite-plugin-pwa";
 
 const manifestForPlugin: Partial<VitePWAOptions> = {
   registerType: "prompt",
-  includeAssets: ["loghi-03.png", "favicaon-196.png", "apple-icon-180.png"],
+  includeAssets: [
+    "manifest-icon-192.maskable.png",
+    "favicon.ico",
+    "apple-touch-icon.png",
+  ],
   manifest: {
     name: "AMG-PWA",
     short_name: "PWA",
@@ -13,7 +17,7 @@ const manifestForPlugin: Partial<VitePWAOptions> = {
     icons: [
       {
         src: "/android-chrome-192x192.png",
-        sizes: "192*192",
+        sizes: "192x192",
         type: "image/png",
         purpose: "favicon",
       },
@@ -25,22 +29,20 @@ const manifestForPlugin: Partial<VitePWAOptions> = {
       },
       {
         src: "/apple-touch-icon.png",
-        sizes: "180*180",
+        sizes: "180x180",
         type: "image/png",
         purpose: "apple touch icon",
       },
       {
         src: "/logo/manifest-icon-512.maskable.png",
-        sizes: "512*512",
+        sizes: "512x512",
         type: "image/png",
-        purpose: "any maskable",
+        purpose: "maskable",
       },
     ],
     theme_color: "#171717",
     background_color: "#f0e7db",
     display: "standalone",
-    scope: "/",
-    start_url: "/",
     orientation: "portrait",
   },
 };
@@ -55,6 +57,10 @@ export default defineConfig({
       },
       includeAssets: ["**/*"],
       manifest: manifestForPlugin,
+      registerType: "autoUpdate",
+      devOptions: {
+        enabled: true,
+      },
     }),
   ],
   resolve: {
