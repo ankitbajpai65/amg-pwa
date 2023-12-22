@@ -1,4 +1,5 @@
 import { FaHome } from "react-icons/fa";
+import { IoChatboxEllipsesOutline } from "react-icons/io5";
 import { BsMenuDown } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 const Footer = () => {
@@ -14,6 +15,7 @@ const Footer = () => {
         <div className="flex justify-around items-center p-2">
           <FaHome size={35} onClick={() => handleClick()} />
           <BsMenuDown size={35} />
+          <IoChatboxEllipsesOutline size={35}/>
         </div>
       </div>
     </>

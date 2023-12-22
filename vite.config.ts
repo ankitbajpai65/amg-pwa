@@ -12,9 +12,10 @@ const manifestForPlugin: Partial<VitePWAOptions> = {
     description: "A mobile app for AMG Datapartners.",
     icons: [
       {
-        src: "./public/loghi-03.png",
+        src: "./public/./public/logo/manifest-icon-192.maskable.png",
         sizes: "192*192",
         type: "image/png",
+        purpose: "favicon",
       },
       {
         src: "./public/logo/apple-icon-180.png",
@@ -23,12 +24,14 @@ const manifestForPlugin: Partial<VitePWAOptions> = {
         purpose: "apple touch icon",
       },
       {
-        src: "./public/logo/manifest-icon-192.maskable.png",
-        sizes: "192*192",
+        src: "./public/logo/manifest-icon-512.maskable.png",
+        sizes: "512*512",
         type: "image/png",
         purpose: "any maskable",
       },
     ],
+    theme_color: "#171717",
+    background_color: "#f0e7db",
     display: "standalone",
     scope: "/",
     start_url: "/",
