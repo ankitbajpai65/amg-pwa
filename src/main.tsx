@@ -26,18 +26,8 @@ import UploadScan from "./containers/qrCodeScan/UploadScan.tsx";
 import PwaMap from "./containers/map/PwaMap.tsx";
 import PrivacyDisplayOnly from "./containers/privacyPolicy/PrivacyDisplayOnly.tsx";
 import AiBot from "./containers/aibot/AiBot.tsx";
-import { registerSW } from "virtual:pwa-register";
 import ChatWithYourFiles from "./containers/genAi/chatwithyourfiles/ChatWithYourFiles.tsx";
 import Gpt_prompt from "./containers/genAi/gpt-prompt/Gpt_prompt.tsx";
-
-
-const updateSW = registerSW({
-  onNeedRefresh() {
-    if (confirm("New content available. Reload?")) {
-      updateSW(true);
-    }
-  },
-});
 
 const router = createBrowserRouter(
   createRoutesFromElements(
