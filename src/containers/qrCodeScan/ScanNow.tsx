@@ -1,9 +1,11 @@
 import { Html5Qrcode } from "html5-qrcode";
 import { useEffect, useRef, useState } from "react";
+import { IoCameraReverse } from "react-icons/io5";
 
 const ScanNow = () => {
   const [startScan, setStartScan] = useState(true);
   const [scanRes, setScanRes] = useState("");
+  const [camId, setCamId] = useState(0);
 
   const camRef = useRef<Html5Qrcode | null>(null);
 
@@ -18,7 +20,7 @@ const ScanNow = () => {
       Html5Qrcode.getCameras()
         .then((devices) => {
           if (devices && devices.length) {
-            cameraId = devices[1].id;
+            cameraId = devices[camId].id;
             console.log({ cameraId });
             handleStart(cameraId, html5QrCode);
           }
@@ -70,6 +72,10 @@ const ScanNow = () => {
       });
   };
 
+  const handleCamId = () => {
+    camId === 0 ? setCamId(1) : setCamId(0);
+  };
+
   return (
     <div className="flex flex-col grow">
       <div className="h-3/5 text-center">
@@ -91,6 +97,9 @@ const ScanNow = () => {
           onClick={() => setStartScan(true)}
         >
           Re-Scan
+        </button>
+        <button onClick={() => handleCamId()}>
+          <IoCameraReverse size={45}/>
         </button>
       </div>
     </div>
