@@ -12,13 +12,19 @@ const manifestForPlugin: Partial<VitePWAOptions> = {
     description: "A mobile app for AMG Datapartners.",
     icons: [
       {
-        src: "./public/./public/logo/manifest-icon-192.maskable.png",
+        src: "./public/android-chrome-192x192.png",
         sizes: "192*192",
         type: "image/png",
         purpose: "favicon",
       },
       {
-        src: "./public/logo/apple-icon-180.png",
+        src: "./public/android-chrome-512x512.png",
+        sizes: "512x512",
+        type: "image/png",
+        purpose: "favicon",
+      },
+      {
+        src: "./public/apple-touch-icon.png",
         sizes: "180*180",
         type: "image/png",
         purpose: "apple touch icon",
@@ -38,7 +44,7 @@ const manifestForPlugin: Partial<VitePWAOptions> = {
     orientation: "portrait",
   },
 };
-
+// https://vitejs.dev/config/
 export default defineConfig({
   base: "./",
   plugins: [react(), VitePWA(manifestForPlugin)],
