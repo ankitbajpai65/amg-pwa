@@ -1,22 +1,31 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useUserDetails } from "@/lib/context/userDetailsContext";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const { userDetails } = useUserDetails();
+  const navigate = useNavigate();
 
-  console.log(userDetails)
-  
-
+  const handleCardClick = (card: { code: string; html: string }) => {
+    if (card.code === "AMGDEMO_GENAI") {
+      navigate("/pwa/gen-ai/gpt-prompt");
+    } else {
+      window.open(card.html, "_blank", "noreferrer");
+    }
+  };
 
   return (
     <div className="p-2 h-max pb-14">
-      <div className="text-lg font-semibold">Welcome, {userDetails?.startList.users[0].nickName}</div>
+      <div className="text-lg font-semibold">
+        Welcome, {userDetails?.startList.users[0].nickName}
+      </div>
       <div className="p-2 flex justify-center flex-wrap gap-5 mobile:max-sm:gap-1 mobile:max-sm:p-1">
         {userDetails?.startList?.cards?.map((item, key) => {
           return (
             <Card
               className=" rounded-xl sm:max-w-[250px] sm:max-h-[350px] mobile:max-sm:w-2/5 mobile:max-sm:h-60"
               key={key}
+              onClick={() => handleCardClick(item)}
             >
               <CardHeader className="bg-red-600">
                 <CardTitle className="text-white">{item.title}</CardTitle>

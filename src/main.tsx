@@ -20,6 +20,24 @@ import PrivacyPolicy from "./containers/privacyPolicy/PrivacyPolicy.tsx";
 import UserDetailsProvider from "./lib/context/userDetailsContext.tsx";
 import UserProfile from "./containers/userProfile/UserProfile.tsx";
 import PrivacyPolicy2 from "./containers/privacyPolicy/PrivacyPolicy2.tsx";
+import QrCodeScan from "./containers/qrCodeScan/QrCodeScan.tsx";
+import ScanNow from "./containers/qrCodeScan/ScanNow.tsx";
+import UploadScan from "./containers/qrCodeScan/UploadScan.tsx";
+import PwaMap from "./containers/map/PwaMap.tsx";
+import PrivacyDisplayOnly from "./containers/privacyPolicy/PrivacyDisplayOnly.tsx";
+import AiBot from "./containers/aibot/AiBot.tsx";
+import { registerSW } from "virtual:pwa-register";
+import ChatWithYourFiles from "./containers/genAi/chatwithyourfiles/ChatWithYourFiles.tsx";
+import Gpt_prompt from "./containers/genAi/gpt-prompt/Gpt_prompt.tsx";
+
+
+const updateSW = registerSW({
+  onNeedRefresh() {
+    if (confirm("New content available. Reload?")) {
+      updateSW(true);
+    }
+  },
+});
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -27,7 +45,14 @@ const router = createBrowserRouter(
       <Route path="" element={<App />} />
       <Route path="changePassword" element={<ChangePass />} />
       <Route path="forgotPassword" element={<ForgotPass />} />
-      <Route path="pwa/" element={<Layout />}>
+      <Route
+        path="pwa/"
+        element={
+          <ProtectedRoutes>
+            <Layout />
+          </ProtectedRoutes>
+        }
+      >
         <Route
           path="home/:userEmail"
           element={
@@ -52,6 +77,14 @@ const router = createBrowserRouter(
             </ProtectedRoutes>
           }
         />
+        <Route
+          path="privacyDisplay/"
+          element={
+            <ProtectedRoutes>
+              <PrivacyDisplayOnly />
+            </ProtectedRoutes>
+          }
+        />
 
         <Route
           path="profile/"
@@ -61,6 +94,43 @@ const router = createBrowserRouter(
             </ProtectedRoutes>
           }
         />
+        <Route
+          path="qrScan/"
+          element={
+            <ProtectedRoutes>
+              <QrCodeScan />
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="qrScan/scanNow"
+          element={
+            <ProtectedRoutes>
+              <ScanNow />
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="qrScan/uploadScan"
+          element={
+            <ProtectedRoutes>
+              <UploadScan />
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="pwaMap/"
+          element={
+            <ProtectedRoutes>
+              <PwaMap />
+            </ProtectedRoutes>
+          }
+        />
+        <Route path="aibot/" element={<AiBot />} />
+        <Route path="gen-ai/">
+          <Route path="chat-with-your-files/" element={<ChatWithYourFiles />} />
+          <Route path="gpt-prompt/" element={<Gpt_prompt />} />
+        </Route>
       </Route>
     </Route>
   )

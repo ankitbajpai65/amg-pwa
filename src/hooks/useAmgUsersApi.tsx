@@ -5,7 +5,7 @@ import { errorAlert, successAlert } from "@/components/appComponents/appAlert";
 import { useUserDetails } from "@/lib/context/userDetailsContext";
 
 type apidatatype = {
-  userUpdate: resDataType | undefined;
+  userUpdateRes: resDataType | undefined;
   setUserUpdate: (reqBody: {
     user: string;
     key: string;
@@ -60,5 +60,5 @@ export default function useAmgUsersApi(): apidatatype {
       console.error("Req body empty useAmgUsersApi");
     }
   };
-  return { userUpdate: data, setUserUpdate };
+  return { userUpdateRes: data, setUserUpdate };
 }
