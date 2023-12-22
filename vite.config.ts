@@ -47,7 +47,16 @@ const manifestForPlugin: Partial<VitePWAOptions> = {
 // https://vitejs.dev/config/
 export default defineConfig({
   base: "./",
-  plugins: [react(), VitePWA(manifestForPlugin)],
+  plugins: [
+    react(),
+    VitePWA({
+      workbox: {
+        globPatterns: ["**/*"],
+      },
+      includeAssets: ["**/*"],
+      manifest: manifestForPlugin,
+    }),
+  ],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

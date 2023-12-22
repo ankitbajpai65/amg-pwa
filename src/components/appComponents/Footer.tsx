@@ -15,7 +15,10 @@ const Footer = () => {
         <div className="flex justify-around items-center p-2">
           <FaHome size={35} onClick={() => handleClick()} />
           <BsMenuDown size={35} />
-          <IoChatboxEllipsesOutline size={35}/>
+          <IoChatboxEllipsesOutline
+            size={35}
+            onClick={() => navigate("/pwa/aibot")}
+          />
         </div>
       </div>
     </>
