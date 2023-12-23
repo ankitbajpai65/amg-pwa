@@ -49,7 +49,7 @@ const PwaMap = () => {
     <div id="map">
       <MapContainer
         center={[51.505, -0.09]}
-        zoom={11}
+        zoom={14}
         scrollWheelZoom={false}
         style={{ height: "80vh", width: "100wh" }}
       >

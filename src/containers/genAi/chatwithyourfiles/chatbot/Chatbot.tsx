@@ -1,6 +1,5 @@
-"use client";
-
 import { useEffect, useRef, useState } from "react";
+import { IoMdSend } from "react-icons/io";
 
 export const Chantbot = (props: { fileName: string }) => {
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
@@ -9,7 +8,7 @@ export const Chantbot = (props: { fileName: string }) => {
 
   const url = "https://amgenaispacebackend.datapartners.ch";
 
-//   const urlTestLocal = "http://127.0.0.1:8000";
+  //   const urlTestLocal = "http://127.0.0.1:8000";
 
   const conversationEntries = Object.entries(conversation);
 
@@ -17,9 +16,9 @@ export const Chantbot = (props: { fileName: string }) => {
     setConversation({});
   }, [props.fileName]);
 
-   useEffect(() => {
-     setUserQuestion("");
-   }, [conversation]);
+  useEffect(() => {
+    setUserQuestion("");
+  }, [conversation]);
 
   const scrollToBottom = () => {
     if (scrollContainerRef.current) {
@@ -80,15 +79,21 @@ export const Chantbot = (props: { fileName: string }) => {
           <div ref={scrollContainerRef}></div>
           <form
             onSubmit={(e) => submitHandler(e)}
-            className="w-full bottom-0 sticky"
+            className="w-full bottom-0 sticky flex"
           >
             <input
               type="text"
               value={userQuestion}
               placeholder="Ask Me Anything"
-              className="w-full border-2 bg-neutral-100 p-2 rounded-xl"
+              className="w-full border-2 border-r-0 bg-neutral-100 p-2 rounded-l-xl"
               onChange={(e) => setUserQuestion(e.target.value)}
             />
+            <button
+              className="bg-neutral-100 border-2 border-l-0 rounded-r-xl px-2"
+              type="submit"
+            >
+              <IoMdSend size={25} />
+            </button>
           </form>
         </div>
       </div>

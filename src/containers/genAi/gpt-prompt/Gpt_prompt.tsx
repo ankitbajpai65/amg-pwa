@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { IoMdSend } from "react-icons/io";
 
 export default function Gpt_prompt() {
   const [userQuestion, setUserQuestion] = useState("");
@@ -8,7 +9,6 @@ export default function Gpt_prompt() {
 
   const url = "https://amgenaispacebackend.datapartners.ch";
   // const urlTest = "http://127.0.0.1:8000/";
-
   useEffect(() => {
     scrollToBottom();
   }, [conversation]);
@@ -95,10 +95,16 @@ export default function Gpt_prompt() {
           <input
             type="text"
             placeholder="Ask Me Anything"
-            className="border-2 bg-neutral-100  w-full h-full rounded-xl p-1 px-2 focus:outline-0"
+            className="border-2 border-r-0 bg-neutral-100  w-full h-full rounded-l-xl p-1 px-2 focus:outline-0"
             value={userQuestion}
             onChange={(e) => setUserQuestion(e.target.value)}
           />
+          <button
+            className="bg-neutral-100 border-2 border-l-0 rounded-r-xl px-2"
+            type="submit"
+          >
+            <IoMdSend size={25} />
+          </button>
         </div>
       </form>
     </div>
