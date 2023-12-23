@@ -42,7 +42,7 @@ const Header = () => {
             </div>
             <DropdownMenu>
               <DropdownMenuTrigger>
-                <FaRegUser size={30}/>
+                <FaRegUser size={30} />
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuLabel>Menu</DropdownMenuLabel>
@@ -52,7 +52,9 @@ const Header = () => {
                   <FaUser style={{ paddingRight: "5px" }} size={25} />
                   Profile
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => navigate("/pwa/privacyDisplay")}>
+                <DropdownMenuItem
+                  onClick={() => navigate("/pwa/privacyDisplay")}
+                >
                   <MdPrivacyTip style={{ paddingRight: "5px" }} size={25} />
                   Privacy
                 </DropdownMenuItem>
@@ -67,7 +69,7 @@ const Header = () => {
                   <FaMapLocation style={{ paddingRight: "5px" }} size={25} />
                   Map
                 </DropdownMenuItem>
-                <DropdownMenuItem>
+                <DropdownMenuItem onClick={() => navigate("/pwa/notifications")}>
                   <IoMdNotifications
                     style={{ paddingRight: "5px" }}
                     size={25}
@@ -78,7 +80,7 @@ const Header = () => {
                   <CiBarcode style={{ paddingRight: "5px" }} size={25} />
                   Scanner
                 </DropdownMenuItem>
-                <DropdownMenuItem>
+                <DropdownMenuItem onClick={() => navigate("/pwa/security")}>
                   <RiNotificationBadgeFill
                     style={{ paddingRight: "5px" }}
                     size={25}
