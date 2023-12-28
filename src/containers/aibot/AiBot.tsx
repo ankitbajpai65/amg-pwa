@@ -61,7 +61,7 @@ const AiBot = () => {
       }
     };
   return (
-    <div className="flex flex-col overflow-auto">
+    <div className="flex flex-col h-full overflow-auto">
       <div className="grow py-1 px-2 overflow-auto text-ellipsis">
         <div className="self-start px-2 py-1 bg-neutral-100 border rounded-md mr-8">
           👋 Want to chat about DataPartners? I'm an AI chatbot here to help you
