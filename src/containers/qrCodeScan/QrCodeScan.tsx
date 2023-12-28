@@ -4,7 +4,7 @@ const QrCodeScan = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col justify-center grow">
+    <div className="flex flex-col h-full justify-center grow">
       {/* <button
         className="rounded-3xl text-xl bg-red-600 py-2 px-4 m-2 border text-white
       font-medium mb-2 hover:bg-red-500 hover:border hover:border-black
