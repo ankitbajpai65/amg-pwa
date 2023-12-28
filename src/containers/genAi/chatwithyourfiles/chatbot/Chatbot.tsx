@@ -63,7 +63,7 @@ export const Chantbot = (props: { fileName: string }) => {
   return (
     <>
       <div className="flex justify-center h-full px-2">
-        <div className="flex-1 flex flex-col justify-between overflow-auto mb-4 w-full">
+        <div className="flex-1 flex flex-col justify-between overflow-auto mb-2 w-full">
           <div className="flex flex-col gap-y-4 my-4">
             {conversationEntries.map(([key, value], index) => (
               <div key={index} className="flex flex-col gap-y-4">
