@@ -75,7 +75,7 @@ export default function ChatWithYourFiles() {
   };
 
   return (
-    <div className="flex flex-col grow mb-16 overflow-auto px-2">
+    <div className="flex flex-col h-full overflow-auto px-2">
       <div className="text-center">
         <h1 className="text-xl font-bold text-center mb-2">
           Docs Ingestion Chatbot

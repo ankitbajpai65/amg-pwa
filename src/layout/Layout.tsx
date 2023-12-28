@@ -35,7 +35,9 @@ function Layout() {
   return (
     <div className="w-screen h-screen border-box flex flex-col">
       <Header />
-      <Outlet />
+      <div className="grow mb-20">
+        <Outlet />
+      </div>
       <Footer />
     </div>
   );
