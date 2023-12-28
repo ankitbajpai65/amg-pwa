@@ -75,7 +75,7 @@ export default function ChatWithYourFiles() {
   };
 
   return (
-    <div className="flex flex-col h-full overflow-auto px-2">
+    <div className="flex flex-col h-full px-2">
       <div className="text-center">
         <h1 className="text-xl font-bold text-center mb-2">
           Docs Ingestion Chatbot
@@ -112,9 +112,9 @@ export default function ChatWithYourFiles() {
                 <DialogClose>
                   <button
                     onClick={handleUpload}
-                    className="bg-red-500 text-white"
+                    className="bg-red-500 text-white rounded-xl text-l p-1 px-2"
                   >
-                    Upload
+                    Confirm
                   </button>
                 </DialogClose>
               )}
@@ -122,9 +122,9 @@ export default function ChatWithYourFiles() {
           </DialogContent>
         </Dialog>
       </div>
-      <div className="grow bg-gray-100 rounded-md my-2 pb-2 box-border overflow-auto">
+      <div className="h-full bg-gray-100 rounded-md my-2 pb-2 box-border overflow-hidden">
         <div className="h-fit">{initialDisplay()}</div>
-        <div className="h-full bg-gray-100 rounded-xl p-1">
+        <div className="h-full bg-gray-100 rounded-xl p-1 pb-3">
           <Chantbot fileName={file?.name as string} />
         </div>
       </div>
