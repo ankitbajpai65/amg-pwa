@@ -23,7 +23,7 @@ const Footer = () => {
   };
   return (
     <>
-      <div className="fixed bottom-0 bg-red-600 rounded-t-xl text-white font-semibold pt-1 mt-2 w-full text-center">
+      <div className="bg-red-600 rounded-t-xl text-white font-semibold pt-1 mt-2 w-full text-center">
         <div className="flex justify-around items-center p-2">
           <FaHome size={35} onClick={() => handleClick()} />
           <DropdownMenu>

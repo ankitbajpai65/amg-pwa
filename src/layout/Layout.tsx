@@ -33,9 +33,9 @@ function Layout() {
   }, [userDetails]);
 
   return (
-    <div className="w-full h-full border-box flex flex-col">
+    <div className="w-full h-full border-box flex flex-col justify-between">
       <Header />
-      <div className="grow mb-20">
+      <div className="grow overflow-auto">
         <Outlet />
       </div>
       <Footer />
