@@ -110,12 +110,12 @@ const Login = () => {
               ></input>
             </div>
           </div>
-          <button
+          {/* <button
             className="w-4/6 rounded-3xl text-xl bg-red-600 py-2 px-4 m-2 border text-white font-medium mb-2 hover:bg-red-500 hover:border hover:border-black focus:bg-red-500 active:bg-red-700"
             type="submit"
           >
             Enter
-          </button>
+          </button> */}
 
           <HandleGoogleLogin />
 
