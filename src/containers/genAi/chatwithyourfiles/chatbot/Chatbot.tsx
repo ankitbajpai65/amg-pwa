@@ -85,14 +85,16 @@ export const Chantbot = (props: { fileName: string }) => {
                   </div>
                 )}
                 {item.answer && (
-                  <div className="self-start px-2 py-1 bg-neutral-200 border rounded-md mr-8">
-                    {item.answer}
-                  </div>
+                  <>
+                    <div className="self-start px-2 py-1 bg-neutral-200 border rounded-md mr-8">
+                      {item.answer}
+                    </div>
+                    <div ref={scrollContainerRef}></div>
+                  </>
                 )}
               </div>
             ))}
           </div>
-          <div ref={scrollContainerRef}></div>
           <form
             onSubmit={(e) => submitHandler(e)}
             className="w-full bottom-0 sticky flex"
