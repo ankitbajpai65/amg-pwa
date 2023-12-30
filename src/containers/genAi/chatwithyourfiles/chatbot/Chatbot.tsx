@@ -72,62 +72,6 @@ export const Chantbot = (props: { fileName: string }) => {
     scrollToBottom();
   }, [conversation]);
 
-  // const [conversation, setConversation] = useState({});
-
-  // const url = "https://amgenaispacebackend.datapartners.ch";
-
-  // //   const urlTestLocal = "http://127.0.0.1:8000";
-
-  // const conversationEntries = Object.entries(conversation);
-
-  // useEffect(() => {
-  //   setConversation({});
-  // }, [props.fileName]);
-
-  // useEffect(() => {
-  //   setUserQuestion("");
-  // }, [conversation]);
-
-  // const scrollToBottom = () => {
-  //   if (scrollContainerRef.current) {
-  //     scrollContainerRef.current.scrollIntoView({ behavior: "smooth" });
-  //   }
-  // };
-
-  // const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   if (userQuestion.trim() !== "") {
-  //     setConversation((prev) => {
-  //       return {
-  //         ...prev,
-  //         [userQuestion]: "Loading...",
-  //       };
-  //     });
-  //     const res = await fetch(`${url}/query/?q=${userQuestion}`, {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       method: "GET",
-  //     });
-  //     const parsedRes = await res.text();
-  //     if (parsedRes.slice(0, 9) !== "<!DOCTYPE") {
-  //       setConversation((prev) => {
-  //         return {
-  //           ...prev,
-  //           [userQuestion]: [parsedRes],
-  //         };
-  //       });
-  //       setUserQuestion("");
-  //     } else {
-  //       alert("console");
-  //       console.log(parsedRes);
-  //     }
-  //   }
-  // };
-  // useEffect(() => {
-  //   scrollToBottom();
-  // }, [conversation]);
-
   return (
     <>
       <div className="flex justify-center h-full px-2">
@@ -135,12 +79,16 @@ export const Chantbot = (props: { fileName: string }) => {
           <div className="flex flex-col gap-y-4 my-4">
             {conversation.map((item, index) => (
               <div key={index} className="flex flex-col gap-y-4">
-                <div className="self-end px-2 py-1 bg-blue-600 border rounded-md text-white ml-8">
-                  {item.question}
-                </div>
-                <div className="self-start px-2 py-1 bg-neutral-200 border rounded-md mr-8">
-                  {item.answer}
-                </div>
+                {item.question && (
+                  <div className="self-end px-2 py-1 bg-blue-600 border rounded-md text-white ml-8">
+                    {item.question}
+                  </div>
+                )}
+                {item.answer && (
+                  <div className="self-start px-2 py-1 bg-neutral-200 border rounded-md mr-8">
+                    {item.answer}
+                  </div>
+                )}
               </div>
             ))}
           </div>

@@ -63,59 +63,6 @@ export default function Gpt_prompt() {
     scrollToBottom();
   }, [conversation]);
 
-  // const conversationEntries = Object.entries(conversation);
-
-  // const url = "https://amgenaispacebackend.datapartners.ch";
-  // // const urlTest = "http://127.0.0.1:8000/";
-  // useEffect(() => {
-  //   scrollToBottom();
-  // }, [conversation]);
-
-  // useEffect(() => {
-  //   setUserQuestion("");
-  // }, [conversation]);
-
-  // const scrollToBottom = () => {
-  //   if (scrollContainerRef.current) {
-  //     scrollContainerRef.current.scrollIntoView({ behavior: "smooth" });
-  //   }
-  // };
-
-  // // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  // //     setInputValue(e.target.value);
-  // // };
-
-  // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   if (userQuestion.trim() !== "") {
-  //     setConversation((prev) => {
-  //       return {
-  //         ...prev,
-  //         [userQuestion]: "Loading...",
-  //       };
-  //     });
-  //     const res = await fetch(`${url}/response/?resp=${userQuestion}`, {
-  //       method: "GET",
-  //       headers: {
-  //         "Content-Type": "application/json; charset=UTF-8",
-  //       },
-  //     });
-  //     // setUserQuestion("");
-  //     const parsedRes = await res.text();
-
-  //     if (parsedRes.slice(0, 9) !== "<!DOCTYPE") {
-  //       setConversation((prev) => {
-  //         return {
-  //           ...prev,
-  //           [userQuestion]: parsedRes.slice(1, -1),
-  //         };
-  //       });
-  //     } else {
-  //       alert("console");
-  //       console.log(parsedRes);
-  //     }
-  //   }
-  // };
   return (
     <div className="flex flex-col h-full overflow-auto">
       <h1 className="text-xl font-bold text-center">GPT-Prompt</h1>
@@ -137,12 +84,16 @@ export default function Gpt_prompt() {
         <div className="p-2">
           {conversation.map((item, index) => (
             <div key={index} className="flex flex-col gap-y-4 ">
-              <div className="self-end px-2 py-1 bg-blue-600 border rounded-md text-white ml-8 break-words ">
-                {item.question}
-              </div>
-              <div className="self-start px-2 py-1 bg-neutral-100 border rounded-md mr-8">
-                {item.answer}
-              </div>
+              {item.question && (
+                <div className="self-end px-2 py-1 bg-blue-600 border rounded-md text-white ml-8 break-words ">
+                  {item.question}
+                </div>
+              )}
+              {item.answer && (
+                <div className="self-start px-2 py-1 bg-neutral-100 border rounded-md mr-8">
+                  {item.answer}
+                </div>
+              )}
               <div ref={scrollContainerRef}></div>
             </div>
           ))}
