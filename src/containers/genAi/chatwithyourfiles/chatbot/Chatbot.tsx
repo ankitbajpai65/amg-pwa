@@ -4,20 +4,24 @@ import { IoMdSend } from "react-icons/io";
 export const Chantbot = (props: { fileName: string }) => {
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   const [userQuestion, setUserQuestion] = useState("");
-  const [conversation, setConversation] = useState({});
+
+  const [conversation, setConversation] = useState([
+    { id: 0, question: "", answer: "" },
+  ]);
 
   const url = "https://amgenaispacebackend.datapartners.ch";
 
-  //   const urlTestLocal = "http://127.0.0.1:8000";
-
-  const conversationEntries = Object.entries(conversation);
+  // const urlTestLocal = "http://127.0.0.1:8000";
 
   useEffect(() => {
-    setConversation({});
+    setConversation([{ id: 0, question: "", answer: "" }]);
   }, [props.fileName]);
 
   useEffect(() => {
-    setUserQuestion("");
+    const length = conversation.length;
+    if (conversation[length - 1].answer !== '"Loading..."') {
+      setUserQuestion("");
+    }
   }, [conversation]);
 
   const scrollToBottom = () => {
@@ -28,50 +32,114 @@ export const Chantbot = (props: { fileName: string }) => {
 
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (userQuestion.trim() !== "") {
-      setConversation((prev) => {
-        return {
-          ...prev,
-          [userQuestion]: "Loading...",
-        };
-      });
-      const res = await fetch(`${url}/query/?q=${userQuestion}`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "GET",
-      });
-      const parsedRes = await res.text();
-      if (parsedRes.slice(0, 9) !== "<!DOCTYPE") {
+    if (props.fileName) {
+      if (userQuestion.trim() !== "") {
         setConversation((prev) => {
-          return {
+          return [
             ...prev,
-            [userQuestion]: [parsedRes],
-          };
+            { id: prev.length, question: userQuestion, answer: "Loading..." },
+          ];
         });
-        setUserQuestion("");
-      } else {
-        alert("console");
-        console.log(parsedRes);
+        const res = await fetch(`${url}/query/?q=${userQuestion}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json; charset=UTF-8",
+          },
+        });
+        // setUserQuestion("");
+        const parsedRes = await res.text();
+
+        if (parsedRes.slice(0, 9) !== "<!DOCTYPE") {
+          setConversation((prev) =>
+            prev.map((item) => {
+              if (item.id === conversation.length) {
+                return { ...item, answer: parsedRes.slice(1, -1) };
+              }
+              return item;
+            })
+          );
+        } else {
+          alert("console");
+          console.log(parsedRes);
+        }
       }
+    } else {
+      setUserQuestion("");
+      alert("Please Upload File first!!");
     }
   };
   useEffect(() => {
     scrollToBottom();
   }, [conversation]);
 
+  // const [conversation, setConversation] = useState({});
+
+  // const url = "https://amgenaispacebackend.datapartners.ch";
+
+  // //   const urlTestLocal = "http://127.0.0.1:8000";
+
+  // const conversationEntries = Object.entries(conversation);
+
+  // useEffect(() => {
+  //   setConversation({});
+  // }, [props.fileName]);
+
+  // useEffect(() => {
+  //   setUserQuestion("");
+  // }, [conversation]);
+
+  // const scrollToBottom = () => {
+  //   if (scrollContainerRef.current) {
+  //     scrollContainerRef.current.scrollIntoView({ behavior: "smooth" });
+  //   }
+  // };
+
+  // const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   if (userQuestion.trim() !== "") {
+  //     setConversation((prev) => {
+  //       return {
+  //         ...prev,
+  //         [userQuestion]: "Loading...",
+  //       };
+  //     });
+  //     const res = await fetch(`${url}/query/?q=${userQuestion}`, {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       method: "GET",
+  //     });
+  //     const parsedRes = await res.text();
+  //     if (parsedRes.slice(0, 9) !== "<!DOCTYPE") {
+  //       setConversation((prev) => {
+  //         return {
+  //           ...prev,
+  //           [userQuestion]: [parsedRes],
+  //         };
+  //       });
+  //       setUserQuestion("");
+  //     } else {
+  //       alert("console");
+  //       console.log(parsedRes);
+  //     }
+  //   }
+  // };
+  // useEffect(() => {
+  //   scrollToBottom();
+  // }, [conversation]);
+
   return (
     <>
       <div className="flex justify-center h-full px-2">
         <div className="flex-1 flex flex-col justify-between overflow-auto mb-2 w-full">
           <div className="flex flex-col gap-y-4 my-4">
-            {conversationEntries.map(([key, value], index) => (
+            {conversation.map((item, index) => (
               <div key={index} className="flex flex-col gap-y-4">
                 <div className="self-end px-2 py-1 bg-blue-600 border rounded-md text-white ml-8">
-                  {key}
+                  {item.question}
                 </div>
                 <div className="self-start px-2 py-1 bg-neutral-200 border rounded-md mr-8">
-                  {value as string}
+                  {item.answer}
                 </div>
               </div>
             ))}
