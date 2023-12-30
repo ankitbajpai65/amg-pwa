@@ -1,65 +1,119 @@
 import { useEffect, useRef, useState } from "react";
 import { IoMdSend } from "react-icons/io";
 
-
 const AiBot = () => {
-    const [userQuestion, setUserQuestion] = useState("");
-    const [conversation, setConversation] = useState({});
-    const scrollContainerRef = useRef<HTMLDivElement|null>(null);
-    const conversationEntries = Object.entries(conversation);
+  const [userQuestion, setUserQuestion] = useState("");
+  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
 
-    const url = "https://amgenaispacebackend.datapartners.ch";
-    // const urlTest = "http://127.0.0.1:8000/";
+  const [conversation, setConversation] = useState([
+    { id: 0, question: "", answer: "" },
+  ]);
 
-    useEffect(() => {
-      scrollToBottom();
-    }, [conversation]);
+  const url = "https://amgenaispacebackend.datapartners.ch";
+  // const urlTest = "http://127.0.0.1:8000/";
 
-    useEffect(() => {
-      setUserQuestion("");
-    }, [conversation]);
+  useEffect(() => {
+    scrollToBottom();
+  }, [conversation]);
 
-    const scrollToBottom = () => {
-      if (scrollContainerRef.current) {
-        scrollContainerRef.current.scrollIntoView({ behavior: "smooth" });
+  useEffect(() => {
+    setUserQuestion("");
+  }, [conversation]);
+
+  const scrollToBottom = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (userQuestion.trim() !== "") {
+      setConversation((prev) => {
+        return [
+          ...prev,
+          { id: prev.length, question: userQuestion, answer: "Loading..." },
+        ];
+      });
+      const res = await fetch(`${url}/va/?va=${userQuestion}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json; charset=UTF-8",
+        },
+      });
+      // setUserQuestion("");
+      const parsedRes = await res.text();
+
+      if (parsedRes.slice(0, 9) !== "<!DOCTYPE") {
+        setConversation((prev) =>
+          prev.map((item) => {
+            if (item.id === conversation.length) {
+              return { ...item, answer: parsedRes.slice(1, -1) };
+            }
+            return item;
+          })
+        );
+      } else {
+        alert("console");
+        console.log(parsedRes);
       }
-    };
+    }
+  };
 
-    // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //     setInputValue(e.target.value);
-    // };
+  // const conversationEntries = Object.entries(conversation);
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      if (userQuestion.trim() !== "") {
-        setConversation((prev) => {
-          return {
-            ...prev,
-            [userQuestion]: "Loading...",
-          };
-        });
-        const res = await fetch(`${url}/va/?va=${userQuestion}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json; charset=UTF-8",
-          },
-        });
-        // setUserQuestion("");
-        const parsedRes = await res.text();
+  // const url = "https://amgenaispacebackend.datapartners.ch";
+  // // const urlTest = "http://127.0.0.1:8000/";
 
-        if (parsedRes.slice(0, 9) !== "<!DOCTYPE") {
-          setConversation((prev) => {
-            return {
-              ...prev,
-              [userQuestion]: parsedRes.slice(1, -1),
-            };
-          });
-        } else {
-          alert("console");
-          console.log(parsedRes);
-        }
-      }
-    };
+  // useEffect(() => {
+  //   scrollToBottom();
+  // }, [conversation]);
+
+  // useEffect(() => {
+  //   setUserQuestion("");
+  // }, [conversation]);
+
+  // const scrollToBottom = () => {
+  //   if (scrollContainerRef.current) {
+  //     scrollContainerRef.current.scrollIntoView({ behavior: "smooth" });
+  //   }
+  // };
+
+  // // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // //     setInputValue(e.target.value);
+  // // };
+
+  // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   if (userQuestion.trim() !== "") {
+  //     setConversation((prev) => {
+  //       return {
+  //         ...prev,
+  //         [userQuestion]: "Loading...",
+  //       };
+  //     });
+  //     const res = await fetch(`${url}/va/?va=${userQuestion}`, {
+  //       method: "GET",
+  //       headers: {
+  //         "Content-Type": "application/json; charset=UTF-8",
+  //       },
+  //     });
+  //     // setUserQuestion("");
+  //     const parsedRes = await res.text();
+
+  //     if (parsedRes.slice(0, 9) !== "<!DOCTYPE") {
+  //       setConversation((prev) => {
+  //         return {
+  //           ...prev,
+  //           [userQuestion]: parsedRes.slice(1, -1),
+  //         };
+  //       });
+  //     } else {
+  //       alert("console");
+  //       console.log(parsedRes);
+  //     }
+  //   }
+  // };
   return (
     <div className="flex flex-col h-full overflow-auto">
       <div className="grow py-1 px-2 overflow-auto text-ellipsis">
@@ -67,18 +121,14 @@ const AiBot = () => {
           👋 Want to chat about DataPartners? I'm an AI chatbot here to help you
           find your way.
         </div>
-        {/* <button className="flex items-center gap-2 self-start px-2 py-2 my-2 bg-neutral-100 border border-red-500 rounded-md mr-8">
-          <MdChat />
-          Email Team
-        </button> */}
         <div className="p-2">
-          {conversationEntries.map(([key, value], index) => (
+          {conversation.map((item, index) => (
             <div key={index} className="flex flex-col gap-y-4 ">
               <div className="self-end px-2 py-1 bg-blue-600 border rounded-md text-white ml-8 break-words ">
-                {key}
+                {item.question}
               </div>
               <div className="self-start px-2 py-1 bg-neutral-100 border rounded-md mr-8">
-                {value as string}
+                {item.answer}
               </div>
               <div ref={scrollContainerRef}></div>
             </div>
