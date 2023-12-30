@@ -30,6 +30,9 @@ import ChatWithYourFiles from "./containers/genAi/chatwithyourfiles/ChatWithYour
 import Gpt_prompt from "./containers/genAi/gpt-prompt/Gpt_prompt.tsx";
 import Security from "./containers/security/Security.tsx";
 import Notifications from "./containers/notifications/Notifications.tsx";
+import { registerSW } from "virtual:pwa-register";
+
+registerSW({ immediate: true });
 
 const router = createBrowserRouter(
   createRoutesFromElements(
