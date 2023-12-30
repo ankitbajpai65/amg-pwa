@@ -85,7 +85,7 @@ export default function Gpt_prompt() {
           {conversation.map((item, index) => (
             <div key={index} className="flex flex-col gap-y-4 ">
               {item.question && (
-                <div className="self-end px-2 py-1 bg-blue-600 border rounded-md text-white ml-8 break-words ">
+                <div className="self-end px-2 py-1 bg-blue-600 border rounded-md text-white ml-8">
                   {item.question}
                 </div>
               )}
