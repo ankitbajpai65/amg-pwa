@@ -124,12 +124,16 @@ const AiBot = () => {
         <div className="p-2">
           {conversation.map((item, index) => (
             <div key={index} className="flex flex-col gap-y-4 ">
-              <div className="self-end px-2 py-1 bg-blue-600 border rounded-md text-white ml-8 break-words ">
-                {item.question}
-              </div>
-              <div className="self-start px-2 py-1 bg-neutral-100 border rounded-md mr-8">
-                {item.answer}
-              </div>
+              {item.question && (
+                <div className="self-end px-2 py-1 bg-blue-600 border rounded-md text-white ml-8 break-words ">
+                  {item.question}
+                </div>
+              )}
+              {item.answer && (
+                <div className="self-start px-2 py-1 bg-neutral-100 border rounded-md mr-8">
+                  {item.answer}
+                </div>
+              )}
               <div ref={scrollContainerRef}></div>
             </div>
           ))}
