@@ -7,6 +7,7 @@ import { useUserDetails } from "@/lib/context/userDetailsContext";
 import { FcGoogle } from "react-icons/fc";
 import { errorAlert, warnAlert } from "@/components/appComponents/appAlert";
 import useSendMailApi from "@/hooks/useSendMailApi";
+import Loader from "@/components/appComponents/Loader";
 
 type Inputs = {
   email: string;
@@ -19,11 +20,12 @@ const Login = () => {
     email: "",
     password: "",
   });
+  const [loaderVisible, setLoaderVisible] = useState(false);
   const { userDetails, setUserDetails } = useUserDetails();
   const { getSendMailStatus } = useSendMailApi();
   const navigate = useNavigate();
   useEffect(() => {
-    console.log("HAIYA",userLoginStatus);
+    console.log("HAIYA", userLoginStatus);
     if (userDetails) {
       if (userDetails?.startList.baseData[1].itemValue === "ON") {
         if (
@@ -38,7 +40,8 @@ const Login = () => {
             cc: "",
             sub: "AMG Invio PIN di accesso ",
             body: `Il PIN di accesso è il seguente: ${userLoginStatus?.pin}`,
-            sendType: userDetails?.startList.users[0].auth2 === "MAIL"?"MAIL":"SMS",
+            sendType:
+              userDetails?.startList.users[0].auth2 === "MAIL" ? "MAIL" : "SMS",
           });
           warnAlert(2000, "Enter then PIN received by email/SMS");
           navigate("/mfa", { state: { pin: userLoginStatus?.pin } });
@@ -59,6 +62,7 @@ const Login = () => {
           navigate(`/pwa/home/${userDetails?.startList.users[0].email}`);
         }
       }
+      setLoaderVisible(false);
     }
   }, [userDetails]);
 
@@ -71,11 +75,13 @@ const Login = () => {
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
+
     if (loginData.email !== "" && loginData.password !== "") {
       getUserLoginStatus({
         user: loginData.email,
         pass: loginData.password,
       });
+      setLoaderVisible(true);
     } else {
       errorAlert(3000, "Empty Input fields");
     }
@@ -111,7 +117,6 @@ const Login = () => {
               <p className="text-4xl font-bold">AMG</p>
               <img className="h-16" src={image}></img>
             </div>
-            {/* <p>Login</p> */}
           </div>
           <div className="mobile:mt-10 sm:m-2  w-full p-2 text-l">
             <div className="mb-1 flex flex-col">
@@ -144,6 +149,9 @@ const Login = () => {
             type="submit"
           >
             Enter
+            <span className="px-2">
+              <Loader status={loaderVisible} />
+            </span>
           </button>
 
           <HandleGoogleLogin />

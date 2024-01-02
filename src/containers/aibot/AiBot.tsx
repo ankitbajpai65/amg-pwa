@@ -117,7 +117,7 @@ const AiBot = () => {
   return (
     <div className="flex flex-col h-full overflow-auto">
       <div className="grow py-1 px-2 overflow-auto text-ellipsis">
-        <div className="self-start px-2 py-1 bg-neutral-100 border rounded-md mr-8">
+        <div className="self-start px-2 py-1 bg-neutral-100 border rounded-md mr-8 dark:bg-neutral-600">
           👋 Want to chat about DataPartners? I'm an AI chatbot here to help you
           find your way.
         </div>
@@ -130,7 +130,7 @@ const AiBot = () => {
                 </div>
               )}
               {item.answer && (
-                <div className="self-start px-2 py-1 bg-neutral-100 border rounded-md mr-8">
+                <div className="self-start px-2 py-1 bg-neutral-100 dark:bg-neutral-600 border rounded-md mr-8">
                   {item.answer}
                 </div>
               )}
@@ -143,11 +143,14 @@ const AiBot = () => {
         <div className="flex rounded-b-xl overflow-hidden p-2 h-16 box-border pb-4">
           <input
             placeholder="Please Enter"
-            className="bg-gray-300 w-full h-full rounded-l p-1 px-2 focus:outline-0"
+            className="bg-gray-300 dark:bg-neutral-600 w-full h-full rounded-l p-1 px-2 focus:outline-0"
             value={userQuestion}
             onChange={(e) => setUserQuestion(e.target.value)}
           />
-          <button className="bg-gray-300 rounded-r px-2" type="submit">
+          <button
+            className="bg-gray-300 dark:bg-neutral-600 rounded-r px-2"
+            type="submit"
+          >
             <IoMdSend size={25} />
           </button>
         </div>

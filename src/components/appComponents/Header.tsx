@@ -16,12 +16,28 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useNavigate } from "react-router-dom";
+import { IoArrowBack } from "react-icons/io5";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useUserDetails } from "@/lib/context/userDetailsContext";
+import { useEffect, useState } from "react";
 
 const Header = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { userDetails, setUserDetails } = useUserDetails();
+  const[backBtnVisible,setBackBtnVisible] = useState(false);
+
+  useEffect(() => {
+    const path = location.pathname.split('/')[2]
+    console.log(path);
+    if(path!=='home'){
+      setBackBtnVisible(true);
+    }
+    else{
+      setBackBtnVisible(false)
+    }
+  }, [location.pathname]);
+
   const handleLogout = () => {
     navigate("/");
     sessionStorage.removeItem("isLoggedIn");
@@ -33,9 +49,18 @@ const Header = () => {
     <>
       <div className="sticky top-0 bg-red-600 rounded-b-xl text-white font-semibold pt-1 mb-2 w-full text-center">
         <div className="flex justify-between px-5">
-          <h2 className="text-2xl border rounded-full p-1 px-3 m-1 bg-gray-100 text-black">
-            {userDetails?.startList.users[0].nickName.slice(0, 1).toUpperCase()}
-          </h2>
+          <div className="flex">
+            {backBtnVisible && (
+              <button className="pr-2" onClick={()=>navigate(-1)}>
+                <IoArrowBack size={35} />
+              </button>
+            )}
+            <h2 className="text-2xl border rounded-full p-1 px-3 m-1 bg-gray-100 text-black">
+              {userDetails?.startList.users[0].nickName
+                .slice(0, 1)
+                .toUpperCase()}
+            </h2>
+          </div>
           <div className="flex w-1/6 justify-around p-2 gap-2 mx-5 w-fit">
             <div className="border border-transparent ">
               <IoIosNotificationsOutline size={35} />
@@ -69,7 +94,9 @@ const Header = () => {
                   <FaMapLocation style={{ paddingRight: "5px" }} size={25} />
                   Map
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => navigate("/pwa/notifications")}>
+                <DropdownMenuItem
+                  onClick={() => navigate("/pwa/notifications")}
+                >
                   <IoMdNotifications
                     style={{ paddingRight: "5px" }}
                     size={25}

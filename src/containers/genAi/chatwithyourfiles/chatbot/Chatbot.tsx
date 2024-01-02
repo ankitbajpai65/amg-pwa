@@ -86,7 +86,7 @@ export const Chantbot = (props: { fileName: string }) => {
                 )}
                 {item.answer && (
                   <>
-                    <div className="self-start px-2 py-1 bg-neutral-200 border rounded-md mr-8">
+                    <div className="self-start px-2 py-1 bg-neutral-200 dark:bg-neutral-500 border rounded-md mr-8">
                       {item.answer}
                     </div>
                     <div ref={scrollContainerRef}></div>
@@ -97,17 +97,17 @@ export const Chantbot = (props: { fileName: string }) => {
           </div>
           <form
             onSubmit={(e) => submitHandler(e)}
-            className="w-full bottom-0 sticky flex"
+            className="w-full bottom-0 pb-1 sticky flex"
           >
             <input
               type="text"
               value={userQuestion}
               placeholder="Ask Me Anything"
-              className="w-full border-2 border-r-0 bg-neutral-100 p-2 rounded-l-xl"
+              className="w-full border-2 border-r-0 bg-neutral-100 dark:bg-neutral-600 p-2 rounded-l-xl outline-0"
               onChange={(e) => setUserQuestion(e.target.value)}
             />
             <button
-              className="bg-neutral-100 border-2 border-l-0 rounded-r-xl px-2"
+              className="bg-neutral-100 dark:bg-neutral-600 border-2 border-l-0 rounded-r-xl px-2"
               type="submit"
             >
               <IoMdSend size={25} />
