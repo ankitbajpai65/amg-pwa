@@ -5,7 +5,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUserDetails } from "@/lib/context/userDetailsContext";
 import { FcGoogle } from "react-icons/fc";
-import { errorAlert } from "@/components/appComponents/appAlert";
+import { errorAlert, warnAlert } from "@/components/appComponents/appAlert";
+import useSendMailApi from "@/hooks/useSendMailApi";
 
 type Inputs = {
   email: string;
@@ -13,22 +14,50 @@ type Inputs = {
 };
 
 const Login = () => {
-  const { getUserLoginStatus } = useCheckUserApi();
+  const { getUserLoginStatus, userLoginStatus } = useCheckUserApi();
   const [loginData, setLoginData] = useState<Inputs>({
     email: "",
     password: "",
   });
-  const { userDetails } = useUserDetails();
+  const { userDetails, setUserDetails } = useUserDetails();
+  const { getSendMailStatus } = useSendMailApi();
   const navigate = useNavigate();
   useEffect(() => {
+    console.log("HAIYA",userLoginStatus);
     if (userDetails) {
-      if (
-        userDetails?.startList.users[0].privacyDate === "" ||
-        userDetails?.startList.users[0].privacyDate === "01/01/1900 00:00:00"
-      ) {
-        navigate("/pwa/privacy");
+      if (userDetails?.startList.baseData[1].itemValue === "ON") {
+        if (
+          userDetails?.startList.users[0].auth2 === "MAIL" ||
+          userDetails?.startList.users[0].auth2 === "SMS"
+        ) {
+          getSendMailStatus({
+            user:
+              userDetails?.startList.users[0].auth2 === "MAIL"
+                ? loginData.email
+                : userDetails?.startList.users[0].phoneCell,
+            cc: "",
+            sub: "AMG Invio PIN di accesso ",
+            body: `Il PIN di accesso è il seguente: ${userLoginStatus?.pin}`,
+            sendType: userDetails?.startList.users[0].auth2 === "MAIL"?"MAIL":"SMS",
+          });
+          warnAlert(2000, "Enter then PIN received by email/SMS");
+          navigate("/mfa", { state: { pin: userLoginStatus?.pin } });
+        } else {
+          navigate("/");
+          sessionStorage.removeItem("isLoggedIn");
+          sessionStorage.removeItem("email");
+          errorAlert(2000, "LogIn Error");
+          setUserDetails(null);
+        }
       } else {
-        navigate(`/pwa/home/${userDetails?.startList.users[0].email}`);
+        if (
+          userDetails?.startList.users[0].privacyDate === "" ||
+          userDetails?.startList.users[0].privacyDate === "01/01/1900 00:00:00"
+        ) {
+          navigate("/pwa/privacy");
+        } else {
+          navigate(`/pwa/home/${userDetails?.startList.users[0].email}`);
+        }
       }
     }
   }, [userDetails]);

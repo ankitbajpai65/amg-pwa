@@ -44,6 +44,7 @@ export default function useCreatePassApi(): apidatatype {
           cc: "",
           sub: "DATAPARTNERS - NEW PASSWORD",
           body: `The new password is - ${resData.psw}`,
+          sendType: "MAIL",
         });
         navigate("/");
       } else if (resData?.status === 400) {
