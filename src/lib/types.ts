@@ -25,6 +25,7 @@ export type userDetailsType = {
     tables: string;
     users: [
       {
+        auth2: string;
         description: string;
         email: string;
         nickName: string;
@@ -39,5 +40,3 @@ export type userDetailsType = {
   };
   status: string;
 } | null;
-
-

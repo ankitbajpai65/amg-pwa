@@ -53,7 +53,7 @@ export default function ChatWithYourFiles() {
     if (apiRes === true) {
       return (
         <>
-          <div className="self-start px-2 py-1 bg-neutral-100 rounded-md mx-2">
+          <div className="self-start px-2 py-1 bg-neutral-100 dark:bg-neutral-600 rounded-md mx-2">
             {file?.name}- File has been loaded
           </div>
         </>
@@ -62,13 +62,13 @@ export default function ChatWithYourFiles() {
       return (
         <>
           {/* <Divider className="my-2" /> */}
-          <div className="self-start px-2 py-1 bg-neutral-200 rounded-md">
+          <div className="self-start px-2 py-1 bg-neutral-200 dark:bg-neutral-600 rounded-md">
             Loading...{file?.name}
           </div>
         </>
       );
     } else {
-      <div className="self-start px-2 py-1 bg-neutral-200 rounded-md">
+      <div className="self-start px-2 py-1 bg-neutral-200 dark:bg-neutral-600 rounded-md">
         Error Loading.
       </div>;
     }
@@ -122,9 +122,9 @@ export default function ChatWithYourFiles() {
           </DialogContent>
         </Dialog>
       </div>
-      <div className="h-full bg-gray-100 rounded-md my-2 pb-2 box-border overflow-hidden">
+      <div className="h-full bg-gray-100 dark:bg-neutral-600 rounded-md my-2 pb-2 box-border overflow-hidden">
         <div className="h-fit">{initialDisplay()}</div>
-        <div className="h-full bg-gray-100 rounded-xl p-1 pb-3">
+        <div className="h-full bg-gray-100 dark:bg-neutral-600 rounded-xl p-1 pb-3">
           <Chantbot fileName={file?.name as string} />
         </div>
       </div>

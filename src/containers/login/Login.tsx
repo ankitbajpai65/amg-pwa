@@ -5,7 +5,9 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUserDetails } from "@/lib/context/userDetailsContext";
 import { FcGoogle } from "react-icons/fc";
-import { errorAlert } from "@/components/appComponents/appAlert";
+import { errorAlert, warnAlert } from "@/components/appComponents/appAlert";
+import useSendMailApi from "@/hooks/useSendMailApi";
+import Loader from "@/components/appComponents/Loader";
 
 type Inputs = {
   email: string;
@@ -13,23 +15,54 @@ type Inputs = {
 };
 
 const Login = () => {
-  const { getUserLoginStatus } = useCheckUserApi();
+  const { getUserLoginStatus, userLoginStatus } = useCheckUserApi();
   const [loginData, setLoginData] = useState<Inputs>({
     email: "",
     password: "",
   });
-  const { userDetails } = useUserDetails();
+  const [loaderVisible, setLoaderVisible] = useState(false);
+  const { userDetails, setUserDetails } = useUserDetails();
+  const { getSendMailStatus } = useSendMailApi();
   const navigate = useNavigate();
   useEffect(() => {
+    console.log("HAIYA", userLoginStatus);
     if (userDetails) {
-      if (
-        userDetails?.startList.users[0].privacyDate === "" ||
-        userDetails?.startList.users[0].privacyDate === "01/01/1900 00:00:00"
-      ) {
-        navigate("/pwa/privacy");
+      if (userDetails?.startList.baseData[1].itemValue === "ON") {
+        if (
+          userDetails?.startList.users[0].auth2 === "MAIL" ||
+          userDetails?.startList.users[0].auth2 === "SMS"
+        ) {
+          getSendMailStatus({
+            user:
+              userDetails?.startList.users[0].auth2 === "MAIL"
+                ? loginData.email
+                : userDetails?.startList.users[0].phoneCell,
+            cc: "",
+            sub: "AMG Invio PIN di accesso ",
+            body: `Il PIN di accesso è il seguente: ${userLoginStatus?.pin}`,
+            sendType:
+              userDetails?.startList.users[0].auth2 === "MAIL" ? "MAIL" : "SMS",
+          });
+          warnAlert(2000, "Enter then PIN received by email/SMS");
+          navigate("/mfa", { state: { pin: userLoginStatus?.pin } });
+        } else {
+          navigate("/");
+          sessionStorage.removeItem("isLoggedIn");
+          sessionStorage.removeItem("email");
+          errorAlert(2000, "LogIn Error");
+          setUserDetails(null);
+        }
       } else {
-        navigate(`/pwa/home/${userDetails?.startList.users[0].email}`);
+        if (
+          userDetails?.startList.users[0].privacyDate === "" ||
+          userDetails?.startList.users[0].privacyDate === "01/01/1900 00:00:00"
+        ) {
+          navigate("/pwa/privacy");
+        } else {
+          navigate(`/pwa/home/${userDetails?.startList.users[0].email}`);
+        }
       }
+      setLoaderVisible(false);
     }
   }, [userDetails]);
 
@@ -42,11 +75,13 @@ const Login = () => {
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
+
     if (loginData.email !== "" && loginData.password !== "") {
       getUserLoginStatus({
         user: loginData.email,
         pass: loginData.password,
       });
+      setLoaderVisible(true);
     } else {
       errorAlert(3000, "Empty Input fields");
     }
@@ -82,7 +117,6 @@ const Login = () => {
               <p className="text-4xl font-bold">AMG</p>
               <img className="h-16" src={image}></img>
             </div>
-            {/* <p>Login</p> */}
           </div>
           <div className="mobile:mt-10 sm:m-2  w-full p-2 text-l">
             <div className="mb-1 flex flex-col">
@@ -115,6 +149,9 @@ const Login = () => {
             type="submit"
           >
             Enter
+            <span className="px-2">
+              <Loader status={loaderVisible} />
+            </span>
           </button>
 
           <HandleGoogleLogin />

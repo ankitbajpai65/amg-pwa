@@ -91,7 +91,7 @@ export default function Gpt_prompt() {
               )}
               {item.answer && (
                 <>
-                  <div className="self-start px-2 py-1 bg-neutral-100 border rounded-md mr-8">
+                  <div className="self-start px-2 py-1 bg-neutral-100 dark:bg-neutral-600 border rounded-md mr-8">
                     {item.answer}
                   </div>
                   <div ref={scrollContainerRef}></div>
@@ -106,12 +106,12 @@ export default function Gpt_prompt() {
           <input
             type="text"
             placeholder="Ask Me Anything"
-            className="border-2 border-r-0 bg-neutral-100  w-full h-full rounded-l-xl p-1 px-2 focus:outline-0"
+            className="border-2 border-r-0 bg-neutral-100 dark:bg-neutral-600 w-full h-full rounded-l-xl p-1 px-2 focus:outline-0"
             value={userQuestion}
             onChange={(e) => setUserQuestion(e.target.value)}
           />
           <button
-            className="bg-neutral-100 border-2 border-l-0 rounded-r-xl px-2"
+            className="bg-neutral-100 dark:bg-neutral-600 border-2 border-l-0 rounded-r-xl px-2"
             type="submit"
           >
             <IoMdSend size={25} />

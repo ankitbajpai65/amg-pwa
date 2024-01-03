@@ -21,7 +21,7 @@ const UploadScan = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center grow">
+    <div className="flex flex-col justify-center items-center h-full">
       <input type="file" id="reader" accept="image/*" onChange={handleUpload} />
        <div>{scanRes}</div>
     </div>

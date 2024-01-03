@@ -39,7 +39,7 @@ export default function useCheckUserApi(): apidatatype {
       });
 
       const resData = await urlRes.data;
-      setData(resData);
+      setData(() => resData);
       if (resData?.status === true) {
         sessionStorage.setItem("isLoggedIn", "true");
         sessionStorage.setItem("email", reqBody.user);
