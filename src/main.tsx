@@ -30,6 +30,10 @@ import ChatWithYourFiles from "./containers/genAi/chatwithyourfiles/ChatWithYour
 import Gpt_prompt from "./containers/genAi/gpt-prompt/Gpt_prompt.tsx";
 import Security from "./containers/security/Security.tsx";
 import Notifications from "./containers/notifications/Notifications.tsx";
+import { registerSW } from "virtual:pwa-register";
+import Mfa from "./containers/login/mfa/Mfa.tsx";
+
+registerSW({ immediate: true });
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -37,6 +41,14 @@ const router = createBrowserRouter(
       <Route path="" element={<App />} />
       <Route path="changePassword" element={<ChangePass />} />
       <Route path="forgotPassword" element={<ForgotPass />} />
+      <Route
+        path="mfa/"
+        element={
+          <ProtectedRoutes>
+            <Mfa />
+          </ProtectedRoutes>
+        }
+      />
       <Route
         path="pwa/"
         element={

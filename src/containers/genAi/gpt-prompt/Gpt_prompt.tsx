@@ -3,18 +3,20 @@ import { IoMdSend } from "react-icons/io";
 
 export default function Gpt_prompt() {
   const [userQuestion, setUserQuestion] = useState("");
-  const [conversation, setConversation] = useState({});
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
-  const conversationEntries = Object.entries(conversation);
+  const [conversation, setConversation] = useState([
+    { id: 0, question: "", answer: "" },
+  ]);
 
   const url = "https://amgenaispacebackend.datapartners.ch";
-  // const urlTest = "http://127.0.0.1:8000/";
-  useEffect(() => {
-    scrollToBottom();
-  }, [conversation]);
+
+  // const urlTestLocal = "http://127.0.0.1:8000";
 
   useEffect(() => {
-    setUserQuestion("");
+    const length = conversation.length;
+    if (conversation[length - 1].answer !== '"Loading..."') {
+      setUserQuestion("");
+    }
   }, [conversation]);
 
   const scrollToBottom = () => {
@@ -23,18 +25,14 @@ export default function Gpt_prompt() {
     }
   };
 
-  // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //     setInputValue(e.target.value);
-  // };
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (userQuestion.trim() !== "") {
       setConversation((prev) => {
-        return {
+        return [
           ...prev,
-          [userQuestion]: "Loading...",
-        };
+          { id: prev.length, question: userQuestion, answer: "Loading..." },
+        ];
       });
       const res = await fetch(`${url}/response/?resp=${userQuestion}`, {
         method: "GET",
@@ -46,24 +44,31 @@ export default function Gpt_prompt() {
       const parsedRes = await res.text();
 
       if (parsedRes.slice(0, 9) !== "<!DOCTYPE") {
-        setConversation((prev) => {
-          return {
-            ...prev,
-            [userQuestion]: parsedRes.slice(1, -1),
-          };
-        });
+        setConversation((prev) =>
+          prev.map((item) => {
+            if (item.id === conversation.length) {
+              return { ...item, answer: parsedRes.slice(1, -1) };
+            }
+            return item;
+          })
+        );
       } else {
         alert("console");
         console.log(parsedRes);
       }
     }
   };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [conversation]);
+
   return (
-    <div className="flex flex-col grow mb-16 overflow-auto">
+    <div className="flex flex-col h-full overflow-auto">
       <h1 className="text-xl font-bold text-center">GPT-Prompt</h1>
       {/* <Divider className="my-2" /> */}
       <div className="grow py-1 px-2 overflow-auto text-ellipsis">
-        {conversationEntries.length === 0 ? (
+        {conversation.length === 0 ? (
           <div className="self-start px-2 py-1 border rounded-xl">
             <p className="self-center top-0 sticky bg-white w-full py-4">
               Scopri il futuro con la nostra sezione demo GENAI: un viaggio
@@ -77,15 +82,21 @@ export default function Gpt_prompt() {
         )}
 
         <div className="p-2">
-          {conversationEntries.map(([key, value], index) => (
+          {conversation.map((item, index) => (
             <div key={index} className="flex flex-col gap-y-4 ">
-              <div className="self-end px-2 py-1 bg-blue-600 border rounded-md text-white ml-8 break-words ">
-                {key}
-              </div>
-              <div className="self-start px-2 py-1 bg-neutral-100 border rounded-md mr-8">
-                {value as string}
-              </div>
-              <div ref={scrollContainerRef}></div>
+              {item.question && (
+                <div className="self-end px-2 py-1 bg-blue-600 border rounded-md text-white ml-8">
+                  {item.question}
+                </div>
+              )}
+              {item.answer && (
+                <>
+                  <div className="self-start px-2 py-1 bg-neutral-100 dark:bg-neutral-600 border rounded-md mr-8">
+                    {item.answer}
+                  </div>
+                  <div ref={scrollContainerRef}></div>
+                </>
+              )}
             </div>
           ))}
         </div>
@@ -95,12 +106,12 @@ export default function Gpt_prompt() {
           <input
             type="text"
             placeholder="Ask Me Anything"
-            className="border-2 border-r-0 bg-neutral-100  w-full h-full rounded-l-xl p-1 px-2 focus:outline-0"
+            className="border-2 border-r-0 bg-neutral-100 dark:bg-neutral-600 w-full h-full rounded-l-xl p-1 px-2 focus:outline-0"
             value={userQuestion}
             onChange={(e) => setUserQuestion(e.target.value)}
           />
           <button
-            className="bg-neutral-100 border-2 border-l-0 rounded-r-xl px-2"
+            className="bg-neutral-100 dark:bg-neutral-600 border-2 border-l-0 rounded-r-xl px-2"
             type="submit"
           >
             <IoMdSend size={25} />

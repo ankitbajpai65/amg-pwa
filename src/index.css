@@ -87,3 +87,9 @@
     @apply bg-background text-foreground;
   }
 }
+#root{
+  height: 100%;
+}
+html,body{
+  height: 100%;
+}

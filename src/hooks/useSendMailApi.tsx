@@ -8,6 +8,7 @@ type apidatatype = {
     cc: string;
     sub: string;
     body: string;
+    sendType: string;
   }) => Promise<void>;
 };
 type resDataType = {
@@ -35,6 +36,7 @@ export default function useSendMailApi(): apidatatype {
     cc: string;
     sub: string;
     body: string;
+    sendType: string;
   }) => {
     if (reqBody) {
       const urlRes = await axios.post(url, {
@@ -44,7 +46,7 @@ export default function useSendMailApi(): apidatatype {
         cc: reqBody.cc,
         sub: reqBody.sub,
         body: reqBody.body,
-        sendType: "MAIL",
+        sendType: reqBody.sendType,
       });
 
       const resData = await urlRes.data;

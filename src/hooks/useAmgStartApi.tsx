@@ -31,13 +31,6 @@ export default function useAmgStartApi(): apidatatype {
       });
       setData(urlRes.data);
       setUserDetails(urlRes.data); //? setting user details context
-      // if (urlRes?.data) {
-      //   if (urlRes?.data.startList.users[0].privacyDate === "") {
-      //     navigate("/privacy");
-      //   } else {
-      //     navigate(`/home/${urlRes?.data.startList.users[0].email}`);
-      //   }
-      // }
     }
   };
   return { apiUserDetails: data, getUserDetails };

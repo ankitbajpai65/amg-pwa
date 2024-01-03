@@ -33,9 +33,11 @@ function Layout() {
   }, [userDetails]);
 
   return (
-    <div className="w-screen h-screen border-box flex flex-col">
+    <div className="w-full h-full border-box flex flex-col justify-between">
       <Header />
-      <Outlet />
+      <div className="grow overflow-auto">
+        <Outlet />
+      </div>
       <Footer />
     </div>
   );
