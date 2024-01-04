@@ -1,13 +1,6 @@
-// import {
-//   MapContainer,
-//   TileLayer,
-//   // Marker,
-//   // Popup,
-//   Circle,
-//   useMap,
-// } from "react-leaflet";
-// import "leaflet/dist/leaflet.css";
-// import "leaflet/dist/images/marker-shadow.png";
+
+import "leaflet/dist/leaflet.css";
+import "leaflet/dist/images/marker-shadow.png";
 import { useEffect, useState } from "react";
 import { errorAlert } from "@/components/appComponents/appAlert";
 import { useJsApiLoader, GoogleMap, MarkerF, CircleF } from "@react-google-maps/api";
