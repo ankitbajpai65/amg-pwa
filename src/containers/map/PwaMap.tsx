@@ -1,19 +1,14 @@
-import {
-  MapContainer,
-  TileLayer,
-  // Marker,
-  // Popup,
-  Circle,
-  useMap,
-} from "react-leaflet";
-import "leaflet/dist/leaflet.css";
-import "leaflet/dist/images/marker-shadow.png";
+
 import { useEffect, useState } from "react";
 import { errorAlert } from "@/components/appComponents/appAlert";
+import { useJsApiLoader, GoogleMap, MarkerF, CircleF } from "@react-google-maps/api";
 
 const PwaMap = () => {
   const [userPos, setUserPos] = useState({ lat: 51.505, lng: -0.09 });
   const [locAcc, setLocAcc] = useState<number>(0);
+  const { isLoaded } = useJsApiLoader({
+    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
+  });
 
   useEffect(() => {
     navigator.geolocation.watchPosition(success, error);
@@ -37,35 +32,31 @@ const PwaMap = () => {
     }
   }, []);
 
-  const RecenterAutomatically = (props: { lat: number; lng: number }) => {
-    const map = useMap();
-    useEffect(() => {
-      map.setView([props.lat, props.lng]);
-    }, [props.lat, props.lng]);
-    return null;
-  };
+
 
   return (
-    <div id="map">
-      <MapContainer
-        center={[51.505, -0.09]}
-        zoom={14}
-        scrollWheelZoom={false}
-        style={{ height: "80vh", width: "100wh" }}
-      >
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        {/* <LocationMarker/> */}
-        {/* <Marker position={userPos}>
-          <Popup>
-            You are here <br /> Current Location
-          </Popup>
-        </Marker> */}
-        <Circle center={[userPos.lat, userPos.lng]} radius={locAcc} />
-        <RecenterAutomatically lat={userPos.lat} lng={userPos.lng} />
-      </MapContainer>
+    <div id="map" className="w-full h-full">
+    
+
+      {isLoaded ? (
+        <>
+          <GoogleMap
+            center={userPos}
+            zoom={11}
+            mapContainerStyle={{ width: "100%", height: "100%" }}
+            options={{
+              streetViewControl: false,
+              mapTypeControl: false,
+              fullscreenControl: false,
+            }}
+          >
+            <MarkerF position={userPos} />
+            <CircleF center={userPos} radius={locAcc}/>
+          </GoogleMap>
+        </>
+      ) : (
+        <div>Map Did not get Loaded</div>
+      )}
     </div>
   );
 };

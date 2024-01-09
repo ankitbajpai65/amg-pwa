@@ -25,7 +25,7 @@ const Login = () => {
   const { getSendMailStatus } = useSendMailApi();
   const navigate = useNavigate();
   useEffect(() => {
-    console.log("HAIYA", userLoginStatus);
+    
     if (userDetails) {
       if (userDetails?.startList.baseData[1].itemValue === "ON") {
         if (
@@ -45,6 +45,16 @@ const Login = () => {
           });
           warnAlert(2000, "Enter then PIN received by email/SMS");
           navigate("/mfa", { state: { pin: userLoginStatus?.pin } });
+        } else if (userDetails?.startList.users[0].auth2 === "OFF") {
+          if (
+            userDetails?.startList.users[0].privacyDate === "" ||
+            userDetails?.startList.users[0].privacyDate ===
+              "01/01/1900 00:00:00"
+          ) {
+            navigate("/pwa/privacy");
+          } else {
+            navigate(`/pwa/home/${userDetails?.startList.users[0].email}`);
+          }
         } else {
           navigate("/");
           sessionStorage.removeItem("isLoggedIn");

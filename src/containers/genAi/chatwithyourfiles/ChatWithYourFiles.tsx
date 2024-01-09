@@ -35,7 +35,6 @@ export default function ChatWithYourFiles() {
           method: "POST",
           body: formData,
         });
-        console.log({ result });
         // const data = await result.json();
         // console.log({data});
         if (result?.status === 200) {
