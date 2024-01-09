@@ -27,7 +27,7 @@ const ScanNow = () => {
         .then((devices) => {
           if (devices && devices.length) {
             cameraId = devices[camId].id;
-            console.log({ cameraId });
+            // console.log({ cameraId });
             handleStart(cameraId, html5QrCode);
           }
         })
