@@ -60,7 +60,7 @@ const PrivacyPolicy2 = () => {
 
   const privacyPolicyText = () => {
     userDetails?.startList.baseData.map((item) => {
-      console.log('yo');
+      
       if (
         item.code === `PRIVACYTEXT2${userDetails?.startList.users[0].language}`
       ) {

@@ -114,11 +114,9 @@ const UserProfile = () => {
     }
   }, [userUpdateRes]);
 
-  console.log({ profileData });
-  console.log(themeState);
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    console.log({ profileData });
+   
     setUserUpdate({
       user: userDetails?.startList.users[0].email as string,
       key: `email|'${userDetails?.startList.users[0].email}'`,

@@ -25,7 +25,7 @@ const Login = () => {
   const { getSendMailStatus } = useSendMailApi();
   const navigate = useNavigate();
   useEffect(() => {
-    console.log("HAIYA", userLoginStatus);
+    
     if (userDetails) {
       if (userDetails?.startList.baseData[1].itemValue === "ON") {
         if (

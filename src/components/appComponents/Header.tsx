@@ -29,7 +29,6 @@ const Header = () => {
 
   useEffect(() => {
     const path = location.pathname.split('/')[2]
-    console.log(path);
     if(path!=='home'){
       setBackBtnVisible(true);
     }
