@@ -21,7 +21,6 @@ export default function useAmgUsersApi(): apidatatype {
   const [data, setData] = useState<resDataType | undefined>();
   const { setUserDetails } = useUserDetails();
   const location = useLocation();
-  console.log(location.pathname);
 
   const url = "https://amg.datapartners.ch/Amg/ws/AMG_WS/AMG_Users/";
   //   {
@@ -48,18 +47,18 @@ export default function useAmgUsersApi(): apidatatype {
         keyc: reqBody.key,
         data: reqBody.data,
       });
-      setData(urlRes.data);
+      setData(()=> urlRes.data);
       if (urlRes?.data.status === "I") {
         if (location.pathname === "/policy/privacy2") {
-          successAlert(2000, "I consensi sono stati archiviati");
+          successAlert(1000, "I consensi sono stati archiviati");
         } else {
-          successAlert(2000, "UserDetails Updated");
+          successAlert(1000, "UserDetails Updated");
         }
       } else {
         if (location.pathname === "/policy/privacy2") {
-          errorAlert(2000, "Policy Acceptance Failed");
+          errorAlert(1000, "Policy Acceptance Failed");
         } else {
-          errorAlert(2000, "Update Failed");
+          errorAlert(1000, "Update Failed");
           sessionStorage.removeItem("isLoggedIn");
           sessionStorage.removeItem("email");
           setUserDetails(null);
