@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import image from "../../../assets/loghi-03.png";
 import { errorAlert } from "@/components/appComponents/appAlert";
 import useChangePassApi from "@/hooks/useChangePassApi";
+import { useLocation, useNavigate } from "react-router-dom";
 
 type Inputs = {
   email: string;
@@ -17,7 +18,10 @@ const ChangePass = () => {
     newPass: "",
     newPass2: "",
   });
+  const location = useLocation();
+  const navigate = useNavigate();
   const root = document.querySelector(":root");
+  
 
   useEffect(() => {
     const value = localStorage.getItem("theme");
@@ -115,12 +119,25 @@ const ChangePass = () => {
               />
             </div>
           </div>
-          <button
-            className="rounded-3xl text-xl bg-red-600 py-2 px-4 m-2 border text-white font-medium mb-2 hover:bg-red-500 hover:border hover:border-black focus:bg-red-500 active:bg-red-700"
-            type="submit"
-          >
-            Confirm
-          </button>
+          <div className="flex flex-col">
+            <button
+              className="rounded-3xl text-xl bg-red-600 py-2 px-4 m-2 border text-white font-medium mb-2 hover:bg-red-500 hover:border hover:border-black focus:bg-red-500 active:bg-red-700"
+              type="submit"
+            >
+              Confirm
+            </button>
+            {location.state?.backBtn && (
+              <>
+                <button
+                  className="rounded-3xl text-xl bg-gray-400 py-2 px-4 m-2 border text-white font-medium mb-2 hover:bg-red-500 hover:border hover:border-black focus:bg-red-500 active:bg-red-700"
+                  onClick={()=>navigate(-1)}
+                  type="button"
+                >
+                  Cancel
+                </button>
+              </>
+            )}
+          </div>
 
           <div className="rounded bg-red-600 h-8 w-full mobile:sticky mobile:top-[100vh]"></div>
         </div>

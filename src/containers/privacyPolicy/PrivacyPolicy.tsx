@@ -1,12 +1,19 @@
+import React, { useEffect, useState } from "react";
 import { useUserDetails } from "@/lib/context/userDetailsContext";
-import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 
 const PrivacyPolicy = () => {
   const [btnAccess, setBtnAccess] = useState(false);
   const navigate = useNavigate();
 
   const { userDetails } = useUserDetails();
+
+  useEffect(()=>{
+    if(userDetails){
+      privacyPolicyText();
+    }
+  },[userDetails])
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const bottom =
@@ -31,24 +38,26 @@ const PrivacyPolicy = () => {
   };
 
   return (
-    <div className="flex flex-col items-center h-3/4 overflow-hidden">
-      <div
-        className="my-5 mx-10 p-10 text-xl h-3/4 border overflow-auto"
-        onScroll={(e) => handleScroll(e)}
-      >
-        {privacyPolicyText()}
-      </div>
+    <>
+      <div className="flex flex-col items-center h-3/4 overflow-hidden">
+        <div
+          className="my-3 mx-10 p-5 text-xl h-3/4 border overflow-auto"
+          onScroll={(e) => handleScroll(e)}
+        >
+          {privacyPolicyText()}
+        </div>
 
-      <button
-        className="rounded-2xl bg-red-600 p-2 m-2 border text-white font-medium
+        <button
+          className="rounded-2xl bg-red-600 p-2 m-2 border text-white font-medium
       mb-2 hover:bg-red-500 hover:border hover:border-black focus:bg-red-500
       active:bg-red-700 text-2xl px-5 disabled:pointer-events-none disabled:bg-slate-300"
-        disabled={!btnAccess}
-        onClick={() => navigate("/pwa/privacy2")}
-      >
-        Proceed
-      </button>
-    </div>
+          disabled={!btnAccess}
+          onClick={() => navigate("/policy/privacy2")}
+        >
+          Procedi
+        </button>
+      </div>
+    </>
   );
 };
 export default PrivacyPolicy;

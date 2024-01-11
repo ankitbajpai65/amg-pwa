@@ -1,8 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
 import { errorAlert, successAlert } from "@/components/appComponents/appAlert";
-// import { useNavigate } from "react-router-dom";
 import { useUserDetails } from "@/lib/context/userDetailsContext";
+import { useLocation } from "react-router-dom";
 
 type apidatatype = {
   userUpdateRes: resDataType | undefined;
@@ -20,7 +20,8 @@ type resDataType = {
 export default function useAmgUsersApi(): apidatatype {
   const [data, setData] = useState<resDataType | undefined>();
   const { setUserDetails } = useUserDetails();
-
+  const location = useLocation();
+  console.log(location.pathname);
 
   const url = "https://amg.datapartners.ch/Amg/ws/AMG_WS/AMG_Users/";
   //   {
@@ -49,12 +50,20 @@ export default function useAmgUsersApi(): apidatatype {
       });
       setData(urlRes.data);
       if (urlRes?.data.status === "I") {
-        successAlert(2000, "UserDetails Updated");
+        if (location.pathname === "/policy/privacy2") {
+          successAlert(2000, "I consensi sono stati archiviati");
+        } else {
+          successAlert(2000, "UserDetails Updated");
+        }
       } else {
-        errorAlert(2000, "Policy not Accepted");
-        sessionStorage.removeItem("isLoggedIn");
-        sessionStorage.removeItem("email");
-        setUserDetails(null);
+        if (location.pathname === "/policy/privacy2") {
+          errorAlert(2000, "Policy Acceptance Failed");
+        } else {
+          errorAlert(2000, "Update Failed");
+          sessionStorage.removeItem("isLoggedIn");
+          sessionStorage.removeItem("email");
+          setUserDetails(null);
+        }
       }
     } else {
       console.error("Req body empty useAmgUsersApi");
