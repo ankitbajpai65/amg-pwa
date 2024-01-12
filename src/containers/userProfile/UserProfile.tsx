@@ -3,7 +3,7 @@ import { Switch } from "@/components/ui/switch";
 import { useThemeContext } from "@/lib/context/themeContext";
 import { useUserDetails } from "@/lib/context/userDetailsContext";
 import useAmgUsersApi from "@/hooks/useAmgUsersApi";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 type Inputs = {
   name: string;
@@ -16,7 +16,7 @@ type Inputs = {
 };
 
 const UserProfile = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const { userUpdateRes, setUserUpdate } = useAmgUsersApi();
   const [themeState, setThemeState] = useState<boolean>(
     localStorage.getItem("theme") === "dark"
@@ -25,6 +25,7 @@ const UserProfile = () => {
   const { setTheme } = useThemeContext();
   const { userDetails, setUserDetails } = useUserDetails();
   const [btnDisabled, setBtnDisabled] = useState(true);
+
   const [profileData, setProfileData] = useState<Inputs>({
     name: userDetails?.startList.users[0].description
       ? userDetails?.startList.users[0].description
@@ -85,6 +86,48 @@ const UserProfile = () => {
   }, [userDetails]);
 
   useEffect(() => {
+    if (userUpdateRes) {
+      updateUserDetailsContext();
+      navigate(`/pwa/home/${sessionStorage.getItem("email")}`);
+    }
+  }, [userUpdateRes]);
+  // console.log(userDetails?.startList.users[0].darkLight);
+  const handleSubmit = async (e: React.SyntheticEvent) => {
+    e.preventDefault();
+
+    await setUserUpdate({
+      user: userDetails?.startList.users[0].email as string,
+      key: `email|'${userDetails?.startList.users[0].email}'`,
+      data: `description;nickName;phone;phone2;phoneCell;language;darkLight|'${profileData.name}';'${profileData.nickName}';'${profileData.phone}';'${profileData.phone2}';'${profileData.phoneCell}';'${profileData.language}';'${profileData.theme}';`,
+    });
+    setBtnDisabled(true);
+  };
+
+  const handleSetTheme = () => {
+    if (themeState === true) root?.classList.add("dark");
+    else root?.classList.remove("dark");
+    setProfileData((prev) => ({
+      ...prev,
+      theme: themeState ? "dark" : "light",
+    }));
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.name === "language") {
+      setProfileData((prev) => ({
+        ...prev,
+        [e.target.name]: e.target.value,
+      }));
+    } else {
+      setProfileData((prev) => ({
+        ...prev,
+        [e.target.id]: e.target.value,
+      }));
+    }
+    setBtnDisabled(false);
+  };
+
+  const updateUserDetailsContext = () => {
     if (userUpdateRes?.status === "I") {
       //!type error couldnt resolve.
       // @ts-expect-error abba dabba jabba
@@ -112,44 +155,7 @@ const UserProfile = () => {
         }
       });
     }
-  }, [userUpdateRes]);
-
-  const handleSubmit = (e: React.SyntheticEvent) => {
-    e.preventDefault();
-   
-    setUserUpdate({
-      user: userDetails?.startList.users[0].email as string,
-      key: `email|'${userDetails?.startList.users[0].email}'`,
-      data: `description;nickName;phone;phone2;phoneCell;language;darkLight|'${profileData.name}';'${profileData.nickName}';'${profileData.phone}';'${profileData.phone2}';'${profileData.phoneCell}';'${profileData.language}';'${profileData.theme}';`,
-    });
-    setBtnDisabled(true);
-    // navigate(`/pwa/home/${sessionStorage.getItem("email")}`);
   };
-
-  const handleSetTheme = () => {
-    if (themeState === true) root?.classList.add("dark");
-    else root?.classList.remove("dark");
-    setProfileData((prev) => ({
-      ...prev,
-      theme: themeState ? "dark" : "light",
-    }));
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.name === "language") {
-      setProfileData((prev) => ({
-        ...prev,
-        [e.target.name]: e.target.value,
-      }));
-    } else {
-      setProfileData((prev) => ({
-        ...prev,
-        [e.target.id]: e.target.value,
-      }));
-    }
-    setBtnDisabled(false);
-  };
-
   return (
     <>
       <form
@@ -165,6 +171,7 @@ const UserProfile = () => {
               className="rounded-xl border-2 p-1 px-2 border-gray-300 hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
               type="name"
               id="name"
+              readOnly
               placeholder="Please enter name"
               value={profileData.name}
               onChange={(e) => handleInputChange(e)}

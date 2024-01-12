@@ -1,6 +1,6 @@
+import { useEffect, useState } from "react";
 import { Switch } from "@/components/ui/switch";
 import { useUserDetails } from "@/lib/context/userDetailsContext";
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAmgUsersApi from "@/hooks/useAmgUsersApi";
 
@@ -60,7 +60,6 @@ const PrivacyPolicy2 = () => {
 
   const privacyPolicyText = () => {
     userDetails?.startList.baseData.map((item) => {
-      
       if (
         item.code === `PRIVACYTEXT2${userDetails?.startList.users[0].language}`
       ) {
@@ -72,29 +71,31 @@ const PrivacyPolicy2 = () => {
   };
 
   return (
-    <div className="flex flex-col items-center h-3/4 overflow-hidden">
-      <div className="my-5 mx-10 p-10 text-xl  border overflow-auto">
-        {privacyText}
-      </div>
-      <div>
-        <label htmlFor="theme-switch">Accept</label>
-        <Switch
-          id="theme-switch"
-          // checked={}
-          onClick={() => handleSwitch()}
-        />
-      </div>
+    <>
+      <div className="flex flex-col items-center h-3/4 overflow-hidden">
+        <div className="my-5 mx-10 p-10 text-xl  border overflow-auto rounded-xl">
+          {privacyText}
+        </div>
+        <div>
+          <label htmlFor="theme-switch">Acconsento</label>
+          <Switch
+            id="theme-switch"
+            // checked={}
+            onClick={() => handleSwitch()}
+          />
+        </div>
 
-      <button
-        className="rounded-2xl bg-red-600 p-2 m-2 border text-white font-medium
+        <button
+          className="rounded-2xl bg-red-600 p-2 m-2 border text-white font-medium
       mb-2 hover:bg-red-500 hover:border hover:border-black focus:bg-red-500
       active:bg-red-700 text-2xl px-5 disabled:pointer-events-none disabled:bg-slate-300"
-        disabled={!btnAccess}
-        onClick={() => handleSubmit()}
-      >
-        AGREE
-      </button>
-    </div>
+          disabled={!btnAccess}
+          onClick={() => handleSubmit()}
+        >
+          AGREE
+        </button>
+      </div>
+    </>
   );
 };
 export default PrivacyPolicy2;
