@@ -32,6 +32,7 @@ import Security from "./containers/security/Security.tsx";
 import Notifications from "./containers/notifications/Notifications.tsx";
 import { registerSW } from "virtual:pwa-register";
 import Mfa from "./containers/login/mfa/Mfa.tsx";
+import PrivacyLayout from "./layout/PrivacyLayout.tsx";
 
 registerSW({ immediate: true });
 
@@ -50,21 +51,13 @@ const router = createBrowserRouter(
         }
       />
       <Route
-        path="pwa/"
+        path="policy/"
         element={
           <ProtectedRoutes>
-            <Layout />
+            <PrivacyLayout />
           </ProtectedRoutes>
         }
       >
-        <Route
-          path="home/:userEmail"
-          element={
-            <ProtectedRoutes>
-              <Home />
-            </ProtectedRoutes>
-          }
-        />
         <Route
           path="privacy/"
           element={
@@ -81,6 +74,24 @@ const router = createBrowserRouter(
             </ProtectedRoutes>
           }
         />
+      </Route>
+      <Route
+        path="pwa/"
+        element={
+          <ProtectedRoutes>
+            <Layout />
+          </ProtectedRoutes>
+        }
+      >
+        <Route
+          path="home/:userEmail"
+          element={
+            <ProtectedRoutes>
+              <Home />
+            </ProtectedRoutes>
+          }
+        />
+
         <Route
           path="privacyDisplay/"
           element={

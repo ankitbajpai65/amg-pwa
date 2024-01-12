@@ -1,5 +1,5 @@
 import { useState } from "react";
-import image from "../../../../public/loghi-03.png";
+import image from "../../../assets/loghi-03.png";
 import { errorAlert } from "@/components/appComponents/appAlert";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useUserDetails } from "@/lib/context/userDetailsContext";
@@ -24,7 +24,7 @@ const Mfa = () => {
           userDetails?.startList.users[0].privacyDate === "" ||
           userDetails?.startList.users[0].privacyDate === "01/01/1900 00:00:00"
         ) {
-          navigate("/pwa/privacy");
+          navigate("/policy/privacy");
         } else {
           navigate(`/pwa/home/${userDetails?.startList.users[0].email}`);
         }

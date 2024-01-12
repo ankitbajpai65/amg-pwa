@@ -82,7 +82,7 @@ const Header = () => {
                   <MdPrivacyTip style={{ paddingRight: "5px" }} size={25} />
                   Privacy
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => navigate("/changePassword")}>
+                <DropdownMenuItem onClick={() => navigate("/changePassword",{state:{backBtn:true}})}>
                   <RiLockPasswordFill
                     style={{ paddingRight: "5px" }}
                     size={25}
@@ -104,7 +104,7 @@ const Header = () => {
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => navigate("/pwa/qrScan")}>
                   <CiBarcode style={{ paddingRight: "5px" }} size={25} />
-                  Scanner
+                  QR-Code Reader
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => navigate("/pwa/security")}>
                   <RiNotificationBadgeFill

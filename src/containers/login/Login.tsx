@@ -25,7 +25,6 @@ const Login = () => {
   const { getSendMailStatus } = useSendMailApi();
   const navigate = useNavigate();
   useEffect(() => {
-    
     if (userDetails) {
       if (userDetails?.startList.baseData[1].itemValue === "ON") {
         if (
@@ -51,7 +50,7 @@ const Login = () => {
             userDetails?.startList.users[0].privacyDate ===
               "01/01/1900 00:00:00"
           ) {
-            navigate("/pwa/privacy");
+            navigate("/policy/privacy");
           } else {
             navigate(`/pwa/home/${userDetails?.startList.users[0].email}`);
           }
@@ -67,7 +66,7 @@ const Login = () => {
           userDetails?.startList.users[0].privacyDate === "" ||
           userDetails?.startList.users[0].privacyDate === "01/01/1900 00:00:00"
         ) {
-          navigate("/pwa/privacy");
+          navigate("/policy/privacy");
         } else {
           navigate(`/pwa/home/${userDetails?.startList.users[0].email}`);
         }
