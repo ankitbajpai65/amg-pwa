@@ -2,24 +2,22 @@ import React, { useEffect, useState } from "react";
 import { useUserDetails } from "@/lib/context/userDetailsContext";
 import { useNavigate } from "react-router-dom";
 
-
 const PrivacyPolicy = () => {
   const [btnAccess, setBtnAccess] = useState(false);
   const navigate = useNavigate();
 
   const { userDetails } = useUserDetails();
 
-  useEffect(()=>{
-    if(userDetails){
+  useEffect(() => {
+    if (userDetails) {
       privacyPolicyText();
     }
-  },[userDetails])
+  }, [userDetails]);
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const bottom =
-      (e.target as HTMLInputElement).scrollHeight -
-        (e.target as HTMLInputElement).scrollTop ===
-      (e.target as HTMLInputElement).clientHeight;
+     ((e.target as HTMLInputElement).scrollHeight -
+        (e.target as HTMLInputElement).scrollTop === (e.target as HTMLInputElement).clientHeight);
     if (bottom) {
       setBtnAccess(true);
     } else {
