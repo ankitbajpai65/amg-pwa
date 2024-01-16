@@ -15,9 +15,9 @@ const PrivacyPolicy = () => {
   }, [userDetails]);
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const elementNode = e.target as HTMLInputElement;
     const bottom =
-     ((e.target as HTMLInputElement).scrollHeight -
-        (e.target as HTMLInputElement).scrollTop === (e.target as HTMLInputElement).clientHeight);
+     ( elementNode.scrollHeight - elementNode.scrollTop - elementNode.clientHeight)<1;
     if (bottom) {
       setBtnAccess(true);
     } else {
