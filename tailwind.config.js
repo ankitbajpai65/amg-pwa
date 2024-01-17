@@ -10,7 +10,7 @@ module.exports = {
   theme: {
     screens: {
       mobile: "350px",
-      sm:'640px',
+      sm: "640px",
     },
     container: {
       center: true,
@@ -22,6 +22,13 @@ module.exports = {
 
     extend: {
       colors: {
+        "text-blue": "#191919",
+        "text-red": "#FF0000",
+        "text-gray": "#999999",
+        "text-dark-gray": "#3F3F3F",
+        "bg-header-gray": "#F3F3F3",
+        "bg-footer-blue": "#11304B",
+        "bg-input-gray": "#EEEEEE",
         bkg: {
           DEFAULT: "rgb(var(--color-bg-offset))",
           foreground: "rgb(var(--color-bg-offset-foreground))",
