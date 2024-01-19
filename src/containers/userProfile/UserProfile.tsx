@@ -157,7 +157,17 @@ const UserProfile = () => {
     }
   };
   return (
-    <>
+    <div>
+      <div className="py-4 px-5 text-text-blue">
+        <p className="text-lg font-semibold">Settings</p>
+        <p>Change your settings and information.</p>
+      </div>
+      <div className="flex items-center px-5">
+        <p className="text-2xl w-fit border rounded-full p-1 px-2 m-1 bg-gray-100 text-white bg-text-red text-xs">
+          {profileData.nickName.slice(0, 1).toUpperCase()}
+        </p>
+        <p>{userDetails?.startList.users[0].email}</p>
+      </div>
       <form
         onSubmit={handleSubmit}
         className="mobile:w-full mobile:h-screen sm:h-fit max-w-md min-w-min w-3/6 mx-auto"
@@ -168,7 +178,7 @@ const UserProfile = () => {
               Name
             </label>
             <input
-              className="rounded-xl border-2 p-1 px-2 border-gray-300 hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
+              className="rounded-md border p-1 px-2 border-border-dark-gray hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
               type="name"
               id="name"
               readOnly
@@ -182,7 +192,7 @@ const UserProfile = () => {
               NickName
             </label>
             <input
-              className="rounded-xl border-2  p-1 px-2 border-gray-300 hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
+              className="rounded-md border  p-1 px-2 border-border-dark-gray hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
               type="nickName"
               id="nickName"
               placeholder="Please enter nickName"
@@ -195,7 +205,7 @@ const UserProfile = () => {
               Telephone 1
             </label>
             <input
-              className="rounded-xl border-2  p-1 px-2 border-gray-300 hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
+              className="rounded-md border  p-1 px-2 border-border-dark-gray hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
               type="number"
               id="phone"
               placeholder="Please enter Telephone number"
@@ -208,7 +218,7 @@ const UserProfile = () => {
               Telephone 2
             </label>
             <input
-              className="rounded-xl border-2  p-1 px-2 border-gray-300 hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
+              className="rounded-md border  p-1 px-2 border-border-dark-gray hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
               type="number"
               id="phone2"
               placeholder="Please enter Telephone number"
@@ -221,7 +231,7 @@ const UserProfile = () => {
               Cellphone
             </label>
             <input
-              className="rounded-xl border-2  p-1 px-2 border-gray-300 hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
+              className="rounded-md border  p-1 px-2 border-border-dark-gray hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
               type="number"
               id="phoneCell"
               placeholder="Please enter Telephone number"
@@ -312,7 +322,7 @@ const UserProfile = () => {
         </div>
         <div className="text-center">
           <button
-            className="rounded-3xl text-xl bg-red-600 py-2 px-4 m-2 border text-white font-medium mb-2 hover:bg-red-500 hover:border hover:border-black focus:bg-red-500 active:bg-red-700 disabled:pointer-events-none disabled:bg-slate-300"
+            className="rounded-md text-xl bg-red-600 py-2 px-4 m-2 border text-white font-medium mb-2 hover:bg-red-500 hover:border hover:border-black focus:bg-red-500 active:bg-red-700 disabled:pointer-events-none disabled:bg-slate-300"
             type="submit"
             disabled={btnDisabled}
           >
@@ -320,7 +330,7 @@ const UserProfile = () => {
           </button>
         </div>
       </form>
-    </>
+    </div>
   );
 };
 export default UserProfile;

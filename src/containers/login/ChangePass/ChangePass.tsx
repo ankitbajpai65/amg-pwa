@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import image from "../../../assets/loghi-03.png";
+import backArrow from "../../../assets/icons/backArrow.png";
 import { errorAlert } from "@/components/appComponents/appAlert";
 import useChangePassApi from "@/hooks/useChangePassApi";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { primaryBtnStyle } from "@/lib/cssTailwind";
 
 type Inputs = {
   email: string;
@@ -18,16 +20,29 @@ const ChangePass = () => {
     newPass: "",
     newPass2: "",
   });
-  const location = useLocation();
+  const [submitBtnDisable, setSubmitBtnDisable] = useState<boolean>(true);
   const navigate = useNavigate();
   const root = document.querySelector(":root");
-  
 
   useEffect(() => {
     const value = localStorage.getItem("theme");
     if (value === "dark") root?.classList.add("dark");
     else root?.classList.remove("dark");
   }, []);
+
+  useEffect(()=>{
+        if (
+          passData.email !== "" &&
+          passData.oldPass !== "" &&
+          passData.newPass !== "" &&
+          passData.newPass2 !== ""
+        ) {
+          setSubmitBtnDisable(false);
+        } else {
+          setSubmitBtnDisable(true);
+        }
+  },[passData])
+
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassData((prev) => ({
@@ -59,89 +74,100 @@ const ChangePass = () => {
   };
 
   return (
-    <div className="w-screen h-screen flex items-center justify-center">
-      <form
-        onSubmit={handleSubmit}
-        className="mobile:w-full mobile:h-screen sm:h-fit max-w-md min-w-min w-3/6 mx-auto "
-      >
-        <div className=" mobile:w-full mobile:h-screen sm:h-min mobile:m-0 mobile:p-0 max-w-md min-w-min w-3/6 m-2 p-2 flex flex-col items-center mx-auto m-2 p-2 bg-bkg border rounded-md ">
-          <div className="bg-red-600 pb-5 rounded h-20 text-white font-semibold mb-2 w-full text-center rounded-b-xl">
-            <div className="flex justify-center items-center ">
-              <p className="text-4xl font-bold">AMG</p>
-              <img className="h-16" src={image}></img>
-            </div>
+    <div className="flex flex-col w-full h-full">
+      {/* header---------- */}
+      <div className="bg-bg-header-gray px-5">
+        <div className="flex items-center">
+          <div className="h-12 sm:h-14">
+            <img className="h-full" src={image} />
           </div>
-          <div className="mobile:mt-10 sm:m-2 w-full p-2 ">
-            <div className="mb-1 flex flex-col">
-              <label htmlFor="email" className="pr-2 font-semibold">
-                Enter Email
-              </label>
-              <input
-                className="rounded-xl p-1 px-2 border-2 border-gray-300 hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
-                type="email"
-                id="email"
-                onChange={(e) => handleInputChange(e)}
-              />
-            </div>
-            <div className="mb-1 flex flex-col">
-              <label htmlFor="oldPass" className="pr-2 font-semibold">
-                Enter Old Password
-              </label>
-              <input
-                className="rounded-xl p-1 px-2 border-2 border-gray-300 hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
-                type="password"
-                id="oldPass"
-                onChange={(e) => handleInputChange(e)}
-              />
-            </div>
-            <div className="mb-2 flex flex-col">
-              <label htmlFor="newPass" className="pr-2 font-semibold">
-                Enter NEW Password
-              </label>
-              <input
-                className="rounded-xl p-1 px-2 border-2 border-gray-300 hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
-                type="password"
-                id="newPass"
-                minLength={8}
-                onChange={(e) => handleInputChange(e)}
-              />
-            </div>
-            <div className="mb-2 flex flex-col">
-              <label htmlFor="newPass2" className="pr-2 font-semibold">
-                Confirm NEW Password
-              </label>
-              <input
-                className="rounded-xl p-1 px-2 border-2 border-gray-300 hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
-                type="password"
-                id="newPass2"
-                minLength={8}
-                onChange={(e) => handleInputChange(e)}
-              />
-            </div>
-          </div>
-          <div className="flex flex-col">
-            <button
-              className="rounded-3xl text-xl bg-red-600 py-2 px-4 m-2 border text-white font-medium mb-2 hover:bg-red-500 hover:border hover:border-black focus:bg-red-500 active:bg-red-700"
-              type="submit"
-            >
-              Confirm
-            </button>
-            {location.state?.backBtn && (
-              <>
-                <button
-                  className="rounded-3xl text-xl bg-gray-400 py-2 px-4 m-2 border text-white font-medium mb-2 hover:bg-red-500 hover:border hover:border-black focus:bg-red-500 active:bg-red-700"
-                  onClick={()=>navigate(-1)}
-                  type="button"
-                >
-                  Cancel
-                </button>
-              </>
-            )}
-          </div>
-
-          <div className="rounded bg-red-600 h-8 w-full mobile:sticky mobile:top-[100vh]"></div>
+          <p className="flex text-text-blue sm:text-lg font-semibold">
+            GEN<span className="text-text-red">A</span>I&nbsp;
+            <span className="text-text-gray">SPACE</span>
+            <span className="text-text-red">&nbsp;PWA</span>
+          </p>
         </div>
-      </form>
+      </div>
+      {/* header---------- */}
+      {/* body---------- */}
+      <div className="grow">
+        <div className="py-4 px-2 border-b">
+          <a onClick={() => navigate(-1)} className="flex items-center">
+            <div className="px-1">
+              <img src={backArrow}></img>
+            </div>
+            <p>Change Password</p>
+          </a>
+        </div>
+        {/* <hr className="my-2 h-0.5 border-t-0 bg-neutral-100 opacity-100 dark:opacity-50" /> */}
+        <div className="p-5">
+          <div>
+            <p className="font-bold text-xl">Change Password</p>
+            <p>Change your password in few steps.</p>
+          </div>
+          <form onSubmit={handleSubmit}>
+            <div className="mt-5 w-full p-2 ">
+              <div className="mb-1 flex flex-col">
+                <label htmlFor="email" className="pr-2 font-semibold">
+                  Email
+                </label>
+                <input
+                  className="rounded p-1 px-2 border border-border-dark-gray hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
+                  type="email"
+                  id="email"
+                  onChange={(e) => handleInputChange(e)}
+                />
+              </div>
+              <div className="mb-1 flex flex-col">
+                <label htmlFor="oldPass" className="pr-2 font-semibold">
+                  Your Old Password
+                </label>
+                <input
+                  className="rounded- p-1 px-2 border border-border-dark-gray hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
+                  type="password"
+                  id="oldPass"
+                  onChange={(e) => handleInputChange(e)}
+                />
+              </div>
+              <div className="mb-2 flex flex-col">
+                <label htmlFor="newPass" className="pr-2 font-semibold">
+                  Your NEW Password
+                </label>
+                <input
+                  className="rounded p-1 px-2 border border-border-dark-gray hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
+                  type="password"
+                  id="newPass"
+                  minLength={8}
+                  onChange={(e) => handleInputChange(e)}
+                />
+              </div>
+              <div className="mb-2 flex flex-col">
+                <label htmlFor="newPass2" className="pr-2 font-semibold">
+                  Confirm New Password
+                </label>
+                <input
+                  className="rounded p-1 px-2 border border-border-dark-gray hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
+                  type="password"
+                  id="newPass2"
+                  minLength={8}
+                  onChange={(e) => handleInputChange(e)}
+                />
+              </div>
+            </div>
+            <div className="w-full">
+              <button
+                className={`${primaryBtnStyle} hover:border hover:border-black focus:bg-red-500 ${
+                  submitBtnDisable && "opacity-25"
+                }`}
+                type="submit"
+              >
+                Confirm
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+      {/* body---------- */}
     </div>
   );
 };

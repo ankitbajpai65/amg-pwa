@@ -177,7 +177,7 @@ const Login = () => {
           <button className={`${primaryBtnStyle} w-full`} type="submit">
             Entra
             <span className="px-2">
-              <Loader status={loaderVisible} />
+              <Loader status={loaderVisible} size={4} />
             </span>
           </button>
         </form>
@@ -203,7 +203,6 @@ const Login = () => {
       </div>
       {/* body---------- */}
       {/* footer---------- */}
-
     </div>
   );
 };

@@ -1,4 +1,10 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { useUserDetails } from "@/lib/context/userDetailsContext";
 import { useNavigate } from "react-router-dom";
 
@@ -23,14 +29,22 @@ const Home = () => {
         {userDetails?.startList?.cards?.map((item, key) => {
           return (
             <Card
-              className=" rounded-xl sm:max-w-[250px] sm:max-h-[350px] mobile:max-sm:w-2/5 mobile:max-sm:h-60"
+              className=" rounded-xl bg-bg-card-light-gray m-2 shadow-lg w-full"
               key={key}
-              onClick={() => handleCardClick(item)}
             >
-              <CardHeader className="bg-red-600">
-                <CardTitle className="text-white">{item.title}</CardTitle>
+              <CardHeader>
+                <div className="text-sm font-semibold text-text-light-gray">{item.code}</div>
+                <CardTitle className="text-text-blue">{item.title}</CardTitle>
               </CardHeader>
-              <CardContent>{item.description}</CardContent>
+              <CardContent className="text-sm">{item.description}</CardContent>
+              <CardFooter>
+                <button
+                  className="bg-text-red p-3 px-8 rounded-md sm:text-xl text-white"
+                  onClick={() => handleCardClick(item)}
+                >
+                  Start
+                </button>
+              </CardFooter>
             </Card>
           );
         })}
