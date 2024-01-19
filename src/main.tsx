@@ -33,6 +33,8 @@ import Notifications from "./containers/notifications/Notifications.tsx";
 import { registerSW } from "virtual:pwa-register";
 import Mfa from "./containers/login/mfa/Mfa.tsx";
 import PrivacyLayout from "./layout/PrivacyLayout.tsx";
+import PwaSettings from "./containers/pwaSettings/PwaSettings.tsx";
+import PwaCalendar from "./containers/calendar/PwaCalendar.tsx";
 
 registerSW({ immediate: true });
 
@@ -144,6 +146,8 @@ const router = createBrowserRouter(
         <Route path="aibot/" element={<AiBot />} />
         <Route path="security/" element={<Security />} />
         <Route path="notifications/" element={<Notifications />} />
+        <Route path="settings/" element={<PwaSettings />} />
+        <Route path="calendar/" element={<PwaCalendar />} />
 
         <Route path="gen-ai/">
           <Route path="chat-with-your-files/" element={<ChatWithYourFiles />} />

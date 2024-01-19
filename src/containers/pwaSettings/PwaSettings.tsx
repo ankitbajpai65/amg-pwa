@@ -1,0 +1,105 @@
+import { FaUser } from "react-icons/fa";
+import { RiLockPasswordFill } from "react-icons/ri";
+import { IoIosArrowForward } from "react-icons/io";
+import { RiLogoutBoxFill } from "react-icons/ri";
+import { MdPrivacyTip } from "react-icons/md";
+import { IoMdNotifications } from "react-icons/io";
+import { IoHelpCircle } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
+import { useUserDetails } from "@/lib/context/userDetailsContext";
+
+const PwaSettings = () => {
+  const navigate = useNavigate();
+
+  const { setUserDetails } = useUserDetails();
+
+  const handleLogout = () => {
+    navigate("/");
+    sessionStorage.removeItem("isLoggedIn");
+    sessionStorage.removeItem("email");
+    setUserDetails(null);
+  };
+  return (
+    <div>
+      <div className="py-4 px-5 text-text-blue">
+        <p className="text-lg font-semibold">Settings</p>
+        <p>Change your settings and information.</p>
+      </div>
+      <div>
+        <div
+          className="flex items-center justify-between px-8 py-3 border-b"
+          onClick={() => navigate("/pwa/profile")}
+        >
+          <div className="flex items-center text-lg">
+            <FaUser style={{ marginRight: "8px" }} size={20} />
+            <p>Profile</p>
+          </div>
+          <div>
+            <IoIosArrowForward />
+          </div>
+        </div>
+        <div
+          className="flex items-center justify-between px-8 py-3 border-b"
+          onClick={() => navigate("/changePassword")}
+        >
+          <div className="flex items-center text-lg">
+            <RiLockPasswordFill style={{ marginRight: "8px" }} size={20} />
+            <p>Change Password</p>
+          </div>
+          <div>
+            <IoIosArrowForward />
+          </div>
+        </div>
+        <div
+          className="flex items-center justify-between px-8 py-3 border-b"
+          onClick={() => navigate("/pwa/privacyDisplay")}
+        >
+          <div className="flex items-center text-lg">
+            <MdPrivacyTip style={{ marginRight: "8px" }} size={20} />
+            <p>Privacy and Security</p>
+          </div>
+          <div>
+            <IoIosArrowForward />
+          </div>
+        </div>
+        <div
+          className="flex items-center justify-between px-8 py-3 border-b"
+          onClick={() => navigate("/pwa/notifications")}
+        >
+          <div className="flex items-center text-lg">
+            <IoMdNotifications style={{ marginRight: "8px" }} size={20} />
+            <p>Notifications</p>
+          </div>
+          <div>
+            <IoIosArrowForward />
+          </div>
+        </div>
+        <div
+          className="flex items-center justify-between px-8 py-3 border-b"
+          onClick={() => navigate("/pwa/notifications")}
+        >
+          <div className="flex items-center text-lg">
+            <IoHelpCircle style={{ marginRight: "8px" }} size={20} />
+            <p>Help And Support</p>
+          </div>
+          <div>
+            <IoIosArrowForward />
+          </div>
+        </div>
+        <div
+          className="flex items-center justify-between px-8 py-3 border-b"
+          onClick={() => handleLogout()}
+        >
+          <div className="flex items-center text-lg">
+            <RiLogoutBoxFill style={{ marginRight: "8px" }} size={20} />
+            <p>Logout</p>
+          </div>
+          <div>
+            <IoIosArrowForward />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+export default PwaSettings;

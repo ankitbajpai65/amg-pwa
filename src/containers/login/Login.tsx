@@ -8,6 +8,7 @@ import { FcGoogle } from "react-icons/fc";
 import { errorAlert, warnAlert } from "@/components/appComponents/appAlert";
 import useSendMailApi from "@/hooks/useSendMailApi";
 import Loader from "@/components/appComponents/Loader";
+import { inputStyle, primaryBtnStyle } from "@/lib/cssTailwind";
 
 type Inputs = {
   email: string;
@@ -101,9 +102,9 @@ const Login = () => {
       onSuccess: (tokenResponse) => console.log(tokenResponse),
     });
     return (
-      <div className="rounded-full w-4/6">
+      <div className="rounded-xl">
         <button
-          className="w-full flex items-center border border-red-600 text-xl p-2 my-2 rounded-3xl font-semibold justify-center"
+          className="w-full flex items-center border border-red-600 text-xl p-2 my-2 rounded-xl font-semibold justify-center"
           type="button"
           onClick={() => googleLoginHook()}
         >
@@ -115,77 +116,94 @@ const Login = () => {
   };
 
   return (
-    <>
-      <form
-        onSubmit={handleSubmit}
-        className="mobile:w-full mobile:h-screen sm:h-fit max-w-md min-w-min w-3/6 mx-auto"
-      >
-        <div className=" mobile:w-full mobile:h-screen sm:h-min mobile:m-0 mobile:p-0 max-w-md min-w-min w-3/6 m-2 p-2 flex flex-col items-center mx-auto m-2 p-2 bg-bkg border rounded-md ">
-          <div className="bg-red-600 rounded h-20 text-white font-semibold mb-2 w-full text-center rounded-b-xl">
-            <div className="flex justify-center items-center ">
-              <p className="text-4xl font-bold">AMG</p>
-              <img className="h-16" src={image}></img>
-            </div>
+    <div className="flex flex-col w-full h-full">
+      {/* header---------- */}
+      <div className="bg-bg-header-gray px-5">
+        <div className="flex items-center">
+          <div className="h-12 sm:h-14">
+            <img className="h-full" src={image} />
           </div>
-          <div className="mobile:mt-10 sm:m-2  w-full p-2 text-l">
+          <p className="flex text-text-blue sm:text-lg font-semibold">
+            GEN<span className="text-text-red">A</span>I&nbsp;
+            <span className="text-text-gray">SPACE</span>
+            <span className="text-text-red">&nbsp;PWA</span>
+          </p>
+        </div>
+      </div>
+      {/* header---------- */}
+      {/* body---------- */}
+      <div className="grow flex flex-col justify-around p-5">
+        <div className="text-center">
+          <div className="flex flex-col items-center">
+            <div className="h-12 sm:h-14">
+              <img className="h-full" src={image} />
+            </div>
+            <p className="flex text-text-blue sm:text-lg font-semibold">
+              GenAi&nbsp;Space
+              <span className="text-text-red">&nbsp;PWA</span>
+            </p>
+          </div>
+          <p>Inserisci il tuo codice utente e la password e premi Entra.</p>
+        </div>
+        <form onSubmit={handleSubmit}>
+          <div className="">
             <div className="mb-1 flex flex-col">
-              <label htmlFor="email" className="pr-2 font-semibold">
+              {/* <label htmlFor="email" className="pr-2 font-semibold">
                 Email
-              </label>
+              </label> */}
               <input
-                className="rounded-xl border-2 p-1 px-2 border-gray-300 hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
+                className={`${inputStyle}`}
                 type="email"
                 id="email"
-                placeholder="Please enter Email"
+                name="email"
+                placeholder="Email"
                 onChange={(e) => handleInputChange(e)}
               />
             </div>
             <div className="mb-2 flex flex-col">
-              <label htmlFor="password" className="pr-2 font-semibold">
+              {/* <label htmlFor="password" className="pr-2 font-semibold">
                 Password
-              </label>
+              </label> */}
               <input
-                className="rounded-xl border-2  p-1 px-2 border-gray-300 hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
+                className={`${inputStyle}`}
                 type="password"
                 id="password"
-                placeholder="Please enter Password"
+                name="password"
+                placeholder="Password"
                 onChange={(e) => handleInputChange(e)}
               ></input>
             </div>
           </div>
-          <button
-            className="w-4/6 rounded-3xl text-xl bg-red-600 py-2 px-4 m-2 border text-white font-medium mb-2 hover:bg-red-500 hover:border hover:border-black focus:bg-red-500 active:bg-red-700"
-            type="submit"
-          >
-            Enter
+          <button className={`${primaryBtnStyle} w-full`} type="submit">
+            Entra
             <span className="px-2">
-              <Loader status={loaderVisible} />
+              <Loader status={loaderVisible} size={4} />
             </span>
           </button>
+        </form>
 
-          <HandleGoogleLogin />
+        <HandleGoogleLogin />
 
-          <div className="flex flex-col m-2 mt-10 text-l w-4/6 text-center">
-            <a
-              className="text-blue-600 border border-red-500 p-2 mb-2 rounded-xl transition duration-150 ease-in-out hover:text-red-600 focus:text-red-600 active:text-red-700"
-              href="/changePassword"
-            >
-              Change Password
-            </a>
-
-            <a
-              className="text-blue-600 border border-red-500 p-2 rounded-xl transition duration-150 ease-in-out
+        <div className="flex justify-center">
+          <a
+            className="text-text-blue underline transition duration-150 ease-in-out hover:text-red-600 focus:text-red-600 active:text-red-700"
+            href="/changePassword"
+          >
+            Change Password
+          </a>
+          <p className="px-1">|</p>
+          <a
+            className="text-text-blue underline transition duration-150 ease-in-out
         hover:text-red-600 focus:text-red-600 active:text-red-700"
-              href="/forgotPassword"
-            >
-              Forgot Password
-            </a>
-          </div>
-
-          <div className="rounded-t-xl bg-red-600 h-8 w-full mobile:sticky mobile:top-[100vh] sm:static sm:top-0"></div>
+            href="/forgotPassword"
+          >
+            Forgot Password
+          </a>
         </div>
-      </form>
-    </>
+      </div>
+      {/* body---------- */}
+      {/* footer---------- */}
+    </div>
   );
 };
 export default Login;

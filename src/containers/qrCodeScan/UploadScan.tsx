@@ -22,7 +22,11 @@ const UploadScan = () => {
 
   return (
     <div className="flex flex-col justify-center items-center h-full">
-      <input type="file" id="reader" accept="image/*" onChange={handleUpload} />
+      <input className="block text-sm text-slate-500
+        file:mr-4 file:py-2 file:px-4 file:rounded-md
+        file:border-0 file:text-sm file:font-semibold
+        file:bg-bg-btn-gray file:text-white
+        text-center" type="file" id="reader" accept="image/*" onChange={handleUpload} />
        <div>{scanRes}</div>
     </div>
   );
