@@ -29,14 +29,20 @@ const Home = () => {
         {userDetails?.startList?.cards?.map((item, key) => {
           return (
             <Card
-              className="rounded-xl bg-bg-card-light-gray m-2 shadow-lg w-full"
+              className="rounded-xl bg-card-light-gray m-2 shadow-lg w-full"
               key={key}
             >
-              <CardHeader>
-                <div className="text-sm font-semibold text-text-light-gray">{item.code}</div>
-                <CardTitle className="text-text-blue">{item.title}</CardTitle>
-              </CardHeader>
-              <CardContent className="text-sm">{item.description}</CardContent>
+              <div className="px-4 pt-2">
+                <CardHeader>
+                  <div className="text-sm font-semibold text-text-light-gray">
+                    {item.code}
+                  </div>
+                  <CardTitle className="text-text-blue">{item.title}</CardTitle>
+                </CardHeader>
+                <CardContent className="text-sm">
+                  {item.description}
+                </CardContent>
+              </div>
               <CardFooter>
                 <button
                   className="bg-text-red p-3 px-8 rounded-md sm:text-xl text-white"
