@@ -6,7 +6,7 @@ const QrCodeScan = () => {
   return (
     <div className="flex flex-col h-full justify-center grow">
       <button
-        className="rounded-3xl text-xl bg-red-600 py-2 px-4 m-2 border text-white
+        className="rounded-md text-xl bg-text-red py-2 px-4 m-2 border text-white
       font-medium mb-2 hover:bg-red-500 hover:border hover:border-black
       focus:bg-red-500 active:bg-red-700"
         onClick={() => navigate("/pwa/qrScan/uploadScan")}
@@ -14,7 +14,7 @@ const QrCodeScan = () => {
         Upload
       </button>
       <button
-        className="rounded-3xl text-xl bg-red-600 py-2 px-4 m-2 border text-white
+        className="rounded-md text-xl bg-text-red py-2 px-4 m-2 border text-white
       font-medium mb-2 hover:bg-red-500 hover:border hover:border-black
       focus:bg-red-500 active:bg-red-700"
         onClick={() => navigate("/pwa/qrScan/scanNow")}

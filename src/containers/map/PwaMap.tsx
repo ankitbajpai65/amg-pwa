@@ -35,11 +35,13 @@ const PwaMap = () => {
 
 
   return (
-    <div id="map" className="w-full h-full">
-    
-
+    <div id="map" className="w-full h-full flex flex-col">
+      <div className="py-4 px-5 text-text-blue">
+        <p className="text-lg font-semibold">Map</p>
+        <p>Use the map to locate each landmark and destination.</p>
+      </div>
       {isLoaded ? (
-        <>
+        <div className="grow">
           <GoogleMap
             center={userPos}
             zoom={11}
@@ -51,11 +53,11 @@ const PwaMap = () => {
             }}
           >
             <MarkerF position={userPos} />
-            <CircleF center={userPos} radius={locAcc}/>
+            <CircleF center={userPos} radius={locAcc} />
           </GoogleMap>
-        </>
+        </div>
       ) : (
-        <div>Map Did not get Loaded</div>
+        <div className="text-center">Map Did not get Loaded</div>
       )}
     </div>
   );

@@ -1,125 +1,50 @@
-import { IoIosNotificationsOutline } from "react-icons/io";
-import { FaRegUser } from "react-icons/fa";
-import { FaUser } from "react-icons/fa";
-import { MdPrivacyTip } from "react-icons/md";
-import { RiLockPasswordFill } from "react-icons/ri";
-import { FaMapLocation } from "react-icons/fa6";
-import { IoMdNotifications } from "react-icons/io";
-import { RiNotificationBadgeFill } from "react-icons/ri";
-import { RiLogoutBoxFill } from "react-icons/ri";
-import { CiBarcode } from "react-icons/ci";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { IoArrowBack } from "react-icons/io5";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useUserDetails } from "@/lib/context/userDetailsContext";
-import { useEffect, useState } from "react";
+import image from "../../assets/loghi-03.png";
+import msgIcon from "../../assets/icons/msg icon.png";
+import notificationIcon from "../../assets/icons/Notifications icon.png";
+import settingsIcon from "../../assets/icons/Settings icon.png";
+
+import { useNavigate } from "react-router-dom";
+
+import NativeIcons from "./NativeIcons";
 
 const Header = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const { userDetails, setUserDetails } = useUserDetails();
-  const[backBtnVisible,setBackBtnVisible] = useState(false);
-
-  useEffect(() => {
-    const path = location.pathname.split('/')[2]
-    if(path!=='home'){
-      setBackBtnVisible(true);
-    }
-    else{
-      setBackBtnVisible(false)
-    }
-  }, [location.pathname]);
-
-  const handleLogout = () => {
-    navigate("/");
-    sessionStorage.removeItem("isLoggedIn");
-    sessionStorage.removeItem("email");
-    setUserDetails(null);
-  };
 
   return (
     <>
-      <div className="sticky top-0 bg-red-600 rounded-b-xl text-white font-semibold pt-1 mb-2 w-full text-center">
-        <div className="flex justify-between px-5">
-          <div className="flex">
-            {backBtnVisible && (
-              <button className="pr-2" onClick={()=>navigate(-1)}>
-                <IoArrowBack size={35} />
-              </button>
-            )}
-            <h2 className="text-2xl border rounded-full p-1 px-3 m-1 bg-gray-100 text-black">
-              {userDetails?.startList.users[0].nickName
-                .slice(0, 1)
-                .toUpperCase()}
-            </h2>
+      <div className="bg-bg-header-gray px-2.5 py-2 flex items-center justify-between">
+        <div className="flex items-center">
+          <div className="h-12 sm:h-14">
+            <img className="h-full" src={image} />
           </div>
-          <div className="flex w-1/6 justify-around p-2 gap-2 mx-5 w-fit">
-            <div className="border border-transparent ">
-              <IoIosNotificationsOutline size={35} />
-            </div>
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <FaRegUser size={30} />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuLabel>Menu</DropdownMenuLabel>
-                <DropdownMenuSeparator></DropdownMenuSeparator>
-
-                <DropdownMenuItem onClick={() => navigate("/pwa/profile")}>
-                  <FaUser style={{ paddingRight: "5px" }} size={25} />
-                  Profile
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={() => navigate("/pwa/privacyDisplay")}
-                >
-                  <MdPrivacyTip style={{ paddingRight: "5px" }} size={25} />
-                  Privacy
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => navigate("/changePassword",{state:{backBtn:true}})}>
-                  <RiLockPasswordFill
-                    style={{ paddingRight: "5px" }}
-                    size={25}
-                  />
-                  Change Password
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => navigate("/pwa/pwaMap")}>
-                  <FaMapLocation style={{ paddingRight: "5px" }} size={25} />
-                  Map
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={() => navigate("/pwa/notifications")}
-                >
-                  <IoMdNotifications
-                    style={{ paddingRight: "5px" }}
-                    size={25}
-                  />
-                  Notifications
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => navigate("/pwa/qrScan")}>
-                  <CiBarcode style={{ paddingRight: "5px" }} size={25} />
-                  QR-Code Reader
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => navigate("/pwa/security")}>
-                  <RiNotificationBadgeFill
-                    style={{ paddingRight: "5px" }}
-                    size={25}
-                  />
-                  Sicurezze
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handleLogout()}>
-                  <RiLogoutBoxFill style={{ paddingRight: "5px" }} size={25} />
-                  Logout
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
+          <p className="flex text-text-blue sm:text-lg font-semibold">
+            GEN<span className="text-text-red">A</span>I&nbsp;
+            <span className="text-text-gray">SPACE</span>
+            <span className="text-text-red">&nbsp;PWA</span>
+          </p>
+        </div>
+        <div className="flex">
+          <button
+            onClick={() => {
+              navigate("/pwa/aibot/");
+            }}
+          >
+            <NativeIcons image={msgIcon} px={2} size={4} />
+          </button>
+          <button
+            onClick={() => {
+              navigate("/pwa/settings/");
+            }}
+          >
+            <NativeIcons image={settingsIcon} px={2} size={5} />
+          </button>
+          <button
+            onClick={() => {
+              navigate("/pwa/notifications/");
+            }}
+          >
+            <NativeIcons image={notificationIcon} px={2} size={5} />
+          </button>
         </div>
       </div>
     </>

@@ -10,7 +10,7 @@ module.exports = {
   theme: {
     screens: {
       mobile: "350px",
-      sm:'640px',
+      sm: "640px",
     },
     container: {
       center: true,
@@ -22,6 +22,18 @@ module.exports = {
 
     extend: {
       colors: {
+        "text-blue": "#191919",
+        "text-red": "#FF0000",
+        "text-gray": "#999999",
+        "text-light-gray": "#A9A9A9",
+        "text-dark-gray": "#3F3F3F",
+        "bg-btn-gray":"#7F7F7F",
+        "bg-header-gray": "#F3F3F3",
+        "bg-footer-blue": "#11304B",
+        "bg-footer-red": "#DC2626",
+        "bg-input-gray": "#EEEEEE",
+        "card-light-gray": "#F8F8F8",
+        "border-dark-gray": "#5A5A5A",
         bkg: {
           DEFAULT: "rgb(var(--color-bg-offset))",
           foreground: "rgb(var(--color-bg-offset-foreground))",
@@ -55,10 +67,6 @@ module.exports = {
         popover: {
           DEFAULT: "hsl(var(--popover))",
           foreground: "hsl(var(--popover-foreground))",
-        },
-        card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
         },
       },
       borderRadius: {

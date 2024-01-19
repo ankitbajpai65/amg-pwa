@@ -28,11 +28,12 @@ import PrivacyDisplayOnly from "./containers/privacyPolicy/PrivacyDisplayOnly.ts
 import AiBot from "./containers/aibot/AiBot.tsx";
 import ChatWithYourFiles from "./containers/genAi/chatwithyourfiles/ChatWithYourFiles.tsx";
 import Gpt_prompt from "./containers/genAi/gpt-prompt/Gpt_prompt.tsx";
-import Security from "./containers/security/Security.tsx";
 import Notifications from "./containers/notifications/Notifications.tsx";
 import { registerSW } from "virtual:pwa-register";
 import Mfa from "./containers/login/mfa/Mfa.tsx";
 import PrivacyLayout from "./layout/PrivacyLayout.tsx";
+import PwaSettings from "./containers/pwaSettings/PwaSettings.tsx";
+import PwaCalendar from "./containers/calendar/PwaCalendar.tsx";
 
 registerSW({ immediate: true });
 
@@ -142,8 +143,10 @@ const router = createBrowserRouter(
           }
         />
         <Route path="aibot/" element={<AiBot />} />
-        <Route path="security/" element={<Security />} />
+
         <Route path="notifications/" element={<Notifications />} />
+        <Route path="settings/" element={<PwaSettings />} />
+        <Route path="calendar/" element={<PwaCalendar />} />
 
         <Route path="gen-ai/">
           <Route path="chat-with-your-files/" element={<ChatWithYourFiles />} />

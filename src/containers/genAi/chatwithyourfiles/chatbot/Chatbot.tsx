@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { IoMdSend } from "react-icons/io";
+import { IoArrowUpCircleSharp } from "react-icons/io5";
+
 
 export const Chantbot = (props: { fileName: string }) => {
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
@@ -95,23 +96,24 @@ export const Chantbot = (props: { fileName: string }) => {
               </div>
             ))}
           </div>
-          <form
-            onSubmit={(e) => submitHandler(e)}
-            className="w-full bottom-0 pb-1 sticky flex"
-          >
-            <input
-              type="text"
-              value={userQuestion}
-              placeholder="Ask Me Anything"
-              className="w-full border-2 border-r-0 bg-neutral-100 dark:bg-neutral-600 p-2 rounded-l-xl outline-0"
-              onChange={(e) => setUserQuestion(e.target.value)}
-            />
-            <button
-              className="bg-neutral-100 dark:bg-neutral-600 border-2 border-l-0 rounded-r-xl px-2"
-              type="submit"
-            >
-              <IoMdSend size={25} />
-            </button>
+          <form onSubmit={(e) => submitHandler(e)} className="">
+            <div className="flex rounded-b-xl overflow-hidden h-14 box-border">
+              <input
+                type="text"
+                placeholder="Ask Me Anything"
+                className="bg-bg-input-gray dark:bg-neutral-600 w-full h-full rounded-l-md p-1 px-2 focus:outline-0"
+                value={userQuestion}
+                onChange={(e) => setUserQuestion(e.target.value)}
+              />
+              <button
+                className="bg-bg-input-gray dark:bg-neutral-600 rounded-r-md px-2"
+                type="submit"
+              >
+                <div className="text-text-red">
+                  <IoArrowUpCircleSharp size={25} />
+                </div>
+              </button>
+            </div>
           </form>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { IoMdSend } from "react-icons/io";
+import { IoArrowUpCircleSharp } from "react-icons/io5";
 
 export default function Gpt_prompt() {
   const [userQuestion, setUserQuestion] = useState("");
@@ -65,10 +65,14 @@ export default function Gpt_prompt() {
 
   return (
     <div className="flex flex-col h-full overflow-auto">
-      <h1 className="text-xl font-bold text-center">GPT-Prompt</h1>
-      {/* <Divider className="my-2" /> */}
+      <div className="py-4 px-5 text-text-blue">
+        <p className="text-lg font-semibold">Gpt Prompt</p>
+        <p>
+          Ask our chatbot anything by typing your question in the space below.
+        </p>
+      </div>
       <div className="grow py-1 px-2 overflow-auto text-ellipsis">
-        {conversation.length === 0 ? (
+        {/* {conversation.length <= 1 ? (
           <div className="self-start px-2 py-1 border rounded-xl">
             <p className="self-center top-0 sticky bg-white w-full py-4">
               Scopri il futuro con la nostra sezione demo GENAI: un viaggio
@@ -79,7 +83,7 @@ export default function Gpt_prompt() {
           </div>
         ) : (
           <></>
-        )}
+        )} */}
 
         <div className="p-2">
           {conversation.map((item, index) => (
@@ -106,15 +110,17 @@ export default function Gpt_prompt() {
           <input
             type="text"
             placeholder="Ask Me Anything"
-            className="border-2 border-r-0 bg-neutral-100 dark:bg-neutral-600 w-full h-full rounded-l-xl p-1 px-2 focus:outline-0"
+            className="bg-bg-input-gray dark:bg-neutral-600 w-full h-full rounded-l-md p-1 px-2 focus:outline-0"
             value={userQuestion}
             onChange={(e) => setUserQuestion(e.target.value)}
           />
           <button
-            className="bg-neutral-100 dark:bg-neutral-600 border-2 border-l-0 rounded-r-xl px-2"
+            className="bg-bg-input-gray dark:bg-neutral-600 rounded-r-md px-2"
             type="submit"
           >
-            <IoMdSend size={25} />
+            <div className="text-text-red">
+              <IoArrowUpCircleSharp size={25} />
+            </div>
           </button>
         </div>
       </form>

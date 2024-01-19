@@ -1,8 +1,10 @@
-const Notifications = () => {
+const PwaCalendar
+ = () => {
   return (
     <div className="flex justify-center items-center">
       <div>Coming soon</div>
     </div>
   );
 };
-export default Notifications;
+export default PwaCalendar
+;

@@ -23,7 +23,7 @@ function App() {
 
   
   return (
-    <div className="border-box sm:m-2 h-screen flex items-center mobile:m-0">
+    <div className="w-full h-full">
       <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID as string}>
         <Login />
       </GoogleOAuthProvider>
