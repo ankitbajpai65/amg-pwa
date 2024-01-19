@@ -76,7 +76,7 @@ const ChangePass = () => {
   return (
     <div className="flex flex-col w-full h-full">
       {/* header---------- */}
-      <div className="bg-bg-header-gray px-5">
+      <div className="bg-bg-header-gray px-5 py-1">
         <div className="flex items-center">
           <div className="h-12 sm:h-14">
             <img className="h-full" src={image} />

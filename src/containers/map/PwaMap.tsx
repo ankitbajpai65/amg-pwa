@@ -57,7 +57,7 @@ const PwaMap = () => {
           </GoogleMap>
         </div>
       ) : (
-        <div>Map Did not get Loaded</div>
+        <div className="text-center">Map Did not get Loaded</div>
       )}
     </div>
   );

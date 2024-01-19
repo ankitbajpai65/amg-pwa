@@ -33,14 +33,22 @@ function PrivacyLayout() {
 
   return (
     <>
-      <div className="bg-red-600 rounded h-20 text-white font-semibold mb-2 w-full text-center rounded-b-xl">
-        <div className="flex justify-center items-center ">
-          <p className="text-4xl font-bold">AMG</p>
-          <img className="h-16" src={image}></img>
+      {/* header---------- */}
+      <div className="bg-bg-header-gray px-5 py-1">
+        <div className="flex items-center">
+          <div className="h-12 sm:h-14">
+            <img className="h-full" src={image} />
+          </div>
+          <p className="flex text-text-blue sm:text-lg font-semibold">
+            GEN<span className="text-text-red">A</span>I&nbsp;
+            <span className="text-text-gray">SPACE</span>
+            <span className="text-text-red">&nbsp;PWA</span>
+          </p>
         </div>
       </div>
+      {/* header---------- */}
       <Outlet />
-      <div className="rounded-t-xl bg-red-600 h-8 w-full mobile:sticky mobile:top-[100vh] sm:static sm:top-0"></div>
+      <div className="bg-bg-footer-red h-8 w-full mobile:sticky mobile:top-[100vh] sm:static sm:top-0"></div>
     </>
   );
 }
