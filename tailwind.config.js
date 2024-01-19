@@ -32,7 +32,7 @@ module.exports = {
         "bg-footer-blue": "#11304B",
         "bg-footer-red": "#DC2626",
         "bg-input-gray": "#EEEEEE",
-        "bg-card-light-Gray": "#F8F8F8",
+        "card-light-gray": "#F8F8F8",
         "border-dark-gray": "#5A5A5A",
         bkg: {
           DEFAULT: "rgb(var(--color-bg-offset))",
@@ -67,10 +67,6 @@ module.exports = {
         popover: {
           DEFAULT: "hsl(var(--popover))",
           foreground: "hsl(var(--popover-foreground))",
-        },
-        card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
         },
       },
       borderRadius: {
