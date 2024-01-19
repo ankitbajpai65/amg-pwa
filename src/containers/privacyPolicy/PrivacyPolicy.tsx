@@ -46,9 +46,9 @@ const PrivacyPolicy = () => {
         </div>
 
         <button
-          className="rounded-2xl bg-red-600 p-2 m-2 border text-white font-medium
+          className="rounded-md bg-text-red p-2 m-2 border text-white font-medium
       mb-2 hover:bg-red-500 hover:border hover:border-black focus:bg-red-500
-      active:bg-red-700 text-2xl px-5 disabled:pointer-events-none disabled:bg-slate-300"
+      active:bg-red-700 text-2xl px-5 disabled:pointer-events-none disabled:opacity-25"
           disabled={!btnAccess}
           onClick={() => navigate("/policy/privacy2")}
         >

@@ -73,11 +73,11 @@ const PrivacyPolicy2 = () => {
   return (
     <>
       <div className="flex flex-col items-center h-3/4 overflow-hidden">
-        <div className="my-5 mx-10 p-10 text-xl  border overflow-auto rounded-xl">
+        <div className="my-5 mx-10 p-10 text-lg border overflow-auto rounded-xl">
           {privacyText}
         </div>
-        <div>
-          <label htmlFor="theme-switch">Acconsento</label>
+        <div className="flex items-center"> 
+          <label htmlFor="theme-switch" className="font-semibold">Acconsento</label>
           <Switch
             id="theme-switch"
             // checked={}
@@ -86,9 +86,9 @@ const PrivacyPolicy2 = () => {
         </div>
 
         <button
-          className="rounded-2xl bg-red-600 p-2 m-2 border text-white font-medium
+          className="rounded-md bg-text-red p-2 m-2 border text-white font-medium
       mb-2 hover:bg-red-500 hover:border hover:border-black focus:bg-red-500
-      active:bg-red-700 text-2xl px-5 disabled:pointer-events-none disabled:bg-slate-300"
+      active:bg-red-700 text-2xl px-5 disabled:pointer-events-none disabled:opacity-25"
           disabled={!btnAccess}
           onClick={() => handleSubmit()}
         >
