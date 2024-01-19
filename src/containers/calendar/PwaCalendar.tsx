@@ -1,9 +1,9 @@
 const PwaCalendar
  = () => {
   return (
-    <>
-      <div>Comming soon</div>
-    </>
+    <div className="flex justify-center items-center">
+      <div>Coming soon</div>
+    </div>
   );
 };
 export default PwaCalendar
