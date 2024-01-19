@@ -1,41 +1,14 @@
-// import { IoIosNotificationsOutline } from "react-icons/io";
-// import { FaRegUser } from "react-icons/fa";
-// import { FaUser } from "react-icons/fa";
-// import { MdPrivacyTip } from "react-icons/md";
-// import { RiLockPasswordFill } from "react-icons/ri";
-// import { FaMapLocation } from "react-icons/fa6";
-// import { IoMdNotifications } from "react-icons/io";
-// import { RiNotificationBadgeFill } from "react-icons/ri";
-// import { RiLogoutBoxFill } from "react-icons/ri";
-// import { CiBarcode } from "react-icons/ci";
-// import {
-//   DropdownMenu,
-//   DropdownMenuContent,
-//   DropdownMenuItem,
-//   DropdownMenuLabel,
-//   DropdownMenuSeparator,
-//   DropdownMenuTrigger,
-// } from "@/components/ui/dropdown-menu";
-// // import { IoArrowBack } from "react-icons/io5";
 import image from "../../assets/loghi-03.png";
 import msgIcon from "../../assets/icons/msg icon.png";
 import notificationIcon from "../../assets/icons/Notifications icon.png";
 import settingsIcon from "../../assets/icons/Settings icon.png";
 
 import { useNavigate } from "react-router-dom";
-import { useUserDetails } from "@/lib/context/userDetailsContext";
+
 import NativeIcons from "./NativeIcons";
 
 const Header = () => {
   const navigate = useNavigate();
-  const { setUserDetails } = useUserDetails();
-
-  // const handleLogout = () => {
-  //   navigate("/");
-  //   sessionStorage.removeItem("isLoggedIn");
-  //   sessionStorage.removeItem("email");
-  //   setUserDetails(null);
-  // };
 
   return (
     <>
