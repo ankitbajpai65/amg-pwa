@@ -22,14 +22,14 @@ const Home = () => {
 
   return (
     <div className="p-2 h-max pb-14">
-      <div className="text-lg font-semibold">
-        Welcome, {userDetails?.startList.users[0].nickName}
+      <div className="px-4 py-2 text-lg font-semibold">
+        Welcome {userDetails?.startList.users[0].nickName},
       </div>
       <div className="p-2 flex justify-center flex-wrap gap-5 mobile:max-sm:gap-1 mobile:max-sm:p-1">
         {userDetails?.startList?.cards?.map((item, key) => {
           return (
             <Card
-              className=" rounded-xl bg-bg-card-light-gray m-2 shadow-lg w-full"
+              className="rounded-xl bg-bg-card-light-gray m-2 shadow-lg w-full"
               key={key}
             >
               <CardHeader>

@@ -36,14 +36,14 @@ const Header = () => {
               navigate("/pwa/settings/");
             }}
           >
-            <NativeIcons image={settingsIcon} px={2} size={4} />
+            <NativeIcons image={settingsIcon} px={2} size={5} />
           </button>
           <button
             onClick={() => {
               navigate("/pwa/notifications/");
             }}
           >
-            <NativeIcons image={notificationIcon} px={2} size={4} />
+            <NativeIcons image={notificationIcon} px={2} size={5} />
           </button>
         </div>
       </div>
