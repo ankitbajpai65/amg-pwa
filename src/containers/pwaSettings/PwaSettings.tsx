@@ -36,7 +36,7 @@ const PwaSettings = () => {
       </div>
       <div>
         <div
-          className="flex items-center justify-between px-8 py-3 border-b"
+          className="flex items-center justify-between px-8 py-3 border-b border-border-light-gray"
           onClick={() => navigate("/pwa/profile")}
         >
           <div className="flex items-center text-lg">
@@ -48,7 +48,7 @@ const PwaSettings = () => {
           </div>
         </div>
         <div
-          className="flex items-center justify-between px-8 py-3 border-b"
+          className="flex items-center justify-between px-8 py-3 border-b border-border-light-gray"
           onClick={() => navigate("/changePassword")}
         >
           <div className="flex items-center text-lg">
@@ -60,8 +60,8 @@ const PwaSettings = () => {
           </div>
         </div>
         <div
-          className="flex items-center justify-between px-8 py-3 border-b"
-          onClick={() => navigate("/pwa/privacyDisplay")}
+          className="flex items-center justify-between px-8 py-3 border-b border-border-light-gray"
+          onClick={() => navigate("/pwa/privacy&security")}
         >
           <div className="flex items-center text-lg">
             <MdPrivacyTip style={{ marginRight: "8px" }} size={20} />
@@ -72,7 +72,7 @@ const PwaSettings = () => {
           </div>
         </div>
         <div
-          className="flex items-center justify-between px-8 py-3 border-b"
+          className="flex items-center justify-between px-8 py-3 border-b border-border-light-gray"
           onClick={() => navigate("/pwa/notifications")}
         >
           <div className="flex items-center text-lg">
@@ -84,7 +84,7 @@ const PwaSettings = () => {
           </div>
         </div>
         <div
-          className="flex items-center justify-between px-8 py-3 border-b"
+          className="flex items-center justify-between px-8 py-3 border-b border-border-light-gray"
           onClick={() => navigate("/pwa/notifications")}
         >
           <div className="flex items-center text-lg">
@@ -96,7 +96,7 @@ const PwaSettings = () => {
           </div>
         </div>
 
-        <div className="px-8 py-3 border-b">
+        <div className="px-8 py-3 border-b border-border-light-gray">
           <Dialog>
             <DialogTrigger className="w-full">
               <div className="flex items-center justify-between">
