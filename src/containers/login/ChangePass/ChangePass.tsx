@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import image from "../../../assets/loghi-03.png";
-import backArrow from "../../../assets/icons/backArrow.png";
 import { errorAlert } from "@/components/appComponents/appAlert";
 import useChangePassApi from "@/hooks/useChangePassApi";
-import { useNavigate } from "react-router-dom";
 import { primaryBtnStyle } from "@/lib/cssTailwind";
+import BodyBackBtn from "@/components/appComponents/BodyBackBtn";
 
 type Inputs = {
   email: string;
@@ -21,7 +20,6 @@ const ChangePass = () => {
     newPass2: "",
   });
   const [submitBtnDisable, setSubmitBtnDisable] = useState<boolean>(true);
-  const navigate = useNavigate();
   const root = document.querySelector(":root");
 
   useEffect(() => {
@@ -30,19 +28,18 @@ const ChangePass = () => {
     else root?.classList.remove("dark");
   }, []);
 
-  useEffect(()=>{
-        if (
-          passData.email !== "" &&
-          passData.oldPass !== "" &&
-          passData.newPass !== "" &&
-          passData.newPass2 !== ""
-        ) {
-          setSubmitBtnDisable(false);
-        } else {
-          setSubmitBtnDisable(true);
-        }
-  },[passData])
-
+  useEffect(() => {
+    if (
+      passData.email !== "" &&
+      passData.oldPass !== "" &&
+      passData.newPass !== "" &&
+      passData.newPass2 !== ""
+    ) {
+      setSubmitBtnDisable(false);
+    } else {
+      setSubmitBtnDisable(true);
+    }
+  }, [passData]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassData((prev) => ({
@@ -91,14 +88,7 @@ const ChangePass = () => {
       {/* header---------- */}
       {/* body---------- */}
       <div className="grow">
-        <div className="py-4 px-2 border-b">
-          <a onClick={() => navigate(-1)} className="flex items-center">
-            <div className="px-1">
-              <img src={backArrow}></img>
-            </div>
-            <p>Change Password</p>
-          </a>
-        </div>
+        <BodyBackBtn btnText="Change Password" />
         {/* <hr className="my-2 h-0.5 border-t-0 bg-neutral-100 opacity-100 dark:opacity-50" /> */}
         <div className="p-5">
           <div>

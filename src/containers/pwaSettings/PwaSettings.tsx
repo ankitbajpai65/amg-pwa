@@ -61,7 +61,7 @@ const PwaSettings = () => {
         </div>
         <div
           className="flex items-center justify-between px-8 py-3 border-b border-border-light-gray"
-          onClick={() => navigate("/pwa/privacyDisplay")}
+          onClick={() => navigate("/pwa/privacy&security")}
         >
           <div className="flex items-center text-lg">
             <MdPrivacyTip style={{ marginRight: "8px" }} size={20} />

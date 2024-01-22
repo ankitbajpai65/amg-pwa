@@ -34,6 +34,7 @@ import Mfa from "./containers/login/mfa/Mfa.tsx";
 import PrivacyLayout from "./layout/PrivacyLayout.tsx";
 import PwaSettings from "./containers/pwaSettings/PwaSettings.tsx";
 import PwaCalendar from "./containers/calendar/PwaCalendar.tsx";
+import PrivacyAndSecurity from "./containers/privacyPolicy/PrivacyAndSecurity.tsx";
 
 registerSW({ immediate: true });
 
@@ -93,15 +94,15 @@ const router = createBrowserRouter(
           }
         />
 
+        <Route path="privacy&security/" element={<PrivacyAndSecurity />} />
         <Route
-          path="privacyDisplay/"
+          path="privacy&security/privacyDisplay/"
           element={
             <ProtectedRoutes>
               <PrivacyDisplayOnly />
             </ProtectedRoutes>
           }
         />
-
         <Route
           path="profile/"
           element={

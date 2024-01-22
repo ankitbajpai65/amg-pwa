@@ -5,6 +5,7 @@ import { useUserDetails } from "@/lib/context/userDetailsContext";
 import useAmgUsersApi from "@/hooks/useAmgUsersApi";
 import { useNavigate } from "react-router-dom";
 import BodyBackBtn from "@/components/appComponents/BodyBackBtn";
+import { primaryBtnStyle } from "@/lib/cssTailwind";
 
 type Inputs = {
   name: string;
@@ -316,7 +317,7 @@ const UserProfile = () => {
             </div>
             <hr className="my-2 h-[0.5px] mx-0 px-0 border-t-0 bg-border-light-gray opacity-100 dark:opacity-50" />
 
-            <div className="mb-2 px-5 flex justify-between">
+            <div className="mb-2 py-3 px-5 flex justify-between">
               <label htmlFor="theme-switch">Dark Mode</label>
               <Switch
                 id="theme-switch"
@@ -330,13 +331,13 @@ const UserProfile = () => {
             </div>
             <hr className="my-2 h-[0.5px] mx-0 px-0 border-t-0 bg-border-light-gray opacity-100 dark:opacity-50" />
           </div>
-          <div className="text-center">
+          <div className="w-full px-4 py-12">
             <button
-              className="rounded-md text-xl bg-red-600 py-2 px-4 m-2 border text-white font-medium mb-2 hover:bg-red-500 hover:border hover:border-black focus:bg-red-500 active:bg-red-700 disabled:pointer-events-none disabled:bg-slate-300"
+              className={`${primaryBtnStyle}hover:border hover:border-black focus:bg-red-500 disabled:opacity-25`}
               type="submit"
               disabled={btnDisabled}
             >
-              Confirm
+              Save Edits
             </button>
           </div>
         </form>
