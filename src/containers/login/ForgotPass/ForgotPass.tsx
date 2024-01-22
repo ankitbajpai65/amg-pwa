@@ -1,17 +1,15 @@
 import { useEffect, useState } from "react";
 import image from "../../../assets/loghi-03.png";
-import backArrow from "../../../assets/icons/backArrow.png";
 import { errorAlert } from "@/components/appComponents/appAlert";
 import useCreatePassApi from "@/hooks/useCreatePassApi";
-import { useNavigate } from "react-router-dom";
 import { primaryBtnStyle } from "@/lib/cssTailwind";
+import BodyBackBtn from "@/components/appComponents/BodyBackBtn";
 
 const ForgotPass = () => {
   const { getCreatePassStatus } = useCreatePassApi();
   const root = document.querySelector(":root");
   const [userData, setUserData] = useState<string>("");
   const [submitBtnDisable, setSubmitBtnDisable] = useState<boolean>(true);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const value = localStorage.getItem("theme");
@@ -60,14 +58,7 @@ const ForgotPass = () => {
       {/* body---------- */}
 
       <div className="grow">
-        <div className="py-4 px-2 border-b">
-          <a onClick={() => navigate(-1)} className="flex items-center">
-            <div className="px-1">
-              <img src={backArrow}></img>
-            </div>
-            <p>Forgot Password</p>
-          </a>
-        </div>
+        <BodyBackBtn btnText="Forgot Password" />
         {/* <hr className="my-2 h-0.5 border-t-0 bg-neutral-100 opacity-100 dark:opacity-50" /> */}
         <div className="p-5">
           <div>
