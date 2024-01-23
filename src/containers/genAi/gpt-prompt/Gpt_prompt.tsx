@@ -95,7 +95,7 @@ export default function Gpt_prompt() {
               )}
               {item.answer && (
                 <>
-                  <div className="self-start px-2 py-1 bg-neutral-100 dark:bg-neutral-600 border rounded-md mr-8">
+                  <div className="self-start px-2 py-1 bg-neutral-100 dark:bg-neutral-600 border border-border-light-gray rounded-md mr-8">
                     {item.answer}
                   </div>
                   <div ref={scrollContainerRef}></div>

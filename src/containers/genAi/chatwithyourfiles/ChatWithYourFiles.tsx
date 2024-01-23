@@ -127,7 +127,7 @@ export default function ChatWithYourFiles() {
           </DialogContent>
         </Dialog>
       </div>
-      <div className="h-full dark:bg-neutral-600 rounded-md my-2 box-border overflow-hidden">
+      <div className="h-full dark:bg-neutral-600 rounded-md my-2 box-border overflow-hidden flex flex-col">
         <div className="h-fit">{initialDisplay()}</div>
         <div className="h-full dark:bg-neutral-600 rounded-xl">
           <Chantbot fileName={file?.name as string} />
