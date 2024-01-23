@@ -17,6 +17,7 @@ const PrivacyAndSecurity = () => {
         <p>Manage your privacy preferences, security marketing and more.</p>
       </div>
       <div className="px-5">
+        {/* Security settings */}
         <div className="mb-2 py-3 flex flex-col">
           <div className="text-text-light-gray py-2">
             <div className="flex items-center">
@@ -47,6 +48,7 @@ const PrivacyAndSecurity = () => {
             </div>
           </div>
         </div>
+        {/* Privacy settings */}
         <div className="mb-2 py-3 flex flex-col">
           <div className="text-text-light-gray py-2">
             <div className="flex items-center">
@@ -55,11 +57,12 @@ const PrivacyAndSecurity = () => {
             </div>
             <hr className="my-2 h-[0.5px] mx-0 px-0 border-t-0 bg-border-light-gray opacity-100 dark:opacity-50" />
           </div>
+          {/* Show full name and image toggle */}
           <div className="flex justify-between">
             <label htmlFor="faceId">Show full name and image</label>
             <Switch id="faceId" name="faceId" />
           </div>
-
+          {/* Privacy Policy link */}
           <div className="flex items-center justify-between py-3">
             <div className="flex items-center text-lg">
               <p>Privacy Policy</p>
@@ -73,6 +76,7 @@ const PrivacyAndSecurity = () => {
             </div>
           </div>
         </div>
+        {/* Marketing settings */}
         <div className="mb-2 py-3 flex flex-col">
           <div className="text-text-light-gray py-2">
             <div className="flex items-center">

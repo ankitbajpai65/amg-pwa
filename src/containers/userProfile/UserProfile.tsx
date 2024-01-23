@@ -174,7 +174,7 @@ const UserProfile = () => {
         </p>
         <p>{userDetails?.startList.users[0].email}</p>
       </div>
-      <div className="">
+      <>
         <form onSubmit={handleSubmit}>
           <div className="mt-2 w-full py-2 text-l">
             <div className="py-4 px-5">
@@ -317,18 +317,20 @@ const UserProfile = () => {
             </div>
             <hr className="my-2 h-[0.5px] mx-0 px-0 border-t-0 bg-border-light-gray opacity-100 dark:opacity-50" />
 
-            <div className="mb-2 py-3 px-5 flex justify-between">
-              <label htmlFor="theme-switch">Dark Mode</label>
-              <Switch
-                id="theme-switch"
-                name="theme"
-                checked={themeState}
-                onClick={() => {
-                  setThemeState(!themeState);
-                  setBtnDisabled(false);
-                }}
-              />
-            </div>
+            
+              <div className="flex justify-between px-5 py-4">
+                <label htmlFor="theme-switch">Dark Mode</label>
+                <Switch
+                  id="theme-switch"
+                  name="theme"
+                  checked={themeState}
+                  onClick={() => {
+                    setThemeState(!themeState);
+                    setBtnDisabled(false);
+                  }}
+                />
+              </div>
+           
             <hr className="my-2 h-[0.5px] mx-0 px-0 border-t-0 bg-border-light-gray opacity-100 dark:opacity-50" />
           </div>
           <div className="w-full px-4 py-12">
@@ -341,7 +343,7 @@ const UserProfile = () => {
             </button>
           </div>
         </form>
-      </div>
+      </>
     </div>
   );
 };

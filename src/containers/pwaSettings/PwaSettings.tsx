@@ -85,7 +85,7 @@ const PwaSettings = () => {
         </div>
         <div
           className="flex items-center justify-between px-8 py-3 border-b border-border-light-gray"
-          onClick={() => navigate("/pwa/notifications")}
+          onClick={() => navigate("/pwa/help&support")}
         >
           <div className="flex items-center text-lg">
             <IoHelpCircle style={{ marginRight: "8px" }} size={20} />
@@ -114,7 +114,7 @@ const PwaSettings = () => {
               <DialogHeader>
                 <h1>Logout</h1>
               </DialogHeader>
-              
+
               <DialogDescription>
                 Do you want to log out of your account? If you log out, you will
                 have to re-enter your credentials.
