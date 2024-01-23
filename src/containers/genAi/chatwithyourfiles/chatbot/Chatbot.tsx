@@ -77,7 +77,7 @@ export const Chantbot = (props: { fileName: string }) => {
     <>
       <div className="flex justify-center h-full px-2">
         <div className="flex-1 flex flex-col justify-between overflow-auto mb-2 w-full">
-          <div className="flex flex-col gap-y-4 my-4">
+          <div className="flex flex-col gap-y-4 my-4 grow">
             {conversation.map((item, index) => (
               <div key={index} className="flex flex-col gap-y-4">
                 {item.question && (
@@ -87,7 +87,7 @@ export const Chantbot = (props: { fileName: string }) => {
                 )}
                 {item.answer && (
                   <>
-                    <div className="self-start px-2 py-1 bg-neutral-200 dark:bg-neutral-500 border rounded-md mr-8">
+                    <div className="self-start px-2 py-1 bg-neutral-200 dark:bg-neutral-500 border border-border-light-gray rounded-md mr-8">
                       {item.answer}
                     </div>
                     <div ref={scrollContainerRef}></div>
