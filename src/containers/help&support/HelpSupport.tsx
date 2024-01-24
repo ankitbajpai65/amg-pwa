@@ -14,7 +14,7 @@ const HelpSupport = () => {
       </div>
       <div className="px-5">
         <div
-          className="flex items-center justify-between py-3 border-b border-border-light-gray"
+          className="flex items-center justify-between py-3 border-b border-border-light-gray cursor-pointer"
           onClick={() => navigate("/pwa/settings")}
         >
           <div className="flex items-center text-lg">
@@ -24,7 +24,7 @@ const HelpSupport = () => {
             <IoIosArrowForward />
           </div>
         </div>
-        <div className="flex items-center justify-between py-3 border-b border-border-light-gray">
+        <div className="flex items-center justify-between py-3 border-b border-border-light-gray cursor-pointer">
           <div className="flex items-center text-lg">
             <p>What is a Copilot</p>
           </div>
@@ -33,7 +33,7 @@ const HelpSupport = () => {
           </div>
         </div>
         <div
-          className="flex items-center justify-between py-3 border-b border-border-light-gray"
+          className="flex items-center justify-between py-3 border-b border-border-light-gray cursor-pointer"
           onClick={() => navigate("/pwa/helpFaq")}
         >
           <div className="flex items-center text-lg">

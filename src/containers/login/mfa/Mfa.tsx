@@ -3,13 +3,13 @@ import image from "../../../assets/loghi-03.png";
 import { errorAlert } from "@/components/appComponents/appAlert";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useUserDetails } from "@/lib/context/userDetailsContext";
+import BodyBackBtn from "@/components/appComponents/BodyBackBtn";
 
 const Mfa = () => {
   const [mfaPin, setMfaPin] = useState<string>();
-  const { userDetails,setUserDetails } = useUserDetails();
+  const { userDetails, setUserDetails } = useUserDetails();
   const location = useLocation();
   const navigate = useNavigate();
-
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMfaPin(e.target.value);
@@ -26,15 +26,14 @@ const Mfa = () => {
         ) {
           navigate("/policy/privacy");
         } else {
-          navigate(`/pwa/home/${userDetails?.startList.users[0].email}`);
+          navigate(`/pwa/home`);
         }
-      }
-      else{
-         navigate("/");
-         sessionStorage.removeItem("isLoggedIn");
-         sessionStorage.removeItem("email");
-         errorAlert(2000, "Authentication Failed");
-         setUserDetails(null);
+      } else {
+        navigate("/");
+        sessionStorage.removeItem("isLoggedIn");
+        sessionStorage.removeItem("email");
+        errorAlert(2000, "Authentication Failed");
+        setUserDetails(null);
       }
     } else {
       errorAlert(3000, "Empty Input fields");
@@ -42,44 +41,47 @@ const Mfa = () => {
   };
 
   return (
-    <div className="w-screen h-screen flex items-center justify-center">
-      <form
-        onSubmit={handleSubmit}
-        className="mobile:w-full mobile:h-full max-w-md min-w-min w-3/6 mx-auto "
-      >
-        <div className=" mobile:w-full mobile:h-full mobile:p-0 max-w-md min-w-min w-3/6 p-2 flex flex-col items-center mx-auto p-2 bg-bkg border rounded-md ">
-          <div className="bg-red-600 pb-5 rounded h-20 text-white font-semibold mb-2 w-full text-center rounded-b-xl">
-            <div className="flex justify-center items-center ">
-              <p className="text-4xl font-bold">AMG</p>
-              <img className="h-16" src={image}></img>
-            </div>
+    <div className="flex flex-col w-full h-full">
+      {/* header---------- */}
+      <div className="bg-bg-header-gray px-5 py-1">
+        <div className="flex items-center">
+          <div className="h-12 sm:h-14">
+            <img className="h-full" src={image} />
           </div>
-
-          <div className="m-2 w-full p-2 mt-10">
+          <p className="flex text-text-blue sm:text-lg font-semibold">
+            GEN<span className="text-text-red">A</span>I&nbsp;
+            <span className="text-text-gray">SPACE</span>
+            <span className="text-text-red">&nbsp;PWA</span>
+          </p>
+        </div>
+      </div>
+      {/* header---------- */}
+      <div className="grow">
+        <BodyBackBtn btnText="MFA" />
+        <form onSubmit={handleSubmit} className="">
+          <div className="p-5 mt-10">
             <div className="mb-1 flex flex-col ">
               <label htmlFor="pin" className="pr-2 font-semibold">
                 Enter Pin
               </label>
               <input
-                className="rounded-xl border-2 p-1 px-2  border-gray-300 hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
+                className="rounded-md border border-border-dark-gray p-1 px-2 hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
                 type="number"
                 id="pin"
                 onChange={(e) => handleInputChange(e)}
                 required
               />
             </div>
+            <button
+              className="w-full rounded-md text-xl bg-text-red py-2 px-4 my-7 border text-white font-medium mb-2 hover:bg-red-500 hover:border hover:border-black focus:bg-red-500 active:bg-red-700"
+              type="submit"
+            >
+              Confirm
+            </button>
           </div>
-
-          <button
-            className="rounded-3xl text-xl bg-red-600 py-2 px-4 m-2 border text-white font-medium mb-2 hover:bg-red-500 hover:border hover:border-black focus:bg-red-500 active:bg-red-700"
-            type="submit"
-          >
-            Confirm
-          </button>
-
-          <div className="rounded-t-xl sticky top-[96%] bg-red-600 h-8 w-full"></div>
-        </div>
-      </form>
+        </form>
+      </div>
+      <div className="bg-bg-footer-red h-8 w-full"></div>
     </div>
   );
 };

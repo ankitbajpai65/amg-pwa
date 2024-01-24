@@ -53,7 +53,7 @@ const Login = () => {
           ) {
             navigate("/policy/privacy");
           } else {
-            navigate(`/pwa/home/${userDetails?.startList.users[0].email}`);
+            navigate(`/pwa/home`);
           }
         } else {
           navigate("/");
@@ -69,7 +69,7 @@ const Login = () => {
         ) {
           navigate("/policy/privacy");
         } else {
-          navigate(`/pwa/home/${userDetails?.startList.users[0].email}`);
+          navigate(`/pwa/home`);
         }
       }
       setLoaderVisible(false);

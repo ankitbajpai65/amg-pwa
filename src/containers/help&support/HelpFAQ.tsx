@@ -56,20 +56,22 @@ const HelpFAQ = () => {
       <div className="px-5">
         {faq.map((item, idx)=>{
             return (
-              
-                <div
-                  className="flex items-center justify-between py-3 border-b border-border-light-gray"
-                  onClick={() => navigate("/pwa/faqDisplay",{state:{singleQuestion:item}})}
-                  key={idx}
-                >
-                  <div className="flex items-center text-lg">
-                    <p>{item.question}</p>
-                  </div>
-                  <div>
-                    <IoIosArrowForward />
-                  </div>
+              <div
+                className="flex items-center justify-between py-3 border-b border-border-light-gray cursor-pointer"
+                onClick={() =>
+                  navigate("/pwa/faqDisplay", {
+                    state: { singleQuestion: item },
+                  })
+                }
+                key={idx}
+              >
+                <div className="flex items-center text-lg">
+                  <p>{item.question}</p>
                 </div>
-             
+                <div>
+                  <IoIosArrowForward />
+                </div>
+              </div>
             );
         })}
         {/* <div className="flex items-center justify-between py-3 border-b border-border-light-gray">

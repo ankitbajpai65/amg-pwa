@@ -36,7 +36,7 @@ const PwaSettings = () => {
       </div>
       <div>
         <div
-          className="flex items-center justify-between px-8 py-3 border-b border-border-light-gray"
+          className="flex items-center justify-between px-8 py-3 border-b border-border-light-gray cursor-pointer"
           onClick={() => navigate("/pwa/profile")}
         >
           <div className="flex items-center text-lg">
@@ -48,7 +48,7 @@ const PwaSettings = () => {
           </div>
         </div>
         <div
-          className="flex items-center justify-between px-8 py-3 border-b border-border-light-gray"
+          className="flex items-center justify-between px-8 py-3 border-b border-border-light-gray cursor-pointer"
           onClick={() => navigate("/changePassword")}
         >
           <div className="flex items-center text-lg">
@@ -60,7 +60,7 @@ const PwaSettings = () => {
           </div>
         </div>
         <div
-          className="flex items-center justify-between px-8 py-3 border-b border-border-light-gray"
+          className="flex items-center justify-between px-8 py-3 border-b border-border-light-gray cursor-pointer"
           onClick={() => navigate("/pwa/privacy&security")}
         >
           <div className="flex items-center text-lg">
@@ -72,8 +72,8 @@ const PwaSettings = () => {
           </div>
         </div>
         <div
-          className="flex items-center justify-between px-8 py-3 border-b border-border-light-gray"
-          onClick={() => navigate("/pwa/notifications")}
+          className="flex items-center justify-between px-8 py-3 border-b border-border-light-gray cursor-pointer"
+          onClick={() => navigate("/pwa/notificationSetting")}
         >
           <div className="flex items-center text-lg">
             <IoMdNotifications style={{ marginRight: "8px" }} size={20} />
@@ -84,7 +84,7 @@ const PwaSettings = () => {
           </div>
         </div>
         <div
-          className="flex items-center justify-between px-8 py-3 border-b border-border-light-gray"
+          className="flex items-center justify-between px-8 py-3 border-b border-border-light-gray cursor-pointer"
           onClick={() => navigate("/pwa/help&support")}
         >
           <div className="flex items-center text-lg">
