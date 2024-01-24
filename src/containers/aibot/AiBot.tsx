@@ -63,13 +63,11 @@ const AiBot = () => {
   return (
     <div className="flex flex-col h-full overflow-auto px-1">
       <div className="py-4 px-5 text-text-blue">
-        <p className="text-lg font-semibold">Gpt Prompt</p>
-        <p>
-          Ask our chatbot anything by typing your question in the space below.
-        </p>
+        <p className="text-lg font-semibold">Datapartners Chat</p>
+        <p>Talk to us, get to know us, make an appointment and more.</p>
       </div>
       <div className="grow py-1 px-2 overflow-auto text-ellipsis">
-        <div className="self-start px-2 py-1 bg-neutral-100 border rounded-md mr-8 dark:bg-neutral-600">
+        <div className="self-start px-2 py-1 bg-neutral-100 rounded-md mr-8 dark:bg-neutral-600">
           👋 Want to chat about DataPartners? I'm an AI chatbot here to help you
           find your way.
         </div>
@@ -82,7 +80,7 @@ const AiBot = () => {
                 </div>
               )}
               {item.answer && (
-                <div className="self-start px-2 py-1 bg-neutral-100 dark:bg-neutral-600 border rounded-md mr-8">
+                <div className="self-start px-2 py-1 bg-neutral-100 dark:bg-neutral-600 rounded-md mr-8">
                   {item.answer}
                 </div>
               )}

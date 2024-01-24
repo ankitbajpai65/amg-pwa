@@ -38,6 +38,8 @@ import PrivacyAndSecurity from "./containers/privacyPolicy/PrivacyAndSecurity.ts
 import HelpSupport from "./containers/help&support/HelpSupport.tsx";
 import HelpFAQ from "./containers/help&support/HelpFAQ.tsx";
 import FaqDisplay from "./containers/help&support/FaqDisplay.tsx";
+import NotificationSetting from "./containers/pwaNotifications/NotificationSetting.tsx";
+import CwyfChat from "./containers/genAi/chatwithyourfiles/CwyfChat.tsx";
 
 registerSW({ immediate: true });
 
@@ -89,7 +91,7 @@ const router = createBrowserRouter(
         }
       >
         <Route
-          path="home/:userEmail"
+          path="home/"
           element={
             <ProtectedRoutes>
               <Home />
@@ -151,12 +153,16 @@ const router = createBrowserRouter(
         <Route path="settings/" element={<PwaSettings />} />
         <Route path="calendar/" element={<PwaCalendar />} />
         <Route path="help&support/" element={<HelpSupport />} />
+        <Route path="notificationSetting/" element={<NotificationSetting />} />
         <Route path="notifications/" element={<Notifications />} />
+
         <Route path="helpFaq/" element={<HelpFAQ />} />
         <Route path="faqDisplay/" element={<FaqDisplay />} />
 
         <Route path="gen-ai/">
           <Route path="chat-with-your-files/" element={<ChatWithYourFiles />} />
+          <Route path="chat-with-your-files/cwyfchat/" element={<CwyfChat />} />
+
           <Route path="gpt-prompt/" element={<Gpt_prompt />} />
         </Route>
       </Route>

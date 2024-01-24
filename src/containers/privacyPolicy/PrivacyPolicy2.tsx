@@ -14,7 +14,7 @@ const PrivacyPolicy2 = () => {
   useEffect(() => {
     if (userUpdateRes) {
       userUpdateRes?.status === "I"
-        ? navigate(`/pwa/home/${sessionStorage.getItem("email")}`)
+        ? navigate(`/pwa/home`)
         : navigate("/");
     }
   }, [userUpdateRes]);

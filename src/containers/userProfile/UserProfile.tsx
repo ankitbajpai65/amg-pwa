@@ -90,7 +90,7 @@ const UserProfile = () => {
   useEffect(() => {
     if (userUpdateRes) {
       updateUserDetailsContext();
-      navigate(`/pwa/home/${sessionStorage.getItem("email")}`);
+      navigate(`/pwa/home`);
     }
   }, [userUpdateRes]);
   // console.log(userDetails?.startList.users[0].darkLight);
@@ -317,9 +317,11 @@ const UserProfile = () => {
             </div>
             <hr className="my-2 h-[0.5px] mx-0 px-0 border-t-0 bg-border-light-gray opacity-100 dark:opacity-50" />
 
-            
-              <div className="flex justify-between px-5 py-4">
-                <label htmlFor="theme-switch">Dark Mode</label>
+            <div className="flex justify-between">
+              <label htmlFor="theme-switch" className="px-5 py-4">
+                Dark Mode
+              </label>
+              
                 <Switch
                   id="theme-switch"
                   name="theme"
@@ -328,9 +330,11 @@ const UserProfile = () => {
                     setThemeState(!themeState);
                     setBtnDisabled(false);
                   }}
+                  className="my-4 mr-5"
                 />
-              </div>
-           
+              
+            </div>
+
             <hr className="my-2 h-[0.5px] mx-0 px-0 border-t-0 bg-border-light-gray opacity-100 dark:opacity-50" />
           </div>
           <div className="w-full px-4 py-12">
