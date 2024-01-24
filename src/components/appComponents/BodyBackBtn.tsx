@@ -6,7 +6,10 @@ const BodyBackBtn = (props: { btnText: string }) => {
 
   return (
     <div className="py-4 px-2 border-b border-border-light-gray">
-      <a onClick={() => navigate(-1)} className="flex items-center">
+      <a
+        onClick={() => navigate(-1)}
+        className="flex items-center w-fit cursor-pointer"
+      >
         <div className="px-1">
           <img src={backArrow}></img>
         </div>
