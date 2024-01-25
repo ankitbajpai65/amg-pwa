@@ -83,7 +83,7 @@ export default function Gpt_prompt() {
               {item.question && (
                 <div className="self-end px-2 py-1 bg-blue-600 border rounded-md text-white ml-8">
                   {item.question}
-                  <div ref={scrollContainerRef}></div>
+                  
                 </div>
               )}
               {item.answer && (
@@ -91,7 +91,7 @@ export default function Gpt_prompt() {
                   <div className="self-start px-2 py-1 bg-neutral-100 dark:bg-neutral-600 border border-border-light-gray rounded-md mr-8">
                     {item.answer}
                   </div>
-                  <div ref={scrollContainerRef}></div>
+                  
                 </>
               )}
             </div>
