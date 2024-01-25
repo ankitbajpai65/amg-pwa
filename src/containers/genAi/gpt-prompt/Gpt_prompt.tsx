@@ -14,7 +14,7 @@ export default function Gpt_prompt() {
   // const urlTestLocal = "http://127.0.0.1:8000";
   useEffect(() => {
     scrollToBottom();
-  }, [conversation]);
+  }, [conversation, userQuestion]);
 
   useEffect(() => {
     const length = conversation.length;
