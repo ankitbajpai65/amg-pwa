@@ -42,6 +42,7 @@ export default function Gpt_prompt() {
           { id: prev.length, question: userQuestion, answer: "Loading..." },
         ];
       });
+      scrollToBottom();
       const res = await fetch(`${urlGCP}/prop/?prop=${userQuestion}`, {
         method: "GET",
         headers: {
