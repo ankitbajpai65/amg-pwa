@@ -34,7 +34,7 @@ export default function Gpt_prompt() {
           { id: prev.length, question: userQuestion, answer: "Loading..." },
         ];
       });
-      const res = await fetch(`${url}/response/?resp=${userQuestion}`, {
+      const res = await fetch(`${url}/prop/?prop=${userQuestion}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json; charset=UTF-8",
