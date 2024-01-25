@@ -8,9 +8,13 @@ export default function Gpt_prompt() {
     { id: 0, question: "", answer: "" },
   ]);
 
-  const url = "https://amgenaispacebackend.datapartners.ch";
+  // const url = "https://amgenaispacebackend.datapartners.ch";
+  const urlGCP = "https://amg-django-be.uc.r.appspot.com";
 
   // const urlTestLocal = "http://127.0.0.1:8000";
+  useEffect(() => {
+    scrollToBottom();
+  }, [conversation]);
 
   useEffect(() => {
     const length = conversation.length;
@@ -34,7 +38,7 @@ export default function Gpt_prompt() {
           { id: prev.length, question: userQuestion, answer: "Loading..." },
         ];
       });
-      const res = await fetch(`${url}/prop/?prop=${userQuestion}`, {
+      const res = await fetch(`${urlGCP}/prop/?prop=${userQuestion}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json; charset=UTF-8",
@@ -58,10 +62,6 @@ export default function Gpt_prompt() {
       }
     }
   };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [conversation]);
 
   return (
     <div className="flex flex-col h-full overflow-auto">
@@ -101,6 +101,7 @@ export default function Gpt_prompt() {
                   <div ref={scrollContainerRef}></div>
                 </>
               )}
+              <div ref={scrollContainerRef}></div>
             </div>
           ))}
         </div>
