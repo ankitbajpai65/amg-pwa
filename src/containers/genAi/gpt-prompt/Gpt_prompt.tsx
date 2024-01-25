@@ -25,7 +25,11 @@ export default function Gpt_prompt() {
 
   const scrollToBottom = () => {
     if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollIntoView({ behavior: "smooth" });
+      scrollContainerRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "end",
+      });
+      console.log("trigger");
     }
   };
 
@@ -49,7 +53,7 @@ export default function Gpt_prompt() {
 
       if (parsedRes.slice(0, 9) !== "<!DOCTYPE") {
         const responseText = parsedRes.slice(1, -1);
-        const cleanResponse = responseText.replace(/(\r\n|\n|\r|\\n)/gm," ");
+        const cleanResponse = responseText.replace(/(\r\n|\n|\r|\\n)/gm, " ");
         setConversation((prev) =>
           prev.map((item) => {
             if (item.id === conversation.length) {
@@ -74,26 +78,12 @@ export default function Gpt_prompt() {
         </p>
       </div>
       <div className="grow py-1 px-2 overflow-auto text-ellipsis">
-        {/* {conversation.length <= 1 ? (
-          <div className="self-start px-2 py-1 border rounded-xl">
-            <p className="self-center top-0 sticky bg-white w-full py-4">
-              Scopri il futuro con la nostra sezione demo GENAI: un viaggio
-              avvincente attraverso intelligenze artificiali generativa
-              all'avanguardia, dove potrai sperimentare direttamente le
-              rivoluzionarie capacità di generazione e analisi del testo.
-            </p>
-          </div>
-        ) : (
-          <></>
-        )} */}
-
         <div className="p-2">
           {conversation.map((item, index) => (
-            <div key={index} className="flex flex-col gap-y-4 ">
+            <div key={index} className="flex flex-col">
               {item.question && (
-                <div className="self-end px-2 py-1 bg-blue-600 border rounded-md text-white ml-8">
+                <div className="self-end px-2 py-1 my-2 bg-blue-600 border rounded-md text-white ml-8">
                   {item.question}
-                  <div ref={scrollContainerRef}></div>
                 </div>
               )}
               {item.answer && (
@@ -101,7 +91,6 @@ export default function Gpt_prompt() {
                   <div className="self-start px-2 py-1 bg-neutral-100 dark:bg-neutral-600 border border-border-light-gray rounded-md mr-8">
                     {item.answer}
                   </div>
-                  <div ref={scrollContainerRef}></div>
                 </>
               )}
               <div ref={scrollContainerRef}></div>
