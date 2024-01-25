@@ -48,10 +48,12 @@ export default function Gpt_prompt() {
       const parsedRes = await res.text();
 
       if (parsedRes.slice(0, 9) !== "<!DOCTYPE") {
+        const responseText = parsedRes.slice(1, -1);
+        const cleanResponse = responseText.replace(/(\r\n|\n|\r|\\n)/gm," ");
         setConversation((prev) =>
           prev.map((item) => {
             if (item.id === conversation.length) {
-              return { ...item, answer: parsedRes.slice(1, -1) };
+              return { ...item, answer: cleanResponse };
             }
             return item;
           })
@@ -91,6 +93,7 @@ export default function Gpt_prompt() {
               {item.question && (
                 <div className="self-end px-2 py-1 bg-blue-600 border rounded-md text-white ml-8">
                   {item.question}
+                  <div ref={scrollContainerRef}></div>
                 </div>
               )}
               {item.answer && (
