@@ -28,6 +28,7 @@ export default function useAmgStartApi(): apidatatype {
         },
         customer: "AMGDEMO",
         user: reqBody,
+        Origin: "PWA",
       });
       setData(urlRes.data);
       setUserDetails(urlRes.data); //? setting user details context
