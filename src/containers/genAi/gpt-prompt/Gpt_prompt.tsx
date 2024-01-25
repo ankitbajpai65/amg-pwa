@@ -14,7 +14,7 @@ export default function Gpt_prompt() {
   // const urlTestLocal = "http://127.0.0.1:8000";
   useEffect(() => {
     scrollToBottom();
-  }, [conversation, userQuestion]);
+  }, [conversation]);
 
   useEffect(() => {
     const length = conversation.length;
@@ -29,6 +29,7 @@ export default function Gpt_prompt() {
         behavior: "smooth",
         block: "end",
       });
+      console.log("trigger");
     }
   };
 
@@ -79,9 +80,9 @@ export default function Gpt_prompt() {
       <div className="grow py-1 px-2 overflow-auto text-ellipsis">
         <div className="p-2">
           {conversation.map((item, index) => (
-            <div key={index} className="flex flex-col gap-y-4 ">
+            <div key={index} className="flex flex-col">
               {item.question && (
-                <div className="self-end px-2 py-1 bg-blue-600 border rounded-md text-white ml-8">
+                <div className="self-end px-2 py-1 my-2 bg-blue-600 border rounded-md text-white ml-8">
                   {item.question}
                 </div>
               )}
@@ -92,10 +93,10 @@ export default function Gpt_prompt() {
                   </div>
                 </>
               )}
+              <div ref={scrollContainerRef}></div>
             </div>
           ))}
         </div>
-        <div ref={scrollContainerRef}></div>
       </div>
       <form onSubmit={handleSubmit}>
         <div className="flex rounded-b-xl overflow-hidden p-2 h-16 box-border pb-4">
