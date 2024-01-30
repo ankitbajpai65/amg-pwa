@@ -54,7 +54,10 @@ export default function Gpt_prompt() {
 
       if (parsedRes.slice(0, 9) !== "<!DOCTYPE") {
         const responseText = parsedRes.slice(1, -1);
-        const cleanResponse = responseText.replace(/(\r\n|\n|\r|\\n)/gm, " ");
+        const cleanResponse = responseText.replace(
+          /(\r\n|\n|\r|\\n|\\|\*)/gm,
+          " "
+        );
         setConversation((prev) =>
           prev.map((item) => {
             if (item.id === conversation.length) {

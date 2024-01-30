@@ -5,9 +5,20 @@ import { IoCameraReverse } from "react-icons/io5";
 const ScanNow = () => {
   const [startScan, setStartScan] = useState(true);
   const [scanRes, setScanRes] = useState("");
+  const [scanResIsURL, setscanResIsURL] = useState(false);
+
   const [camId, setCamId] = useState(0);
 
   const camRef = useRef<Html5Qrcode | null>(null);
+
+  useEffect(() => {
+    const urlPattern =
+      /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)/gm;
+    if (scanRes) {
+      const flag = scanRes.match(urlPattern)?true:false
+      setscanResIsURL(()=>flag);
+    }
+  }, [scanRes]);
 
   useEffect(() => {
     if (startScan === true) {
@@ -89,7 +100,7 @@ const ScanNow = () => {
           <div id="reader"></div>
         ) : scanRes === "" ? (
           <div>No Scan</div>
-        ) : (
+        ) : (scanResIsURL?<a href={scanRes}>Link</a>:
           <div>{scanRes}</div>
         )}
       </div>
