@@ -100,7 +100,7 @@ const ScanNow = () => {
           <div id="reader"></div>
         ) : scanRes === "" ? (
           <div>No Scan</div>
-        ) : (scanResIsURL?<a href={scanRes}>Link</a>:
+        ) : (scanResIsURL?<a href={scanRes}>{scanRes}</a>:
           <div>{scanRes}</div>
         )}
       </div>
