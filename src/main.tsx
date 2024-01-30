@@ -40,6 +40,7 @@ import HelpFAQ from "./containers/help&support/HelpFAQ.tsx";
 import FaqDisplay from "./containers/help&support/FaqDisplay.tsx";
 import NotificationSetting from "./containers/pwaNotifications/NotificationSetting.tsx";
 import CwyfChat from "./containers/genAi/chatwithyourfiles/CwyfChat.tsx";
+import IframePg from "./containers/iframePg/IframePg.tsx";
 
 registerSW({ immediate: true });
 
@@ -165,6 +166,7 @@ const router = createBrowserRouter(
 
           <Route path="gpt-prompt/" element={<Gpt_prompt />} />
         </Route>
+        <Route path="iframePg/" element={<IframePg />} />
       </Route>
     </Route>
   )

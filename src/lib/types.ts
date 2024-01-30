@@ -14,6 +14,7 @@ export type userDetailsType = {
       description: string;
       forecolor: string;
       html: string;
+      linkType:string;
       rif1: string;
       rif2: string;
       rif3: string;
