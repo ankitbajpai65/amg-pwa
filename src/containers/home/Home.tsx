@@ -12,11 +12,25 @@ const Home = () => {
   const { userDetails } = useUserDetails();
   const navigate = useNavigate();
 
-  const handleCardClick = (card: { code: string; html: string }) => {
-    if (card.code === "AMGDEMO_GENAI") {
-      navigate("/pwa/gen-ai/gpt-prompt");
-    } else {
+  const handleCardClick = (card: {
+    code: string;
+    html: string;
+    linkType: string;
+  }) => {
+    if (card.linkType === "EXTERNAL_LINK") {
       window.open(card.html, "_blank", "noreferrer");
+    } else if (card.linkType === "IFRAME_LINK") {
+      navigate("/pwa/iframePg", { state: { iframeLink: card.html } });
+    } else {
+      if (card.linkType === "INTERNAL_LINK") {
+        if (card.code === "AMGDEMO_GENAI") {
+          navigate("/pwa/gen-ai/gpt-prompt");
+        } else {
+          alert("card code error");
+        }
+      } else {
+        alert("card linktype error");
+      }
     }
   };
 

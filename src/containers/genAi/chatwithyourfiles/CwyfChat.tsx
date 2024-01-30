@@ -68,10 +68,15 @@ const CwyfChat = () => {
         const parsedRes = await res.text();
 
         if (parsedRes.slice(0, 9) !== "<!DOCTYPE") {
+          const responseText = parsedRes.slice(1, -1);
+          const cleanResponse = responseText.replace(
+            /(\r\n|\n|\r|\\n|\\|\*)/gm,
+            " "
+          );
           setConversation((prev) =>
             prev.map((item) => {
               if (item.id === conversation.length) {
-                return { ...item, answer: parsedRes.slice(1, -1) };
+                return { ...item, answer: cleanResponse };
               }
               return item;
             })
