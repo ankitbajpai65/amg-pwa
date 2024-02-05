@@ -93,6 +93,8 @@
 html,body{
   height: 100%;
 }
+
+/*! input number arrow remove  */
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -103,4 +105,9 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type=number] {
   -moz-appearance: textfield;
+}
+/* ?prderd lid does not show number without this */
+ol {
+  list-style: decimal;
+  padding-left: 2rem;
 }

@@ -42,7 +42,7 @@ export default function ChatWithYourFiles() {
         if (result?.status === 200) {
           setIsLoading(() => false);
           navigate("/pwa/gen-ai/chat-with-your-files/cwyfchat", {
-            state: { fileName: file?.name as string },
+            state: { fileName: file?.name as string, fileSize: file?.size },
           });
         } else {
           alert("ERROR Check console");
