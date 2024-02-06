@@ -5,6 +5,9 @@ import { IoDocumentText } from "react-icons/io5";
 import { FaCheckCircle } from "react-icons/fa";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import { useLocation, useNavigate } from "react-router-dom";
+import useHandleAllLogAiAPI from "@/hooks/logAi/handleAllLogAi";
+import ReactMarkdown from "react-markdown";
+
 
 const CwyfChat = () => {
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
@@ -13,10 +16,13 @@ const CwyfChat = () => {
   const [conversation, setConversation] = useState([
     { id: 0, question: "", answer: "" },
   ]);
+  const { handleAllLogAiApi } = useHandleAllLogAiAPI();
   const location = useLocation();
   const navigate = useNavigate();
 
   const fileName = location.state?.fileName;
+  const fileSize = location.state?.fileSize;
+
   const url = "https://amgenaispacebackend.datapartners.ch";
 
   // const urlTestLocal = "http://127.0.0.1:8000";
@@ -68,19 +74,32 @@ const CwyfChat = () => {
         const parsedRes = await res.text();
 
         if (parsedRes.slice(0, 9) !== "<!DOCTYPE") {
-          const responseText = parsedRes.slice(1, -1);
-          const cleanResponse = responseText.replace(
-            /(\r\n|\n|\r|\\n|\\|\*)/gm,
-            " "
+          const formatedText = parsedRes.replace(
+            /(\n|\\n)/gi,
+            "&nbsp;&nbsp;\n"
           );
+          const responseText = formatedText.slice(1, -1);
+        
           setConversation((prev) =>
             prev.map((item) => {
               if (item.id === conversation.length) {
-                return { ...item, answer: cleanResponse };
+                return { ...item, answer: responseText };
               }
               return item;
             })
           );
+             handleAllLogAiApi({
+               question: userQuestion,
+               answer: parsedRes.slice(1, -1),
+               step: "PWA_CHATFILE",
+               fileName: fileName,
+               fileSize: fileSize,
+               reaction: "",
+               tokensIn: "",
+               tokensOut: "",
+               wordsIn: `${userQuestion.length}`,
+               wordsOut: `${parsedRes.slice(1, -1).length}`,
+             });
         } else {
           alert("console");
           console.log(parsedRes);
@@ -125,7 +144,7 @@ const CwyfChat = () => {
               {item.answer && (
                 <>
                   <div className="self-start px-2 py-1 bg-neutral-100 dark:bg-neutral-600 border border-border-light-gray rounded-md mr-8">
-                    {item.answer}
+                    <ReactMarkdown children={item.answer}></ReactMarkdown>
                   </div>
                   <div ref={scrollContainerRef}></div>
                 </>

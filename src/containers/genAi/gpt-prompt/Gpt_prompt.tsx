@@ -1,5 +1,7 @@
+import useHandleAllLogAiAPI from "@/hooks/logAi/handleAllLogAi";
 import { useEffect, useRef, useState } from "react";
 import { IoArrowUpCircleSharp } from "react-icons/io5";
+import ReactMarkdown from "react-markdown";
 
 export default function Gpt_prompt() {
   const [userQuestion, setUserQuestion] = useState("");
@@ -7,9 +9,10 @@ export default function Gpt_prompt() {
   const [conversation, setConversation] = useState([
     { id: 0, question: "", answer: "" },
   ]);
+  const { handleAllLogAiApi } = useHandleAllLogAiAPI();
 
-  // const url = "https://amgenaispacebackend.datapartners.ch";
-  const urlGCP = "https://amg-django-be.uc.r.appspot.com";
+  const url = "https://amgenaispacebackend.datapartners.ch";
+  // const urlGCP = "https://amg-django-be.uc.r.appspot.com";
 
   // const urlTestLocal = "http://127.0.0.1:8000";
   useEffect(() => {
@@ -29,7 +32,6 @@ export default function Gpt_prompt() {
         behavior: "smooth",
         block: "end",
       });
-      console.log("trigger");
     }
   };
 
@@ -43,7 +45,7 @@ export default function Gpt_prompt() {
           { id: prev.length, question: userQuestion, answer: "Loading..." },
         ];
       });
-      const res = await fetch(`${urlGCP}/prop/?prop=${userQuestion}`, {
+      const res = await fetch(`${url}/prop/?prop=${userQuestion}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json; charset=UTF-8",
@@ -53,19 +55,28 @@ export default function Gpt_prompt() {
       const parsedRes = await res.text();
 
       if (parsedRes.slice(0, 9) !== "<!DOCTYPE") {
-        const responseText = parsedRes.slice(1, -1);
-        const cleanResponse = responseText.replace(
-          /(\r\n|\n|\r|\\n|\\|\*)/gm,
-          " "
-        );
+        const formatedText = parsedRes.replace(/(\n|\\n)/gi, "&nbsp;&nbsp;\n");
+        const responseText = formatedText.slice(1, -1);
         setConversation((prev) =>
           prev.map((item) => {
             if (item.id === conversation.length) {
-              return { ...item, answer: cleanResponse };
+              return { ...item, answer: responseText };
             }
             return item;
           })
         );
+        handleAllLogAiApi({
+          question: userQuestion,
+          answer: parsedRes.slice(1, -1),
+          step: "PWA_GPT",
+          fileName: "",
+          fileSize: 0,
+          reaction: "",
+          tokensIn: "",
+          tokensOut: "",
+          wordsIn: `${userQuestion.length}`,
+          wordsOut: `${parsedRes.slice(1, -1).length}`,
+        });
       } else {
         alert("console");
         console.log(parsedRes);
@@ -93,7 +104,7 @@ export default function Gpt_prompt() {
               {item.answer && (
                 <>
                   <div className="self-start px-2 py-1 bg-neutral-100 dark:bg-neutral-600 border border-border-light-gray rounded-md mr-8">
-                    {item.answer}
+                    <ReactMarkdown children={item.answer}></ReactMarkdown>
                   </div>
                 </>
               )}
