@@ -91,7 +91,7 @@ const CwyfChat = () => {
              handleAllLogAiApi({
                question: userQuestion,
                answer: parsedRes.slice(1, -1),
-               step: "PWA_CHATFILE",
+               step: "GENAI_CHATFILE",
                fileName: fileName,
                fileSize: fileSize,
                reaction: "",

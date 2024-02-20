@@ -68,7 +68,7 @@ export default function Gpt_prompt() {
         handleAllLogAiApi({
           question: userQuestion,
           answer: parsedRes.slice(1, -1),
-          step: "PWA_GPT",
+          step: "GENAI_GPT",
           fileName: "",
           fileSize: 0,
           reaction: "",
