@@ -21,6 +21,7 @@ type resDataType = {
 export default function useSendMailApi(): apidatatype {
   const [data, setData] = useState<resDataType | undefined>();
   const url = "https://amg.datapartners.ch/Amg/ws/PIP_Ws/InvioMail/InvioFast";
+  const urlSMS = "https://amg.datapartners.ch/Amg/ws/PIP_Ws/InvioSms/InvioFas";
   //   {
   //   "customer":"AMGDEMO",
   //   "from":"noreply@datapartners.ch",
@@ -39,15 +40,18 @@ export default function useSendMailApi(): apidatatype {
     sendType: string;
   }) => {
     if (reqBody) {
-      const urlRes = await axios.post(url, {
-        customer: "AMGDEMO",
-        from: "noreply@datapartners.ch",
-        to: reqBody.user,
-        cc: reqBody.cc,
-        sub: reqBody.sub,
-        body: reqBody.body,
-        sendType: reqBody.sendType,
-      });
+      const urlRes = await axios.post(
+        reqBody.sendType === "SMS" ? urlSMS : url,
+        {
+          customer: "AMGDEMO",
+          from: "noreply@datapartners.ch",
+          to: reqBody.user,
+          cc: reqBody.cc,
+          sub: reqBody.sub,
+          body: reqBody.body,
+          sendType: reqBody.sendType,
+        }
+      );
 
       const resData = await urlRes.data;
       setData(resData);
