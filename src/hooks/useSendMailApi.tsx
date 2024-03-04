@@ -44,7 +44,7 @@ export default function useSendMailApi(): apidatatype {
         reqBody.sendType === "SMS" ? urlSMS : url,
         {
           customer: "AMGDEMO",
-          from: "noreply@datapartners.ch",
+          from: "noreply@ellegm.it",
           to: reqBody.user,
           cc: reqBody.cc,
           sub: reqBody.sub,
