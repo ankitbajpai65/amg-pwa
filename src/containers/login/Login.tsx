@@ -1,12 +1,12 @@
 import image from "../../assets/loghi-03.png";
-import useCheckUserApi from "@/hooks/useCheckUserApi";
+import useCheckUserApi from "@/hooks/AmgMS/useCheckUserApi";
 import { useGoogleLogin } from "@react-oauth/google";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUserDetails } from "@/lib/context/userDetailsContext";
 import { FcGoogle } from "react-icons/fc";
 import { errorAlert, warnAlert } from "@/components/appComponents/appAlert";
-import useSendMailApi from "@/hooks/useSendMailApi";
+import useSendMailApi from "@/hooks/AmgMS/useSendMailApi";
 import Loader from "@/components/appComponents/Loader";
 import { inputStyle, primaryBtnStyle } from "@/lib/cssTailwind";
 
