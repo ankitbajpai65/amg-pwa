@@ -1,5 +1,5 @@
 import { errorAlert, warnAlert } from "@/components/appComponents/appAlert";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -30,34 +30,44 @@ export default function useChangePassApi(): apidatatype {
     passnew: string;
   }) => {
     if (reqBody) {
-      const changePassRes = await axios.post(url, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        
-          customer: "AMGDEMO",
-          user: reqBody.email,
-          passold: reqBody.passold,
-          passnew: reqBody.passnew,
-        
-        // {
-        // customer: "AMGDEMO",
-        // user: data.email,
-        // passold: data.password,
-        // passnew:""
-        // }
-      });
+   try {
+     const changePassRes = await axios.post(url, {
+       headers: {
+         "Content-Type": "application/json",
+       },
 
-      const resData = changePassRes.data;
-      setData(resData);
-      if (resData?.status === true) {
-        warnAlert(3000, "Password Change Success");
-        navigate("/");
-      } else if (resData?.status === 400) {
-        errorAlert(5000, resData?.title);
-      } else {
-        errorAlert(5000, resData?.title);
-      }
+       customer: "AMGDEMO",
+       user: reqBody.email,
+       passold: reqBody.passold,
+       passnew: reqBody.passnew,
+
+       // {
+       // customer: "AMGDEMO",
+       // user: data.email,
+       // passold: data.password,
+       // passnew:""
+       // }
+     });
+
+     const resData = changePassRes.data;
+     setData(resData);
+     if (resData?.status === true) {
+       warnAlert(3000, "Password Change Success");
+       navigate("/");
+     } else if (resData?.status === 400) {
+       errorAlert(5000, resData?.title);
+     } else {
+       errorAlert(5000, resData?.title);
+     }
+   } catch (e) {
+     console.error(e, "useChagePassAPI");
+     const error = e as Error | AxiosError;
+     if (axios.isAxiosError(error)) {
+       setData(() => error?.response?.data);
+       console.log(error?.response?.data);
+       errorAlert(1000, error?.response?.data.error);
+     }
+   }
     }
   };
   return { userChangePassStatus: data, getChangePassStatus };

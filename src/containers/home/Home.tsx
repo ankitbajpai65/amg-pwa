@@ -25,6 +25,9 @@ const Home = () => {
       if (card.linkType === "INTERNAL_LINK") {
         if (card.code === "AMGDEMO_GENAI") {
           navigate("/pwa/gen-ai/gpt-prompt");
+        }
+        else if (card.code === "AMGPWA_PATBOOK") {
+          navigate("/pwa/Booking/patientMeetings");
         } else {
           alert("card code error");
         }

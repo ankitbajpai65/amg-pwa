@@ -41,6 +41,9 @@ import FaqDisplay from "./containers/help&support/FaqDisplay.tsx";
 import NotificationSetting from "./containers/pwaNotifications/NotificationSetting.tsx";
 import CwyfChat from "./containers/genAi/chatwithyourfiles/CwyfChat.tsx";
 import IframePg from "./containers/iframePg/IframePg.tsx";
+import PatientsMeetings from "./containers/patientsMeetings/PatientsMeetings.tsx";
+import PatientListProvider from "./lib/context/patientListContext.tsx";
+import PatientsPrivacy from "./containers/patientsMeetings/patientsPrivacy.tsx";
 
 registerSW({ immediate: true });
 
@@ -163,10 +166,14 @@ const router = createBrowserRouter(
         <Route path="gen-ai/">
           <Route path="chat-with-your-files/" element={<ChatWithYourFiles />} />
           <Route path="chat-with-your-files/cwyfchat/" element={<CwyfChat />} />
-
           <Route path="gpt-prompt/" element={<Gpt_prompt />} />
         </Route>
         <Route path="iframePg/" element={<IframePg />} />
+
+        <Route path="Booking/">
+          <Route path="patientMeetings/" element={<PatientsMeetings />} />
+          <Route path="patientPrivacy/" element={<PatientsPrivacy />} />
+        </Route>
       </Route>
     </Route>
   )
@@ -177,7 +184,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <ToastContainer />
     <ThemeContextProvider>
       <UserDetailsProvider>
-        <RouterProvider router={router} />
+        <PatientListProvider>
+          <RouterProvider router={router} />
+        </PatientListProvider>
       </UserDetailsProvider>
     </ThemeContextProvider>
   </React.StrictMode>

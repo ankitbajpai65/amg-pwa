@@ -1,4 +1,4 @@
-import {createContext, useContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import { userDetailsType } from "../types";
 
 type useUserDetailsProviderType = {
@@ -10,20 +10,24 @@ type userDetailsContextType = {
   setUserDetails: React.Dispatch<React.SetStateAction<userDetailsType>>;
 };
 
-export const userDetailsContext = createContext<userDetailsContextType|null>(null)
+export const userDetailsContext = createContext<userDetailsContextType | null>(
+  null
+);
 
-export default function UserDetailsProvider({children}:useUserDetailsProviderType){
-const [userDetails, setUserDetails] = useState<userDetailsType>(null);
+export default function UserDetailsProvider({
+  children,
+}: useUserDetailsProviderType) {
+  const [userDetails, setUserDetails] = useState<userDetailsType>(null);
 
-    return(
-        <userDetailsContext.Provider value={{userDetails,setUserDetails}}>
-            {children}
-        </userDetailsContext.Provider>
-    )
+  return (
+    <userDetailsContext.Provider value={{ userDetails, setUserDetails }}>
+      {children}
+    </userDetailsContext.Provider>
+  );
 }
 
-export function useUserDetails(){
-     const context = useContext(userDetailsContext);
+export function useUserDetails() {
+  const context = useContext(userDetailsContext);
   if (!context) {
     throw new Error(
       "useEraserDetail must be used within the context provider."

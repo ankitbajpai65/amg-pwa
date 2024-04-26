@@ -41,3 +41,36 @@ export type userDetailsType = {
   };
   status: string;
 } | null;
+
+export type PatientsListType = {
+  error: string;
+  status: string;
+  patients: {
+    id: string;
+    surname: string;
+    name: string;
+    dob: string;
+    address: string;
+    city: string;
+    province: string;
+    nation: string;
+    birthCity: string;
+    birthProvince: string;
+    birthCountry: string;
+    doctor: string;
+    ssnType: string;
+    notificationType: string;
+    origin: string;
+    rif1: string;
+    rif2: string;
+    rif3: string;
+    email: string;
+    phoneNumber: string;
+    phoneNumber2: string;
+    insurance: string;
+    consensus: string;
+    consensusDate: string;
+    nbrMeetings: string | null;
+    nextMeetDate: string;
+  }[];
+} | null;
