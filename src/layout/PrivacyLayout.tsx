@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 import image from "../assets/loghi-03.png";
 import { useThemeContext } from "@/lib/context/themeContext";
 import { useUserDetails } from "@/lib/context/userDetailsContext";
-import useAmgStartApi from "@/hooks/AmgMS/useAmgStartApi";
+import useAmgStartApi from "@/components/hooks/AmgMS/useAmgStartApi";
 
 function PrivacyLayout() {
   const root = document.querySelector(":root");

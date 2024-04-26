@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Switch } from "@/components/ui/switch";
 import { useUserDetails } from "@/lib/context/userDetailsContext";
 import { useNavigate } from "react-router-dom";
-import useAmgUsersApi from "@/hooks/AmgMS/useAmgUsersApi";
+import useAmgUsersApi from "@/components/hooks/AmgMS/useAmgUsersApi";
 
 const PrivacyPolicy2 = () => {
   const [btnAccess, setBtnAccess] = useState(false);

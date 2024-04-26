@@ -2,8 +2,8 @@ import axios from "axios";
 import { useState } from "react";
 
 type apidatatype = {
-  userLoginStatus: resDataType | undefined;
-  getSendMailStatus: (reqBody: {
+  sendMailAPIRes: resDataType | undefined;
+  getSendMailAPI: (reqBody: {
     user: string;
     cc: string;
     sub: string;
@@ -32,7 +32,7 @@ export default function useSendMailApi(): apidatatype {
   //   "sendType":"MAIL"
   // }
 
-  const getSendMailStatus = async (reqBody: {
+  const getSendMailAPI = async (reqBody: {
     user: string;
     cc: string;
     sub: string;
@@ -57,5 +57,5 @@ export default function useSendMailApi(): apidatatype {
       setData(resData);
     }
   };
-  return { userLoginStatus: data, getSendMailStatus };
+  return { sendMailAPIRes: data, getSendMailAPI };
 }

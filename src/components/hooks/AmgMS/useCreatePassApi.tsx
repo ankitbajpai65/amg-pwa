@@ -17,7 +17,7 @@ type resDataType = {
 
 export default function useCreatePassApi(): apidatatype {
   const navigate = useNavigate();
-  const { getSendMailStatus } = useSendMailApi();
+  const { getSendMailAPI } = useSendMailApi();
   const [data, setData] = useState<resDataType | undefined>();
   const url =
     "https://amg.datapartners.ch/Amg/ws/AMG_Security/Login/CreatePassword";
@@ -39,7 +39,7 @@ export default function useCreatePassApi(): apidatatype {
       setData(resData);
       if (resData?.status === true) {
         warnAlert(3000, "New Password created, Please check registered Email");
-        getSendMailStatus({
+        getSendMailAPI({
           user: reqBody.user,
           cc: "",
           sub: "DATAPARTNERS - NEW PASSWORD",

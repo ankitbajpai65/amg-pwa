@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import image from "../../../assets/loghi-03.png";
 import { errorAlert } from "@/components/appComponents/appAlert";
-import useCreatePassApi from "@/hooks/AmgMS/useCreatePassApi";
+import useCreatePassApi from "@/components/hooks/AmgMS/useCreatePassApi";
 import { primaryBtnStyle } from "@/lib/cssTailwind";
 import BodyBackBtn from "@/components/appComponents/BodyBackBtn";
 

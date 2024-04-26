@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Switch } from "@/components/ui/switch";
 import { useThemeContext } from "@/lib/context/themeContext";
 import { useUserDetails } from "@/lib/context/userDetailsContext";
-import useAmgUsersApi from "@/hooks/AmgMS/useAmgUsersApi";
+import useAmgUsersApi from "@/components/hooks/AmgMS/useAmgUsersApi";
 import { useNavigate } from "react-router-dom";
 import BodyBackBtn from "@/components/appComponents/BodyBackBtn";
 import { primaryBtnStyle } from "@/lib/cssTailwind";

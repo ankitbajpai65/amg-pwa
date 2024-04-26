@@ -4,7 +4,7 @@ import Header from "../components/appComponents/Header";
 import Footer from "../components/appComponents/Footer";
 import { useThemeContext } from "@/lib/context/themeContext";
 import { useUserDetails } from "@/lib/context/userDetailsContext";
-import useAmgStartApi from "@/hooks/AmgMS/useAmgStartApi";
+import useAmgStartApi from "@/components/hooks/AmgMS/useAmgStartApi";
 
 function Layout() {
   const root = document.querySelector(":root");

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import Login from "./containers/login/Login";
+import Login from "./components/hooks/Login";
 import { useThemeContext } from "./lib/context/themeContext";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
