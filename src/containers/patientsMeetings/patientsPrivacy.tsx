@@ -1,12 +1,18 @@
 import { pwaDictionary } from "@/lib/textDictionary";
 import { primaryBtnStyle } from "@/lib/cssTailwind";
 import BodyBackBtn from "@/components/appComponents/BodyBackBtn";
+import { useNavigate } from "react-router-dom";
+import { usePatientListContext } from "@/lib/context/patientListContext";
 
 export default function PatientsPrivacy() {
+  const navigate = useNavigate();
+  const { patientList } = usePatientListContext();
+
   return (
     <div className="flex flex-col">
       <div className="bg-text-red text-white text-center text-lg p-2">
-        Customer ID
+        {patientList?.patients &&
+          `${patientList.patients[0].name} ${patientList.patients[0].surname}`}
       </div>
       <BodyBackBtn btnText={pwaDictionary.my_Appointments} />
 
@@ -21,7 +27,12 @@ export default function PatientsPrivacy() {
           voluptatibus tenetur esse, iste molestias.
         </div>
         <div className="w-fit my-5">
-          <button className={`${primaryBtnStyle} px-10`}>Entra</button>
+          <button
+            className={`${primaryBtnStyle} px-10`}
+            onClick={() => navigate("/pwa/Booking/patientMeetingList")}
+          >
+            Entra
+          </button>
         </div>
       </div>
     </div>

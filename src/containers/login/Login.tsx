@@ -25,6 +25,7 @@ const Login = () => {
   const { userDetails, setUserDetails } = useUserDetails();
   const { getSendMailAPI } = useSendMailApi();
   const navigate = useNavigate();
+
   useEffect(() => {
     if (userDetails) {
       if (userDetails?.startList.baseData[1].itemValue === "ON") {

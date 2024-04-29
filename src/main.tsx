@@ -41,9 +41,15 @@ import FaqDisplay from "./containers/help&support/FaqDisplay.tsx";
 import NotificationSetting from "./containers/pwaNotifications/NotificationSetting.tsx";
 import CwyfChat from "./containers/genAi/chatwithyourfiles/CwyfChat.tsx";
 import IframePg from "./containers/iframePg/IframePg.tsx";
-import PatientsMeetings from "./containers/patientsMeetings/PatientsMeetings.tsx";
 import PatientListProvider from "./lib/context/patientListContext.tsx";
 import PatientsPrivacy from "./containers/patientsMeetings/patientsPrivacy.tsx";
+import PatientsMeetings1 from "./containers/patientsMeetings/PatientsMeetings1.tsx";
+import PatientMeetingList from "./containers/patientsMeetings/PatientMeeting2.tsx";
+import MeetingListProvider from "./lib/context/meetingsListContext.tsx";
+import MeetingDetails from "./containers/patientsMeetings/MeetingDetails.tsx";
+import PatientLayout from "./layout/PatientLayout.tsx";
+import NewMeeting from "./containers/patientsMeetings/NewMeeting.tsx";
+import OperatorListProvider from "./lib/context/operatorListContext.tsx";
 
 registerSW({ immediate: true });
 
@@ -170,9 +176,12 @@ const router = createBrowserRouter(
         </Route>
         <Route path="iframePg/" element={<IframePg />} />
 
-        <Route path="Booking/">
-          <Route path="patientMeetings/" element={<PatientsMeetings />} />
+        <Route path="Booking/" element={<PatientLayout />}>
+          <Route path="patientMeetings/" element={<PatientsMeetings1 />} />
           <Route path="patientPrivacy/" element={<PatientsPrivacy />} />
+          <Route path="patientMeetingList/" element={<PatientMeetingList />} />
+          <Route path="meetingDetails/" element={<MeetingDetails />} />
+          <Route path="newMeeting/" element={<NewMeeting />} />
         </Route>
       </Route>
     </Route>
@@ -185,7 +194,11 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <ThemeContextProvider>
       <UserDetailsProvider>
         <PatientListProvider>
-          <RouterProvider router={router} />
+          <MeetingListProvider>
+            <OperatorListProvider>
+              <RouterProvider router={router} />
+            </OperatorListProvider>
+          </MeetingListProvider>
         </PatientListProvider>
       </UserDetailsProvider>
     </ThemeContextProvider>
