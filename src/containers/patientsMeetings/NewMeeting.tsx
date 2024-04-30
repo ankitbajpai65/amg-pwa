@@ -1,4 +1,5 @@
 import DropSelector from "@/components/appComponents/DropSelector";
+import { successAlert } from "@/components/appComponents/appAlert";
 import useGetOperatorsListAPI from "@/components/hooks/AmgMS/amgOperatorMS/useGetOperators";
 import useSendMailApi from "@/components/hooks/AmgMS/useSendMailApi";
 import { useMeetingListContext } from "@/lib/context/meetingsListContext";
@@ -8,6 +9,7 @@ import { useUserDetails } from "@/lib/context/userDetailsContext";
 import { pwaDictionary } from "@/lib/textDictionary";
 import { amgStartTableType, selectorValueType } from "@/lib/types";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function NewMeeting() {
   const [operatoreValue, setOperatoreValue] = useState("");
@@ -25,12 +27,14 @@ export default function NewMeeting() {
   });
 
   const { getOperatorsList } = useGetOperatorsListAPI();
-  const { getSendMailAPI } = useSendMailApi();
+  const { getSendMailAPI, sendMailAPIRes } = useSendMailApi();
 
   const { userDetails } = useUserDetails();
   const { operatorList } = useOperatorListContext();
   const { patientList } = usePatientListContext();
   const { meetingList } = useMeetingListContext();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (userDetails) {
@@ -38,14 +42,12 @@ export default function NewMeeting() {
     }
   }, []);
 
-  // useEffect(() => {
-  //   if (location.state.patientId && userDetails) {
-  //     getMeetingsListApi({
-  //       userEmail: userDetails?.startList.users[0].email as string,
-  //       patientId: location.state.patientId,
-  //     });
-  //   }
-  // }, [location.state, userDetails]);
+  useEffect(() => {
+    if (sendMailAPIRes?.status === "I") {
+      successAlert(1000, "Mail Sent");
+      navigate(-1);
+    }
+  }, [sendMailAPIRes]);
 
   useEffect(() => {
     if (userDetails && userDetails.status === "I") {
@@ -160,7 +162,7 @@ export default function NewMeeting() {
                 }}
               />
             </div>
-            <div className="flex flex-col my-1">
+            <div className="flex flex-col my-1 w-[50%]">
               <label className="px-2">Date</label>
               <input
                 type="date"
