@@ -162,7 +162,7 @@ export default function NewMeeting() {
                 }}
               />
             </div>
-            <div className="flex flex-col my-1">
+            <div className="flex flex-col my-1 w-[50%]">
               <label className="px-2">Date</label>
               <input
                 type="date"
