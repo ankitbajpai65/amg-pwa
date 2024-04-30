@@ -163,7 +163,7 @@ export default function NewMeeting() {
               />
             </div>
             <div className="flex flex-col my-1 w-[50%]">
-              <label className="px-2">Date</label>
+              <label className="px-2">Data Preferita</label>
               <input
                 type="date"
                 className="border rounded-md p-2 w-full text-center"
