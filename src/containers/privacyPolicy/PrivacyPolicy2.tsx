@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Switch } from "@/components/ui/switch";
 import { useUserDetails } from "@/lib/context/userDetailsContext";
 import { useNavigate } from "react-router-dom";
-import useAmgUsersApi from "@/hooks/useAmgUsersApi";
+import useAmgUsersApi from "@/components/hooks/AmgMS/useAmgUsersApi";
 
 const PrivacyPolicy2 = () => {
   const [btnAccess, setBtnAccess] = useState(false);
@@ -13,9 +13,7 @@ const PrivacyPolicy2 = () => {
 
   useEffect(() => {
     if (userUpdateRes) {
-      userUpdateRes?.status === "I"
-        ? navigate(`/pwa/home`)
-        : navigate("/");
+      userUpdateRes?.status === "I" ? navigate(`/pwa/home`) : navigate("/");
     }
   }, [userUpdateRes]);
 
@@ -76,8 +74,10 @@ const PrivacyPolicy2 = () => {
         <div className="my-5 mx-10 p-10 text-lg border overflow-auto rounded-xl">
           {privacyText}
         </div>
-        <div className="flex items-center"> 
-          <label htmlFor="theme-switch" className="font-semibold">Acconsento</label>
+        <div className="flex items-center">
+          <label htmlFor="theme-switch" className="font-semibold">
+            Acconsento
+          </label>
           <Switch
             id="theme-switch"
             // checked={}

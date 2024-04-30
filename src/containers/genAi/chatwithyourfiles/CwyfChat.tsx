@@ -5,9 +5,8 @@ import { IoDocumentText } from "react-icons/io5";
 import { FaCheckCircle } from "react-icons/fa";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import { useLocation, useNavigate } from "react-router-dom";
-import useHandleAllLogAiAPI from "@/hooks/logAi/handleAllLogAi";
+import useHandleAllLogAiAPI from "@/components/hooks/logAi/handleAllLogAi";
 import ReactMarkdown from "react-markdown";
-
 
 const CwyfChat = () => {
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
@@ -79,7 +78,7 @@ const CwyfChat = () => {
             "&nbsp;&nbsp;\n"
           );
           const responseText = formatedText.slice(1, -1);
-        
+
           setConversation((prev) =>
             prev.map((item) => {
               if (item.id === conversation.length) {
@@ -88,18 +87,18 @@ const CwyfChat = () => {
               return item;
             })
           );
-             handleAllLogAiApi({
-               question: userQuestion,
-               answer: parsedRes.slice(1, -1),
-               step: "GENAI_CHATFILE",
-               fileName: fileName,
-               fileSize: fileSize,
-               reaction: "",
-               tokensIn: "",
-               tokensOut: "",
-               wordsIn: `${userQuestion.length}`,
-               wordsOut: `${parsedRes.slice(1, -1).length}`,
-             });
+          handleAllLogAiApi({
+            question: userQuestion,
+            answer: parsedRes.slice(1, -1),
+            step: "GENAI_CHATFILE",
+            fileName: fileName,
+            fileSize: fileSize,
+            reaction: "",
+            tokensIn: "",
+            tokensOut: "",
+            wordsIn: `${userQuestion.length}`,
+            wordsOut: `${parsedRes.slice(1, -1).length}`,
+          });
         } else {
           alert("console");
           console.log(parsedRes);
