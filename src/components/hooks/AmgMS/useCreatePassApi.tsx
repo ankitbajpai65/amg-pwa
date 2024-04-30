@@ -42,6 +42,7 @@ export default function useCreatePassApi(): apidatatype {
       warnAlert(3000, "New Password created, Please check registered Email");
       getSendMailAPI({
         user: reqBody.user,
+        to:reqBody.user,
         cc: "",
         sub: "DATAPARTNERS - NEW PASSWORD",
         body: `The new password is - ${resData.psw}`,

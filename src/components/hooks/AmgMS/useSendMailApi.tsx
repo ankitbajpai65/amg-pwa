@@ -5,13 +5,15 @@ import { useState } from "react";
 
 type apidatatype = {
   sendMailAPIRes: resDataType | undefined;
-  getSendMailAPI: (reqBody: {
-    user: string;
-    cc: string;
-    sub: string;
-    body: string;
-    sendType: string;
-  }) => Promise<void>;
+  getSendMailAPI: (reqBody: reqBodyType) => Promise<void>;
+};
+type reqBodyType = {
+  user: string;
+  to: string;
+  cc: string;
+  sub: string;
+  body: string;
+  sendType: string;
 };
 type resDataType = {
   status: string | number | boolean;
@@ -35,13 +37,7 @@ export default function useSendMailApi(): apidatatype {
   //   "sendType":"MAIL"
   // }
 
-  const getSendMailAPI = async (reqBody: {
-    user: string;
-    cc: string;
-    sub: string;
-    body: string;
-    sendType: string;
-  }) => {
+  const getSendMailAPI = async (reqBody: reqBodyType) => {
     if (reqBody) {
       try {
         const urlRes = await axios.post(
@@ -51,7 +47,7 @@ export default function useSendMailApi(): apidatatype {
             from: userDetails?.startList.baseData.find(
               (item) => item.code === "MAILFROM"
             )?.itemValue,
-            to: reqBody.user,
+            to: reqBody.to,
             cc: reqBody.cc,
             sub: reqBody.sub,
             body: reqBody.body,

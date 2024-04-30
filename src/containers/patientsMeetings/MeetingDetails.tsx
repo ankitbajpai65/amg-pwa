@@ -64,6 +64,9 @@ export default function MeetingDetails() {
       if (singleMeetingDetails && singlePatientDetails) {
         getSendMailAPI({
           user: userDetails?.startList.users[0].email as string,
+          to: userDetails?.startList.baseData.find(
+            (item) => item.code === "PWAPATBOOKMAILTO"
+          )?.itemValue as string,
           cc: "",
           sub: "PWA_BOOKING Richiesta cancellazione appuntamento",
           body: `Il paziente ${singlePatientDetails.id} ${

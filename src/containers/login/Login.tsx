@@ -34,7 +34,9 @@ const Login = () => {
           userDetails?.startList.users[0].auth2 === "SMS"
         ) {
           getSendMailAPI({
-            user:
+            user: loginData.email,
+
+            to:
               userDetails?.startList.users[0].auth2 === "MAIL"
                 ? loginData.email
                 : userDetails?.startList.users[0].phoneCell,

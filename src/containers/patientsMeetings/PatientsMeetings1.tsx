@@ -6,9 +6,12 @@ import useGetPatientsListAPI from "@/components/hooks/AmgMS/amgPatientsMS/useGet
 import { useEffect, useState } from "react";
 import { useUserDetails } from "@/lib/context/userDetailsContext";
 import { usePatientListContext } from "@/lib/context/patientListContext";
+import Loader from "@/components/appComponents/Loader";
 
 export default function PatientsMeetings1() {
-  const [patientAuthFlag, setPatientAuthFlag] = useState(false);
+  const [patientAuthFlag, setPatientAuthFlag] = useState<boolean>(false);
+  const [patientListLoadingFlag, setPatientListLoadingFlag] =
+    useState<boolean>(true);
 
   const { patientList } = usePatientListContext();
 
@@ -34,15 +37,21 @@ export default function PatientsMeetings1() {
           patientEmail: patientList?.patients[0].email,
         })
       );
+      setPatientListLoadingFlag(false);
     } else {
       setPatientAuthFlag(false);
+      if (getPatientsListRes?.status) setPatientListLoadingFlag(false);
     }
   }, [getPatientsListRes]);
   // console.log({ patientList });
 
   return (
     <div className="flex flex-col">
-      {patientAuthFlag ? (
+      {patientListLoadingFlag ? (
+        <div className="flex justify-center my-5">
+          <Loader size={8} status={patientListLoadingFlag} />
+        </div>
+      ) : patientAuthFlag ? (
         <>
           <div className="bg-text-red text-white text-center text-lg p-2">
             {patientList?.patients
@@ -64,10 +73,9 @@ export default function PatientsMeetings1() {
           </div>
           <div className="px-2">
             <div>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere,
-              quasi. Libero corrupti nulla esse repellat a modi, repudiandae
-              perspiciatis rerum maiores placeat impedit! Nulla asperiores
-              voluptatibus tenetur esse, iste molestias.
+              {userDetails?.startList.baseData.find(
+                (item) => item.code === "PWAPATBOOKHOMETEXT"
+              )?.itemValue}
             </div>
             <div className="w-fit my-5">
               <button

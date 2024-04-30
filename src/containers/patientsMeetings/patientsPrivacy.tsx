@@ -3,10 +3,12 @@ import { primaryBtnStyle } from "@/lib/cssTailwind";
 import BodyBackBtn from "@/components/appComponents/BodyBackBtn";
 import { useNavigate } from "react-router-dom";
 import { usePatientListContext } from "@/lib/context/patientListContext";
+import { useUserDetails } from "@/lib/context/userDetailsContext";
 
 export default function PatientsPrivacy() {
   const navigate = useNavigate();
   const { patientList } = usePatientListContext();
+  const { userDetails } = useUserDetails();
 
   return (
     <div className="flex flex-col">
@@ -21,10 +23,11 @@ export default function PatientsPrivacy() {
       </div>
       <div className="px-2">
         <div>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere,
-          quasi. Libero corrupti nulla esse repellat a modi, repudiandae
-          perspiciatis rerum maiores placeat impedit! Nulla asperiores
-          voluptatibus tenetur esse, iste molestias.
+          {
+            userDetails?.startList.baseData.find(
+              (item) => item.code === "PWAPATBOOKPRIVTEXT"
+            )?.itemValue
+          }
         </div>
         <div className="w-fit my-5">
           <button
