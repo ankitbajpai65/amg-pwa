@@ -1,4 +1,4 @@
-import useHandleAllLogAiAPI from "@/hooks/logAi/handleAllLogAi";
+import useHandleAllLogAiAPI from "@/components/hooks/logAi/handleAllLogAi";
 import { useEffect, useRef, useState } from "react";
 import { IoArrowUpCircleSharp } from "react-icons/io5";
 import ReactMarkdown from "react-markdown";

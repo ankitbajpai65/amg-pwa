@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Switch } from "@/components/ui/switch";
 import { useThemeContext } from "@/lib/context/themeContext";
 import { useUserDetails } from "@/lib/context/userDetailsContext";
-import useAmgUsersApi from "@/hooks/useAmgUsersApi";
+import useAmgUsersApi from "@/components/hooks/AmgMS/useAmgUsersApi";
 import { useNavigate } from "react-router-dom";
 import BodyBackBtn from "@/components/appComponents/BodyBackBtn";
 import { primaryBtnStyle } from "@/lib/cssTailwind";
@@ -321,18 +321,17 @@ const UserProfile = () => {
               <label htmlFor="theme-switch" className="px-5 py-4">
                 Dark Mode
               </label>
-              
-                <Switch
-                  id="theme-switch"
-                  name="theme"
-                  checked={themeState}
-                  onClick={() => {
-                    setThemeState(!themeState);
-                    setBtnDisabled(false);
-                  }}
-                  className="my-4 mr-5"
-                />
-              
+
+              <Switch
+                id="theme-switch"
+                name="theme"
+                checked={themeState}
+                onClick={() => {
+                  setThemeState(!themeState);
+                  setBtnDisabled(false);
+                }}
+                className="my-4 mr-5"
+              />
             </div>
 
             <hr className="my-2 h-[0.5px] mx-0 px-0 border-t-0 bg-border-light-gray opacity-100 dark:opacity-50" />

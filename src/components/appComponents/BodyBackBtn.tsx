@@ -1,13 +1,15 @@
 import { useNavigate } from "react-router-dom";
 import backArrow from "../../assets/icons/backArrow.png";
 
-const BodyBackBtn = (props: { btnText: string }) => {
+const BodyBackBtn = (props: { btnText: string; returnToPath?: string }) => {
   const navigate = useNavigate();
 
   return (
     <div className="py-4 px-2 border-b border-border-light-gray">
       <a
-        onClick={() => navigate(-1)}
+        onClick={() =>
+          props.returnToPath ? navigate(props.returnToPath) : navigate(-1)
+        }
         className="flex items-center w-fit cursor-pointer"
       >
         <div className="px-1">
