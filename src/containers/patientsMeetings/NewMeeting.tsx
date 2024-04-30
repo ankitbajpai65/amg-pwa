@@ -200,7 +200,10 @@ export default function NewMeeting() {
           >
             {pwaDictionary.confirm}
           </button>
-          <button className="bg-gray-300 p-2 px-4 rounded-md">
+          <button
+            className="bg-gray-300 p-2 px-4 rounded-md"
+            onClick={() => navigate(-1)}
+          >
             {pwaDictionary.cancel}
           </button>
         </div>
