@@ -39,7 +39,8 @@ export default function PatientMeetingList() {
   return (
     <div className="flex flex-col">
       <div className="bg-text-red text-white text-center text-lg p-2">
-        Centro Salute
+        {patientList?.patients &&
+          `${patientList.patients[0].name} ${patientList.patients[0].surname}`}
       </div>
       <BodyBackBtn
         btnText={pwaDictionary.my_Appointments}

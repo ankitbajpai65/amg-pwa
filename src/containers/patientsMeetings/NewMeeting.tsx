@@ -43,9 +43,9 @@ export default function NewMeeting() {
   }, []);
 
   useEffect(() => {
-    if (sendMailAPIRes?.status === "I") {
+    if (sendMailAPIRes?.status === "INVIATA") {
       successAlert(1000, "Mail Sent");
-      navigate(-1);
+      navigate("/pwa/Booking/patientMeetingList");
     }
   }, [sendMailAPIRes]);
 
@@ -126,7 +126,7 @@ export default function NewMeeting() {
   return (
     <>
       <div className="bg-text-red text-white text-center text-lg p-2">
-        {pwaDictionary.newMeet_req}
+        {pwaDictionary.newMeet_req_title}
       </div>
       <div className="my-2">
         <div className="mx-5">
@@ -152,17 +152,6 @@ export default function NewMeeting() {
           </div>
           <div className="flex gap-2">
             <div className="flex flex-col my-1 w-[50%]">
-              <label className="px-2">{pwaDictionary.Start_Time}</label>
-              <input
-                type="time"
-                className="border rounded-md p-2 w-full text-center"
-                value={timeStartValue}
-                onChange={(e) => {
-                  setTimeStartValue(e.target.value);
-                }}
-              />
-            </div>
-            <div className="flex flex-col my-1 w-[50%]">
               <label className="px-2">Data Preferita</label>
               <input
                 type="date"
@@ -175,6 +164,17 @@ export default function NewMeeting() {
                 onChange={(e) => {
                   console.log(e.target.value);
                   setDate(new Date(e.target.value));
+                }}
+              />
+            </div>
+            <div className="flex flex-col my-1 w-[50%]">
+              <label className="px-2">{pwaDictionary.Start_Time}</label>
+              <input
+                type="time"
+                className="border rounded-md p-2 w-full text-center"
+                value={timeStartValue}
+                onChange={(e) => {
+                  setTimeStartValue(e.target.value);
                 }}
               />
             </div>

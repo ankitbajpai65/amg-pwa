@@ -8,7 +8,7 @@ import { useUserDetails } from "@/lib/context/userDetailsContext";
 import { usePatientListContext } from "@/lib/context/patientListContext";
 import Loader from "@/components/appComponents/Loader";
 
-export default function PatientsMeetings1() {
+export default function HomePatientsMeetings() {
   const [patientAuthFlag, setPatientAuthFlag] = useState<boolean>(false);
   const [patientListLoadingFlag, setPatientListLoadingFlag] =
     useState<boolean>(true);
