@@ -54,7 +54,6 @@ export default function useSendMailApi(): apidatatype {
             sendType: reqBody.sendType,
           }
         );
-
         const resData = await urlRes.data;
         setData(resData);
       } catch (e) {

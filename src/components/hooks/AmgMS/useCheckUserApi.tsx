@@ -32,34 +32,35 @@ export default function useCheckUserApi(): apidatatype {
     pass: string;
   }) => {
     if (reqBody) {
-     try {
-       const urlRes = await axios.post(url, {
-         customer: "AMGDEMO",
-         user: reqBody.user,
-         pass: reqBody.pass,
-       });
+      try {
+        const urlRes = await axios.post(url, {
+          customer: "AMGDEMO",
+          user: reqBody.user,
+          pass: reqBody.pass,
+        });
 
-       const resData = await urlRes.data;
-       setData(() => resData);
-       if (resData?.status === true) {
-         sessionStorage.setItem("isLoggedIn", "true");
-         sessionStorage.setItem("email", reqBody.user);
-         getUserDetails(reqBody.user);
-       } else if (resData?.status === 400) {
-         errorAlert(5000, resData?.title);
-       } else {
-         sessionStorage.setItem("isLoggedIn", "false");
-         errorAlert(5000, resData?.error);
-       }
-     } catch (e) {
-       console.error(e, "useCheckUserAPI");
-       const error = e as Error | AxiosError;
-       if (axios.isAxiosError(error)) {
-         setData(() => error?.response?.data);
-         console.log(error?.response?.data);
-         errorAlert(1000, error?.response?.data.error);
-       }
-     }
+        const resData = await urlRes.data;
+        setData(() => resData);
+        console.log(resData);
+        if (resData?.status === true) {
+          sessionStorage.setItem("isLoggedIn", "true");
+          sessionStorage.setItem("email", reqBody.user);
+          getUserDetails(reqBody.user);
+        } else if (resData?.status === 400) {
+          errorAlert(5000, resData?.title);
+        } else {
+          sessionStorage.setItem("isLoggedIn", "false");
+          errorAlert(5000, resData?.error);
+        }
+      } catch (e) {
+        console.error(e, "useCheckUserAPI");
+        const error = e as Error | AxiosError;
+        if (axios.isAxiosError(error)) {
+          setData(() => error?.response?.data);
+          console.log(error?.response?.data);
+          errorAlert(1000, error?.response?.data.error);
+        }
+      }
     }
   };
   return { userLoginStatus: data, getUserLoginStatus };
