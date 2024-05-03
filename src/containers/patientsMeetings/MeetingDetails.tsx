@@ -9,7 +9,7 @@ import { primaryBtnStyle } from "@/lib/cssTailwind";
 import { pwaDictionary } from "@/lib/textDictionary";
 import { SingleAppointmentType } from "@/lib/types";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function MeetingDetails() {
   const [singleMeetingDetails, setSingleMeetingDetails] =
@@ -24,6 +24,7 @@ export default function MeetingDetails() {
   const { userDetails } = useUserDetails();
 
   const location = useLocation();
+  const navigate = useNavigate();
 
   //   const singleMeetingDetails = meetingList?.meetings[0];
 
@@ -48,8 +49,9 @@ export default function MeetingDetails() {
   }, [getMeetingsListRes, meetingList]);
 
   useEffect(() => {
-    if (sendMailAPIRes?.status === "I") {
+    if (sendMailAPIRes?.status === "INVIATA") {
       successAlert(1000, "Mail Sent");
+      navigate("/pwa/Booking/patientMeetingList");
     }
   }, [sendMailAPIRes]);
 

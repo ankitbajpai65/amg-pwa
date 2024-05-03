@@ -27,6 +27,12 @@ const Login = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (userLoginStatus?.status || userLoginStatus?.error) {
+      setLoaderVisible(() => false);
+    }
+  }, [userLoginStatus]);
+
+  useEffect(() => {
     if (userDetails) {
       if (userDetails?.startList.baseData[1].itemValue === "ON") {
         if (
