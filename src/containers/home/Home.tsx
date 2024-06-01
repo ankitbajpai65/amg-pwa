@@ -115,8 +115,8 @@ const Home = () => {
             labore, corrupti facilis?
           </CardContent>
         </Card> */}
-        <div>{printToken}</div>
       </div>
+      <div className="break-all">{printToken}</div>
     </div>
   );
 };
