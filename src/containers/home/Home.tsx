@@ -33,6 +33,7 @@ const Home = () => {
           "BJiGpffy-15nEOP6tGHpaPE7JEqkdcdPKXEZ7ZABEyRGDllvIFMjv6cOi3m2oBDXq5r7fUa58Fq0lFZiScuWj7k",
       });
       console.log(token);
+      alert(token);
       if (userEmail)
         setDeviceToken({
           user: userEmail,
