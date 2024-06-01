@@ -4,10 +4,10 @@ import Header from "../components/appComponents/Header";
 import Footer from "../components/appComponents/Footer";
 import { useThemeContext } from "@/lib/context/themeContext";
 import { useUserDetails } from "@/lib/context/userDetailsContext";
-import useAmgStartApi from "@/components/hooks/AmgMS/useAmgStartApi";
+import useAmgStartApi from "@/components/hooks/AmgMS/useAmgStartApi.tsx";
 import { onMessage } from "firebase/messaging";
 import { messaging } from "../firebase.tsx";
-import useUpdateNotificationContext from "../components/hooks/notif.tsx";
+import useUpdateNotificationContext from "../components/hooks/updateNotification/notif.tsx";
 import { useNotificationContext } from "@/lib/context/notificationContext.tsx";
 import { notificationToast } from "@/components/appComponents/appAlert.tsx";
 
