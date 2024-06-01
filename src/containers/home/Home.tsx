@@ -9,12 +9,14 @@ import {
 import { messaging } from "@/firebase";
 import { getToken } from "firebase/messaging";
 import { useUserDetails } from "@/lib/context/userDetailsContext";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useDeviceTokenApi from "@/components/hooks/deviceToken/setDeviceToken";
 
 const Home = () => {
   const { setDeviceToken } = useDeviceTokenApi();
+
+  const [printToken, setToken] = useState("");
 
   const { userDetails } = useUserDetails();
   const userEmail = sessionStorage.getItem("email");
@@ -33,7 +35,7 @@ const Home = () => {
           "BJiGpffy-15nEOP6tGHpaPE7JEqkdcdPKXEZ7ZABEyRGDllvIFMjv6cOi3m2oBDXq5r7fUa58Fq0lFZiScuWj7k",
       });
       console.log(token);
-      alert(token);
+      setToken(token);
       if (userEmail)
         setDeviceToken({
           user: userEmail,
@@ -113,6 +115,7 @@ const Home = () => {
             labore, corrupti facilis?
           </CardContent>
         </Card> */}
+        <div>{printToken}</div>
       </div>
     </div>
   );
