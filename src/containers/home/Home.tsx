@@ -11,15 +11,15 @@ import { getToken } from "firebase/messaging";
 import { useUserDetails } from "@/lib/context/userDetailsContext";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import useDeviceTokenApi from "@/components/hooks/deviceToken/setDeviceToken";
+// import useDeviceTokenApi from "@/components/hooks/deviceToken/setDeviceToken";
 
 const Home = () => {
-  const { setDeviceToken } = useDeviceTokenApi();
+  // const { setDeviceToken } = useDeviceTokenApi();
 
   const [printToken, setToken] = useState("");
 
   const { userDetails } = useUserDetails();
-  const userEmail = sessionStorage.getItem("email");
+  // const userEmail = sessionStorage.getItem("email");
 
   const navigate = useNavigate();
 
@@ -36,11 +36,11 @@ const Home = () => {
       });
       console.log(token);
       setToken(token);
-      if (userEmail)
-        setDeviceToken({
-          user: userEmail,
-          token: token,
-        });
+      // if (userEmail)
+      //   setDeviceToken({
+      //     user: userEmail,
+      //     token: token,
+      //   });
     } else if (permissioin === "denied") {
       warnAlert(2000, "You have denied notification permissions!!");
     }

@@ -8,7 +8,7 @@ import useAmgStartApi from "@/components/hooks/AmgMS/useAmgStartApi.tsx";
 import { onMessage } from "firebase/messaging";
 import { messaging } from "../firebase.tsx";
 import useUpdateNotificationContext from "../components/hooks/updateNotification/notif.tsx";
-import { useNotificationContext } from "@/lib/context/notificationContext.tsx";
+// import { useNotificationContext } from "@/lib/context/notificationContext.tsx";
 import { notificationToast } from "@/components/appComponents/appAlert.tsx";
 
 function Layout() {
@@ -23,7 +23,7 @@ function Layout() {
 
   const { getUserDetails } = useAmgStartApi();
   const { updateNotificationContext } = useUpdateNotificationContext();
-  const { notificationList } = useNotificationContext();
+  // const { notificationList } = useNotificationContext();
 
   const userEmail = sessionStorage.getItem("email");
 
@@ -41,6 +41,12 @@ function Layout() {
       }
     }
   });
+
+  useEffect(() => {
+    navigator.serviceWorker.ready.then((regisation) => {
+      regisation.getNotifications().then((notif) => console.log(notif));
+    });
+  }, []);
 
   useEffect(() => {
     const getLocalStorageTheme = localStorage.getItem("theme");
@@ -61,7 +67,7 @@ function Layout() {
   }, [userDetails]);
 
   useEffect(() => {
-    console.log({ notificationList });
+    // console.log({ notificationList });
     if (trigger) {
       updateNotificationContext(triggerData);
       setTrigger(false);
