@@ -51,6 +51,8 @@ import NewMeeting from "./containers/patientsMeetings/NewMeeting.tsx";
 import OperatorListProvider from "./lib/context/operatorListContext.tsx";
 import HomePatientsMeetings from "./containers/patientsMeetings/HomePatientsMeetings.tsx";
 
+import NotificationProvider from "./lib/context/notificationContext.tsx";
+
 registerSW({ immediate: true });
 
 const router = createBrowserRouter(
@@ -193,13 +195,15 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <ToastContainer />
     <ThemeContextProvider>
       <UserDetailsProvider>
-        <PatientListProvider>
-          <MeetingListProvider>
-            <OperatorListProvider>
-              <RouterProvider router={router} />
-            </OperatorListProvider>
-          </MeetingListProvider>
-        </PatientListProvider>
+        <NotificationProvider>
+          <PatientListProvider>
+            <MeetingListProvider>
+              <OperatorListProvider>
+                <RouterProvider router={router} />
+              </OperatorListProvider>
+            </MeetingListProvider>
+          </PatientListProvider>
+        </NotificationProvider>
       </UserDetailsProvider>
     </ThemeContextProvider>
   </React.StrictMode>

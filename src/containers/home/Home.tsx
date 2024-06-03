@@ -1,3 +1,4 @@
+import { warnAlert } from "@/components/appComponents/appAlert";
 import {
   Card,
   CardContent,
@@ -5,12 +6,45 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { messaging } from "@/firebase";
+import { getToken } from "firebase/messaging";
 import { useUserDetails } from "@/lib/context/userDetailsContext";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+// import useDeviceTokenApi from "@/components/hooks/deviceToken/setDeviceToken";
 
 const Home = () => {
+  // const { setDeviceToken } = useDeviceTokenApi();
+
+  const [printToken, setToken] = useState("");
+
   const { userDetails } = useUserDetails();
+  // const userEmail = sessionStorage.getItem("email");
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    requestPermission();
+  }, []);
+
+  const requestPermission = async () => {
+    const permissioin = await Notification.requestPermission();
+    if (permissioin === "granted") {
+      const token = await getToken(messaging, {
+        vapidKey:
+          "BJiGpffy-15nEOP6tGHpaPE7JEqkdcdPKXEZ7ZABEyRGDllvIFMjv6cOi3m2oBDXq5r7fUa58Fq0lFZiScuWj7k",
+      });
+      console.log(token);
+      setToken(token);
+      // if (userEmail)
+      //   setDeviceToken({
+      //     user: userEmail,
+      //     token: token,
+      //   });
+    } else if (permissioin === "denied") {
+      warnAlert(2000, "You have denied notification permissions!!");
+    }
+  };
 
   const handleCardClick = (card: {
     code: string;
@@ -25,8 +59,7 @@ const Home = () => {
       if (card.linkType === "INTERNAL_LINK") {
         if (card.code === "AMGDEMO_GENAI") {
           navigate("/pwa/gen-ai/gpt-prompt");
-        }
-        else if (card.code === "AMGPWA_PATBOOK") {
+        } else if (card.code === "AMGPWA_PATBOOK") {
           navigate("/pwa/Booking/patientMeetings");
         } else {
           alert("card code error");
@@ -83,6 +116,7 @@ const Home = () => {
           </CardContent>
         </Card> */}
       </div>
+      <div className="break-all">{printToken}</div>
     </div>
   );
 };

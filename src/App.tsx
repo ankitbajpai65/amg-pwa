@@ -7,7 +7,6 @@ function App() {
   const root = document.querySelector(":root");
   const { theme, setTheme } = useThemeContext();
 
-  
   useEffect(() => {
     const getLocalStorageTheme = localStorage.getItem("theme");
     if (getLocalStorageTheme === "dark") root?.classList.add("dark");
@@ -21,10 +20,11 @@ function App() {
     // console.log(import.meta.env.VITE_GOOGLE_CLIENT_ID);
   }, [theme]);
 
-  
   return (
     <div className="w-full h-full">
-      <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID as string}>
+      <GoogleOAuthProvider
+        clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID as string}
+      >
         <Login />
       </GoogleOAuthProvider>
     </div>
