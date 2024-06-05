@@ -7,12 +7,18 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import NativeIcons from "./NativeIcons";
+import { useNotificationContext } from "@/lib/context/notificationContext";
+import { useEffect } from "react";
 
 const Header = (props: { toggleSidebar: () => void }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { toggleSidebar } = props;
+  const { notificationList } = useNotificationContext();
 
+  useEffect(() => {
+    console.log(notificationList);
+  }, [notificationList]);
   return (
     <>
       <div className="bg-bg-header-gray px-2.5 py-2 flex items-center justify-between">
@@ -51,8 +57,14 @@ const Header = (props: { toggleSidebar: () => void }) => {
             onClick={() => {
               navigate("/pwa/notifications/");
             }}
+            className="relative"
           >
             <NativeIcons image={notificationIcon} px={2} size={5} />
+            {notificationList && notificationList?.length > 0 && (
+              <div className="absolute -top-2 right-1 text-xs bg-red-500 rounded-full h-4 w-4 flex items-center justify-center">
+                {notificationList?.length}
+              </div>
+            )}
           </button>
         </div>
       </div>
