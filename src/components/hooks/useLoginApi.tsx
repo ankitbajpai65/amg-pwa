@@ -22,6 +22,8 @@ export default function useLoginApi() {
     password: string;
     customer: string;
   }) => {
+    console.log("getUserLogin runs")
+
     console.log(reqBody);
 
     try {
@@ -33,6 +35,7 @@ export default function useLoginApi() {
         });
         const resData = res.data;
         console.log(resData);
+
         setData(() => resData);
         if (resData?.response === "login successful") {
           getUserDetails({
@@ -40,6 +43,7 @@ export default function useLoginApi() {
             customerId: reqBody.customer,
           });
           localStorage.setItem("userEmail", reqBody.userEmail);
+          localStorage.setItem("AccessToken", resData.token);
         } else {
           errorAlert(3000, resData?.error);
         }

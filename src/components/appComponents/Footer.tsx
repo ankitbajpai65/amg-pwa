@@ -10,7 +10,8 @@ const Footer = () => {
   const navigate = useNavigate();
   const handleClick = () => {
     if (sessionStorage.getItem("isLoggedIn") === "true") {
-      navigate(`/pwa/home`);
+      // navigate(`/pwa/home`);
+      navigate("/pwa/genaiservices/gpt-prompt")
     }
   };
   return (
@@ -44,7 +45,8 @@ const Footer = () => {
               // style={{ paddingRight: "5px"}}
               size={20}
               title="Scanner"
-              onClick={() => navigate("/pwa/genaiservices/gpt-prompt")}
+              // onClick={() => navigate("/pwa/genaiservices/gpt-prompt")}
+              onClick={() => navigate(`/pwa/home`)}
             />
             {/* <p className="text-xs">Gpt Prompt</p> */}
             <p className="text-xs">Genai</p>
