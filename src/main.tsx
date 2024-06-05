@@ -54,6 +54,8 @@ import GenaiLayout from "./containers/genAi/GenaiLayout.tsx";
 import GptPrompt from "./containers/genAi/GptPrompt.tsx";
 // import ImgToText from "./containers/genAi/ImgToText.tsx";
 
+import NotificationProvider from "./lib/context/notificationContext.tsx";
+
 registerSW({ immediate: true });
 
 const router = createBrowserRouter(
@@ -208,13 +210,15 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <ToastContainer />
     <ThemeContextProvider>
       <UserDetailsProvider>
-        <PatientListProvider>
-          <MeetingListProvider>
-            <OperatorListProvider>
-              <RouterProvider router={router} />
-            </OperatorListProvider>
-          </MeetingListProvider>
-        </PatientListProvider>
+        <NotificationProvider>
+          <PatientListProvider>
+            <MeetingListProvider>
+              <OperatorListProvider>
+                <RouterProvider router={router} />
+              </OperatorListProvider>
+            </MeetingListProvider>
+          </PatientListProvider>
+        </NotificationProvider>
       </UserDetailsProvider>
     </ThemeContextProvider>
   </React.StrictMode>
