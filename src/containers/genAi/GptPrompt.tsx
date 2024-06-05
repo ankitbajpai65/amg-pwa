@@ -27,8 +27,6 @@ export default function GptPrompt(props: {
   setOpenedThread?: React.Dispatch<
     React.SetStateAction<threadDataType | undefined>
   >;
-  // threadArray: threadDataType[];
-  // setThreadArray: React.Dispatch<React.SetStateAction<threadDataType[]>>;
   handleNewThread?: (file: File | null, service: string) => void;
   updateThreadArray?: (
     id: string,
@@ -41,22 +39,16 @@ export default function GptPrompt(props: {
   setIsUploadModalOpen?: React.Dispatch<React.SetStateAction<boolean>>;
   uploadedFile?: File | undefined;
   setUploadedFile?: React.Dispatch<React.SetStateAction<File | undefined>>;
-  // handleChatWithFile: (e, tid: string) => void;
 }) {
-  console.log("GPT prompt renders");
-
   const {
     openedThread,
     setOpenedThread,
-    // threadArray,
-    // setThreadArray,
     handleNewThread,
     updateThreadArray,
     isUploadModalOpen,
     setIsUploadModalOpen,
     uploadedFile,
     setUploadedFile,
-    // handleChatWithFile,
   } = props;
   const accessToken = localStorage.getItem("AccessToken");
   const [userQuestion, setUserQuestion] = useState("");
@@ -193,8 +185,6 @@ export default function GptPrompt(props: {
     console.log("handleCreateNewThread runs", serviceType);
     if (handleNewThread) handleNewThread(null, serviceType);
 
-    // setOpenedThread(threadArray[0]);
-    // setConversation([{ id: "", question: "", answer: "", image_name: "" }]);
     if (setOpenedThread)
       setOpenedThread({
         _id: "",
@@ -265,13 +255,6 @@ export default function GptPrompt(props: {
 
       <form className="mt-auto" onSubmit={(e) => handleSubmit(e)}>
         <div className="flex justify-center gap-6 rounded-b-xl overflow-hidden p-2 h-16 box-border pb-4">
-          {/* <button className="w-1/5">
-            <FaPlus
-              className="m-auto bg-gray-300 rounded-full p-2 cursor-pointer"
-              size={30}
-            />
-          </button> */}
-          {/* <div className="w-1/5"> */}
           <DropdownMenu.Root>
             <DropdownMenu.Trigger asChild>
               <button
