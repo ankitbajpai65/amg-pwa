@@ -36,7 +36,6 @@ module.exports = {
         "card-light-gray": "#F8F8F8",
         "border-dark-gray": "#5A5A5A",
         "border-light-gray": "#9191914d",
-
         bkg: {
           DEFAULT: "rgb(var(--color-bg-offset))",
           foreground: "rgb(var(--color-bg-offset-foreground))",

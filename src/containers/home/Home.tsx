@@ -11,37 +11,55 @@ import { getToken } from "firebase/messaging";
 import { useUserDetails } from "@/lib/context/userDetailsContext";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import useDeviceTokenApi from "@/components/hooks/deviceToken/setDeviceToken";
+import useDeviceTokenApi from "@/components/hooks/deviceToken/setDeviceToken";
 
 const Home = () => {
-  // const { setDeviceToken } = useDeviceTokenApi();
+  const { setDeviceToken } = useDeviceTokenApi();
 
   const [printToken, setToken] = useState("");
 
   const { userDetails } = useUserDetails();
-  // const userEmail = sessionStorage.getItem("email");
+  const userEmail = sessionStorage.getItem("email");
 
   const navigate = useNavigate();
 
   useEffect(() => {
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        // Register the service worker as soon as the app loads
+        navigator.serviceWorker
+          .register("/firebase-messaging-sw.js", {
+            scope: "/firebase-cloud-messaging-push-scope",
+          })
+          .then((registration) => {
+            console.log(
+              "Service Worker registered with scope:",
+              registration.scope
+            );
+          })
+          .catch((err) => {
+            console.log("Service worker registration failed, error:", err);
+          });
+      });
+    }
     requestPermission();
   }, []);
 
   const requestPermission = async () => {
-    const permissioin = await Notification.requestPermission();
-    if (permissioin === "granted") {
+    console.log("YOYO");
+    const permission = await Notification.requestPermission();
+    if (permission === "granted") {
       const token = await getToken(messaging, {
         vapidKey:
           "BJiGpffy-15nEOP6tGHpaPE7JEqkdcdPKXEZ7ZABEyRGDllvIFMjv6cOi3m2oBDXq5r7fUa58Fq0lFZiScuWj7k",
       });
-      console.log(token);
+      console.log(token,userEmail);
       setToken(token);
-      // if (userEmail)
-      //   setDeviceToken({
-      //     user: userEmail,
-      //     token: token,
-      //   });
-    } else if (permissioin === "denied") {
+      if (token)
+        setDeviceToken({
+          token: token,
+        });
+    } else if (permission === "denied") {
       warnAlert(2000, "You have denied notification permissions!!");
     }
   };
