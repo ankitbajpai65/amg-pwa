@@ -10,7 +10,7 @@ import NativeIcons from "./NativeIcons";
 import { useNotificationContext } from "@/lib/context/notificationContext";
 import { useEffect } from "react";
 
-const Header = (props: { toggleSidebar: () => void }) => {
+const Header = (props: { toggleSidebar?: () => void }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { toggleSidebar } = props;

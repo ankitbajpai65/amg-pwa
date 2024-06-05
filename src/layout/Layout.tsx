@@ -81,7 +81,7 @@ function Layout() {
 
   return (
     <div className="w-full h-full border-box flex flex-col justify-between">
-      <Header toggleSidebar={toggleSidebar} />
+      <Header />
       {/* <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} /> */}
       <div className="grow overflow-auto">
         <Outlet />
