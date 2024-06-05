@@ -45,7 +45,11 @@ export default function useCheckUserApi(): apidatatype {
         if (resData?.status === true) {
           sessionStorage.setItem("isLoggedIn", "true");
           sessionStorage.setItem("email", reqBody.user);
-          getUserDetails(reqBody.user);
+          // getUserDetails(reqBody.user);
+          getUserDetails({
+            emailId: reqBody.user as string,
+            customerId: "AMGDEMO",
+          });
         } else if (resData?.status === 400) {
           errorAlert(5000, resData?.title);
         } else {

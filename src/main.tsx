@@ -26,8 +26,8 @@ import UploadScan from "./containers/qrCodeScan/UploadScan.tsx";
 import PwaMap from "./containers/map/PwaMap.tsx";
 import PrivacyDisplayOnly from "./containers/privacyPolicy/PrivacyDisplayOnly.tsx";
 import AiBot from "./containers/aibot/AiBot.tsx";
-import ChatWithYourFiles from "./containers/genAi/chatwithyourfiles/ChatWithYourFiles.tsx";
-import Gpt_prompt from "./containers/genAi/gpt-prompt/Gpt_prompt.tsx";
+// import ChatWithYourFiles from "./containers/genAi/chatwithyourfiles/ChatWithYourFiles.tsx";
+// import Gpt_prompt from "./containers/genAi/gpt-prompt/Gpt_prompt.tsx";
 import Notifications from "./containers/pwaNotifications/Notifications.tsx";
 import { registerSW } from "virtual:pwa-register";
 import Mfa from "./containers/login/mfa/Mfa.tsx";
@@ -39,7 +39,7 @@ import HelpSupport from "./containers/help&support/HelpSupport.tsx";
 import HelpFAQ from "./containers/help&support/HelpFAQ.tsx";
 import FaqDisplay from "./containers/help&support/FaqDisplay.tsx";
 import NotificationSetting from "./containers/pwaNotifications/NotificationSetting.tsx";
-import CwyfChat from "./containers/genAi/chatwithyourfiles/CwyfChat.tsx";
+// import CwyfChat from "./containers/genAi/chatwithyourfiles/CwyfChat.tsx";
 import IframePg from "./containers/iframePg/IframePg.tsx";
 import PatientListProvider from "./lib/context/patientListContext.tsx";
 import PatientsPrivacy from "./containers/patientsMeetings/patientsPrivacy.tsx";
@@ -50,6 +50,9 @@ import PatientLayout from "./layout/PatientLayout.tsx";
 import NewMeeting from "./containers/patientsMeetings/NewMeeting.tsx";
 import OperatorListProvider from "./lib/context/operatorListContext.tsx";
 import HomePatientsMeetings from "./containers/patientsMeetings/HomePatientsMeetings.tsx";
+import GenaiLayout from "./containers/genAi/GenaiLayout.tsx";
+import GptPrompt from "./containers/genAi/GptPrompt.tsx";
+// import ImgToText from "./containers/genAi/ImgToText.tsx";
 
 import NotificationProvider from "./lib/context/notificationContext.tsx";
 
@@ -170,12 +173,6 @@ const router = createBrowserRouter(
 
         <Route path="helpFaq/" element={<HelpFAQ />} />
         <Route path="faqDisplay/" element={<FaqDisplay />} />
-
-        <Route path="gen-ai/">
-          <Route path="chat-with-your-files/" element={<ChatWithYourFiles />} />
-          <Route path="chat-with-your-files/cwyfchat/" element={<CwyfChat />} />
-          <Route path="gpt-prompt/" element={<Gpt_prompt />} />
-        </Route>
         <Route path="iframePg/" element={<IframePg />} />
 
         <Route path="Booking/" element={<PatientLayout />}>
@@ -186,7 +183,25 @@ const router = createBrowserRouter(
           <Route path="newMeeting/" element={<NewMeeting />} />
         </Route>
       </Route>
+
+      <Route
+        path="pwa/genaiservices"
+        element={
+          <ProtectedRoutes>
+            <GenaiLayout />
+          </ProtectedRoutes>
+        }
+      >
+        {/* <Route path="chat-with-your-files/" element={<ChatWithYourFiles />} /> */}
+        {/* <Route path="chat-with-your-files/cwyfchat/" element={<CwyfChat />} /> */}
+        {/* <Route path="gpt-prompt/" element={<Gpt_prompt />} /> */}
+        <Route path="gpt-prompt/" element={<GptPrompt />} />
+        {/* <Route path="image_text/" element={<ImgToText />} /> */}
+        {/* <Route path="image_text/" element={<ImgToText/>} />
+        <Route path="image_text/" element={<ImgToText/>} /> */}
+      </Route>
     </Route>
+    // </Route>
   )
 );
 
