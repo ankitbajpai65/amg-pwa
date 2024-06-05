@@ -24,7 +24,7 @@ const Login = () => {
   });
   const [loaderVisible, setLoaderVisible] = useState(false);
   const { userDetails, setUserDetails } = useUserDetails();
-  const { getUserLogin, useLoginApiRes } = useLoginApi();
+  const { getUserLogin} = useLoginApi();
   const { getSendMailAPI } = useSendMailApi();
   const navigate = useNavigate();
 
@@ -34,18 +34,21 @@ const Login = () => {
     }
   }, [userLoginStatus]);
 
-  useEffect(() => {
-    if (useLoginApiRes?.response === "login successful") {
-      localStorage.setItem("AccessToken", useLoginApiRes.token);
-      // navigate("/b2b");
-    } else {
-      if (useLoginApiRes?.status === false || useLoginApiRes?.status === 400) {
-        console.log(useLoginApiRes);
-        errorAlert(1000, "Errore di accesso");
-      }
-      setLoaderVisible(false);
-    }
-  }, [useLoginApiRes]);
+  // useEffect(() => {
+  //   console.log("useEffect runs - line 38 ")
+  //   // console.log(useLoginApiRes.token);
+  //   if (useLoginApiRes?.response === "login successful") {
+  //     console.log("if runs**********", useLoginApiRes.token);
+  //     localStorage.setItem("AccessToken", useLoginApiRes.token);
+  //     // navigate("/b2b");
+  //   } else {
+  //     if (useLoginApiRes?.status === false || useLoginApiRes?.status === 400) {
+  //       console.log(useLoginApiRes);
+  //       errorAlert(1000, "Errore di accesso");
+  //     }
+  //     setLoaderVisible(false);
+  //   }
+  // }, [useLoginApiRes]);
 
   useEffect(() => {
     if (userDetails) {

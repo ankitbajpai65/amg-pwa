@@ -24,7 +24,7 @@ function GenaiLayout() {
 
   const { userDetails } = useUserDetails();
   const { getUserDetails } = useAmgStartApi();
-  const { fetchUserThreadRes, fetchUsersThread,isLoading } = useUserHistory();
+  const { fetchUserThreadRes, fetchUsersThread, isLoading } = useUserHistory();
 
   const userEmail = sessionStorage.getItem("email");
 
@@ -38,17 +38,15 @@ function GenaiLayout() {
   >();
   const [openedThread, setOpenedThread] = useState<threadDataType>();
 
-  useEffect(() => {
-    fetchUsersThread();
-  }, []);
+  const accessToken = localStorage.getItem("AccessToken");
+  // console.log(accessToken);
 
   useEffect(() => {
-    console.log("useEffect runs");
-  }, [threadArray]);
+    if (accessToken) fetchUsersThread();
+  }, [accessToken]);
 
   useEffect(() => {
-    console.log(fetchUserThreadRes);
-
+    // console.log(fetchUserThreadRes);
     setThreadArray(fetchUserThreadRes?.user_history);
   }, [fetchUserThreadRes]);
 
@@ -98,7 +96,7 @@ function GenaiLayout() {
   }, [isSidebarOpen]);
 
   const handleNewThread = (file?: File | null, serviceType?: string) => {
-    console.log("***** handleNewThread runs *******", serviceType);
+    // console.log("***** handleNewThread runs *******", serviceType);
     console.log(file);
 
     if (
@@ -111,7 +109,7 @@ function GenaiLayout() {
       return;
     }
 
-    console.log("serviceType", serviceType);
+    // console.log("serviceType", serviceType);
 
     const newThread = (service: string) => ({
       _id: "",
@@ -143,7 +141,7 @@ function GenaiLayout() {
     serviceType: string,
     fileUrl?: string
   ) => {
-    console.log("updateThreadArray runs");
+    // console.log("updateThreadArray runs");
     console.log({ threadId, chatQues, chatAns, serviceType, fileUrl });
 
     if (!threadArray) {
@@ -347,7 +345,7 @@ function GenaiLayout() {
       </div>
       <Footer />
 
-      {isLoading && <NewLoader/>}
+      {isLoading && <NewLoader />}
     </div>
   );
 }
