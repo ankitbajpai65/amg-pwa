@@ -1,15 +1,14 @@
 import image from "../../assets/loghi-03.png";
 import useCheckUserApi from "@/components/hooks/AmgMS/useCheckUserApi";
-// import { useGoogleLogin } from "@react-oauth/google";
+import { useGoogleLogin } from "@react-oauth/google";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUserDetails } from "@/lib/context/userDetailsContext";
-// import { FcGoogle } from "react-icons/fc";
+import { FcGoogle } from "react-icons/fc";
 import { errorAlert, warnAlert } from "@/components/appComponents/appAlert";
 import useSendMailApi from "@/components/hooks/AmgMS/useSendMailApi";
 import Loader from "@/components/appComponents/Loader";
 import { inputStyle, primaryBtnStyle } from "@/lib/cssTailwind";
-import useLoginApi from "@/components/hooks/useLoginApi";
 
 type Inputs = {
   email: string;
@@ -24,7 +23,6 @@ const Login = () => {
   });
   const [loaderVisible, setLoaderVisible] = useState(false);
   const { userDetails, setUserDetails } = useUserDetails();
-  const { getUserLogin} = useLoginApi();
   const { getSendMailAPI } = useSendMailApi();
   const navigate = useNavigate();
 
@@ -33,22 +31,6 @@ const Login = () => {
       setLoaderVisible(() => false);
     }
   }, [userLoginStatus]);
-
-  // useEffect(() => {
-  //   console.log("useEffect runs - line 38 ")
-  //   // console.log(useLoginApiRes.token);
-  //   if (useLoginApiRes?.response === "login successful") {
-  //     console.log("if runs**********", useLoginApiRes.token);
-  //     localStorage.setItem("AccessToken", useLoginApiRes.token);
-  //     // navigate("/b2b");
-  //   } else {
-  //     if (useLoginApiRes?.status === false || useLoginApiRes?.status === 400) {
-  //       console.log(useLoginApiRes);
-  //       errorAlert(1000, "Errore di accesso");
-  //     }
-  //     setLoaderVisible(false);
-  //   }
-  // }, [useLoginApiRes]);
 
   useEffect(() => {
     if (userDetails) {
@@ -80,8 +62,7 @@ const Login = () => {
           ) {
             navigate("/policy/privacy");
           } else {
-            // navigate(`/pwa/home`);
-            navigate(`/pwa/genaiservices/gpt-prompt`);
+            navigate(`/pwa/home`);
           }
         } else {
           navigate("/");
@@ -97,8 +78,7 @@ const Login = () => {
         ) {
           navigate("/policy/privacy");
         } else {
-          // navigate(`/pwa/home`);
-          navigate(`/pwa/genaiservices/gpt-prompt`);
+          navigate(`/pwa/home`);
         }
       }
       setLoaderVisible(false);
@@ -120,35 +100,29 @@ const Login = () => {
         user: loginData.email,
         pass: loginData.password,
       });
-      getUserLogin({
-        userEmail: loginData.email,
-        password: loginData.password,
-        // customer: formType === "Privato" ? "AMGDEMO" : inputCustomerValue,
-        customer: "AMGDEMO",
-      });
       setLoaderVisible(true);
     } else {
       errorAlert(3000, "Empty Input fields");
     }
   };
 
-  // const HandleGoogleLogin = () => {
-  //   const googleLoginHook = useGoogleLogin({
-  //     onSuccess: (tokenResponse) => console.log(tokenResponse),
-  //   });
-  //   return (
-  //     <div className="rounded-xl">
-  //       <button
-  //         className="w-full flex items-center border border-red-600 text-xl p-2 my-2 rounded-xl font-semibold justify-center"
-  //         type="button"
-  //         onClick={() => googleLoginHook()}
-  //       >
-  //         <FcGoogle size={25} style={{ paddingRight: "5px" }} /> Sign in with
-  //         Google
-  //       </button>
-  //     </div>
-  //   );
-  // };
+  const HandleGoogleLogin = () => {
+    const googleLoginHook = useGoogleLogin({
+      onSuccess: (tokenResponse) => console.log(tokenResponse),
+    });
+    return (
+      <div className="rounded-xl">
+        <button
+          className="w-full flex items-center border border-red-600 text-xl p-2 my-2 rounded-xl font-semibold justify-center"
+          type="button"
+          onClick={() => googleLoginHook()}
+        >
+          <FcGoogle size={25} style={{ paddingRight: "5px" }} /> Sign in with
+          Google
+        </button>
+      </div>
+    );
+  };
 
   return (
     <div className="flex flex-col w-full h-full">
@@ -166,7 +140,6 @@ const Login = () => {
         </div>
       </div>
       {/* header---------- */}
-
       {/* body---------- */}
       <div className="grow flex flex-col justify-around p-5">
         <div className="text-center">
@@ -218,7 +191,7 @@ const Login = () => {
           </button>
         </form>
 
-        {/* <HandleGoogleLogin /> */}
+        <HandleGoogleLogin />
 
         <div className="flex justify-center">
           <a

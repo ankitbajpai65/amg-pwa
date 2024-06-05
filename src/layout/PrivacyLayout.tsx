@@ -27,10 +27,7 @@ function PrivacyLayout() {
 
   useEffect(() => {
     if (!userDetails) {
-      getUserDetails({
-        emailId: userEmail as string,
-        customerId: "AMGDEMO",
-      });
+      getUserDetails(userEmail as string);
     }
   }, [userDetails]);
 
