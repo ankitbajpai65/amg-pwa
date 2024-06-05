@@ -7,10 +7,7 @@ import { errorAlert } from "@/components/appComponents/appAlert";
 
 type apidatatype = {
   apiUserDetails: userDetailsType | undefined;
-  getUserDetails: (reqBody: {
-    emailId: string;
-    customerId: string;
-  }) => Promise<void>;
+  getUserDetails: (reqBody: string) => Promise<void>;
 };
 
 export default function useAmgStartApi(): apidatatype {
@@ -24,19 +21,17 @@ export default function useAmgStartApi(): apidatatype {
   //     "user": "gg@dp.com",
   //   }
 
-  const getUserDetails = async (reqBody: {
-    emailId: string;
-    customerId: string;
-  }) => {
+  const getUserDetails = async (reqBody: string) => {
     if (reqBody) {
       try {
         const urlRes = await axios.post(url, {
           headers: {
             content: "application/json",
           },
-          customer: reqBody.customerId,
-          user: reqBody.emailId,
+          customer: "AMGDEMO",
+          user: reqBody,
           Origin: "PWA", //!CHANGE TO PWA
+          
         });
         const resData = urlRes.data;
         setData(resData);

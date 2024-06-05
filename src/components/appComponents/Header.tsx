@@ -2,18 +2,15 @@ import image from "../../assets/loghi-03.png";
 import msgIcon from "../../assets/icons/msg icon.png";
 import notificationIcon from "../../assets/icons/Notifications icon.png";
 import settingsIcon from "../../assets/icons/Settings icon.png";
-import { GiHamburgerMenu } from "react-icons/gi";
 
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import NativeIcons from "./NativeIcons";
 import { useNotificationContext } from "@/lib/context/notificationContext";
 import { useEffect } from "react";
 
-const Header = (props: { toggleSidebar?: () => void }) => {
+const Header = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const { toggleSidebar } = props;
   const { notificationList } = useNotificationContext();
 
   useEffect(() => {
@@ -23,12 +20,6 @@ const Header = (props: { toggleSidebar?: () => void }) => {
     <>
       <div className="bg-bg-header-gray px-2.5 py-2 flex items-center justify-between">
         <div className="flex items-center">
-          {location.pathname.endsWith("genaiservices/gpt-prompt") && (
-            <GiHamburgerMenu
-              onClick={toggleSidebar}
-              className="cursor-pointer"
-            />
-          )}
           <div className="h-12 sm:h-14">
             <img className="h-full" src={image} />
           </div>
