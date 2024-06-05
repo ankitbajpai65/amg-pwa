@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import Login from "./containers/login/Login";
 import { useThemeContext } from "./lib/context/themeContext";
-import { GoogleOAuthProvider } from "@react-oauth/google";
+// import { GoogleOAuthProvider } from "@react-oauth/google";
 
 function App() {
   const root = document.querySelector(":root");
@@ -22,11 +22,9 @@ function App() {
 
   return (
     <div className="w-full h-full">
-      <GoogleOAuthProvider
-        clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID as string}
-      >
+      {/* <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID as string}> */}
         <Login />
-      </GoogleOAuthProvider>
+      {/* </GoogleOAuthProvider> */}
     </div>
   );
 }
