@@ -14,19 +14,15 @@ import ReactMarkdown from "react-markdown";
 import UploadFileModal from "./UploadFileModal";
 import userLogo from "@/assets/user.png";
 import logo from "@/assets/loghi-03.png";
-// import {
-// import {
-//   HamburgerMenuIcon,
-//   DotFilledIcon,
-//   CheckIcon,
-//   ChevronRightIcon,
-// } from '@radix-ui/react-icons';
 
-// const url = "https://amgenaispacebackend.datapartners.ch";
 const url = "https://genaiservices-be.datapartners.ch";
 
 export default function Cwyf(props: {
   openedThread?: threadDataType;
+  setOpenedThread?: React.Dispatch<
+    React.SetStateAction<threadDataType | undefined>
+  >;
+  handleNewThread?: (file: File | null, service: string) => void;
   isUploadModalOpen: boolean;
   setIsUploadModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   uploadedFile: File | undefined;
@@ -41,6 +37,8 @@ export default function Cwyf(props: {
 }) {
   const {
     openedThread,
+    setOpenedThread,
+    handleNewThread,
     isUploadModalOpen,
     setIsUploadModalOpen,
     uploadedFile,
@@ -51,7 +49,7 @@ export default function Cwyf(props: {
   const [userQuestion, setUserQuestion] = useState("");
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   const [conversation, setConversation] = useState([
-    { id: 0, question: "", answer: "" },
+    { id: 0, question: "", answer: "", image_name: "" },
   ]);
   const [uploadedFileId, setUploadFileId] = useState<string>("");
 
@@ -75,7 +73,7 @@ export default function Cwyf(props: {
             question: item.question,
             answer: item.answer,
             image_name: "",
-            created_at: "",
+            // created_at: "",
           })
         );
         setConversation(newConversation);
@@ -199,6 +197,26 @@ export default function Cwyf(props: {
     }
   }
 
+  function handleCreateNewThread(serviceType: string) {
+    console.log("handleCreateNewThread runs", serviceType);
+    if (handleNewThread) handleNewThread(null, serviceType);
+
+    if (setOpenedThread)
+      setOpenedThread({
+        _id: "",
+        service: serviceType,
+      });
+
+    if (
+      serviceType === "image_to_text" ||
+      serviceType === "faq" ||
+      serviceType === "cwyf"
+    )
+      setIsUploadModalOpen && setIsUploadModalOpen(true);
+    else
+      setConversation([{ id: +"", question: "", answer: "", image_name: "" }]);
+  }
+
   function handleOpenFile() {
     if (openedThread && openedThread.data) {
       const a = document.createElement("a");
@@ -220,12 +238,20 @@ export default function Cwyf(props: {
           </p>
         </div>
       ) : (
-        <div className="grow py-1 px-2 overflow-auto text-ellipsis flex">
+        <div
+        style={{ width: "85%", margin: "auto" }}
+        className="grow py-1 px-2 overflow-auto text-ellipsis flex">
           <div className="p-2 mt-auto">
             {conversation.map((item, index) => (
               <div key={index} className="flex flex-col">
                 {item.question && (
                   <>
+                    <div className={`flex items-center mt-4 gap-1`}>
+                      <div className="h-14 w-14">
+                        <img src={userLogo} alt="" className="h-full w-full" />
+                      </div>
+                      <div className="text-lg font-semibold">User</div>
+                    </div>
                     {index === 0 && (
                       <div
                         onClick={handleOpenFile}
@@ -234,12 +260,6 @@ export default function Cwyf(props: {
                         <img src={pdfIcon} alt="pdfIcon" className="h-10" />
                       </div>
                     )}
-                    <div className={`flex items-center mt-4 gap-1`}>
-                      <div className="h-14 w-14">
-                        <img src={userLogo} alt="" className="h-full w-full" />
-                      </div>
-                      <div className="text-lg font-semibold">User</div>
-                    </div>
                     <div className="self-start px-2 py-1 my-2 bg-blue-600 border rounded-md text-white">
                       {item.question}
                     </div>
@@ -296,19 +316,34 @@ export default function Cwyf(props: {
                 align="center"
                 sideOffset={5}
               >
-                <DropdownMenu.Item className="px-4 py-1 hover:bg-gray-100 cursor-pointer">
+                <DropdownMenu.Item
+                  onClick={() => handleCreateNewThread("propchat")}
+                  className="px-4 py-1 hover:bg-gray-100 cursor-pointer"
+                >
                   <img src={textIcon} alt="" className="h-6" />
                 </DropdownMenu.Item>
-                <DropdownMenu.Item className="px-4 py-1 hover:bg-gray-100 cursor-pointer">
+                <DropdownMenu.Item
+                  onClick={() => handleCreateNewThread("faq")}
+                  className="px-4 py-1 hover:bg-gray-100 cursor-pointer"
+                >
                   <img src={faqIcon} alt="" className="h-6" />
                 </DropdownMenu.Item>
-                <DropdownMenu.Item className="px-4 py-1 hover:bg-gray-100 cursor-pointer">
+                <DropdownMenu.Item
+                  onClick={() => handleCreateNewThread("cwyf")}
+                  className="px-4 py-1 hover:bg-gray-100 cursor-pointer"
+                >
                   <img src={cwyfIcon} alt="" className="h-6" />
                 </DropdownMenu.Item>
-                <DropdownMenu.Item className="px-4 py-1 hover:bg-gray-100 cursor-pointer">
+                <DropdownMenu.Item
+                  onClick={() => handleCreateNewThread("image_to_text")}
+                  className="px-4 py-1 hover:bg-gray-100 cursor-pointer"
+                >
                   <img src={imgTxtIcon} alt="" className="h-7" />
                 </DropdownMenu.Item>
-                <DropdownMenu.Item className="px-4 py-1 hover:bg-gray-100 cursor-pointer">
+                <DropdownMenu.Item
+                  onClick={() => handleCreateNewThread("text_to_image")}
+                  className="px-4 py-1 hover:bg-gray-100 cursor-pointer"
+                >
                   <PiFileImage size={23} className="ml-1" />
                 </DropdownMenu.Item>
               </DropdownMenu.Content>

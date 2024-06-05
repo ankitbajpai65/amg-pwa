@@ -62,23 +62,9 @@ export default function GptPrompt(props: {
   const [userQuestion, setUserQuestion] = useState("");
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   const [conversation, setConversation] = useState<conversationType>([
-    { id: 0, question: "", answer: "", image_name: "", created_at: "" },
+    { id: 0, question: "", answer: "", image_name: "" },
   ]);
   // const { handleAllLogAiApi } = useHandleAllLogAiAPI();
-
-  // const url = "https://amgenaispacebackend.datapartners.ch";
-  // const urlGCP = "https://amg-django-be.uc.r.appspot.com";
-
-  // const urlTestLocal = "http://127.0.0.1:8000";
-
-  //   const [bookmarksChecked, setBookmarksChecked] = useState(true);
-  //   const [urlsChecked, setUrlsChecked] = useState(false);
-  //   const [person, setPerson] = useState("pedro");
-
-  // useEffect(() => {
-  //   console.log(openedThread);
-  //   if (openedThread) setConversation(openedThread.data);
-  // }, [openedThread]);
 
   useEffect(() => {
     console.log(openedThread);
@@ -126,10 +112,22 @@ export default function GptPrompt(props: {
         if (prev) {
           return [
             ...prev,
-            { id: prev.length, question: userQuestion, answer: "Loading..." },
+            {
+              id: prev.length,
+              question: userQuestion,
+              answer: "Loading...",
+              image_name: "",
+            },
           ];
         } else {
-          return [{ id: 0, question: userQuestion, answer: "Loading..." }];
+          return [
+            {
+              id: 0,
+              question: userQuestion,
+              answer: "Loading...",
+              image_name: "",
+            },
+          ];
         }
       });
       const res = await fetch(
@@ -162,16 +160,11 @@ export default function GptPrompt(props: {
         setConversation((prev) => {
           console.log(prev);
           return prev.map((item) => {
-            // console.log(item.id + 1, conversation?.length);
-            // if (+item.id === conversation?.length) {
-            //   console.log("139");
             return {
               ...item,
               answer: formatedText,
               created_at: new Date().toISOString(),
             };
-            // }
-            // return item;
           });
         });
 
@@ -213,7 +206,7 @@ export default function GptPrompt(props: {
       serviceType === "faq" ||
       serviceType === "cwyf"
     )
-    setIsUploadModalOpen && setIsUploadModalOpen(true);
+      setIsUploadModalOpen && setIsUploadModalOpen(true);
     else
       setConversation([{ id: +"", question: "", answer: "", image_name: "" }]);
   }
@@ -228,7 +221,10 @@ export default function GptPrompt(props: {
           </p>
         </div>
       ) : (
-        <div className="grow py-1 px-2 overflow-auto text-ellipsis flex">
+        <div
+          style={{ width: "85%", margin: "auto" }}
+          className="grow py-1 px-2 overflow-auto text-ellipsis flex"
+        >
           <div className="p-2 mt-auto w-full">
             {conversation.map((item, index) => (
               <div key={index} className="flex flex-col">
@@ -343,7 +339,7 @@ export default function GptPrompt(props: {
               className="bg-bg-input-gray dark:bg-neutral-600 w-1/6 h-full rounded-r-md px-2"
               type="submit"
             >
-              <div className="text-text-red">
+              <div className="text-text-red flex justify-end">
                 <IoArrowUpCircleSharp size={25} />
               </div>
             </button>

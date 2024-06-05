@@ -16,13 +16,13 @@ export default function UploadFileModal(props: {
   setOpenedThread?: React.Dispatch<
     React.SetStateAction<threadDataType | undefined>
   >;
-  updateThreadArray: (
+  updateThreadArray?: (
     id: string,
     question: string,
     answer: string,
     service: string,
     fileUrl?: string
-  ) => void | undefined;
+  ) => void;
   handleChatWithFile?: (e: FormEvent<HTMLFormElement>, tid: string) => void;
   handleGenerateFaqs?: (tid: string, fileName: string) => void;
   setUploadFileId?: React.Dispatch<React.SetStateAction<string>>;
@@ -114,7 +114,7 @@ export default function UploadFileModal(props: {
             question: file.name,
             answer: "Ask me a question now",
             image_name: "",
-            created_at: new Date().toISOString(),
+            // created_at: new Date().toISOString(),
           },
         ]);
       }
@@ -127,7 +127,7 @@ export default function UploadFileModal(props: {
       // );
       //   return;
       // } else {
-      else if (serviceType === "image_to_text") {
+      else if (serviceType === "image_to_text" && updateThreadArray) {
         updateThreadArray(
           data.id,
           data.Image_name,
@@ -152,7 +152,7 @@ export default function UploadFileModal(props: {
             question: data.image_path,
             answer: data.response,
             image_name: data.Image_name,
-            created_at: new Date().toISOString(),
+            // created_at: new Date().toISOString(),
           },
         ]);
       }

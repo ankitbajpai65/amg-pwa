@@ -11,15 +11,6 @@ import { PiFileImage } from "react-icons/pi";
 import { threadDataType } from "./type";
 import UploadFileModal from "./UploadFileModal";
 import { errorAlert } from "@/components/appComponents/appAlert";
-// import Loader from "@/components/appComponents/Loader";
-// import ReactMarkdown from "react-markdown";
-// import {
-//   HamburgerMenuIcon,
-//   DotFilledIcon,
-//   CheckIcon,
-//   ChevronRightIcon,
-// } from '@radix-ui/react-icons';
-
 type faqResType = {
   Question: string;
   Answer: string;
@@ -27,6 +18,10 @@ type faqResType = {
 
 export default function Faq(props: {
   openedThread?: threadDataType;
+  setOpenedThread?: React.Dispatch<
+    React.SetStateAction<threadDataType | undefined>
+  >;
+  handleNewThread?: (file: File | null, service: string) => void;
   isUploadModalOpen: boolean;
   setIsUploadModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   uploadedFile: File | undefined;
@@ -41,6 +36,8 @@ export default function Faq(props: {
 }) {
   const {
     openedThread,
+    setOpenedThread,
+    handleNewThread,
     isUploadModalOpen,
     setIsUploadModalOpen,
     uploadedFile,
@@ -53,7 +50,7 @@ export default function Faq(props: {
   const [faqResponse, setFaqResponse] = useState<faqResType[]>([]);
   // const [isLoading, setIsLoading] = useState<boolean>(false);
   const [conversation, setConversation] = useState([
-    { id: 0, question: "", answer: "" },
+    { id: 0, question: "", answer: "", image_name: "" },
   ]);
   const { handleAllLogAiApi } = useHandleAllLogAiAPI();
 
@@ -107,6 +104,28 @@ export default function Faq(props: {
   //     console.log(error);
   //   }
   // }
+
+  function handleCreateNewThread(serviceType: string) {
+    console.log("handleCreateNewThread runs", serviceType);
+    if (handleNewThread) handleNewThread(null, serviceType);
+
+    // setOpenedThread(threadArray[0]);
+    // setConversation([{ id: "", question: "", answer: "", image_name: "" }]);
+    if (setOpenedThread)
+      setOpenedThread({
+        _id: "",
+        service: serviceType,
+      });
+
+    if (
+      serviceType === "image_to_text" ||
+      serviceType === "faq" ||
+      serviceType === "cwyf"
+    )
+      setIsUploadModalOpen && setIsUploadModalOpen(true);
+    else
+      setConversation([{ id: +"", question: "", answer: "", image_name: "" }]);
+  }
 
   async function handleGenerateFaqs(id: string, fileName: string) {
     console.log("handleGenerateFaqs runs", id, fileName);
@@ -173,25 +192,11 @@ export default function Faq(props: {
           </p>
         </div>
       ) : (
-        <div className="grow py-1 px-2 overflow-auto text-ellipsis flex">
+        <div
+          style={{ minWidth: "85%", margin: "auto" }}
+          className="grow py-1 px-2 overflow-auto text-ellipsis flex"
+        >
           <div className="p-2 mt-auto">
-            {/* {conversation.map((item, index) => (
-              <div key={index} className="flex flex-col">
-                {item.question && (
-                  <div className="self-end px-2 py-1 my-2 bg-blue-600 border rounded-md text-white ml-8">
-                    {item.question}
-                  </div>
-                )}
-                {item.answer && (
-                  <>
-                    <div className="self-start px-2 py-1 bg-neutral-100 dark:bg-neutral-600 border border-border-light-gray rounded-md mr-8">
-                      <ReactMarkdown children={item.answer}></ReactMarkdown>
-                    </div>
-                  </>
-                )}
-                <div ref={scrollContainerRef}></div>
-              </div>
-            ))} */}
             {faqResponse && faqResponse?.length > 0 && (
               <div className="m-1 sm:m-5 mt-12">
                 <h1 className="font-bold text-3xl mb-3">Generated FAQ</h1>
@@ -213,12 +218,6 @@ export default function Faq(props: {
 
       <form>
         <div className="flex justify-center gap-6 rounded-b-xl overflow-hidden p-2 h-16 box-border pb-4">
-          {/* <button className="w-1/5">
-            <FaPlus
-              className="m-auto bg-gray-300 rounded-full p-2 cursor-pointer"
-              size={30}
-            />
-          </button> */}
           <DropdownMenu.Root>
             <DropdownMenu.Trigger asChild>
               <button
@@ -239,19 +238,34 @@ export default function Faq(props: {
                 align="center"
                 sideOffset={5}
               >
-                <DropdownMenu.Item className="px-4 py-1 hover:bg-gray-100 cursor-pointer">
+                <DropdownMenu.Item
+                  onClick={() => handleCreateNewThread("propchat")}
+                  className="px-4 py-1 hover:bg-gray-100 cursor-pointer"
+                >
                   <img src={textIcon} alt="" className="h-6" />
                 </DropdownMenu.Item>
-                <DropdownMenu.Item className="px-4 py-1 hover:bg-gray-100 cursor-pointer">
+                <DropdownMenu.Item
+                  onClick={() => handleCreateNewThread("faq")}
+                  className="px-4 py-1 hover:bg-gray-100 cursor-pointer"
+                >
                   <img src={faqIcon} alt="" className="h-6" />
                 </DropdownMenu.Item>
-                <DropdownMenu.Item className="px-4 py-1 hover:bg-gray-100 cursor-pointer">
+                <DropdownMenu.Item
+                  onClick={() => handleCreateNewThread("cwyf")}
+                  className="px-4 py-1 hover:bg-gray-100 cursor-pointer"
+                >
                   <img src={cwyfIcon} alt="" className="h-6" />
                 </DropdownMenu.Item>
-                <DropdownMenu.Item className="px-4 py-1 hover:bg-gray-100 cursor-pointer">
+                <DropdownMenu.Item
+                  onClick={() => handleCreateNewThread("image_to_text")}
+                  className="px-4 py-1 hover:bg-gray-100 cursor-pointer"
+                >
                   <img src={imgTxtIcon} alt="" className="h-7" />
                 </DropdownMenu.Item>
-                <DropdownMenu.Item className="px-4 py-1 hover:bg-gray-100 cursor-pointer">
+                <DropdownMenu.Item
+                  onClick={() => handleCreateNewThread("text_to_image")}
+                  className="px-4 py-1 hover:bg-gray-100 cursor-pointer"
+                >
                   <PiFileImage size={23} className="ml-1" />
                 </DropdownMenu.Item>
               </DropdownMenu.Content>
@@ -264,6 +278,7 @@ export default function Faq(props: {
               className="bg-bg-input-gray dark:bg-neutral-600 h-full w-5/6 rounded-l-md p-1 px-2 focus:outline-0"
               value={userQuestion}
               onChange={(e) => setUserQuestion(e.target.value)}
+              disabled={true}
             />
             <button
               className="bg-bg-input-gray dark:bg-neutral-600 w-1/6 h-full rounded-r-md px-2"

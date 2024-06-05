@@ -30,6 +30,6 @@ export type conversationType = {
   id: number;
   question: string;
   answer: string;
-  image_name?: string;
-  created_at?: string;
+  image_name: string;
+  // created_at?: string;
 }[];

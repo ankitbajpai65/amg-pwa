@@ -8,7 +8,8 @@ import imgTxtIcon from "@/assets/icons/imgTxt.png";
 import { threadDataType } from "./type";
 import { forwardRef } from "react";
 import { MdDelete } from "react-icons/md";
-import { successAlert } from "@/components/appComponents/appAlert";
+import useDeleteThreadApi from "@/components/hooks/genaiservices/useDeleteThreadApi";
+import NewLoader from "@/components/appComponents/NewLoader";
 
 const renderText = (text: string) =>
   text && (
@@ -41,7 +42,7 @@ const Sidebar = forwardRef<
     handleNewThread,
   } = props;
 
-  const accessToken = localStorage.getItem("AccessToken");
+  const { deleteThread, isLoading } = useDeleteThreadApi();
 
   const handleDeleteThread = async (
     e: React.MouseEvent<SVGElement, MouseEvent>,
@@ -49,42 +50,11 @@ const Sidebar = forwardRef<
     service: string
   ) => {
     e.stopPropagation();
-    // setIsLoading(true);
 
-    try {
-      const confirmation = confirm("Do you want to delete this thread?");
-      if (!confirmation) return;
-      const response = await fetch(
-        `https://genaiservices-be.datapartners.ch/delete_thread/?tid=${threadId}&service=${service}
-      `,
-        {
-          method: "GET",
-          headers: {
-            Authorization: accessToken as string,
-          },
-        }
-      );
-      const res = await response.json();
-
-      if (res.status === 200)
-        successAlert(1000, "Thread deleted successfully!");
-      setThreadArray((prev) =>
-        prev ? prev.filter((thread) => thread._id !== threadId) : []
-      );
-
-      // setConversation([
-      //   { id: "", question: "", answer: "", image_name: "", reaction: "" },
-      // ]);
-      // if (threadArray.length > 1) handleThreadSelection(threadArray[1]);
-
-      // setFaqResponse([])
-
-      console.log(res);
-    } catch (error) {
-      console.log("Error deleting thread", error);
-    } finally {
-      // setIsLoading(false);
-    }
+    deleteThread(e, threadId, service);
+    setThreadArray((prev) =>
+      prev ? prev.filter((thread) => thread._id !== threadId) : []
+    );
   };
 
   return (
@@ -188,6 +158,8 @@ const Sidebar = forwardRef<
           </ul>
         </div>
       </div>
+
+      {isLoading && <NewLoader />}
     </div>
   );
 });

@@ -12,10 +12,12 @@ type resBodyType = {
 
 export default function useUserHistory() {
   const [usersThread, setUsersThread] = useState<resBodyType>();
+  const [isLoading,setIsLoading] = useState<boolean>(false);
   const accessToken = localStorage.getItem("AccessToken");
 
   const fetchUsersThread = async () => {
     try {
+      setIsLoading(true);
       const res = await axios.get(`${url}/get_user_history/`, {
         headers: {
           Authorization: accessToken,
@@ -32,8 +34,10 @@ export default function useUserHistory() {
       if (axios.isAxiosError(error)) {
         errorAlert(1000, error?.response?.data.error);
       }
+    }finally{
+      setIsLoading(false);
     }
   };
 
-  return { fetchUserThreadRes: usersThread, fetchUsersThread };
+  return { fetchUserThreadRes: usersThread, fetchUsersThread,isLoading };
 }

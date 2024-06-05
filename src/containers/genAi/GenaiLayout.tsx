@@ -14,6 +14,7 @@ import ImgToText from "./ImgToText";
 import TextToImg from "./TextToImg";
 import Cwyf from "./Cwyf";
 import Faq from "./Faq";
+import NewLoader from "@/components/appComponents/NewLoader";
 
 function GenaiLayout() {
   const root = document.querySelector(":root");
@@ -23,7 +24,7 @@ function GenaiLayout() {
 
   const { userDetails } = useUserDetails();
   const { getUserDetails } = useAmgStartApi();
-  const { fetchUserThreadRes, fetchUsersThread } = useUserHistory();
+  const { fetchUserThreadRes, fetchUsersThread,isLoading } = useUserHistory();
 
   const userEmail = sessionStorage.getItem("email");
 
@@ -67,7 +68,10 @@ function GenaiLayout() {
 
   useEffect(() => {
     if (!userDetails) {
-      getUserDetails(userEmail as string);
+      getUserDetails({
+        emailId: userEmail as string,
+        customerId: "AMGDEMO",
+      });
     }
   }, [userDetails]);
 
@@ -169,19 +173,9 @@ function GenaiLayout() {
               created_at: new Date().toISOString(),
               data: [
                 {
-                  // id: conversation.length.toString(),
                   question: chatQues,
                   answer: chatAns,
                   file_path: fileUrl,
-                  // prop: null,
-                  // response: null,
-                  // image_url: null,
-                  // image_name: null,
-                  // file_name: null,
-                  // image_path: null,
-                  // embeddings_path: null,
-                  // qa: null,
-                  // json_file: null,
                 },
               ],
             };
@@ -194,14 +188,6 @@ function GenaiLayout() {
                   question: chatQues,
                   answer: chatAns,
                   image_url: fileUrl,
-                  // prop: null,
-                  // response: null,
-                  // image_name: null,
-                  // file_name: null,
-                  // image_path: null,
-                  // embeddings_path: null,
-                  // qa: null,
-                  // json_file: null,
                 },
               ],
             };
@@ -250,7 +236,7 @@ function GenaiLayout() {
         _id: threadId,
         created_at: new Date().toISOString(),
         service: serviceType,
-        data: [{ question: chatQues, answer: chatAns }],
+        data: [{ question: chatQues, answer: chatAns, image_path: "" }],
       };
 
       const tempThreadArray = threadArray.map((item) => {
@@ -261,7 +247,7 @@ function GenaiLayout() {
       });
 
       if (serviceType === "image_to_text") {
-        newThread.data[0].image_path = fileUrl;
+        newThread.data[0].image_path = fileUrl as string;
       }
 
       let updatedArray;
@@ -284,91 +270,6 @@ function GenaiLayout() {
     }
   };
 
-  // async function handleChatWithFile(
-  //   e: React.FormEvent<HTMLFormElement>,
-  //   threadId: string
-  // ) {
-  //   e.preventDefault();
-
-  //   console.log("handleChatWithFile runs **********")
-
-  //   if (!threadId) {
-  //     threadId = openedThread?._id;
-  //   }
-  //   console.log("handleChatWithFile runs", threadId);
-
-  //   const sanitizedQuestion = userQuestion.trim();
-
-  //   if (!sanitizedQuestion) return;
-
-  //   if (userQuestion.trim() !== "") {
-  //     setConversation((prev) => {
-  //       return [
-  //         ...prev,
-  //         {
-  //           id: prev.length.toString(),
-  //           question: userQuestion,
-  //           answer: "Loading...",
-  //           image_name: "",
-  //           created_at: new Date().toISOString(),
-  //         },
-  //       ];
-  //     });
-  //   }
-
-  //   try {
-  //     const queryResponse = await fetch(
-  //       // `${url}/generate/load_qa_pdf_chat/?tid=${threadId}`,
-  //       `https://genaiservices-be.datapartners.ch/generate/load_qa_pdf_chat/?tid=${threadId}`,
-  //       {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json; charset=UTF-8",
-  //           Authorization: accessToken as string,
-  //         },
-  //         body: JSON.stringify({ question: sanitizedQuestion }),
-  //       }
-  //     );
-
-  //     const queryData = await queryResponse.json();
-  //     console.log("queryData", queryData);
-
-  //     // updateThreadArray(
-  //     //   threadId,
-  //     //   userQuestion,
-  //     //   queryData?.answer.output_text,
-  //     //   "cwyf"
-  //     // );
-  //     setConversation((prev) =>
-  //       prev.map((item) => {
-  //         if (+item.id === conversation.length) {
-  //           return {
-  //             ...item,
-  //             answer: queryData?.answer?.output_text,
-  //             created_at: new Date().toISOString(),
-  //           };
-  //         }
-  //         return item;
-  //       })
-  //     );
-
-  //     // handleAllLogAiApi({
-  //     //   question: userQuestion,
-  //     //   answer: queryData?.answer.output_text,
-  //     //   step: "GENAI_CHATFILE",
-  //     //   fileName: uploadedFile?.name ?? "",
-  //     //   fileSize: uploadedFile?.size ?? 0,
-  //     //   reaction: "",
-  //     //   tokensIn: "",
-  //     //   tokensOut: "",
-  //     //   wordsIn: `${userQuestion.length}`,
-  //     //   wordsOut: queryData?.answer.output_text.length,
-  //     // });
-  //   } catch (error) {
-  //     console.error("Something went wrong ", error);
-  //   }
-  // }
-
   console.log("openedThread", openedThread);
 
   return (
@@ -386,29 +287,23 @@ function GenaiLayout() {
         handleNewThread={handleNewThread}
       />
       <div className="grow overflow-auto">
-        {/* <Outlet 
-        openedThread={openedThread}
-        /> */}
-
         {(!openedThread || openedThread.service === "propchat") && (
           <GptPrompt
             openedThread={openedThread}
             setOpenedThread={setOpenedThread}
-            // threadArray={threadArray}
-            // setThreadArray={setThreadArray}
             handleNewThread={handleNewThread}
             updateThreadArray={updateThreadArray}
             isUploadModalOpen={isUploadModalOpen}
             setIsUploadModalOpen={setIsUploadModalOpen}
             uploadedFile={uploadedFile}
             setUploadedFile={setUploadedFile}
-            // handleChatWithFile={handleChatWithFile}
           />
         )}
         {openedThread && openedThread.service === "image_to_text" && (
           <ImgToText
             openedThread={openedThread}
             setOpenedThread={setOpenedThread}
+            handleNewThread={handleNewThread}
             isUploadModalOpen={isUploadModalOpen}
             setIsUploadModalOpen={setIsUploadModalOpen}
             uploadedFile={uploadedFile}
@@ -419,12 +314,17 @@ function GenaiLayout() {
         {openedThread && openedThread.service === "text_to_image" && (
           <TextToImg
             openedThread={openedThread}
+            setOpenedThread={setOpenedThread}
+            handleNewThread={handleNewThread}
+            setIsUploadModalOpen={setIsUploadModalOpen}
             updateThreadArray={updateThreadArray}
           />
         )}
         {openedThread && openedThread.service === "cwyf" && (
           <Cwyf
             openedThread={openedThread}
+            setOpenedThread={setOpenedThread}
+            handleNewThread={handleNewThread}
             isUploadModalOpen={isUploadModalOpen}
             setIsUploadModalOpen={setIsUploadModalOpen}
             uploadedFile={uploadedFile}
@@ -435,6 +335,8 @@ function GenaiLayout() {
         {openedThread && openedThread.service === "faq" && (
           <Faq
             openedThread={openedThread}
+            setOpenedThread={setOpenedThread}
+            handleNewThread={handleNewThread}
             isUploadModalOpen={isUploadModalOpen}
             setIsUploadModalOpen={setIsUploadModalOpen}
             uploadedFile={uploadedFile}
@@ -444,6 +346,8 @@ function GenaiLayout() {
         )}
       </div>
       <Footer />
+
+      {isLoading && <NewLoader/>}
     </div>
   );
 }

@@ -20,6 +20,7 @@ export default function ImgToText(props: {
   setOpenedThread: React.Dispatch<
     React.SetStateAction<threadDataType | undefined>
   >;
+  handleNewThread?: (file: File | null, service: string) => void;
   isUploadModalOpen: boolean;
   setIsUploadModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   uploadedFile: File | undefined;
@@ -36,6 +37,7 @@ export default function ImgToText(props: {
   const {
     openedThread,
     setOpenedThread,
+    handleNewThread,
     isUploadModalOpen,
     setIsUploadModalOpen,
     uploadedFile,
@@ -45,7 +47,7 @@ export default function ImgToText(props: {
   const [userQuestion, setUserQuestion] = useState("");
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   const [conversation, setConversation] = useState([
-    { id: 0, question: "", answer: "" },
+    { id: 0, question: "", answer: "", image_name: "" },
   ]);
   // const { handleAllLogAiApi } = useHandleAllLogAiAPI();
 
@@ -94,6 +96,28 @@ export default function ImgToText(props: {
     }
   };
 
+  function handleCreateNewThread(serviceType: string) {
+    console.log("handleCreateNewThread runs", serviceType);
+    if (handleNewThread) handleNewThread(null, serviceType);
+
+    // setOpenedThread(threadArray[0]);
+    // setConversation([{ id: "", question: "", answer: "", image_name: "" }]);
+    if (setOpenedThread)
+      setOpenedThread({
+        _id: "",
+        service: serviceType,
+      });
+
+    if (
+      serviceType === "image_to_text" ||
+      serviceType === "faq" ||
+      serviceType === "cwyf"
+    )
+      setIsUploadModalOpen && setIsUploadModalOpen(true);
+    else
+      setConversation([{ id: +"", question: "", answer: "", image_name: "" }]);
+  }
+
   return (
     <div className="flex flex-col h-full overflow-auto">
       {!conversation ? (
@@ -106,7 +130,10 @@ export default function ImgToText(props: {
       ) : (
         openedThread &&
         openedThread.data && (
-          <div className="grow py-1 px-2 overflow-auto text-ellipsis flex">
+          <div
+            style={{ width: "85%", margin: "auto" }}
+            className="grow py-1 overflow-auto text-ellipsis flex"
+          >
             <div className="p-2 mt-auto">
               {/* {conversation.map((item, index) => ( */}
               <div className="flex flex-col">
@@ -122,7 +149,7 @@ export default function ImgToText(props: {
                       <img
                         src={openedThread?.data[0].image_path ?? undefined}
                         alt="Image"
-                        className="mb-3 ml-3 h-auto w-3/4 sm:w-2/6 md:w-1/5"
+                        className="mb-3 ml-3 h-auto w-5/6 sm:w-80"
                       />
                     </div>
                   </>
@@ -149,7 +176,6 @@ export default function ImgToText(props: {
                 )}
                 <div ref={scrollContainerRef}></div>
               </div>
-              {/* ))} */}
             </div>
           </div>
         )
@@ -178,19 +204,34 @@ export default function ImgToText(props: {
                 align="center"
                 sideOffset={5}
               >
-                <DropdownMenu.Item className="px-4 py-1 hover:bg-gray-100 cursor-pointer">
+                <DropdownMenu.Item
+                  onClick={() => handleCreateNewThread("propchat")}
+                  className="px-4 py-1 hover:bg-gray-100 cursor-pointer"
+                >
                   <img src={textIcon} alt="" className="h-6" />
                 </DropdownMenu.Item>
-                <DropdownMenu.Item className="px-4 py-1 hover:bg-gray-100 cursor-pointer">
+                <DropdownMenu.Item
+                  onClick={() => handleCreateNewThread("faq")}
+                  className="px-4 py-1 hover:bg-gray-100 cursor-pointer"
+                >
                   <img src={faqIcon} alt="" className="h-6" />
                 </DropdownMenu.Item>
-                <DropdownMenu.Item className="px-4 py-1 hover:bg-gray-100 cursor-pointer">
+                <DropdownMenu.Item
+                  onClick={() => handleCreateNewThread("cwyf")}
+                  className="px-4 py-1 hover:bg-gray-100 cursor-pointer"
+                >
                   <img src={cwyfIcon} alt="" className="h-6" />
                 </DropdownMenu.Item>
-                <DropdownMenu.Item className="px-4 py-1 hover:bg-gray-100 cursor-pointer">
+                <DropdownMenu.Item
+                  onClick={() => handleCreateNewThread("image_to_text")}
+                  className="px-4 py-1 hover:bg-gray-100 cursor-pointer"
+                >
                   <img src={imgTxtIcon} alt="" className="h-7" />
                 </DropdownMenu.Item>
-                <DropdownMenu.Item className="px-4 py-1 hover:bg-gray-100 cursor-pointer">
+                <DropdownMenu.Item
+                  onClick={() => handleCreateNewThread("text_to_image")}
+                  className="px-4 py-1 hover:bg-gray-100 cursor-pointer"
+                >
                   <PiFileImage size={23} className="ml-1" />
                 </DropdownMenu.Item>
               </DropdownMenu.Content>
