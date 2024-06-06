@@ -23,9 +23,7 @@ import logo from "@/assets/loghi-03.png";
 import Gallery from "./Gallery/Gallery";
 import useDownloadImgApi from "@/components/hooks/genaiservices/txtToImg/useDownloadImgApi";
 import NewLoader from "@/components/appComponents/NewLoader";
-// import {
 
-// const url = "https://amgenaispacebackend.datapartners.ch";
 const url = "https://genaiservices-be.datapartners.ch";
 
 export default function TextToImg(props: {
@@ -58,6 +56,8 @@ export default function TextToImg(props: {
   const [conversation, setConversation] = useState([
     { id: 0, question: "", answer: "", image_name: "" },
   ]);
+  const [isInputFieldDisable, setIsInputFieldDisable] =
+    useState<boolean>(false);
   const [showGallery, setShowGallery] = useState<boolean>(false);
   const [textToImageInput, setTextToImageInput] = useState({
     model: "",
@@ -66,11 +66,6 @@ export default function TextToImg(props: {
 
   const { isDownloadImgLoading, handleImageDownload } = useDownloadImgApi();
   // const { handleAllLogAiApi } = useHandleAllLogAiAPI();
-
-  // useEffect(() => {
-  //   console.log(openedThread);
-  //   if (openedThread) setConversation(openedThread.data);
-  // }, [openedThread]);
 
   useEffect(() => {
     scrollToBottom();
@@ -88,19 +83,6 @@ export default function TextToImg(props: {
       });
     }
   };
-
-  // useEffect(() => {
-  //   console.log(openedThread);
-  //   if (openedThread && openedThread.data) {
-  //     setConversation(
-  //       openedThread.data.map((item, index) => ({
-  //         id: index,
-  //         question: item.prop ?? item.question,
-  //         answer: item.image_url ?? item.answer,
-  //       }))
-  //     );
-  //   }
-  // }, [openedThread]);
 
   useEffect(() => {
     console.log(openedThread);
@@ -122,6 +104,8 @@ export default function TextToImg(props: {
   ) => {
     e.preventDefault();
     console.log("handleGenerateImageFromText runs");
+
+    setIsInputFieldDisable(true);
 
     const { model, quality } = textToImageInput;
     const modelQuery = model.toLowerCase().replace(/\s/g, "-");
@@ -165,8 +149,6 @@ export default function TextToImg(props: {
 
       const response = await res.json();
       console.log(response);
-
-      // setApiResThreadId(response.id);
 
       updateThreadArray(
         response.id,
@@ -213,6 +195,8 @@ export default function TextToImg(props: {
       // });
     } catch (error) {
       console.log("Error generating image from text:", error);
+    } finally {
+      setIsInputFieldDisable(false);
     }
   };
 
@@ -220,8 +204,6 @@ export default function TextToImg(props: {
     console.log("handleCreateNewThread runs", serviceType);
     if (handleNewThread) handleNewThread(null, serviceType);
 
-    // setOpenedThread(threadArray[0]);
-    // setConversation([{ id: "", question: "", answer: "", image_name: "" }]);
     if (setOpenedThread)
       setOpenedThread({
         _id: "",
@@ -253,7 +235,7 @@ export default function TextToImg(props: {
             style={{ minWidth: "85%", margin: "auto" }}
             className="grow py-1 px-2 overflow-auto text-ellipsis flex"
           >
-            <div className="p-2 mt-auto relative">
+            <div className="p-2 mt-auto relative w-full">
               <div
                 className="flex justify-between fixed top-20 right-0"
                 style={{ width: "82%" }}
@@ -288,7 +270,7 @@ export default function TextToImg(props: {
                     )}
                     {item.answer && (
                       <>
-                        <div className="flex justify-between">
+                        <div className="flex justify-between items-center">
                           <div className="flex items-center gap-0.25">
                             <div className="h-14 w-14">
                               <img
@@ -297,7 +279,7 @@ export default function TextToImg(props: {
                                 className="h-full w-full"
                               />
                             </div>
-                            <div className="text-lg font-semibold mt-2">
+                            <div className="text-lg font-semibold">
                               GenAI Space
                             </div>
                           </div>
@@ -384,12 +366,6 @@ export default function TextToImg(props: {
 
           <form onSubmit={(e) => handleGenerateImageFromText(e)}>
             <div className="flex justify-center gap-6 rounded-b-xl overflow-hidden p-2 h-16 box-border pb-4">
-              {/* <button className="w-1/5">
-              <FaPlus
-                className="m-auto bg-gray-300 rounded-full p-2 cursor-pointer"
-                size={30}
-              />
-            </button> */}
               <DropdownMenu.Root>
                 <DropdownMenu.Trigger asChild>
                   <button
@@ -450,6 +426,7 @@ export default function TextToImg(props: {
                   className="bg-bg-input-gray dark:bg-neutral-600 h-full w-5/6 rounded-l-md p-1 px-2 focus:outline-0"
                   value={userQuestion}
                   onChange={(e) => setUserQuestion(e.target.value)}
+                  disabled={isInputFieldDisable}
                 />
                 <button
                   className="bg-bg-input-gray dark:bg-neutral-600 w-1/6 h-full rounded-r-md px-2"

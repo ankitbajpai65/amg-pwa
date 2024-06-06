@@ -55,7 +55,7 @@ export default function Faq(props: {
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
 
   const [faqResponse, setFaqResponse] = useState<faqResType[]>([]);
-  // const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [conversation, setConversation] = useState([
     { id: 0, question: "", answer: "", image_name: "" },
   ]);
@@ -118,8 +118,6 @@ export default function Faq(props: {
     console.log("handleCreateNewThread runs", serviceType);
     if (handleNewThread) handleNewThread(null, serviceType);
 
-    // setOpenedThread(threadArray[0]);
-    // setConversation([{ id: "", question: "", answer: "", image_name: "" }]);
     if (setOpenedThread)
       setOpenedThread({
         _id: "",
@@ -138,7 +136,7 @@ export default function Faq(props: {
 
   async function handleGenerateFaqs(id: string, fileName: string) {
     console.log("handleGenerateFaqs runs", id, fileName);
-    // setIsLoading(true);
+    setIsLoading(true);
     // setActiveServiceType("faq");
 
     try {
@@ -163,7 +161,7 @@ export default function Faq(props: {
             }
             setFaqResponse(res.faq_qa);
             clearInterval(intervalId);
-            // setIsLoading(false);
+            setIsLoading(false);
 
             updateThreadArray(res.id, fileName, "", "faq", res.file_path);
 
@@ -343,13 +341,11 @@ export default function Faq(props: {
           serviceType="faq"
           setConversation={setConversation}
           handleGenerateFaqs={handleGenerateFaqs}
-          // setUploadFileId={setUploadFileId}
-          // setOpenedThread={setOpenedThread}
           updateThreadArray={updateThreadArray}
         />
       )}
 
-      {isDownloadFaqLoading && <NewLoader />}
+      {(isLoading || isDownloadFaqLoading) && <NewLoader />}
     </div>
   );
 }

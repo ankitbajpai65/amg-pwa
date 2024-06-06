@@ -9,6 +9,7 @@ import cwyfIcon from "@/assets/icons/cwyf.png";
 import imgTxtIcon from "@/assets/icons/imgTxt.png";
 import pdfIcon from "@/assets/icons/pdfIcon.png";
 import { PiFileImage } from "react-icons/pi";
+import { FaRegCopy } from "react-icons/fa6";
 import share from "@/assets/icons/share.png";
 import { conversationType, threadDataType } from "./type";
 import ReactMarkdown from "react-markdown";
@@ -16,6 +17,7 @@ import UploadFileModal from "./UploadFileModal";
 import userLogo from "@/assets/user.png";
 import logo from "@/assets/loghi-03.png";
 import Gallery from "./Gallery/Gallery";
+import { successAlert } from "@/components/appComponents/appAlert";
 
 const url = "https://genaiservices-be.datapartners.ch";
 
@@ -60,13 +62,6 @@ export default function Cwyf(props: {
 
   console.log("cwyf renders");
   // const { handleAllLogAiApi } = useHandleAllLogAiAPI();
-
-  // useEffect(() => {
-  //   console.log(openedThread);
-  //   if (openedThread && openedThread.data && openedThread.data[0].qa)
-  //     setConversation(openedThread.data[0].qa);
-  //   else setConversation(openedThread.data);
-  // }, [openedThread]);
 
   useEffect(() => {
     console.log(openedThread);
@@ -121,13 +116,7 @@ export default function Cwyf(props: {
     threadId: string
   ) {
     e.preventDefault();
-
-    // if (!threadId) {
-    //   threadId = openedThread?._id;
-    // }
     threadId = threadId || openedThread?._id || "";
-
-    console.log("handleChatWithFile runs", threadId);
 
     const sanitizedQuestion = userQuestion.trim();
 
@@ -233,6 +222,17 @@ export default function Cwyf(props: {
     }
   }
 
+  const handleCopyBtnClick = (answer: string) => {
+    navigator.clipboard
+      .writeText(answer)
+      .then(() => {
+        successAlert(1000, "Text copied to clipboard!");
+      })
+      .catch((err) => {
+        console.error("Failed to copy: ", err);
+      });
+  };
+
   return (
     <div className="flex flex-col h-full overflow-auto">
       {showGallery ? (
@@ -299,13 +299,27 @@ export default function Cwyf(props: {
                     )}
                     {item.answer && (
                       <>
-                        <div className="flex items-center gap-0.25">
-                          <div className="h-14 w-14">
-                            <img src={logo} alt="" className="h-full w-full" />
+                        <div className="flex justify-between">
+                          <div className="flex items-center gap-0.25">
+                            <div className="h-14 w-14">
+                              <img
+                                src={logo}
+                                alt=""
+                                className="h-full w-full"
+                              />
+                            </div>
+                            <div className="text-lg font-semibold mt-2">
+                              GenAI Space
+                            </div>
                           </div>
-                          <div className="text-lg font-semibold mt-2">
-                            GenAI Space
-                          </div>
+                          <button
+                            className="h-10 w-10 flex justify-center items-center hover:bg-zinc-200 rounded-full p-2"
+                            onClick={() =>
+                              handleCopyBtnClick(item.answer as string)
+                            }
+                          >
+                            <FaRegCopy size={20} />
+                          </button>
                         </div>
                         <div className="self-start px-2 py-1 bg-neutral-100 dark:bg-neutral-600 border border-border-light-gray rounded-md mr-8">
                           <ReactMarkdown children={item.answer}></ReactMarkdown>
@@ -321,13 +335,6 @@ export default function Cwyf(props: {
 
           <form onSubmit={(e) => handleChatWithFile(e, uploadedFileId)}>
             <div className="flex justify-center gap-6 rounded-b-xl overflow-hidden p-2 h-16 box-border pb-4">
-              {/* <button className="w-1/5">
-            <FaPlus
-              className="m-auto bg-gray-300 rounded-full p-2 cursor-pointer"
-              size={30}
-            />
-          </button> */}
-              {/* <div className="w-1/5"> */}
               <DropdownMenu.Root>
                 <DropdownMenu.Trigger asChild>
                   <button
@@ -381,7 +388,6 @@ export default function Cwyf(props: {
                   </DropdownMenu.Content>
                 </DropdownMenu.Portal>
               </DropdownMenu.Root>
-              {/* </div> */}
               <div className="w-4/5 h-full flex">
                 <input
                   type="text"
@@ -412,7 +418,6 @@ export default function Cwyf(props: {
           setFile={setUploadedFile}
           serviceType="cwyf"
           setConversation={setConversation}
-          // setOpenedThread={setOpenedThread}
           handleChatWithFile={handleChatWithFile}
           setUploadFileId={setUploadFileId}
           updateThreadArray={updateThreadArray}

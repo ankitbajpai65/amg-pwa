@@ -10,6 +10,7 @@ import imgTxtIcon from "@/assets/icons/imgTxt.png";
 import share from "@/assets/icons/share.png";
 import { PiFileImage } from "react-icons/pi";
 import { FaChevronDown } from "react-icons/fa6";
+import { FaRegCopy } from "react-icons/fa6";
 import {
   conversationType,
   gptPromptMultiResponseType,
@@ -22,6 +23,7 @@ import logo from "@/assets/loghi-03.png";
 import Gallery from "./Gallery/Gallery";
 import Drafts from "./Drafts";
 import useGptMultiApi from "@/components/hooks/genaiservices/gptPrompt/useGptMultiApi";
+import { successAlert } from "@/components/appComponents/appAlert";
 
 const url = "https://genaiservices-be.datapartners.ch";
 
@@ -300,6 +302,17 @@ export default function GptPrompt(props: {
     }
   }
 
+  const handleCopyBtnClick = (answer: string) => {
+    navigator.clipboard
+      .writeText(answer)
+      .then(() => {
+        successAlert(1000, "Text copied to clipboard!");
+      })
+      .catch((err) => {
+        console.error("Failed to copy: ", err);
+      });
+  };
+
   return (
     <div className="flex flex-col h-full overflow-auto">
       {showGallery ? (
@@ -415,13 +428,27 @@ export default function GptPrompt(props: {
 
                     {item.answer && (
                       <>
-                        <div className="flex items-center gap-0.25">
-                          <div className="h-14 w-14">
-                            <img src={logo} alt="" className="h-full w-full" />
+                        <div className="flex justify-between">
+                          <div className="flex items-center gap-0.25">
+                            <div className="h-14 w-14">
+                              <img
+                                src={logo}
+                                alt=""
+                                className="h-full w-full"
+                              />
+                            </div>
+                            <div className="text-lg font-semibold">
+                              GenAI Space
+                            </div>
                           </div>
-                          <div className="text-lg font-semibold mt-2">
-                            GenAI Space
-                          </div>
+                          <button
+                            className="h-10 w-10 flex justify-center items-center hover:bg-zinc-200 rounded-full p-2"
+                            onClick={() =>
+                              handleCopyBtnClick(item.answer as string)
+                            }
+                          >
+                            <FaRegCopy size={20} />
+                          </button>
                         </div>
                         <div className="self-start px-2 py-1 bg-neutral-100 dark:bg-neutral-600 border border-border-light-gray rounded-md mr-8">
                           <ReactMarkdown children={item.answer}></ReactMarkdown>
@@ -524,7 +551,6 @@ export default function GptPrompt(props: {
           setConversation={setConversation}
           setOpenedThread={setOpenedThread}
           updateThreadArray={updateThreadArray}
-          // handleChatWithFile={handleChatWithFile}
         />
       )}
     </div>

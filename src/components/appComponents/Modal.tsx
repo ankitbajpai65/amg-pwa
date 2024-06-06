@@ -14,7 +14,7 @@ export default function Modal({
     <div
       onClick={() => setIsOpen && setIsOpen(false)}
       className={cn(
-        'backdrop h-full w-full bg-black bg-opacity-40 flex items-center justify-center fixed top-0 left-0 z-50',
+        'backdrop h-full w-full bg-gray-600 bg-opacity-40 flex items-center justify-center fixed top-0 left-0 z-50',
         isOpen ? 'visible' : 'hidden'
       )}
     >

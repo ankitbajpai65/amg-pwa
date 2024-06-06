@@ -192,7 +192,7 @@ const Gallery1 = ({
     <div className="w-full mt-5">
       {filteredArray.map((items, index) => {
         if (!items.date) return null;
-
+        console.log(items);
         return (
           <div key={index}>
             <h1

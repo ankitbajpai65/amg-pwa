@@ -1,12 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-// import { Outlet } from "react-router-dom";
 import Header from "@/components/appComponents/Header";
 import Footer from "@/components/appComponents/Footer";
 import { useThemeContext } from "@/lib/context/themeContext";
 import { useUserDetails } from "@/lib/context/userDetailsContext";
 import useAmgStartApi from "@/components/hooks/AmgMS/useAmgStartApi";
 import Sidebar from "@/containers/genAi/Sidebar";
-// import Gpt_prompt from "./gpt-prompt/Gpt_prompt";
 import useUserHistory from "@/components/hooks/genaiservices/useUserHistory";
 import { threadDataType } from "./type";
 import GptPrompt from "./GptPrompt";
@@ -39,14 +37,12 @@ function GenaiLayout() {
   const [openedThread, setOpenedThread] = useState<threadDataType>();
 
   const accessToken = localStorage.getItem("AccessToken");
-  // console.log(accessToken);
 
   useEffect(() => {
     if (accessToken) fetchUsersThread();
   }, [accessToken]);
 
   useEffect(() => {
-    // console.log(fetchUserThreadRes);
     setThreadArray(fetchUserThreadRes?.user_history);
   }, [fetchUserThreadRes]);
 
@@ -75,9 +71,6 @@ function GenaiLayout() {
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      // if (sidebarRef.current && !sidebarRef?.current?.contains(event.target as Node)) {
-      //   setIsSidebarOpen(false);
-      // }
       if (
         sidebarRef.current &&
         !(sidebarRef.current as HTMLElement).contains(event.target as Node)
@@ -96,7 +89,6 @@ function GenaiLayout() {
   }, [isSidebarOpen]);
 
   const handleNewThread = (file?: File | null, serviceType?: string) => {
-    // console.log("***** handleNewThread runs *******", serviceType);
     console.log(file);
 
     if (
@@ -108,8 +100,6 @@ function GenaiLayout() {
       setOpenedThread(threadArray[0]);
       return;
     }
-
-    // console.log("serviceType", serviceType);
 
     const newThread = (service: string) => ({
       _id: "",

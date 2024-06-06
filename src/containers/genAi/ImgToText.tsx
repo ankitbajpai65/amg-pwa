@@ -8,6 +8,7 @@ import faqIcon from "@/assets/icons/faq.png";
 import cwyfIcon from "@/assets/icons/cwyf.png";
 import imgTxtIcon from "@/assets/icons/imgTxt.png";
 import { PiFileImage } from "react-icons/pi";
+import { FaRegCopy } from "react-icons/fa6";
 import share from "@/assets/icons/share.png";
 import { conversationType, threadDataType } from "./type";
 import ReactMarkdown from "react-markdown";
@@ -15,7 +16,7 @@ import UploadFileModal from "./UploadFileModal";
 import userLogo from "@/assets/user.png";
 import logo from "@/assets/loghi-03.png";
 import Gallery from "./Gallery/Gallery";
-// import {
+import { successAlert } from "@/components/appComponents/appAlert";
 
 export default function ImgToText(props: {
   openedThread?: threadDataType | undefined;
@@ -55,13 +56,6 @@ export default function ImgToText(props: {
   ]);
   const [showGallery, setShowGallery] = useState<boolean>(false);
   // const { handleAllLogAiApi } = useHandleAllLogAiAPI();
-
-  //   const url = "https://amgenaispacebackend.datapartners.ch";
-
-  // useEffect(() => {
-  //   console.log(openedThread);
-  //   if (openedThread) setConversation(openedThread.data);
-  // }, [openedThread]);
 
   useEffect(() => {
     console.log(openedThread);
@@ -105,8 +99,6 @@ export default function ImgToText(props: {
     console.log("handleCreateNewThread runs", serviceType);
     if (handleNewThread) handleNewThread(null, serviceType);
 
-    // setOpenedThread(threadArray[0]);
-    // setConversation([{ id: "", question: "", answer: "", image_name: "" }]);
     if (setOpenedThread)
       setOpenedThread({
         _id: "",
@@ -122,6 +114,17 @@ export default function ImgToText(props: {
     else
       setConversation([{ id: +"", question: "", answer: "", image_name: "" }]);
   }
+
+  const handleCopyBtnClick = (answer: string) => {
+    navigator.clipboard
+      .writeText(answer)
+      .then(() => {
+        successAlert(1000, "Text copied to clipboard!");
+      })
+      .catch((err) => {
+        console.error("Failed to copy: ", err);
+      });
+  };
 
   return (
     <div className="flex flex-col h-full overflow-auto">
@@ -162,7 +165,6 @@ export default function ImgToText(props: {
                   </button>
                 </div>
                 <div className="p-2 mt-auto">
-                  {/* {conversation.map((item, index) => ( */}
                   <div className="flex flex-col">
                     {openedThread &&
                       openedThread?.data[0] &&
@@ -193,17 +195,32 @@ export default function ImgToText(props: {
                       openedThread?.data[0] &&
                       openedThread._id && (
                         <>
-                          <div className="flex items-center gap-0.25">
-                            <div className="h-14 w-14">
-                              <img
-                                src={logo}
-                                alt=""
-                                className="h-full w-full"
-                              />
+                          <div className="flex justify-between">
+                            <div className="flex items-center gap-0.25">
+                              <div className="h-14 w-14">
+                                <img
+                                  src={logo}
+                                  alt=""
+                                  className="h-full w-full"
+                                />
+                              </div>
+                              <div className="text-lg font-semibold mt-2">
+                                GenAI Space
+                              </div>
                             </div>
-                            <div className="text-lg font-semibold mt-2">
-                              GenAI Space
-                            </div>
+                            <button
+                              className="h-10 w-10 flex justify-center items-center hover:bg-zinc-200 rounded-full p-2"
+                              onClick={() =>
+                                openedThread &&
+                                openedThread.data &&
+                                handleCopyBtnClick(
+                                  openedThread.data[0].response ??
+                                    (openedThread.data[0].answer as string)
+                                )
+                              }
+                            >
+                              <FaRegCopy size={20} />
+                            </button>
                           </div>
                           <div className="self-start px-2 py-1 bg-neutral-100 dark:bg-neutral-600 border border-border-light-gray rounded-md mr-8">
                             <ReactMarkdown
@@ -224,7 +241,6 @@ export default function ImgToText(props: {
 
           <form className="mt-auto">
             <div className="flex justify-center gap-6 rounded-b-xl overflow-hidden p-2 h-16 box-border pb-4">
-              {/* <div className="w-1/5"> */}
               <DropdownMenu.Root>
                 <DropdownMenu.Trigger asChild>
                   <button
@@ -278,7 +294,6 @@ export default function ImgToText(props: {
                   </DropdownMenu.Content>
                 </DropdownMenu.Portal>
               </DropdownMenu.Root>
-              {/* </div> */}
 
               <div className="w-4/5 h-full flex">
                 <input
@@ -310,13 +325,10 @@ export default function ImgToText(props: {
           setFile={setUploadedFile}
           serviceType="image_to_text"
           setConversation={setConversation}
-          // handleChatWithFile={handleChatWithFile}
-          // setUploadFileId={setUploadFileId}
           setOpenedThread={setOpenedThread}
           updateThreadArray={updateThreadArray}
         />
       )}
     </div>
-    // </div>
   );
 }
