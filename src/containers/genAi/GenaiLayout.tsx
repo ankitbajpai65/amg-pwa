@@ -290,6 +290,7 @@ function GenaiLayout() {
             openedThread={openedThread}
             setOpenedThread={setOpenedThread}
             handleNewThread={handleNewThread}
+            threadArray={threadArray}
             updateThreadArray={updateThreadArray}
             isUploadModalOpen={isUploadModalOpen}
             setIsUploadModalOpen={setIsUploadModalOpen}
@@ -302,11 +303,12 @@ function GenaiLayout() {
             openedThread={openedThread}
             setOpenedThread={setOpenedThread}
             handleNewThread={handleNewThread}
+            threadArray={threadArray}
+            updateThreadArray={updateThreadArray}
             isUploadModalOpen={isUploadModalOpen}
             setIsUploadModalOpen={setIsUploadModalOpen}
             uploadedFile={uploadedFile}
             setUploadedFile={setUploadedFile}
-            updateThreadArray={updateThreadArray}
           />
         )}
         {openedThread && openedThread.service === "text_to_image" && (
@@ -315,6 +317,7 @@ function GenaiLayout() {
             setOpenedThread={setOpenedThread}
             handleNewThread={handleNewThread}
             setIsUploadModalOpen={setIsUploadModalOpen}
+            threadArray={threadArray}
             updateThreadArray={updateThreadArray}
           />
         )}
@@ -327,6 +330,7 @@ function GenaiLayout() {
             setIsUploadModalOpen={setIsUploadModalOpen}
             uploadedFile={uploadedFile}
             setUploadedFile={setUploadedFile}
+            threadArray={threadArray}
             updateThreadArray={updateThreadArray}
           />
         )}
@@ -339,6 +343,7 @@ function GenaiLayout() {
             setIsUploadModalOpen={setIsUploadModalOpen}
             uploadedFile={uploadedFile}
             setUploadedFile={setUploadedFile}
+            threadArray={threadArray}
             updateThreadArray={updateThreadArray}
           />
         )}

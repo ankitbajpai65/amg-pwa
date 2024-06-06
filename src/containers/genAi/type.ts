@@ -33,3 +33,13 @@ export type conversationType = {
   image_name: string;
   // created_at?: string;
 }[];
+
+export type groupByDateType = {
+  date: string;
+  threadData: threadDataType[];
+}[];
+
+export type faqResType = {
+  Question: string;
+  Answer: string;
+};

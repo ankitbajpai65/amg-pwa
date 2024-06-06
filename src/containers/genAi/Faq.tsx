@@ -8,9 +8,11 @@ import faqIcon from "@/assets/icons/faq.png";
 import cwyfIcon from "@/assets/icons/cwyf.png";
 import imgTxtIcon from "@/assets/icons/imgTxt.png";
 import { PiFileImage } from "react-icons/pi";
+import share from "@/assets/icons/share.png";
 import { threadDataType } from "./type";
 import UploadFileModal from "./UploadFileModal";
 import { errorAlert } from "@/components/appComponents/appAlert";
+import Gallery from "./Gallery/Gallery";
 type faqResType = {
   Question: string;
   Answer: string;
@@ -26,6 +28,7 @@ export default function Faq(props: {
   setIsUploadModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   uploadedFile: File | undefined;
   setUploadedFile: React.Dispatch<React.SetStateAction<File | undefined>>;
+  threadArray: threadDataType[] | undefined;
   updateThreadArray: (
     id: string,
     question: string,
@@ -42,6 +45,7 @@ export default function Faq(props: {
     setIsUploadModalOpen,
     uploadedFile,
     setUploadedFile,
+    threadArray,
     updateThreadArray,
   } = props;
   const [userQuestion, setUserQuestion] = useState("");
@@ -52,6 +56,7 @@ export default function Faq(props: {
   const [conversation, setConversation] = useState([
     { id: 0, question: "", answer: "", image_name: "" },
   ]);
+  const [showGallery, setShowGallery] = useState<boolean>(false);
   const { handleAllLogAiApi } = useHandleAllLogAiAPI();
 
   const accessToken = localStorage.getItem("AccessToken");
@@ -184,114 +189,139 @@ export default function Faq(props: {
 
   return (
     <div className="flex flex-col h-full overflow-auto">
-      {!conversation ? (
-        <div className="py-4 px-5 text-text-blue">
-          <p className="text-lg font-semibold">Gpt Prompt</p>
-          <p>
-            Ask our chatbot anything by typing your question in the space below.
-          </p>
-        </div>
+      {showGallery ? (
+        <Gallery
+          setShowGallery={setShowGallery}
+          activeServiceType="faq"
+          threadArray={threadArray}
+          // uploadedFileDetails={uploadedFileDetails}
+        />
       ) : (
-        <div
-          style={{ minWidth: "85%", margin: "auto" }}
-          className="grow py-1 px-2 overflow-auto text-ellipsis flex"
-        >
-          <div className="p-2 mt-auto">
-            {faqResponse && faqResponse?.length > 0 && (
-              <div className="m-1 sm:m-5 mt-12">
-                <h1 className="font-bold text-3xl mb-3">Generated FAQ</h1>
-                {faqResponse &&
-                  faqResponse?.map((res: faqResType, index: number) => (
-                    <div
-                      key={index}
-                      className="ankit mb-3 bg-gray-100 py-3 px-4"
-                    >
-                      <div className="mb-1 font-semibold">{res.Question}</div>
-                      <div className="text-justify">{res.Answer}</div>
-                    </div>
-                  ))}
-              </div>
-            )}
-          </div>
-        </div>
-      )}
-
-      <form>
-        <div className="flex justify-center gap-6 rounded-b-xl overflow-hidden p-2 h-16 box-border pb-4">
-          <DropdownMenu.Root>
-            <DropdownMenu.Trigger asChild>
-              <button
-                className="IconButton border-none outline-none"
-                aria-label="Customise options"
-              >
-                <FaPlus
-                  className="m-auto bg-gray-300 rounded-full p-2 cursor-pointer"
-                  size={30}
-                />
-              </button>
-            </DropdownMenu.Trigger>
-
-            <DropdownMenu.Portal>
-              <DropdownMenu.Content
-                className="bg-white border border-gray-300 rounded-lg shadow-lg py-2 w-fit"
-                side="top"
-                align="center"
-                sideOffset={5}
-              >
-                <DropdownMenu.Item
-                  onClick={() => handleCreateNewThread("propchat")}
-                  className="px-4 py-1 hover:bg-gray-100 cursor-pointer"
-                >
-                  <img src={textIcon} alt="" className="h-6" />
-                </DropdownMenu.Item>
-                <DropdownMenu.Item
-                  onClick={() => handleCreateNewThread("faq")}
-                  className="px-4 py-1 hover:bg-gray-100 cursor-pointer"
-                >
-                  <img src={faqIcon} alt="" className="h-6" />
-                </DropdownMenu.Item>
-                <DropdownMenu.Item
-                  onClick={() => handleCreateNewThread("cwyf")}
-                  className="px-4 py-1 hover:bg-gray-100 cursor-pointer"
-                >
-                  <img src={cwyfIcon} alt="" className="h-6" />
-                </DropdownMenu.Item>
-                <DropdownMenu.Item
-                  onClick={() => handleCreateNewThread("image_to_text")}
-                  className="px-4 py-1 hover:bg-gray-100 cursor-pointer"
-                >
-                  <img src={imgTxtIcon} alt="" className="h-7" />
-                </DropdownMenu.Item>
-                <DropdownMenu.Item
-                  onClick={() => handleCreateNewThread("text_to_image")}
-                  className="px-4 py-1 hover:bg-gray-100 cursor-pointer"
-                >
-                  <PiFileImage size={23} className="ml-1" />
-                </DropdownMenu.Item>
-              </DropdownMenu.Content>
-            </DropdownMenu.Portal>
-          </DropdownMenu.Root>
-          <div className="w-4/5 h-full flex">
-            <input
-              type="text"
-              placeholder="Ask Me Anything"
-              className="bg-bg-input-gray dark:bg-neutral-600 h-full w-5/6 rounded-l-md p-1 px-2 focus:outline-0"
-              value={userQuestion}
-              onChange={(e) => setUserQuestion(e.target.value)}
-              disabled={true}
-            />
-            <button
-              className="bg-bg-input-gray dark:bg-neutral-600 w-1/6 h-full rounded-r-md px-2"
-              type="submit"
+        <>
+          {!conversation ? (
+            <div className="py-4 px-5 text-text-blue">
+              <p className="text-lg font-semibold">Gpt Prompt</p>
+              <p>
+                Ask our chatbot anything by typing your question in the space
+                below.
+              </p>
+            </div>
+          ) : (
+            <div
+              style={{ minWidth: "85%", margin: "auto" }}
+              className="grow py-1 px-2 overflow-auto text-ellipsis flex"
             >
-              <div className="text-text-red">
-                <IoArrowUpCircleSharp size={25} />
+              <div
+                className="flex justify-between fixed top-20 right-0"
+                style={{ width: "82%" }}
+              >
+                <button
+                  onClick={() => setShowGallery(true)}
+                  // disabled={showGalleryBtn}
+                  className="ml-auto mr-2 bg-slate-400 disabled:bg-slate-100 rounded-lg h-8 w-8 p-2 cursor-pointer"
+                >
+                  <img src={share} alt="" className="h-full w-full" />
+                </button>
               </div>
-            </button>
-          </div>
-        </div>
-      </form>
+              <div className="p-2 mt-auto">
+                {faqResponse && faqResponse?.length > 0 && (
+                  <div className="m-1 sm:m-5 mt-12">
+                    <h1 className="font-bold text-3xl mb-3">Generated FAQ</h1>
+                    {faqResponse &&
+                      faqResponse?.map((res: faqResType, index: number) => (
+                        <div
+                          key={index}
+                          className="ankit mb-3 bg-gray-100 py-3 px-4"
+                        >
+                          <div className="mb-1 font-semibold">
+                            {res.Question}
+                          </div>
+                          <div className="text-justify">{res.Answer}</div>
+                        </div>
+                      ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
 
+          <form>
+            <div className="flex justify-center gap-6 rounded-b-xl overflow-hidden p-2 h-16 box-border pb-4">
+              <DropdownMenu.Root>
+                <DropdownMenu.Trigger asChild>
+                  <button
+                    className="IconButton border-none outline-none"
+                    aria-label="Customise options"
+                  >
+                    <FaPlus
+                      className="m-auto bg-gray-300 rounded-full p-2 cursor-pointer"
+                      size={30}
+                    />
+                  </button>
+                </DropdownMenu.Trigger>
+
+                <DropdownMenu.Portal>
+                  <DropdownMenu.Content
+                    className="bg-white border border-gray-300 rounded-lg shadow-lg py-2 w-fit"
+                    side="top"
+                    align="center"
+                    sideOffset={5}
+                  >
+                    <DropdownMenu.Item
+                      onClick={() => handleCreateNewThread("propchat")}
+                      className="px-4 py-1 hover:bg-gray-100 cursor-pointer"
+                    >
+                      <img src={textIcon} alt="" className="h-6" />
+                    </DropdownMenu.Item>
+                    <DropdownMenu.Item
+                      onClick={() => handleCreateNewThread("faq")}
+                      className="px-4 py-1 hover:bg-gray-100 cursor-pointer"
+                    >
+                      <img src={faqIcon} alt="" className="h-6" />
+                    </DropdownMenu.Item>
+                    <DropdownMenu.Item
+                      onClick={() => handleCreateNewThread("cwyf")}
+                      className="px-4 py-1 hover:bg-gray-100 cursor-pointer"
+                    >
+                      <img src={cwyfIcon} alt="" className="h-6" />
+                    </DropdownMenu.Item>
+                    <DropdownMenu.Item
+                      onClick={() => handleCreateNewThread("image_to_text")}
+                      className="px-4 py-1 hover:bg-gray-100 cursor-pointer"
+                    >
+                      <img src={imgTxtIcon} alt="" className="h-7" />
+                    </DropdownMenu.Item>
+                    <DropdownMenu.Item
+                      onClick={() => handleCreateNewThread("text_to_image")}
+                      className="px-4 py-1 hover:bg-gray-100 cursor-pointer"
+                    >
+                      <PiFileImage size={23} className="ml-1" />
+                    </DropdownMenu.Item>
+                  </DropdownMenu.Content>
+                </DropdownMenu.Portal>
+              </DropdownMenu.Root>
+              <div className="w-4/5 h-full flex">
+                <input
+                  type="text"
+                  placeholder="Ask Me Anything"
+                  className="bg-bg-input-gray dark:bg-neutral-600 h-full w-5/6 rounded-l-md p-1 px-2 focus:outline-0"
+                  value={userQuestion}
+                  onChange={(e) => setUserQuestion(e.target.value)}
+                  disabled={true}
+                />
+                <button
+                  className="bg-bg-input-gray dark:bg-neutral-600 w-1/6 h-full rounded-r-md px-2"
+                  type="submit"
+                >
+                  <div className="text-text-red">
+                    <IoArrowUpCircleSharp size={25} />
+                  </div>
+                </button>
+              </div>
+            </div>
+          </form>
+        </>
+      )}
       {isUploadModalOpen && (
         <UploadFileModal
           isOpen={isUploadModalOpen}

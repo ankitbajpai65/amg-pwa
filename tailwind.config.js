@@ -11,6 +11,7 @@ module.exports = {
     screens: {
       mobile: "350px",
       sm: "640px",
+      md:"768px",
     },
     container: {
       center: true,
