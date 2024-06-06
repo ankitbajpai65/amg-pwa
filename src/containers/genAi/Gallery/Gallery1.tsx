@@ -172,7 +172,7 @@ const renderTitle = (text: string) =>
   text ? <p>{text.length > 15 ? `${text.slice(0, 15)}...` : text}</p> : null;
 
 const renderText = (text: string) =>
-  text ? <p>{text.length > 60 ? `${text.slice(0, 60)}...` : text}</p> : null;
+  text ? <p>{text.length > 55 ? `${text.slice(0, 55)}...` : text}</p> : null;
 
 const Gallery1 = ({
   filteredArray,

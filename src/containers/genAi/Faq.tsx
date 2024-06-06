@@ -232,9 +232,9 @@ export default function Faq(props: {
                       <h1 className="font-bold text-3xl mb-3">Generated FAQ</h1>
                       <button
                         onClick={() => handleFaqDownload(openedThread?._id)}
-                        className="h-10 w-10 flex justify-center items-center hover:bg-zinc-200 rounded-full p-2"
+                        className="h-10 w-10 flex justify-center items-center bg-gray-200 hover:bg-red-200 rounded-full p-2"
                       >
-                        <BsDownload size={20} />
+                        <BsDownload size={20} className="text-red-600"/>
                       </button>
                     </div>
                     {faqResponse &&

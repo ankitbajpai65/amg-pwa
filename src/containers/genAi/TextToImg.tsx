@@ -270,7 +270,7 @@ export default function TextToImg(props: {
                     )}
                     {item.answer && (
                       <>
-                        <div className="flex justify-between items-center">
+                        {/* <div className="flex justify-between items-center"> */}
                           <div className="flex items-center gap-0.25">
                             <div className="h-14 w-14">
                               <img
@@ -283,13 +283,7 @@ export default function TextToImg(props: {
                               GenAI Space
                             </div>
                           </div>
-                          <button
-                            onClick={() => handleImageDownload(item.answer)}
-                            className="h-10 w-10 flex justify-center items-center hover:bg-zinc-200 rounded-full p-2"
-                          >
-                            <BsDownload size={20} />
-                          </button>
-                        </div>
+                        {/* </div> */}
 
                         <div className="min-h-[200px] w-full">
                           {item.answer.startsWith("http") ? (
@@ -302,6 +296,12 @@ export default function TextToImg(props: {
                             <p>{item.answer}</p>
                           )}
                         </div>
+                        <button
+                            onClick={() => handleImageDownload(item.answer)}
+                            className="h-10 w-10 ml-3 flex justify-center items-center bg-gray-200 hover:bg-red-200 rounded-full p-2"
+                          >
+                            <BsDownload size={20} className="text-red-600"/>
+                          </button>
                       </>
                     )}
                     <div ref={scrollContainerRef}></div>
