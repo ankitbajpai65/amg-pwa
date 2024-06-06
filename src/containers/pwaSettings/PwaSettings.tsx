@@ -116,8 +116,7 @@ const PwaSettings = () => {
               </DialogHeader>
 
               <DialogDescription>
-                Do you want to log out of your account? If you log out, you will
-                have to re-enter your credentials.
+                Do you want to log out of your account?
               </DialogDescription>
               <DialogFooter className="flex-row justify-center">
                 <DialogClose>

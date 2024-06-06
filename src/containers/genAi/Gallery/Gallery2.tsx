@@ -281,6 +281,32 @@ const Gallery2 = ({
   const activeData = activeItem?.data?.[0];
   const activeQa = activeData?.qa;
 
+  function formatDate(inputDate: string) {
+    // Parse the input date string
+    const date = new Date(inputDate);
+    const today = new Date();
+
+    // Check if the date is today
+    if (date.toDateString() === today.toDateString()) {
+      const hours = ("0" + date.getHours()).slice(-2);
+      const minutes = ("0" + date.getMinutes()).slice(-2);
+      return `Ogge alle ${hours}:${minutes}`;
+    }
+
+    // Get day, month, year, and time
+    const day = date.getDate();
+    const month = date.toLocaleString("default", { month: "long" });
+    const year = date.getFullYear();
+    const hours = ("0" + date.getHours()).slice(-2);
+    const minutes = ("0" + date.getMinutes()).slice(-2);
+
+    // Format the date
+    const formattedDate = `${day} ${month}, ${year} ${hours}:${minutes}`;
+
+    // console.log("formattedDate", formattedDate);
+    return formattedDate;
+  }
+
   return (
     <div className="flex flex-col md:flex md:flex-row items-start gap-5 md:gap-20 my-5 h-full md:h-4/5 z-1">
       <div
@@ -355,7 +381,8 @@ const Gallery2 = ({
           ) : activeServiceType === "faq" ? (
             <span className="mr-3">Faqs</span>
           ) : null}
-          {activeItem?.created_at?.split(".")[0]}
+          {/* {activeItem?.created_at?.split(".")[0]} */}
+          {formatDate(activeItem?.created_at ?? "")}
         </div>
         {activeServiceType === "propchat" ? (
           <div className="bg-zinc-100 h-36 w-60 cursor-pointer rounded-lg p-3">

@@ -90,14 +90,6 @@ export default function UploadFileModal(props: {
 
       if (result?.status !== 200) throw new Error(data);
 
-      // if (activeServiceType === "cwyf")
-      //   setUploadedFileDetails({
-      //     file_name: data.response.response.file_name,
-      //     file_url: data.response.response.file_path,
-      //   });
-      // setSelectedThread(data.id);
-      // setApiResThreadId(data.id);
-
       if (serviceType === "faq" && handleGenerateFaqs) {
         handleGenerateFaqs(data, file.name);
         return;
@@ -107,7 +99,6 @@ export default function UploadFileModal(props: {
         console.log("handleChatFile runs from uploadFilemodal");
         if (handleChatWithFile) handleChatWithFile(e, data.response.id);
 
-        // console.log("conversation state sets from uploadFilemodal");
         setConversation([
           {
             id: +"",
@@ -117,17 +108,7 @@ export default function UploadFileModal(props: {
             // created_at: new Date().toISOString(),
           },
         ]);
-      }
-      // updateThreadArray(
-      //   data.response.id,
-      //   data.response.response.file_name,
-      //   "Ask me a question now",
-      //   "cwyf",
-      //   data?.response?.response?.file_path
-      // );
-      //   return;
-      // } else {
-      else if (serviceType === "image_to_text" && updateThreadArray) {
+      } else if (serviceType === "image_to_text" && updateThreadArray) {
         updateThreadArray(
           data.id,
           data.Image_name,
@@ -156,8 +137,6 @@ export default function UploadFileModal(props: {
           },
         ]);
       }
-
-      // }
       successAlert(1000, "File uploaded successfully");
     } catch (error) {
       errorAlert(1000, "Error please check console");
@@ -165,7 +144,6 @@ export default function UploadFileModal(props: {
     } finally {
       setIsFileUploading(false);
       if (setIsOpen) setIsOpen(false);
-      // setFile(null);
     }
   }
 
@@ -178,7 +156,7 @@ export default function UploadFileModal(props: {
   return (
     <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
       <div onClick={(e) => e.stopPropagation()}>
-        <div className="border w-88 p-5 flex-col justify-center gap-4 rounded-lg px-4 flex items-center bg-white relative z-50">
+        <div className="w-88 p-5 flex-col justify-center gap-4 rounded-lg px-4 flex items-center bg-white relative z-50">
           <IoClose
             size={25}
             onClick={() => setIsOpen && setIsOpen(false)}
