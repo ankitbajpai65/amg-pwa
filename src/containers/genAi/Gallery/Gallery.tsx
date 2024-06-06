@@ -7,13 +7,9 @@ import chatquestionsIcon from "@/assets/icons/faq.png";
 import documentIcon from "@/assets/icons/cwyf.png";
 import materialIcon from "@/assets/icons/imgTxt.png";
 import { PiFileImageDuotone } from "react-icons/pi";
-import { BsDownload } from "react-icons/bs";
 import { IoChevronBackOutline } from "react-icons/io5";
 import Gallery1 from "./Gallery1";
 import Gallery2 from "./Gallery2";
-import useDownloadImgApi from "@/components/hooks/genaiservices/txtToImg/useDownloadImgApi";
-import NewLoader from "@/components/appComponents/NewLoader";
-import useDownloadFaqApi from "@/components/hooks/genaiservices/faq/useDownloadFaqApi";
 
 const groupByDate = (array: threadDataType[]) => {
   console.log(array);
@@ -80,9 +76,6 @@ const Gallery = (props: {
   } = props;
   const [filteredArray, setFilteredArray] = useState<groupByDateType>([]);
   const [activeItem, setActiveItem] = useState<threadDataType | null>(null);
-
-  const { isDownloadImgLoading, handleImageDownload } = useDownloadImgApi();
-  const { isDownloadFaqLoading, handleFaqDownload } = useDownloadFaqApi();
 
   // const [openedFileDetail, setOpenedFileDetail] = useState({})
   // const [isFileModalVisible, setIsFileModalVisible] = useState<boolean>(false);
@@ -172,15 +165,15 @@ const Gallery = (props: {
             ) : null}
           </div>
 
-          {activeItem?.service === "faq" && (
+          {/* {activeItem?.service === "faq" && (
             <button
               onClick={() => handleFaqDownload(activeItem._id)}
               className="block md:hidden hover:bg-zinc-200 p-2 rounded-full ml-auto"
             >
               <BsDownload />
             </button>
-          )}
-          {activeItem?.service === "text_to_image" && (
+          )} */}
+          {/* {activeItem?.service === "text_to_image" && (
             <button
               onClick={() =>
                 activeItem?.data &&
@@ -192,8 +185,8 @@ const Gallery = (props: {
               className="block md:hidden hover:bg-zinc-200 p-2 rounded-full ml-auto"
             >
               <BsDownload />
-            </button>
-          )}
+            </button> 
+          )} */}
         </div>
         {/* <input type="text" placeholder="Search..." className="w-full py-2 px-4 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-500 focus:ring focus:ring-blue-200" /> */}
         {!activeItem ? (
@@ -217,7 +210,6 @@ const Gallery = (props: {
         />
       )} */}
 
-      {(isDownloadImgLoading || isDownloadFaqLoading) && <NewLoader />}
     </div>
   );
 };

@@ -299,31 +299,27 @@ export default function Cwyf(props: {
                     )}
                     {item.answer && (
                       <>
-                        <div className="flex justify-between">
-                          <div className="flex items-center gap-0.25">
-                            <div className="h-14 w-14">
-                              <img
-                                src={logo}
-                                alt=""
-                                className="h-full w-full"
-                              />
-                            </div>
-                            <div className="text-lg font-semibold mt-2">
-                              GenAI Space
-                            </div>
+                        {/* <div className="flex justify-between"> */}
+                        <div className="flex items-center gap-0.25">
+                          <div className="h-14 w-14">
+                            <img src={logo} alt="" className="h-full w-full" />
                           </div>
-                          <button
-                            className="h-10 w-10 flex justify-center items-center hover:bg-zinc-200 rounded-full p-2"
-                            onClick={() =>
-                              handleCopyBtnClick(item.answer as string)
-                            }
-                          >
-                            <FaRegCopy size={20} />
-                          </button>
+                          <div className="text-lg font-semibold mt-2">
+                            GenAI Space
+                          </div>
                         </div>
+                        {/* </div> */}
                         <div className="self-start px-2 py-1 bg-neutral-100 dark:bg-neutral-600 border border-border-light-gray rounded-md mr-8">
                           <ReactMarkdown children={item.answer}></ReactMarkdown>
                         </div>
+                        <button
+                          className="h-10 w-10 mt-2 flex justify-center items-center bg-gray-200 hover:bg-red-200 rounded-full p-2"
+                          onClick={() =>
+                            handleCopyBtnClick(item.answer as string)
+                          }
+                        >
+                          <FaRegCopy size={18} className="text-red-600"/>
+                        </button>
                       </>
                     )}
                     <div ref={scrollContainerRef}></div>

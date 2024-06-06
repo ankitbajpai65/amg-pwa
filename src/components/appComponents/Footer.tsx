@@ -1,7 +1,7 @@
 import { FaHome } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import { CiBarcode } from "react-icons/ci";
-import { FaCalendarDay } from "react-icons/fa6";
+// import { FaCalendarDay } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import { FaLaptopCode } from "react-icons/fa";
 // import { HiMiniChatBubbleBottomCenterText } from "react-icons/hi2";
@@ -11,7 +11,7 @@ const Footer = () => {
   const handleClick = () => {
     if (sessionStorage.getItem("isLoggedIn") === "true") {
       // navigate(`/pwa/home`);
-      navigate("/pwa/genaiservices/gpt-prompt")
+      navigate("/pwa/genaiservices/gpt-prompt");
     }
   };
   return (
@@ -31,7 +31,7 @@ const Footer = () => {
             />
             <p className="text-xs">Map</p>
           </div>
-          <div className="flex flex-col items-center">
+          {/* <div className="flex flex-col items-center">
             <FaCalendarDay
               style={{ paddingRight: "5px" }}
               size={20}
@@ -39,7 +39,7 @@ const Footer = () => {
               onClick={() => navigate("/pwa/calendar")}
             />
             <p className="text-xs">Calendar</p>
-          </div>
+          </div> */}
           <div className="flex flex-col items-center">
             <FaLaptopCode
               // style={{ paddingRight: "5px"}}

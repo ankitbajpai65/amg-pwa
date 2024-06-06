@@ -426,17 +426,41 @@ const Gallery2 = ({
             )}
           </>
         )}
+
+        {activeItem.service === "faq" && (
+          <button
+            onClick={() => handleFaqDownload(activeItem._id)}
+            className="flex gap-2 items-center bg-red-500 text-white py-1 px-3 mt-5 rounded-md"
+          >
+            <BsDownload /> Download
+          </button>
+        )}
+
+        {activeItem.service === "text_to_image" && (
+          <button
+            onClick={() =>
+              activeItem.data &&
+              handleImageDownload(
+                activeItem.data[0].image_url ??
+                  (activeItem.data[0].answer as string)
+              )
+            }
+            className="flex gap-2 items-center bg-red-500 text-white py-1 px-3 mt-5 rounded-md"
+          >
+            <BsDownload /> Download
+          </button>
+        )}
       </div>
 
-      {activeItem.service === "faq" && (
+      {/* {activeItem.service === "faq" && (
         <button
           onClick={() => handleFaqDownload(activeItem._id)}
           className="hidden md:block hover:bg-zinc-200 p-2 rounded-full"
         >
           <BsDownload />
         </button>
-      )}
-      {activeItem.service === "text_to_image" && (
+      )} */}
+      {/* {activeItem.service === "text_to_image" && (
         <button
           onClick={() =>
             activeItem.data &&
@@ -449,7 +473,7 @@ const Gallery2 = ({
         >
           <BsDownload />
         </button>
-      )}
+      )} */}
 
       {(isDownloadImgLoading || isDownloadFaqLoading) && <NewLoader />}
     </div>
