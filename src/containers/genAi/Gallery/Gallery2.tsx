@@ -234,7 +234,11 @@
 import { useState, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import pdfIcon from "@/assets/icons/pdfIcon.png";
+import { BsDownload } from "react-icons/bs";
 import { threadDataType, faqResType } from "../type";
+import useDownloadImgApi from "@/components/hooks/genaiservices/txtToImg/useDownloadImgApi";
+import NewLoader from "@/components/appComponents/NewLoader";
+import useDownloadFaqApi from "@/components/hooks/genaiservices/faq/useDownloadFaqApi";
 
 const renderTitle = (text: string) =>
   text && <p>{text.length > 15 ? `${text.slice(0, 15)}...` : text}</p>;
@@ -252,6 +256,8 @@ const Gallery2 = ({
   handleOpenFile: () => void;
 }) => {
   const [faqData, setFaqData] = useState<faqResType[]>([]);
+  const { isDownloadImgLoading, handleImageDownload } = useDownloadImgApi();
+  const { isDownloadFaqLoading, handleFaqDownload } = useDownloadFaqApi();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -394,6 +400,31 @@ const Gallery2 = ({
           </>
         )}
       </div>
+
+      {activeItem.service === "faq" && (
+        <button
+          onClick={() => handleFaqDownload(activeItem._id)}
+          className="hidden md:block hover:bg-zinc-200 p-2 rounded-full"
+        >
+          <BsDownload />
+        </button>
+      )}
+      {activeItem.service === "text_to_image" && (
+        <button
+          onClick={() =>
+            activeItem.data &&
+            handleImageDownload(
+              activeItem.data[0].image_url ??
+                (activeItem.data[0].answer as string)
+            )
+          }
+          className="hidden md:block hover:bg-zinc-200 p-2 rounded-full"
+        >
+          <BsDownload />
+        </button>
+      )}
+
+      {(isDownloadImgLoading || isDownloadFaqLoading) && <NewLoader />}
     </div>
   );
 };

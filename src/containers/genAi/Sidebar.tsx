@@ -50,11 +50,13 @@ const Sidebar = forwardRef<
     service: string
   ) => {
     e.stopPropagation();
-
-    deleteThread(e, threadId, service);
+    const confirmation = confirm("Do you want to delete this thread?");
+    if (!confirmation) return;
+    deleteThread(e, threadId, service, toggleSidebar);
     setThreadArray((prev) =>
       prev ? prev.filter((thread) => thread._id !== threadId) : []
     );
+    // toggleSidebar()
   };
 
   return (

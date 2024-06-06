@@ -8,11 +8,14 @@ import faqIcon from "@/assets/icons/faq.png";
 import cwyfIcon from "@/assets/icons/cwyf.png";
 import imgTxtIcon from "@/assets/icons/imgTxt.png";
 import { PiFileImage } from "react-icons/pi";
+import { BsDownload } from "react-icons/bs";
 import share from "@/assets/icons/share.png";
 import { threadDataType } from "./type";
 import UploadFileModal from "./UploadFileModal";
 import { errorAlert } from "@/components/appComponents/appAlert";
 import Gallery from "./Gallery/Gallery";
+import useDownloadFaqApi from "@/components/hooks/genaiservices/faq/useDownloadFaqApi";
+import NewLoader from "@/components/appComponents/NewLoader";
 type faqResType = {
   Question: string;
   Answer: string;
@@ -58,6 +61,7 @@ export default function Faq(props: {
   ]);
   const [showGallery, setShowGallery] = useState<boolean>(false);
   const { handleAllLogAiApi } = useHandleAllLogAiAPI();
+  const { isDownloadFaqLoading, handleFaqDownload } = useDownloadFaqApi();
 
   const accessToken = localStorage.getItem("AccessToken");
 
@@ -226,7 +230,15 @@ export default function Faq(props: {
               <div className="p-2 mt-auto">
                 {faqResponse && faqResponse?.length > 0 && (
                   <div className="m-1 sm:m-5 mt-12">
-                    <h1 className="font-bold text-3xl mb-3">Generated FAQ</h1>
+                    <div className="flex justify-between">
+                      <h1 className="font-bold text-3xl mb-3">Generated FAQ</h1>
+                      <button
+                        onClick={() => handleFaqDownload(openedThread?._id)}
+                        className="h-10 w-10 flex justify-center items-center hover:bg-zinc-200 rounded-full p-2"
+                      >
+                        <BsDownload size={20} />
+                      </button>
+                    </div>
                     {faqResponse &&
                       faqResponse?.map((res: faqResType, index: number) => (
                         <div
@@ -337,7 +349,7 @@ export default function Faq(props: {
         />
       )}
 
-      {/* {isLoading && <Loader />} */}
+      {isDownloadFaqLoading && <NewLoader />}
     </div>
   );
 }

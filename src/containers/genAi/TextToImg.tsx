@@ -8,6 +8,7 @@ import faqIcon from "@/assets/icons/faq.png";
 import cwyfIcon from "@/assets/icons/cwyf.png";
 import imgTxtIcon from "@/assets/icons/imgTxt.png";
 import { PiFileImage } from "react-icons/pi";
+import { BsDownload } from "react-icons/bs";
 import share from "@/assets/icons/share.png";
 import { conversationType, threadDataType } from "./type";
 import {
@@ -20,6 +21,8 @@ import {
 import userLogo from "@/assets/user.png";
 import logo from "@/assets/loghi-03.png";
 import Gallery from "./Gallery/Gallery";
+import useDownloadImgApi from "@/components/hooks/genaiservices/txtToImg/useDownloadImgApi";
+import NewLoader from "@/components/appComponents/NewLoader";
 // import {
 
 // const url = "https://amgenaispacebackend.datapartners.ch";
@@ -60,6 +63,8 @@ export default function TextToImg(props: {
     model: "",
     quality: "",
   });
+
+  const { isDownloadImgLoading, handleImageDownload } = useDownloadImgApi();
   // const { handleAllLogAiApi } = useHandleAllLogAiAPI();
 
   // useEffect(() => {
@@ -283,14 +288,27 @@ export default function TextToImg(props: {
                     )}
                     {item.answer && (
                       <>
-                        <div className="flex items-center gap-0.25">
-                          <div className="h-14 w-14">
-                            <img src={logo} alt="" className="h-full w-full" />
+                        <div className="flex justify-between">
+                          <div className="flex items-center gap-0.25">
+                            <div className="h-14 w-14">
+                              <img
+                                src={logo}
+                                alt=""
+                                className="h-full w-full"
+                              />
+                            </div>
+                            <div className="text-lg font-semibold mt-2">
+                              GenAI Space
+                            </div>
                           </div>
-                          <div className="text-lg font-semibold mt-2">
-                            GenAI Space
-                          </div>
+                          <button
+                            onClick={() => handleImageDownload(item.answer)}
+                            className="h-10 w-10 flex justify-center items-center hover:bg-zinc-200 rounded-full p-2"
+                          >
+                            <BsDownload size={20} />
+                          </button>
                         </div>
+
                         <div className="min-h-[200px] w-full">
                           {item.answer.startsWith("http") ? (
                             <img
@@ -446,6 +464,8 @@ export default function TextToImg(props: {
           </form>
         </>
       )}
+
+      {isDownloadImgLoading && <NewLoader />}
     </div>
   );
 }
