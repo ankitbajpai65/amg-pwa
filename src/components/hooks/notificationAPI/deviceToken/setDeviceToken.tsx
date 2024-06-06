@@ -7,17 +7,14 @@ export default function useDeviceTokenApi() {
 
   const setDeviceToken = async (reqBody: { token: string }) => {
     const accessToken = localStorage.getItem("AccessToken");
-
+    axios.defaults.headers.common["Authorization"] = accessToken;
     if (reqBody) {
       try {
         const urlRes = await axios.post(`${url}/get_registration_token/`, {
-          headers: {
-            Authorization: accessToken,
-          },
           token: reqBody.token,
         });
         const res = urlRes.data;
-        console.log(res.length<10?res : "ERROR");
+        console.log(res.length < 10 ? res : "ERROR");
       } catch (e) {
         console.error(e, "setDeviceToken");
         const error = e as Error | AxiosError;

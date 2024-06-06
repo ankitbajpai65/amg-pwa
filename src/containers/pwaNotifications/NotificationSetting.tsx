@@ -1,7 +1,103 @@
 import BodyBackBtn from "@/components/appComponents/BodyBackBtn";
+import { successAlert } from "@/components/appComponents/appAlert";
+import useGetNotificationFlagsApi from "@/components/hooks/notificationAPI/notificationFlag/getNotificationFlagStatus";
+import useSetNotificationFlagsApi from "@/components/hooks/notificationAPI/notificationFlag/updateNotificationFlag";
 import { Switch } from "@/components/ui/switch";
+import { useEffect, useState } from "react";
 
 const NotificationSetting = () => {
+  const [notificationFlag, setNotificationFlag] = useState<{
+    newServiceFlagEmail: boolean;
+    newServiceFlagPush: boolean;
+    generalFlagEmail: boolean;
+    generalFlagPush: boolean;
+  }>({
+    newServiceFlagEmail: false,
+    newServiceFlagPush: false,
+    generalFlagEmail: false,
+    generalFlagPush: false,
+  });
+
+  const { getNotificationFlagStatusRes, getNotificationFlagStatus } =
+    useGetNotificationFlagsApi();
+
+  const { setNotificationFlagStatus, setNotificationFlagStatusRes } =
+    useSetNotificationFlagsApi();
+
+  let timer: NodeJS.Timeout;
+
+  useEffect(() => {
+    getNotificationFlagStatus();
+  }, []);
+
+  useEffect(() => {
+    if (getNotificationFlagStatusRes?.status === 200) {
+      setNotificationFlag(() => ({
+        newServiceFlagEmail:
+          getNotificationFlagStatusRes.response.chat_email === "true"
+            ? true
+            : false,
+        newServiceFlagPush:
+          getNotificationFlagStatusRes.response.chat_push === "true"
+            ? true
+            : false,
+        generalFlagEmail:
+          getNotificationFlagStatusRes.response.general_email === "true"
+            ? true
+            : false,
+        generalFlagPush:
+          getNotificationFlagStatusRes.response.general_push === "true"
+            ? true
+            : false,
+      }));
+    }
+  }, [getNotificationFlagStatusRes]);
+
+  useEffect(() => {
+    if (getNotificationFlagStatusRes?.response) {
+      if (
+        notificationFlag.generalFlagEmail !==
+          (getNotificationFlagStatusRes?.response.general_email === "true"
+            ? true
+            : false) ||
+        notificationFlag.generalFlagPush !==
+          (getNotificationFlagStatusRes?.response.general_push === "true"
+            ? true
+            : false) ||
+        notificationFlag.newServiceFlagEmail !==
+          (getNotificationFlagStatusRes?.response.chat_email === "true"
+            ? true
+            : false) ||
+        notificationFlag.newServiceFlagPush !==
+          (getNotificationFlagStatusRes?.response.chat_push === "true"
+            ? true
+            : false)
+      ) {
+        updateNotificationSettings();
+      }
+    }
+  }, [notificationFlag]);
+
+  useEffect(() => {
+    if (
+      setNotificationFlagStatusRes?.response === "notification flag updated"
+    ) {
+      successAlert(1000, "Notification Setting Updated");
+    }
+  }, [setNotificationFlagStatusRes]);
+
+  const updateNotificationSettings = () => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      setNotificationFlagStatus({
+        generalEmailFlag: notificationFlag.generalFlagEmail,
+        generalPushFlag: notificationFlag.generalFlagPush,
+        newServiceEmailFlag: notificationFlag.newServiceFlagEmail,
+        newServicePushFlag: notificationFlag.newServiceFlagPush,
+      });
+    }, 1000);
+  };
+
   return (
     <div>
       <BodyBackBtn btnText="Notifications" />
@@ -24,11 +120,31 @@ const NotificationSetting = () => {
           </div>
           <div className="flex justify-between py-1">
             <label htmlFor="email">Email</label>
-            <Switch id="email" name="email" />
+            <Switch
+              id="email"
+              name="email"
+              checked={notificationFlag?.newServiceFlagEmail}
+              onClick={() =>
+                setNotificationFlag((prev) => ({
+                  ...prev,
+                  newServiceFlagEmail: !prev?.newServiceFlagEmail,
+                }))
+              }
+            />
           </div>
           <div className="flex justify-between py-1">
             <label htmlFor="push">Push</label>
-            <Switch id="push" name="push" />
+            <Switch
+              id="push"
+              name="push"
+              checked={notificationFlag?.newServiceFlagPush}
+              onClick={() =>
+                setNotificationFlag((prev) => ({
+                  ...prev,
+                  newServiceFlagPush: !prev?.newServiceFlagPush,
+                }))
+              }
+            />
           </div>
         </div>
         {/* Notifications about chat */}
@@ -42,11 +158,31 @@ const NotificationSetting = () => {
           </div>
           <div className="flex justify-between py-1">
             <label htmlFor="email">Email</label>
-            <Switch id="email" name="email" />
+            <Switch
+              id="email"
+              name="email"
+              checked={notificationFlag?.generalFlagEmail}
+              onClick={() =>
+                setNotificationFlag((prev) => ({
+                  ...prev,
+                  generalFlagEmail: !prev?.generalFlagEmail,
+                }))
+              }
+            />
           </div>
           <div className="flex justify-between py-1">
             <label htmlFor="push">Push</label>
-            <Switch id="push" name="push" />
+            <Switch
+              id="push"
+              name="push"
+              checked={notificationFlag?.generalFlagPush}
+              onClick={() =>
+                setNotificationFlag((prev) => ({
+                  ...prev,
+                  generalFlagPush: !prev?.generalFlagPush,
+                }))
+              }
+            />
           </div>
         </div>
       </div>

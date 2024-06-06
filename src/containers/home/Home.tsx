@@ -11,7 +11,7 @@ import { getToken } from "firebase/messaging";
 import { useUserDetails } from "@/lib/context/userDetailsContext";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import useDeviceTokenApi from "@/components/hooks/deviceToken/setDeviceToken";
+import useDeviceTokenApi from "@/components/hooks/notificationAPI/deviceToken/setDeviceToken";
 
 const Home = () => {
   const { setDeviceToken } = useDeviceTokenApi();
