@@ -50,17 +50,19 @@ const Sidebar = forwardRef<
     service: string
   ) => {
     e.stopPropagation();
-
-    deleteThread(e, threadId, service);
+    const confirmation = confirm("Do you want to delete this thread?");
+    if (!confirmation) return;
+    deleteThread(e, threadId, service, toggleSidebar);
     setThreadArray((prev) =>
       prev ? prev.filter((thread) => thread._id !== threadId) : []
     );
+    // toggleSidebar()
   };
 
   return (
     <div
       ref={ref}
-      className={`fixed top-0 left-0 w-64 h-full bg-bg-header-gray transform ${
+      className={`fixed top-0 left-0 w-64 h-full bg-bg-header-gray transform z-50 ${
         isOpen ? "translate-x-0" : "-translate-x-full"
       } transition-transform duration-300 ease-in-out`}
     >
@@ -71,6 +73,11 @@ const Sidebar = forwardRef<
         <button
           onClick={() => {
             handleNewThread(null, "propchat");
+            setOpenedThread({
+              _id: "",
+              service: "propchat",
+            });
+            // setConversation([{ id: +"", question: "", answer: "", image_name: "" }]);
           }}
           className="bg-gray-800 text-white flex justify-between px-4 py-2 rounded w-full mb-2"
         >

@@ -33,3 +33,24 @@ export type conversationType = {
   image_name: string;
   // created_at?: string;
 }[];
+
+export type groupByDateType = {
+  date: string;
+  threadData: threadDataType[];
+}[];
+
+export type faqResType = {
+  Question: string;
+  Answer: string;
+};
+
+export type gptPromptMultiResponseType = {
+  response: {
+    groq_res: string;
+    gemini_res: string;
+    duck_res: string;
+  };
+  status: string;
+  status_code: number;
+};
+

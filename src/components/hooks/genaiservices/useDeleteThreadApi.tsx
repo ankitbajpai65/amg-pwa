@@ -18,7 +18,8 @@ export default function useDeleteThreadApi() {
   const deleteThread = async (
     e: React.MouseEvent<SVGElement, MouseEvent>,
     threadId: string,
-    service: string
+    service: string,
+    toggleSidebar: () => void
   ) => {
     e.preventDefault();
     try {
@@ -35,8 +36,10 @@ export default function useDeleteThreadApi() {
       const resData = await res.data;
       console.log(resData);
 
-      if (resData.status === 200)
+      if (resData.status === 200) {
         successAlert(1000, "Thread deleted successfully!");
+        toggleSidebar();
+      }
     } catch (e) {
       console.error(e, "AmgStartAPI");
       const error = e as Error | AxiosError;
