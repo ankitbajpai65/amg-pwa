@@ -291,6 +291,7 @@ function GenaiLayout() {
             setOpenedThread={setOpenedThread}
             handleNewThread={handleNewThread}
             threadArray={threadArray}
+            setThreadArray={setThreadArray}
             updateThreadArray={updateThreadArray}
             isUploadModalOpen={isUploadModalOpen}
             setIsUploadModalOpen={setIsUploadModalOpen}

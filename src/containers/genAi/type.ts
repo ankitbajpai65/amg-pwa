@@ -43,3 +43,14 @@ export type faqResType = {
   Question: string;
   Answer: string;
 };
+
+export type gptPromptMultiResponseType = {
+  response: {
+    groq_res: string;
+    gemini_res: string;
+    duck_res: string;
+  };
+  status: string;
+  status_code: number;
+};
+

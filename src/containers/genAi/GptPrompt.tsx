@@ -9,12 +9,19 @@ import cwyfIcon from "@/assets/icons/cwyf.png";
 import imgTxtIcon from "@/assets/icons/imgTxt.png";
 import share from "@/assets/icons/share.png";
 import { PiFileImage } from "react-icons/pi";
-import { conversationType, threadDataType } from "./type";
+import { FaChevronDown } from "react-icons/fa6";
+import {
+  conversationType,
+  gptPromptMultiResponseType,
+  threadDataType,
+} from "./type";
 import ReactMarkdown from "react-markdown";
 import UploadFileModal from "./UploadFileModal";
 import userLogo from "@/assets/user.png";
 import logo from "@/assets/loghi-03.png";
 import Gallery from "./Gallery/Gallery";
+import Drafts from "./Drafts";
+import useGptMultiApi from "@/components/hooks/genaiservices/gptPrompt/useGptMultiApi";
 
 const url = "https://genaiservices-be.datapartners.ch";
 
@@ -25,6 +32,9 @@ export default function GptPrompt(props: {
   >;
   handleNewThread?: (file: File | null, service: string) => void;
   threadArray?: threadDataType[] | undefined;
+  setThreadArray?: React.Dispatch<
+    React.SetStateAction<threadDataType[] | undefined>
+  >;
   updateThreadArray?: (
     id: string,
     question: string,
@@ -42,6 +52,7 @@ export default function GptPrompt(props: {
     setOpenedThread,
     handleNewThread,
     threadArray,
+    setThreadArray,
     updateThreadArray,
     isUploadModalOpen,
     setIsUploadModalOpen,
@@ -55,6 +66,10 @@ export default function GptPrompt(props: {
     { id: 0, question: "", answer: "", image_name: "" },
   ]);
   const [showGallery, setShowGallery] = useState<boolean>(false);
+  const [showOtherDrafts, setShowOtherDrafts] = useState<boolean>(false);
+  const [gptMultiResponses, setGptMultiResponse] =
+    useState<gptPromptMultiResponseType>();
+  const { fetchGptMultiRes, gptMultiRes } = useGptMultiApi();
   // const { handleAllLogAiApi } = useHandleAllLogAiAPI();
 
   useEffect(() => {
@@ -82,6 +97,12 @@ export default function GptPrompt(props: {
       }
     }
   }, [conversation]);
+
+  useEffect(() => {
+    if (gptMultiRes) {
+      setGptMultiResponse(gptMultiRes);
+    }
+  }, [gptMultiRes]);
 
   const scrollToBottom = () => {
     if (scrollContainerRef.current) {
@@ -161,6 +182,8 @@ export default function GptPrompt(props: {
 
         console.log(parsedRes);
 
+        fetchGptMultiRes(resData.id as string, userQuestion as string);
+
         // handleAllLogAiApi({
         //   question: userQuestion,
         //   answer: parsedRes.slice(1, -1),
@@ -182,6 +205,8 @@ export default function GptPrompt(props: {
 
   function handleCreateNewThread(serviceType: string) {
     console.log("handleCreateNewThread runs", serviceType);
+    setShowOtherDrafts(false);
+
     if (handleNewThread) handleNewThread(null, serviceType);
 
     if (setOpenedThread)
@@ -198,6 +223,81 @@ export default function GptPrompt(props: {
       setIsUploadModalOpen && setIsUploadModalOpen(true);
     else
       setConversation([{ id: +"", question: "", answer: "", image_name: "" }]);
+  }
+
+  const handleDraftsSelection = (question: string, response: string) => {
+    console.log(response);
+    setConversation((prevConversation) => {
+      const updatedConversation = [...prevConversation];
+      updatedConversation[updatedConversation.length - 1].answer = response;
+      return updatedConversation;
+    });
+
+    setThreadArray &&
+      setThreadArray((prev) => {
+        return prev
+          ? prev.map((thread) => {
+              if (openedThread) {
+                if (thread._id === openedThread._id) {
+                  const updatedData = thread.data ? [...thread.data] : [];
+                  if (updatedData.length > 0) {
+                    updatedData[updatedData.length - 1] = {
+                      ...updatedData[updatedData.length - 1],
+                      answer: response,
+                    };
+                  }
+                  return {
+                    ...thread,
+                    data: updatedData,
+                  };
+                }
+              }
+              return thread;
+            })
+          : [];
+      });
+
+    handleUpdateGptResponse(question, response);
+    // debouncedHandleUpdateGptResponse(question, response);
+  };
+
+  async function handleUpdateGptResponse(
+    question: string,
+    selectedResponse: string,
+    reaction?: string
+  ) {
+    try {
+      const response = await fetch(`${url}/prop_update/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json; charset=UTF-8",
+          Authorization: accessToken as string,
+        },
+        body: JSON.stringify({
+          tid: openedThread && openedThread._id,
+          question: question,
+          answer: selectedResponse,
+          reaction: reaction ?? "",
+        }),
+      });
+      const res = await response.json();
+      console.log(res);
+
+      // handleAllLogAiApi({
+      //   question: userQuestion,
+      //   answer: selectedResponse,
+      //   step: "GENAI_GPT",
+      //   fileName: "",
+      //   fileSize: 0,
+      //   reaction: reaction ?? "",
+      //   tokensIn: "",
+      //   tokensOut: "",
+      //   wordsIn: `${userQuestion.length}`,
+      //   wordsOut: `${selectedResponse.length}`,
+      // });
+    } catch (error) {
+      console.log("Error updating response:", error);
+    }
   }
 
   return (
@@ -256,6 +356,63 @@ export default function GptPrompt(props: {
                         </div>
                       </>
                     )}
+
+                    {index === conversation.length - 1 &&
+                      gptMultiResponses &&
+                      threadArray &&
+                      threadArray[0].data &&
+                      threadArray[0].data[0].question !== "New Thread" && (
+                        <div className="">
+                          <button
+                            onClick={() => setShowOtherDrafts(!showOtherDrafts)}
+                            className="flex items-center gap-2 ml-auto mb-3"
+                          >
+                            {!showOtherDrafts ? "Show drafts" : "Hide drafts"}
+                            <FaChevronDown
+                              size={15}
+                              className={`text-red-600 transform transition-transform duration-300 ${
+                                showOtherDrafts ? "rotate-180" : ""
+                              }`}
+                            />
+                          </button>
+
+                          {showOtherDrafts && (
+                            <div className="flex gap-1 sm:gap-4 sm:px-8">
+                              {["gemini_res", "groq_res", "duck_res"].map(
+                                (res, index) => {
+                                  const label = `Draft ${index + 1}`;
+                                  const response =
+                                    gptMultiResponses.response[
+                                      res as keyof typeof gptMultiResponses.response
+                                    ];
+                                  const isSelected =
+                                    conversation[conversation.length - 1]
+                                      .answer === response;
+
+                                  return (
+                                    <Drafts
+                                      key={index}
+                                      response={response}
+                                      label={label}
+                                      isSelected={isSelected}
+                                      onClick={() =>
+                                        handleDraftsSelection(
+                                          conversation[conversation.length - 1]
+                                            .question,
+                                          gptMultiResponses.response[
+                                            res as keyof typeof gptMultiResponses.response
+                                          ]
+                                        )
+                                      }
+                                    />
+                                  );
+                                }
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      )}
+
                     {item.answer && (
                       <>
                         <div className="flex items-center gap-0.25">
