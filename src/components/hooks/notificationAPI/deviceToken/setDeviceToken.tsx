@@ -1,9 +1,9 @@
 import axios, { AxiosError } from "axios";
-import { errorAlert } from "@/components/appComponents/appAlert";
+import { errorAlert} from "@/components/appComponents/appAlert";
+
 
 export default function useDeviceTokenApi() {
-  // const url = "http://127.0.0.1:8000/getToken/";
-  const url = "https://genaiservices-be.datapartners.ch";
+  const url = "http://127.0.0.1:8000/getToken/";
 
   const setDeviceToken = async (reqBody: { token: string }) => {
     const accessToken = localStorage.getItem("AccessToken");
@@ -16,7 +16,7 @@ export default function useDeviceTokenApi() {
         const res = urlRes.data;
         console.log(res);
       } catch (e) {
-        console.error(e, "setDeviceToken");
+        console.error(e, "setDevideToken");
         const error = e as Error | AxiosError;
         if (axios.isAxiosError(error)) {
           // console.log(error?.response?.data);
