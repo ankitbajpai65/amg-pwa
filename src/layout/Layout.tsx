@@ -21,6 +21,8 @@ function Layout() {
   const { theme, setTheme } = useThemeContext();
   const { userDetails } = useUserDetails();
 
+  // console.log(userDetails)
+
   const { getUserDetails } = useAmgStartApi();
   const { updateNotificationContext } = useUpdateNotificationContext();
   // const { notificationList } = useNotificationContext();
@@ -62,7 +64,10 @@ function Layout() {
 
   useEffect(() => {
     if (!userDetails) {
-      getUserDetails(userEmail as string);
+      getUserDetails({
+        emailId: userEmail as string,
+        customerId: "AMGDEMO",
+      });
     }
   }, [userDetails]);
 
@@ -77,6 +82,7 @@ function Layout() {
   return (
     <div className="w-full h-full border-box flex flex-col justify-between">
       <Header />
+      {/* <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} /> */}
       <div className="grow overflow-auto">
         <Outlet />
       </div>
