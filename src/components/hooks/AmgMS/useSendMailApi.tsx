@@ -1,5 +1,5 @@
 import { errorAlert } from "@/components/appComponents/appAlert";
-import { useUserDetails } from "@/lib/context/userDetailsContext";
+// import { useUserDetails } from "@/lib/context/userDetailsContext";
 import axios, { AxiosError } from "axios";
 import { useState } from "react";
 
@@ -24,7 +24,7 @@ type resDataType = {
 
 export default function useSendMailApi(): apidatatype {
   const [data, setData] = useState<resDataType | undefined>();
-  const { userDetails } = useUserDetails();
+  // const { userDetails } = useUserDetails();
   const url = "https://amg.datapartners.ch/Amg/ws/PIP_Ws/InvioMail/InvioFast";
   const urlSMS = "https://amg.datapartners.ch/Amg/ws/PIP_Ws/InvioSms/InvioFas";
   //   {
@@ -44,9 +44,7 @@ export default function useSendMailApi(): apidatatype {
           reqBody.sendType === "SMS" ? urlSMS : url,
           {
             customer: "AMGDEMO",
-            from: userDetails?.startList.baseData.find(
-              (item) => item.code === "MAILFROM"
-            )?.itemValue,
+            from: "noreply@datapartners.ch",
             to: reqBody.to,
             cc: reqBody.cc,
             sub: reqBody.sub,

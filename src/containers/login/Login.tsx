@@ -1,5 +1,5 @@
 import image from "../../assets/loghi-03.png";
-import useCheckUserApi from "@/components/hooks/AmgMS/useCheckUserApi";
+// import useCheckUserApi from "@/components/hooks/AmgMS/useCheckUserApi";
 // import { useGoogleLogin } from "@react-oauth/google";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -17,38 +17,32 @@ type Inputs = {
 };
 
 const Login = () => {
-  const { getUserLoginStatus, userLoginStatus } = useCheckUserApi();
+  // const { getUserLoginStatus, userLoginStatus } = useCheckUserApi();
   const [loginData, setLoginData] = useState<Inputs>({
     email: "",
     password: "",
   });
   const [loaderVisible, setLoaderVisible] = useState(false);
   const { userDetails, setUserDetails } = useUserDetails();
-  const { getUserLogin} = useLoginApi();
+  const { getUserLoginRes, getUserLogin } = useLoginApi();
   const { getSendMailAPI } = useSendMailApi();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (userLoginStatus?.status || userLoginStatus?.error) {
-      setLoaderVisible(() => false);
-    }
-  }, [userLoginStatus]);
-
   // useEffect(() => {
-  //   console.log("useEffect runs - line 38 ")
-  //   // console.log(useLoginApiRes.token);
-  //   if (useLoginApiRes?.response === "login successful") {
-  //     console.log("if runs**********", useLoginApiRes.token);
-  //     localStorage.setItem("AccessToken", useLoginApiRes.token);
-  //     // navigate("/b2b");
-  //   } else {
-  //     if (useLoginApiRes?.status === false || useLoginApiRes?.status === 400) {
-  //       console.log(useLoginApiRes);
-  //       errorAlert(1000, "Errore di accesso");
-  //     }
-  //     setLoaderVisible(false);
+  //   if (userLoginStatus?.status || userLoginStatus?.error) {
+  //     setLoaderVisible(() => false);
   //   }
-  // }, [useLoginApiRes]);
+  // }, [userLoginStatus]);
+
+  useEffect(() => {
+    console.log(getUserLoginRes);
+    if (getUserLoginRes) {
+      console.log(getUserLoginRes);
+      if (getUserLoginRes.status || getUserLoginRes.error) {
+        setLoaderVisible(false);
+      }
+    }
+  }, [getUserLoginRes]);
 
   useEffect(() => {
     if (userDetails) {
@@ -66,12 +60,14 @@ const Login = () => {
                 : userDetails?.startList.users[0].phoneCell,
             cc: "",
             sub: "AMG Invio PIN di accesso ",
-            body: `Il PIN di accesso è il seguente: ${userLoginStatus?.pin}`,
+            // body: `Il PIN di accesso è il seguente: ${userLoginStatus?.pin}`,
+            body: `Il PIN di accesso è il seguente: ${getUserLoginRes?.pin}`,
             sendType:
               userDetails?.startList.users[0].auth2 === "MAIL" ? "MAIL" : "SMS",
           });
           warnAlert(2000, "Enter then PIN received by email/SMS");
-          navigate("/mfa", { state: { pin: userLoginStatus?.pin } });
+          // navigate("/mfa", { state: { pin: userLoginStatus?.pin } });
+          navigate("/mfa", { state: { pin: getUserLoginRes?.pin } });
         } else if (userDetails?.startList.users[0].auth2 === "OFF") {
           if (
             userDetails?.startList.users[0].privacyDate === "" ||
@@ -116,10 +112,10 @@ const Login = () => {
     e.preventDefault();
 
     if (loginData.email !== "" && loginData.password !== "") {
-      getUserLoginStatus({
-        user: loginData.email,
-        pass: loginData.password,
-      });
+      // getUserLoginStatus({
+      //   user: loginData.email,
+      //   pass: loginData.password,
+      // });
       getUserLogin({
         userEmail: loginData.email,
         password: loginData.password,

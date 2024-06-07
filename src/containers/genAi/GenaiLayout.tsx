@@ -36,7 +36,7 @@ function GenaiLayout() {
   >();
   const [openedThread, setOpenedThread] = useState<threadDataType>();
 
-  const accessToken = localStorage.getItem("AccessToken");
+  const accessToken = sessionStorage.getItem("AccessToken");
 
   useEffect(() => {
     if (accessToken) fetchUsersThread();

@@ -61,7 +61,7 @@ export default function GptPrompt(props: {
     uploadedFile,
     setUploadedFile,
   } = props;
-  const accessToken = localStorage.getItem("AccessToken");
+  const accessToken = sessionStorage.getItem("AccessToken");
   const [userQuestion, setUserQuestion] = useState("");
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   const [conversation, setConversation] = useState<conversationType>([
@@ -447,7 +447,7 @@ export default function GptPrompt(props: {
                             handleCopyBtnClick(item.answer as string)
                           }
                         >
-                          <FaRegCopy size={18} className="text-red-600 mt-1"/>
+                          <FaRegCopy size={18} className="text-red-600 mt-1" />
                         </button>
                       </>
                     )}

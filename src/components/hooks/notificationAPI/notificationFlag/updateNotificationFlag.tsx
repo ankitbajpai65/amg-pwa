@@ -25,7 +25,7 @@ export default function useSetNotificationFlagsApi(): apidatatype {
   const url = "https://genaiservices-be.datapartners.ch";
 
   const setNotificationFlagStatus = async (reqBody: reqBodyType) => {
-    const accessToken = localStorage.getItem("AccessToken");
+    const accessToken = sessionStorage.getItem("AccessToken");
     axios.defaults.headers.common["Authorization"] = accessToken;
     const {
       generalEmailFlag,

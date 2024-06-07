@@ -15,7 +15,7 @@ type responseType = {
 
 export default function useGptApi() {
   const [data, setData] = useState<responseType | null>();
-  const accessToken = localStorage.getItem("AccessToken");
+  const accessToken = sessionStorage.getItem("AccessToken");
 
   const fetchGptRes = async (url: string) => {
     console.log("fetchGptRes runs");
