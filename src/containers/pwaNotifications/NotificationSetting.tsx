@@ -106,10 +106,10 @@ const NotificationSetting = () => {
         <p>Choose what to be updated on.</p>
       </div>
       <div className="px-5 py-1">
-        <div className="flex justify-between">
+        {/* <div className="flex justify-between">
           <label htmlFor="faceId">Use Face ID for access</label>
           <Switch id="faceId" name="faceId" />
-        </div>
+        </div> */}
         {/* Notifications about new services */}
         <div className="mb-2 py-3 flex flex-col">
           <div className="text-text-light-gray py-2">
@@ -149,7 +149,7 @@ const NotificationSetting = () => {
         </div>
         {/* Notifications about chat */}
 
-        <div className="mb-2 py-3 flex flex-col">
+        {/* <div className="mb-2 py-3 flex flex-col">
           <div className="text-text-light-gray py-2">
             <div className="flex items-center">
               <p>Notifications about chat Copy</p>
@@ -184,7 +184,7 @@ const NotificationSetting = () => {
               }
             />
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
