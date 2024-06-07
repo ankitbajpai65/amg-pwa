@@ -8,10 +8,10 @@ type apidatatype = {
 };
 
 type reqBodyType = {
-  generalEmailFlag: boolean;
-  generalPushFlag: boolean;
-  newServiceEmailFlag: boolean;
-  newServicePushFlag: boolean;
+  generalEmailFlag: string;
+  generalPushFlag: string;
+  newServiceEmailFlag: string;
+  newServicePushFlag: string;
 };
 
 type resDataType = {
