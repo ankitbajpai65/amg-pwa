@@ -110,7 +110,7 @@ const PwaSettings = () => {
               </div>
             </DialogTrigger>
 
-            <DialogContent className="border rounded-md">
+            <DialogContent className="border rounded-md bg-white">
               <DialogHeader>
                 <h1>Logout</h1>
               </DialogHeader>

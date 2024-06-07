@@ -45,7 +45,7 @@ export default function UploadFileModal(props: {
     "https://genaiservices-be.datapartners.ch/generate/upload_langqa/"
   );
 
-  const accessToken = localStorage.getItem("AccessToken");
+  const accessToken = sessionStorage.getItem("AccessToken");
 
   let uploadButtonText: string;
 

@@ -13,7 +13,7 @@ type resBodyType = {
 export default function useUserHistory() {
   const [usersThread, setUsersThread] = useState<resBodyType>();
   const [isLoading,setIsLoading] = useState<boolean>(false);
-  const accessToken = localStorage.getItem("AccessToken");
+  const accessToken = sessionStorage.getItem("AccessToken");
 
   const fetchUsersThread = async () => {
     try {

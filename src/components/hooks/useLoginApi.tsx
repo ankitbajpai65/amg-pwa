@@ -8,6 +8,7 @@ type resBodyType = {
   status: number | boolean;
   token: string;
   error?: string;
+  pin: string;
 };
 
 export default function useLoginApi() {
@@ -22,7 +23,7 @@ export default function useLoginApi() {
     password: string;
     customer: string;
   }) => {
-    console.log("getUserLogin runs")
+    console.log("getUserLogin runs");
 
     console.log(reqBody);
 
@@ -42,8 +43,11 @@ export default function useLoginApi() {
             emailId: reqBody.userEmail,
             customerId: reqBody.customer,
           });
-          localStorage.setItem("userEmail", reqBody.userEmail);
-          localStorage.setItem("AccessToken", resData.token);
+          // localStorage.setItem("userEmail", reqBody.userEmail);
+          // localStorage.setItem("AccessToken", resData.token);
+          sessionStorage.setItem("isLoggedIn", "true");
+          sessionStorage.setItem("email", reqBody.userEmail);
+          sessionStorage.setItem("AccessToken", resData.token);
         } else {
           errorAlert(3000, resData?.error);
         }
@@ -57,6 +61,7 @@ export default function useLoginApi() {
         status: false,
         token: "",
         error: error?.message,
+        pin: "",
       }));
       if (axios.isAxiosError(error)) {
         errorAlert(1000, "Error Logging in");
@@ -64,5 +69,5 @@ export default function useLoginApi() {
       }
     }
   };
-  return { useLoginApiRes: data, getUserLogin };
+  return { getUserLoginRes: data, getUserLogin };
 }
