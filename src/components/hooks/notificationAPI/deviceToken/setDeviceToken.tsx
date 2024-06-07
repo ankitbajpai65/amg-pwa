@@ -14,7 +14,7 @@ export default function useDeviceTokenApi() {
           token: reqBody.token,
         });
         const res = urlRes.data;
-        console.log(res.length < 10 ? res : "ERROR");
+        console.log(res);
       } catch (e) {
         console.error(e, "setDeviceToken");
         const error = e as Error | AxiosError;

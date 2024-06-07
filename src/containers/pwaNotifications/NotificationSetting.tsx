@@ -90,10 +90,10 @@ const NotificationSetting = () => {
     clearTimeout(timer);
     timer = setTimeout(() => {
       setNotificationFlagStatus({
-        generalEmailFlag: notificationFlag.generalFlagEmail,
-        generalPushFlag: notificationFlag.generalFlagPush,
-        newServiceEmailFlag: notificationFlag.newServiceFlagEmail,
-        newServicePushFlag: notificationFlag.newServiceFlagPush,
+        generalEmailFlag: notificationFlag.generalFlagEmail.toString(),
+        generalPushFlag: notificationFlag.generalFlagPush.toString(),
+        newServiceEmailFlag: notificationFlag.newServiceFlagEmail.toString(),
+        newServicePushFlag: notificationFlag.newServiceFlagPush.toString(),
       });
     }, 1000);
   };
