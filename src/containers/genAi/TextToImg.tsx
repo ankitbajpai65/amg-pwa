@@ -116,7 +116,7 @@ export default function TextToImg(props: {
       alert("Please select model and quality!");
       return;
     }
-    if (!userQuestion || userQuestion.length < 2) {
+    if (!userQuestion) {
       alert("Please provide the question!");
       return;
     }
