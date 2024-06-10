@@ -8,12 +8,16 @@ import useAmgStartApi from "@/components/hooks/AmgMS/useAmgStartApi.tsx";
 import { onMessage } from "firebase/messaging";
 import { messaging } from "../firebase.tsx";
 import useUpdateNotificationContext from "../components/hooks/updateNotificationContext/notif.tsx";
-// import { useNotificationContext } from "@/lib/context/notificationContext.tsx";
 import { notificationToast } from "@/components/appComponents/appAlert.tsx";
+import useGetNotificationListApi from "@/components/hooks/notificationAPI/notificationList/getNotificationList.tsx";
+import { useNotificationContext } from "@/lib/context/notificationContext.tsx";
 
 function Layout() {
   const [trigger, setTrigger] = useState(false);
+  const [backgroundListnerControlFlag, setBackgroundListnerControlFlag] =
+    useState(true);
   const [triggerData, setTriggerData] = useState({
+    id: "",
     title: "",
     body: "",
   });
@@ -25,7 +29,9 @@ function Layout() {
 
   const { getUserDetails } = useAmgStartApi();
   const { updateNotificationContext } = useUpdateNotificationContext();
-  // const { notificationList } = useNotificationContext();
+  const { getNotificationListApi, getNotificationListRes } =
+    useGetNotificationListApi();
+  const { setNotificationList } = useNotificationContext();
 
   const userEmail = sessionStorage.getItem("email");
 
@@ -36,6 +42,7 @@ function Layout() {
       if (data?.title && data.body) {
         setTrigger(true);
         setTriggerData({
+          id: "new Notification",
           title: data?.title,
           body: data.body,
         });
@@ -49,6 +56,38 @@ function Layout() {
       regisation.getNotifications().then((notif) => console.log(notif));
     });
   }, []);
+
+  useEffect(() => {
+    if (backgroundListnerControlFlag || trigger) {
+      document.addEventListener("visibilitychange", () => {
+        if (document.visibilityState === "visible") {
+          console.log("Background Listner");
+          console.log(document.visibilityState);
+          getNotificationListApi();
+        }
+      });
+    }
+  }, [trigger]);
+
+  useEffect(() => {
+    console.log("foreground Page Change");
+
+    getNotificationListApi();
+  }, []);
+
+  useEffect(() => {
+    setBackgroundListnerControlFlag(false);
+    if (getNotificationListRes && getNotificationListRes?.length > 0) {
+      const tempNotificationArray = getNotificationListRes.map((item) => {
+        return {
+          id: item.notificationID,
+          title: item.notificationTitle,
+          body: item.notificationMsg,
+        };
+      });
+      setNotificationList(tempNotificationArray);
+    }
+  }, [getNotificationListRes]);
 
   useEffect(() => {
     const getLocalStorageTheme = localStorage.getItem("theme");
@@ -72,7 +111,7 @@ function Layout() {
   }, [userDetails]);
 
   useEffect(() => {
-    // console.log({ notificationList });
+    console.log("Foreground");
     if (trigger) {
       updateNotificationContext(triggerData);
       setTrigger(false);
