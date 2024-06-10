@@ -32,6 +32,7 @@ function Layout() {
   const { getNotificationListApi, getNotificationListRes } =
     useGetNotificationListApi();
   const { setNotificationList } = useNotificationContext();
+  
 
   const userEmail = sessionStorage.getItem("email");
 

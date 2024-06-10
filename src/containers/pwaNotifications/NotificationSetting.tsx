@@ -1,12 +1,12 @@
 import BodyBackBtn from "@/components/appComponents/BodyBackBtn";
 import { successAlert } from "@/components/appComponents/appAlert";
-import useGetNotificationFlagsApi from "@/components/hooks/notificationAPI/notificationFlag/getNotificationFlagStatus";
 import useSetNotificationFlagsApi from "@/components/hooks/notificationAPI/notificationFlag/updateNotificationFlag";
 import { Switch } from "@/components/ui/switch";
+import { useNotificationFlagContext } from "@/lib/context/notificationFlagContext";
 import { useEffect, useState } from "react";
 
 const NotificationSetting = () => {
-  const [notificationFlag, setNotificationFlag] = useState<{
+  const [notificationFlaglocal, setNotificationFlaglocal] = useState<{
     newServiceFlagEmail: boolean;
     newServiceFlagPush: boolean;
     generalFlagEmail: boolean;
@@ -18,8 +18,10 @@ const NotificationSetting = () => {
     generalFlagPush: false,
   });
 
-  const { getNotificationFlagStatusRes, getNotificationFlagStatus } =
-    useGetNotificationFlagsApi();
+  // const { getNotificationFlagStatusRes, getNotificationFlagStatus } =
+  //   useGetNotificationFlagsApi();
+  const { notificationFlag, setNotificationFlag } =
+    useNotificationFlagContext();
 
   const { setNotificationFlagStatus, setNotificationFlagStatusRes } =
     useSetNotificationFlagsApi();
@@ -27,51 +29,49 @@ const NotificationSetting = () => {
   let timer: NodeJS.Timeout;
 
   useEffect(() => {
-    getNotificationFlagStatus();
-  }, []);
-
-  useEffect(() => {
-    if (getNotificationFlagStatusRes?.status === 200) {
-      setNotificationFlag(() => ({
-        newServiceFlagEmail:
-          getNotificationFlagStatusRes.response.chat_email === "true"
-            ? true
-            : false,
-        newServiceFlagPush:
-          getNotificationFlagStatusRes.response.chat_push === "true"
-            ? true
-            : false,
-        generalFlagEmail:
-          getNotificationFlagStatusRes.response.general_email === "true"
-            ? true
-            : false,
-        generalFlagPush:
-          getNotificationFlagStatusRes.response.general_push === "true"
-            ? true
-            : false,
-      }));
+    if (notificationFlag) {
+      setNotificationFlaglocal(() => notificationFlag);
     }
-  }, [getNotificationFlagStatusRes]);
+  }, [notificationFlag]);
+
+  // useEffect(() => {
+  //   getNotificationFlagStatus();
+  // }, []);
+
+  // useEffect(() => {
+  //   if (getNotificationFlagStatusRes?.status === 200) {
+  //     setNotificationFlag(() => ({
+  //       newServiceFlagEmail:
+  //         getNotificationFlagStatusRes.response.chat_email === "true"
+  //           ? true
+  //           : false,
+  //       newServiceFlagPush:
+  //         getNotificationFlagStatusRes.response.chat_push === "true"
+  //           ? true
+  //           : false,
+  //       generalFlagEmail:
+  //         getNotificationFlagStatusRes.response.general_email === "true"
+  //           ? true
+  //           : false,
+  //       generalFlagPush:
+  //         getNotificationFlagStatusRes.response.general_push === "true"
+  //           ? true
+  //           : false,
+  //     }));
+  //   }
+  // }, [getNotificationFlagStatusRes]);
 
   useEffect(() => {
-    if (getNotificationFlagStatusRes?.response) {
+    if (notificationFlag) {
       if (
-        notificationFlag.generalFlagEmail !==
-          (getNotificationFlagStatusRes?.response.general_email === "true"
-            ? true
-            : false) ||
-        notificationFlag.generalFlagPush !==
-          (getNotificationFlagStatusRes?.response.general_push === "true"
-            ? true
-            : false) ||
-        notificationFlag.newServiceFlagEmail !==
-          (getNotificationFlagStatusRes?.response.chat_email === "true"
-            ? true
-            : false) ||
-        notificationFlag.newServiceFlagPush !==
-          (getNotificationFlagStatusRes?.response.chat_push === "true"
-            ? true
-            : false)
+        notificationFlaglocal.generalFlagEmail !==
+          notificationFlag.generalFlagEmail ||
+        notificationFlaglocal.generalFlagPush !==
+          notificationFlag.generalFlagPush ||
+        notificationFlaglocal.newServiceFlagEmail !==
+          notificationFlag.newServiceFlagEmail ||
+        notificationFlaglocal.newServiceFlagPush !==
+          notificationFlag.newServiceFlagPush
       ) {
         updateNotificationSettings();
       }
@@ -83,6 +83,7 @@ const NotificationSetting = () => {
       setNotificationFlagStatusRes?.response === "notification flag updated"
     ) {
       successAlert(1000, "Notification Setting Updated");
+      setNotificationFlag(() => notificationFlaglocal);
     }
   }, [setNotificationFlagStatusRes]);
 
@@ -90,10 +91,11 @@ const NotificationSetting = () => {
     clearTimeout(timer);
     timer = setTimeout(() => {
       setNotificationFlagStatus({
-        generalEmailFlag: notificationFlag.generalFlagEmail.toString(),
-        generalPushFlag: notificationFlag.generalFlagPush.toString(),
-        newServiceEmailFlag: notificationFlag.newServiceFlagEmail.toString(),
-        newServicePushFlag: notificationFlag.newServiceFlagPush.toString(),
+        generalEmailFlag: notificationFlaglocal.generalFlagEmail.toString(),
+        generalPushFlag: notificationFlaglocal.generalFlagPush.toString(),
+        newServiceEmailFlag:
+          notificationFlaglocal.newServiceFlagEmail.toString(),
+        newServicePushFlag: notificationFlaglocal.newServiceFlagPush.toString(),
       });
     }, 1000);
   };
@@ -125,7 +127,7 @@ const NotificationSetting = () => {
               name="email"
               checked={notificationFlag?.newServiceFlagEmail}
               onClick={() =>
-                setNotificationFlag((prev) => ({
+                setNotificationFlaglocal((prev) => ({
                   ...prev,
                   newServiceFlagEmail: !prev?.newServiceFlagEmail,
                 }))
@@ -139,7 +141,7 @@ const NotificationSetting = () => {
               name="push"
               checked={notificationFlag?.newServiceFlagPush}
               onClick={() =>
-                setNotificationFlag((prev) => ({
+                setNotificationFlaglocal((prev) => ({
                   ...prev,
                   newServiceFlagPush: !prev?.newServiceFlagPush,
                 }))
