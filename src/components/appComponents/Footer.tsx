@@ -41,7 +41,7 @@ const Footer = () => {
               // onClick={() => navigate(`/pwa/home`)}
             />
             {/* <p className="text-xs">Gpt Prompt</p> */}
-            <p className="text-xs">Easydai</p>
+            <p className="text-xs">EasyDAI</p>
           </div>
           <div className="flex flex-col items-center">
             <FaLocationDot
