@@ -1,6 +1,7 @@
 import { FaHome } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
-import { CiBarcode } from "react-icons/ci";
+// import { CiBarcode } from "react-icons/ci";
+import { MdDocumentScanner } from "react-icons/md";
 // import { FaCalendarDay } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import { FaLaptopCode } from "react-icons/fa";
@@ -52,12 +53,18 @@ const Footer = () => {
             <p className="text-xs">Map</p>
           </div>
           <div className="flex flex-col items-center">
-            <CiBarcode
+            <MdDocumentScanner
               style={{ paddingRight: "5px" }}
               size={25}
               title="Scanner"
               onClick={() => navigate("/pwa/qrScan")}
             />
+            {/* <CiBarcode
+              style={{ paddingRight: "5px" }}
+              size={25}
+              title="Scanner"
+              onClick={() => navigate("/pwa/qrScan")}
+            /> */}
             <p className="text-xs">Scan</p>
           </div>
           {/* <div className="flex flex-col items-center">

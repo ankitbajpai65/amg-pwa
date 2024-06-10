@@ -1,4 +1,3 @@
-// import useHandleAllLogAiAPI from "@/components/hooks/logAi/handleAllLogAi";
 import { useEffect, useRef, useState } from "react";
 import { IoArrowUpCircleSharp } from "react-icons/io5";
 import { FaPlus } from "react-icons/fa6";
@@ -10,13 +9,16 @@ import imgTxtIcon from "@/assets/icons/imgTxt.png";
 import pdfIcon from "@/assets/icons/pdfIcon.png";
 import { PiFileImage } from "react-icons/pi";
 import { FaRegCopy } from "react-icons/fa6";
+import { BiSolidDislike } from "react-icons/bi";
+import { BiSolidLike } from "react-icons/bi";
 import share from "@/assets/icons/share.png";
 import { conversationType, threadDataType } from "./type";
 import ReactMarkdown from "react-markdown";
 import UploadFileModal from "./UploadFileModal";
-import userLogo from "@/assets/user.png";
-import logo from "@/assets/loghi-03.png";
+import userLogo from "@/assets/user2.png";
+import logo from "@/assets/logo.png";
 import Gallery from "./Gallery/Gallery";
+import useHandleAllLogAiAPI from "@/components/hooks/logAi/handleAllLogAi";
 import { successAlert } from "@/components/appComponents/appAlert";
 
 const url = "https://genaiservices-be.datapartners.ch";
@@ -59,9 +61,10 @@ export default function Cwyf(props: {
   ]);
   const [showGallery, setShowGallery] = useState<boolean>(false);
   const [uploadedFileId, setUploadFileId] = useState<string>("");
+  const [activeReaction, setActiveReaction] = useState<string | null>(null);
 
   console.log("cwyf renders");
-  // const { handleAllLogAiApi } = useHandleAllLogAiAPI();
+  const { handleAllLogAiApi } = useHandleAllLogAiAPI();
 
   useEffect(() => {
     console.log(openedThread);
@@ -116,6 +119,8 @@ export default function Cwyf(props: {
     threadId: string
   ) {
     e.preventDefault();
+    setActiveReaction(null);
+
     threadId = threadId || openedThread?._id || "";
 
     const sanitizedQuestion = userQuestion.trim();
@@ -174,18 +179,18 @@ export default function Cwyf(props: {
         });
       });
 
-      // handleAllLogAiApi({
-      //   question: userQuestion,
-      //   answer: queryData?.answer.output_text,
-      //   step: "GENAI_CHATFILE",
-      //   fileName: uploadedFile?.name ?? "",
-      //   fileSize: uploadedFile?.size ?? 0,
-      //   reaction: "",
-      //   tokensIn: "",
-      //   tokensOut: "",
-      //   wordsIn: `${userQuestion.length}`,
-      //   wordsOut: queryData?.answer.output_text.length,
-      // });
+      handleAllLogAiApi({
+        question: userQuestion,
+        answer: queryData?.answer.output_text,
+        step: "GENAI_CHATFILE",
+        fileName: uploadedFile?.name ?? "",
+        fileSize: uploadedFile?.size ?? 0,
+        reaction: "",
+        tokensIn: "",
+        tokensOut: "",
+        wordsIn: `${userQuestion.length}`,
+        wordsOut: queryData?.answer.output_text.length,
+      });
     } catch (error) {
       console.error("Something went wrong ", error);
     }
@@ -233,6 +238,28 @@ export default function Cwyf(props: {
       });
   };
 
+  function handleUpateReactions(reaction: string) {
+    console.log(reaction);
+    if (reaction === "OK") setActiveReaction("upvote");
+    else setActiveReaction("downvote");
+
+    handleAllLogAiApi({
+      question: userQuestion ?? conversation[conversation.length - 1].question,
+      answer: conversation[conversation.length - 1].answer,
+      step: "GENAI_CHATFILE",
+      fileName: uploadedFile?.name ?? "",
+      fileSize: uploadedFile?.size ?? 0,
+      reaction: `${reaction === "OK" ? "OK" : "KO"}`,
+      tokensIn: "",
+      tokensOut: "",
+      wordsIn: `${
+        userQuestion.length ??
+        conversation[conversation.length - 1].question.length
+      }`,
+      wordsOut: conversation[conversation.length - 1].answer.length.toString(),
+    });
+  }
+
   return (
     <div className="flex flex-col h-full overflow-auto">
       {showGallery ? (
@@ -274,8 +301,8 @@ export default function Cwyf(props: {
                   <div key={index} className="flex flex-col">
                     {item.question && (
                       <>
-                        <div className={`flex items-center mt-4 gap-1`}>
-                          <div className="h-14 w-14">
+                        <div className={`flex items-center mt-4 gap-2 my-3`}>
+                          <div className="h-8 w-8">
                             <img
                               src={userLogo}
                               alt=""
@@ -300,8 +327,8 @@ export default function Cwyf(props: {
                     {item.answer && (
                       <>
                         {/* <div className="flex justify-between"> */}
-                        <div className="flex items-center gap-0.25">
-                          <div className="h-14 w-14">
+                        <div className="flex items-center gap-1 my-3">
+                          <div className="h-8 w-8">
                             <img src={logo} alt="" className="h-full w-full" />
                           </div>
                           <div className="text-lg font-semibold mt-2">
@@ -318,11 +345,45 @@ export default function Cwyf(props: {
                             handleCopyBtnClick(item.answer as string)
                           }
                         >
-                          <FaRegCopy size={18} className="text-red-600"/>
+                          <FaRegCopy size={18} className="text-red-600" />
                         </button>
                       </>
                     )}
                     <div ref={scrollContainerRef}></div>
+
+                    {index === conversation.length - 1 &&
+                      conversation[conversation.length - 1].answer &&
+                      conversation[conversation.length - 1].answer !==
+                        "Loading..." && (
+                        <div className="flex gap-6 ml-2 mt-4">
+                          <button
+                            // ref={upvoteRef}
+                            onClick={() => handleUpateReactions("OK")}
+                          >
+                            <BiSolidLike
+                              size={20}
+                              className={
+                                activeReaction === "upvote"
+                                  ? "text-red-500"
+                                  : ""
+                              }
+                            />
+                          </button>
+                          <button
+                            // ref={downvoteRef}
+                            onClick={() => handleUpateReactions("KO")}
+                          >
+                            <BiSolidDislike
+                              size={20}
+                              className={
+                                activeReaction === "downvote"
+                                  ? "text-red-500"
+                                  : ""
+                              }
+                            />
+                          </button>
+                        </div>
+                      )}
                   </div>
                 ))}
               </div>

@@ -1,4 +1,3 @@
-// import useHandleAllLogAiAPI from "@/components/hooks/logAi/handleAllLogAi";
 import { useEffect, useRef, useState } from "react";
 import { IoArrowUpCircleSharp } from "react-icons/io5";
 import { FaPlus } from "react-icons/fa6";
@@ -9,13 +8,16 @@ import cwyfIcon from "@/assets/icons/cwyf.png";
 import imgTxtIcon from "@/assets/icons/imgTxt.png";
 import { PiFileImage } from "react-icons/pi";
 import { FaRegCopy } from "react-icons/fa6";
+import { BiSolidDislike } from "react-icons/bi";
+import { BiSolidLike } from "react-icons/bi";
 import share from "@/assets/icons/share.png";
 import { conversationType, threadDataType } from "./type";
 import ReactMarkdown from "react-markdown";
 import UploadFileModal from "./UploadFileModal";
-import userLogo from "@/assets/user.png";
-import logo from "@/assets/loghi-03.png";
+import userLogo from "@/assets/user2.png";
+import logo from "@/assets/logo.png";
 import Gallery from "./Gallery/Gallery";
+import useHandleAllLogAiAPI from "@/components/hooks/logAi/handleAllLogAi";
 import { successAlert } from "@/components/appComponents/appAlert";
 
 export default function ImgToText(props: {
@@ -55,7 +57,9 @@ export default function ImgToText(props: {
     { id: 0, question: "", answer: "", image_name: "" },
   ]);
   const [showGallery, setShowGallery] = useState<boolean>(false);
-  // const { handleAllLogAiApi } = useHandleAllLogAiAPI();
+  const [activeReaction, setActiveReaction] = useState<string | null>(null);
+
+  const { handleAllLogAiApi } = useHandleAllLogAiAPI();
 
   useEffect(() => {
     console.log(openedThread);
@@ -126,6 +130,30 @@ export default function ImgToText(props: {
       });
   };
 
+  function handleUpateReactions(reaction: string) {
+    const selectedReaction = reaction === "OK" ? "upvote" : "downvote";
+    setActiveReaction(selectedReaction);
+
+    const answer =
+      openedThread?.data?.[0]?.response ??
+      openedThread?.data?.[0]?.answer ??
+      "";
+    const wordsOut = answer.length.toString();
+
+    handleAllLogAiApi({
+      question: userQuestion,
+      answer,
+      step: "GENAI_IMG2TXT",
+      fileName: uploadedFile?.name ?? "",
+      fileSize: uploadedFile?.size ?? 0,
+      reaction: selectedReaction === "upvote" ? "OK" : "KO",
+      tokensIn: "",
+      tokensOut: "",
+      wordsIn: userQuestion.length.toString(),
+      wordsOut,
+    });
+  }
+
   return (
     <div className="flex flex-col h-full overflow-auto">
       {showGallery ? (
@@ -170,8 +198,8 @@ export default function ImgToText(props: {
                       openedThread?.data[0] &&
                       openedThread._id && (
                         <>
-                          <div className={`flex items-center mt-4 gap-1`}>
-                            <div className="h-14 w-14">
+                          <div className={`flex items-center mt-4 gap-2 my-3`}>
+                            <div className="h-8 w-8">
                               <img
                                 src={userLogo}
                                 alt=""
@@ -196,8 +224,8 @@ export default function ImgToText(props: {
                       openedThread._id && (
                         <>
                           {/* <div className="flex justify-between"> */}
-                          <div className="flex items-center gap-0.25">
-                            <div className="h-14 w-14">
+                          <div className="flex items-center gap-2 my-3">
+                            <div className="h-8 w-8">
                               <img
                                 src={logo}
                                 alt=""
@@ -228,11 +256,45 @@ export default function ImgToText(props: {
                               )
                             }
                           >
-                            <FaRegCopy size={18} className="text-red-600"/>
+                            <FaRegCopy size={18} className="text-red-600" />
                           </button>
                         </>
                       )}
                     <div ref={scrollContainerRef}></div>
+
+                    {(openedThread.data[0].response ||
+                      openedThread.data[0].answer) &&
+                      (openedThread.data[0].response !== "Loading..." ||
+                        openedThread.data[0].answer !== "Loading...") && (
+                        <div className="flex gap-6 ml-2 mt-4">
+                          <button
+                            // ref={upvoteRef}
+                            onClick={() => handleUpateReactions("OK")}
+                          >
+                            <BiSolidLike
+                              size={20}
+                              className={
+                                activeReaction === "upvote"
+                                  ? "text-red-500"
+                                  : ""
+                              }
+                            />
+                          </button>
+                          <button
+                            // ref={downvoteRef}
+                            onClick={() => handleUpateReactions("KO")}
+                          >
+                            <BiSolidDislike
+                              size={20}
+                              className={
+                                activeReaction === "downvote"
+                                  ? "text-red-500"
+                                  : ""
+                              }
+                            />
+                          </button>
+                        </div>
+                      )}
                   </div>
                 </div>
               </div>

@@ -5,7 +5,7 @@ const useHandleAllLogAiAPI = () => {
   const { getLogsAiStatus } = useAmgLogsAiApi();
   const { userDetails } = useUserDetails();
 
-  const userEmail = userDetails?.startList.users[0].description as string;
+  const userEmail = userDetails?.startList.users[0].email as string;
   function handleAllLogAiApi(props: {
     question: string;
     answer: string;
