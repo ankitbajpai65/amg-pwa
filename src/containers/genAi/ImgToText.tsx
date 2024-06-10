@@ -58,6 +58,7 @@ export default function ImgToText(props: {
   ]);
   const [showGallery, setShowGallery] = useState<boolean>(false);
   const [activeReaction, setActiveReaction] = useState<string | null>(null);
+  const [flag,setFlag] = useState<boolean>(false);
 
   const { handleAllLogAiApi } = useHandleAllLogAiAPI();
 
@@ -265,7 +266,7 @@ export default function ImgToText(props: {
                     {(openedThread.data[0].response ||
                       openedThread.data[0].answer) &&
                       (openedThread.data[0].response !== "Loading..." ||
-                        openedThread.data[0].answer !== "Loading...") && (
+                        openedThread.data[0].answer !== "Loading...") && flag&& (
                         <div className="flex gap-6 ml-2 mt-4">
                           <button
                             // ref={upvoteRef}
@@ -389,6 +390,7 @@ export default function ImgToText(props: {
           setConversation={setConversation}
           setOpenedThread={setOpenedThread}
           updateThreadArray={updateThreadArray}
+          setFlag={setFlag}
         />
       )}
     </div>

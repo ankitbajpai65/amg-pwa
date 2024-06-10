@@ -66,6 +66,7 @@ export default function TextToImg(props: {
     quality: "",
   });
   const [activeReaction, setActiveReaction] = useState<string | null>(null);
+  const [flag, setFlag] = useState<boolean>(false);
 
   const { isDownloadImgLoading, handleImageDownload } = useDownloadImgApi();
   const { handleAllLogAiApi } = useHandleAllLogAiAPI();
@@ -109,6 +110,7 @@ export default function TextToImg(props: {
     console.log("handleGenerateImageFromText runs");
 
     setIsInputFieldDisable(true);
+    setFlag(true);
 
     const { model, quality } = textToImageInput;
     const modelQuery = model.toLowerCase().replace(/\s/g, "-");
@@ -343,7 +345,8 @@ export default function TextToImg(props: {
                     {index === conversation.length - 1 &&
                       conversation[conversation.length - 1].answer &&
                       conversation[conversation.length - 1].answer !==
-                        "Loading..." && (
+                        "Loading..." &&
+                      flag && (
                         <div className="flex gap-6 ml-4 mt-4">
                           <button
                             // ref={upvoteRef}
