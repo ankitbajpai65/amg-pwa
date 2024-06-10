@@ -38,7 +38,7 @@ messaging.onBackgroundMessage((payload) => {
     icon: "/loghi-03.png",
   };
 
-  // self.registration.showNotification(notificationTitle, notificationOptions);
+  self.registration.showNotification(notificationTitle, notificationOptions);
 });
 
 self.addEventListener("notificationclick", (event) => {

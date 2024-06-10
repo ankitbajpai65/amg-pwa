@@ -32,7 +32,7 @@ const NotificationSetting = () => {
     if (notificationFlag) {
       setNotificationFlaglocal(() => notificationFlag);
     }
-  }, [notificationFlag]);
+  }, []);
 
   // useEffect(() => {
   //   getNotificationFlagStatus();
@@ -62,21 +62,10 @@ const NotificationSetting = () => {
   // }, [getNotificationFlagStatusRes]);
 
   useEffect(() => {
-    if (notificationFlag) {
-      if (
-        notificationFlaglocal.generalFlagEmail !==
-          notificationFlag.generalFlagEmail ||
-        notificationFlaglocal.generalFlagPush !==
-          notificationFlag.generalFlagPush ||
-        notificationFlaglocal.newServiceFlagEmail !==
-          notificationFlag.newServiceFlagEmail ||
-        notificationFlaglocal.newServiceFlagPush !==
-          notificationFlag.newServiceFlagPush
-      ) {
-        updateNotificationSettings();
-      }
+    if (notificationFlag && notificationFlaglocal) {
+      updateNotificationSettings();
     }
-  }, [notificationFlag]);
+  }, [notificationFlaglocal]);
 
   useEffect(() => {
     if (
@@ -125,7 +114,7 @@ const NotificationSetting = () => {
             <Switch
               id="email"
               name="email"
-              checked={notificationFlag?.newServiceFlagEmail}
+              checked={notificationFlaglocal?.newServiceFlagEmail}
               onClick={() =>
                 setNotificationFlaglocal((prev) => ({
                   ...prev,
@@ -139,7 +128,7 @@ const NotificationSetting = () => {
             <Switch
               id="push"
               name="push"
-              checked={notificationFlag?.newServiceFlagPush}
+              checked={notificationFlaglocal?.newServiceFlagPush}
               onClick={() =>
                 setNotificationFlaglocal((prev) => ({
                   ...prev,
