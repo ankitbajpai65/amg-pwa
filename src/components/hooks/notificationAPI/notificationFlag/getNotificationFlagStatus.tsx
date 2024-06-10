@@ -14,7 +14,7 @@ type resDataType = {
     chat_email: string;
     chat_push: string;
   };
-  status: 200;
+  status: number;
 };
 
 export default function useGetNotificationFlagsApi(): apidatatype {
