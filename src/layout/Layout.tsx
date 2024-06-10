@@ -11,6 +11,8 @@ import useUpdateNotificationContext from "../components/hooks/updateNotification
 import { notificationToast } from "@/components/appComponents/appAlert.tsx";
 import useGetNotificationListApi from "@/components/hooks/notificationAPI/notificationList/getNotificationList.tsx";
 import { useNotificationContext } from "@/lib/context/notificationContext.tsx";
+import useGetNotificationFlagsApi from "@/components/hooks/notificationAPI/notificationFlag/getNotificationFlagStatus";
+import { useNotificationFlagContext } from "@/lib/context/notificationFlagContext";
 
 function Layout() {
   const [trigger, setTrigger] = useState(false);
@@ -32,9 +34,11 @@ function Layout() {
   const { getNotificationListApi, getNotificationListRes } =
     useGetNotificationListApi();
   const { setNotificationList } = useNotificationContext();
-  
 
   const userEmail = sessionStorage.getItem("email");
+  const { getNotificationFlagStatus, getNotificationFlagStatusRes } =
+    useGetNotificationFlagsApi();
+  const { setNotificationFlag } = useNotificationFlagContext();
 
   onMessage(messaging, (payload) => {
     console.log("yyo", payload);
@@ -51,6 +55,35 @@ function Layout() {
       }
     }
   });
+
+  useEffect(() => {
+    getNotificationFlagStatus();
+  }, []);
+
+  // const navigate = useNavigate();
+
+  useEffect(() => {
+    if (getNotificationFlagStatusRes?.status === 200) {
+      setNotificationFlag(() => ({
+        newServiceFlagEmail:
+          getNotificationFlagStatusRes.response.chat_email === "true"
+            ? true
+            : false,
+        newServiceFlagPush:
+          getNotificationFlagStatusRes.response.chat_push === "true"
+            ? true
+            : false,
+        generalFlagEmail:
+          getNotificationFlagStatusRes.response.general_email === "true"
+            ? true
+            : false,
+        generalFlagPush:
+          getNotificationFlagStatusRes.response.general_push === "true"
+            ? true
+            : false,
+      }));
+    }
+  }, [getNotificationFlagStatusRes]);
 
   useEffect(() => {
     navigator.serviceWorker.ready.then((regisation) => {

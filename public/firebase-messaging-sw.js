@@ -3,15 +3,7 @@ importScripts(
   "https://www.gstatic.com/firebasejs/8.10.0/firebase-messaging.js"
 );
 
-// import { initializeApp } from "firebase/app";
-// import { getMessaging } from "firebase/messaging/sw";
 
-// const defaultConfig = {
-//   apiKey: true,
-//   projectId: true,
-//   messagingSenderId: true,
-//   appId: true,
-// };
 const firebaseConfig = {
   apiKey: "AIzaSyASu9PvMcAc0refWhraPwQc5K8hH4Qgpc4",
   authDomain: "amg-pwa-notification.firebaseapp.com",
@@ -37,7 +29,6 @@ messaging.onBackgroundMessage((payload) => {
     body: payload.notification.body,
     icon: "/loghi-03.png",
   };
-
   self.registration.showNotification(notificationTitle, notificationOptions);
 });
 

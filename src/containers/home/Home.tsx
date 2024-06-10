@@ -12,8 +12,6 @@ import { useUserDetails } from "@/lib/context/userDetailsContext";
 import { useEffect, useState } from "react";
 // import { useNavigate } from "react-router-dom";
 import useDeviceTokenApi from "@/components/hooks/notificationAPI/deviceToken/setDeviceToken";
-import useGetNotificationFlagsApi from "@/components/hooks/notificationAPI/notificationFlag/getNotificationFlagStatus";
-import { useNotificationFlagContext } from "@/lib/context/notificationFlagContext";
 
 const Home = () => {
   const [printToken, setToken] = useState("");
@@ -22,38 +20,6 @@ const Home = () => {
   const userEmail = sessionStorage.getItem("email");
 
   const { setDeviceToken } = useDeviceTokenApi();
-  const { getNotificationFlagStatus, getNotificationFlagStatusRes } =
-    useGetNotificationFlagsApi();
-  const { setNotificationFlag } = useNotificationFlagContext();
-
-  useEffect(() => {
-    getNotificationFlagStatus();
-  }, []);
-
-  // const navigate = useNavigate();
-
-  useEffect(() => {
-    if (getNotificationFlagStatusRes?.status === 200) {
-      setNotificationFlag(() => ({
-        newServiceFlagEmail:
-          getNotificationFlagStatusRes.response.chat_email === "true"
-            ? true
-            : false,
-        newServiceFlagPush:
-          getNotificationFlagStatusRes.response.chat_push === "true"
-            ? true
-            : false,
-        generalFlagEmail:
-          getNotificationFlagStatusRes.response.general_email === "true"
-            ? true
-            : false,
-        generalFlagPush:
-          getNotificationFlagStatusRes.response.general_push === "true"
-            ? true
-            : false,
-      }));
-    }
-  }, [getNotificationFlagStatusRes]);
 
   useEffect(() => {
     if ("serviceWorker" in navigator) {
