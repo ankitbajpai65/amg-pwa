@@ -76,8 +76,8 @@ const Login = () => {
           ) {
             navigate("/policy/privacy");
           } else {
-            // navigate(`/pwa/home`);
-            navigate(`/pwa/genaiservices/gpt-prompt`);
+            navigate(`/pwa/home`);
+            // navigate(`/pwa/genaiservices/gpt-prompt`);
           }
         } else {
           navigate("/");

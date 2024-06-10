@@ -10,7 +10,7 @@ import { messaging } from "@/firebase";
 import { getToken } from "firebase/messaging";
 import { useUserDetails } from "@/lib/context/userDetailsContext";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import useDeviceTokenApi from "@/components/hooks/notificationAPI/deviceToken/setDeviceToken";
 
 const Home = () => {
@@ -21,7 +21,7 @@ const Home = () => {
   const { userDetails } = useUserDetails();
   const userEmail = sessionStorage.getItem("email");
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   useEffect(() => {
     if ("serviceWorker" in navigator) {
@@ -53,40 +53,40 @@ const Home = () => {
         vapidKey:
           "BJiGpffy-15nEOP6tGHpaPE7JEqkdcdPKXEZ7ZABEyRGDllvIFMjv6cOi3m2oBDXq5r7fUa58Fq0lFZiScuWj7k",
       });
-      console.log(token,userEmail);
+      console.log(token, userEmail);
       setToken(token);
-      if (token)
-        setDeviceToken({
-          token: token,
-        });
+      if (token) console.log(printToken);
+      setDeviceToken({
+        token: token,
+      });
     } else if (permission === "denied") {
       warnAlert(2000, "You have denied notification permissions!!");
     }
   };
 
-  const handleCardClick = (card: {
-    code: string;
-    html: string;
-    linkType: string;
-  }) => {
-    if (card.linkType === "EXTERNAL_LINK") {
-      window.open(card.html, "_blank", "noreferrer");
-    } else if (card.linkType === "IFRAME_LINK") {
-      navigate("/pwa/iframePg", { state: { iframeLink: card.html } });
-    } else {
-      if (card.linkType === "INTERNAL_LINK") {
-        if (card.code === "AMGDEMO_GENAI") {
-          navigate("/pwa/gen-ai/gpt-prompt");
-        } else if (card.code === "AMGPWA_PATBOOK") {
-          navigate("/pwa/Booking/patientMeetings");
-        } else {
-          alert("card code error");
-        }
-      } else {
-        alert("card linktype error");
-      }
-    }
-  };
+  // const handleCardClick = (card: {
+  //   code: string;
+  //   html: string;
+  //   linkType: string;
+  // }) => {
+  //   if (card.linkType === "EXTERNAL_LINK") {
+  //     window.open(card.html, "_blank", "noreferrer");
+  //   } else if (card.linkType === "IFRAME_LINK") {
+  //     navigate("/pwa/iframePg", { state: { iframeLink: card.html } });
+  //   } else {
+  //     if (card.linkType === "INTERNAL_LINK") {
+  //       if (card.code === "AMGDEMO_GENAI") {
+  //         navigate("/pwa/gen-ai/gpt-prompt");
+  //       } else if (card.code === "AMGPWA_PATBOOK") {
+  //         navigate("/pwa/Booking/patientMeetings");
+  //       } else {
+  //         alert("card code error");
+  //       }
+  //     } else {
+  //       alert("card linktype error");
+  //     }
+  //   }
+  // };
 
   return (
     <div className="p-2 h-max pb-14">
@@ -94,7 +94,7 @@ const Home = () => {
         Welcome {userDetails?.startList.users[0].nickName},
       </div>
       <div className="p-2 flex justify-center flex-wrap gap-5 mobile:max-sm:gap-1 mobile:max-sm:p-1">
-        {userDetails?.startList?.cards?.map((item, key) => {
+        {/* {userDetails?.startList?.cards?.map((item, key) => {
           return (
             <Card
               className="rounded-xl bg-card-light-gray m-2 shadow-lg w-full"
@@ -121,6 +121,36 @@ const Home = () => {
               </CardFooter>
             </Card>
           );
+        })} */}
+        {[...Array(8)].map((_, idx) => {
+          return (
+            <Card
+              className="rounded-xl bg-card-light-gray m-2 shadow-lg w-full"
+              key={idx}
+            >
+              <div className="px-4 pt-2">
+                <CardHeader>
+                  <div className="text-sm font-semibold text-text-light-gray">
+                    Lorem, ipsum.
+                  </div>
+                  <CardTitle className="text-text-blue">lorem ipsum</CardTitle>
+                </CardHeader>
+                <CardContent className="text-sm">
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                  Maiores reprehenderit eius est atque, tenetur dolorem culpa?
+                  Labore ad minima corrupti?
+                </CardContent>
+              </div>
+              <CardFooter>
+                <button
+                  className="bg-text-red p-3 px-8 rounded-md sm:text-xl text-white"
+                  // onClick={() => handleCardClick(item)}
+                >
+                  Start
+                </button>
+              </CardFooter>
+            </Card>
+          );
         })}
         {/* <Card className="w-[250px] h-[350px]  ">
           <CardHeader className="bg-red-600 ">
@@ -134,7 +164,7 @@ const Home = () => {
           </CardContent>
         </Card> */}
       </div>
-      <div className="break-all">{printToken}</div>
+      {/* <div className="break-all">{printToken}</div> */}
     </div>
   );
 };

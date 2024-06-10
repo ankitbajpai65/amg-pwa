@@ -10,8 +10,8 @@ const Footer = () => {
   const navigate = useNavigate();
   const handleClick = () => {
     if (sessionStorage.getItem("isLoggedIn") === "true") {
-      // navigate(`/pwa/home`);
-      navigate("/pwa/genaiservices/gpt-prompt");
+      navigate(`/pwa/home`);
+      // navigate("/pwa/genaiservices/gpt-prompt");
     }
   };
   return (
@@ -21,15 +21,6 @@ const Footer = () => {
           <div className="flex flex-col items-center">
             <FaHome size={20} onClick={() => handleClick()} title="Home" />
             <p className="text-xs">Home</p>
-          </div>
-          <div className="flex flex-col items-center">
-            <FaLocationDot
-              style={{ paddingRight: "5px" }}
-              size={20}
-              title="Map"
-              onClick={() => navigate("/pwa/pwaMap")}
-            />
-            <p className="text-xs">Map</p>
           </div>
           {/* <div className="flex flex-col items-center">
             <FaCalendarDay
@@ -45,11 +36,20 @@ const Footer = () => {
               // style={{ paddingRight: "5px"}}
               size={20}
               title="Scanner"
-              // onClick={() => navigate("/pwa/genaiservices/gpt-prompt")}
-              onClick={() => navigate(`/pwa/home`)}
+              onClick={() => navigate("/pwa/genaiservices/gpt-prompt")}
+              // onClick={() => navigate(`/pwa/home`)}
             />
             {/* <p className="text-xs">Gpt Prompt</p> */}
-            <p className="text-xs">Genai</p>
+            <p className="text-xs">Easydai</p>
+          </div>
+          <div className="flex flex-col items-center">
+            <FaLocationDot
+              style={{ paddingRight: "5px" }}
+              size={20}
+              title="Map"
+              onClick={() => navigate("/pwa/pwaMap")}
+            />
+            <p className="text-xs">Map</p>
           </div>
           <div className="flex flex-col items-center">
             <CiBarcode
