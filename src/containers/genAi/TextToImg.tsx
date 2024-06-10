@@ -109,11 +109,20 @@ export default function TextToImg(props: {
     e.preventDefault();
     console.log("handleGenerateImageFromText runs");
 
-    setIsInputFieldDisable(true);
-    setFlag(true);
-
     const { model, quality } = textToImageInput;
     const modelQuery = model.toLowerCase().replace(/\s/g, "-");
+
+    if (!model || !quality) {
+      alert("Please select model and quality!");
+      return;
+    }
+    if (!userQuestion || userQuestion.length < 2) {
+      alert("Please provide the question!");
+      return;
+    }
+
+    setIsInputFieldDisable(true);
+    setFlag(true);
 
     setConversation((prev) => {
       console.log(prev);
