@@ -73,7 +73,7 @@ export default function GptPrompt(props: {
   const [showOtherDrafts, setShowOtherDrafts] = useState<boolean>(false);
   const [gptMultiResponses, setGptMultiResponse] =
     useState<gptPromptMultiResponseType>();
-  // const [flag,setFlag] = useState<boolean>(false);
+  const [flag, setFlag] = useState<boolean>(false);
   const [activeReaction, setActiveReaction] = useState<string | null>(null);
 
   const { fetchGptMultiRes, gptMultiRes } = useGptMultiApi();
@@ -126,6 +126,7 @@ export default function GptPrompt(props: {
     e.preventDefault();
 
     setActiveReaction(null);
+    setFlag(true);
 
     const threadId = openedThread?._id;
     if (userQuestion.trim() !== "") {
@@ -485,7 +486,8 @@ export default function GptPrompt(props: {
                     {index === conversation.length - 1 &&
                       conversation[conversation.length - 1].answer &&
                       conversation[conversation.length - 1].answer !==
-                        "Loading..." && (
+                        "Loading..." &&
+                      flag &&(
                         <div className="flex gap-6 ml-2 mt-4">
                           <button
                             // ref={upvoteRef}

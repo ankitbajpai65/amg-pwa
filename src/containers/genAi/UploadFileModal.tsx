@@ -28,6 +28,7 @@ export default function UploadFileModal(props: {
   handleChatWithFile?: (e: FormEvent<HTMLFormElement>, tid: string) => void;
   handleGenerateFaqs?: (tid: string, fileName: string) => void;
   setUploadFileId?: React.Dispatch<React.SetStateAction<string>>;
+  setFlag?: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const {
     isOpen,
@@ -41,6 +42,7 @@ export default function UploadFileModal(props: {
     handleChatWithFile,
     handleGenerateFaqs,
     setUploadFileId,
+    setFlag,
   } = props;
   const [isFileUploading, setIsFileUploading] = useState<boolean>(false);
   const [apiUrl, setApiUrl] = useState(
@@ -113,6 +115,8 @@ export default function UploadFileModal(props: {
           },
         ]);
       } else if (serviceType === "image_to_text" && updateThreadArray) {
+        setFlag && setFlag(true);
+
         updateThreadArray(
           data.id,
           data.Image_name,

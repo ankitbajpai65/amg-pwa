@@ -62,6 +62,7 @@ export default function Cwyf(props: {
   const [showGallery, setShowGallery] = useState<boolean>(false);
   const [uploadedFileId, setUploadFileId] = useState<string>("");
   const [activeReaction, setActiveReaction] = useState<string | null>(null);
+  const [flag, setFlag] = useState<boolean>(false);
 
   console.log("cwyf renders");
   const { handleAllLogAiApi } = useHandleAllLogAiAPI();
@@ -120,6 +121,7 @@ export default function Cwyf(props: {
   ) {
     e.preventDefault();
     setActiveReaction(null);
+    setFlag(true);
 
     threadId = threadId || openedThread?._id || "";
 
@@ -354,7 +356,8 @@ export default function Cwyf(props: {
                     {index === conversation.length - 1 &&
                       conversation[conversation.length - 1].answer &&
                       conversation[conversation.length - 1].answer !==
-                        "Loading..." && (
+                        "Loading..." &&
+                      flag && (
                         <div className="flex gap-6 ml-2 mt-4">
                           <button
                             // ref={upvoteRef}
