@@ -1,4 +1,3 @@
-// import useHandleAllLogAiAPI from "@/components/hooks/logAi/handleAllLogAi";
 import { useEffect, useRef, useState } from "react";
 import { IoArrowUpCircleSharp } from "react-icons/io5";
 import { FaPlus } from "react-icons/fa6";
@@ -22,6 +21,7 @@ import userLogo from "@/assets/user.png";
 import logo from "@/assets/loghi-03.png";
 import Gallery from "./Gallery/Gallery";
 import Drafts from "./Drafts";
+import useHandleAllLogAiAPI from "@/components/hooks/logAi/handleAllLogAi";
 import useGptMultiApi from "@/components/hooks/genaiservices/gptPrompt/useGptMultiApi";
 import { successAlert } from "@/components/appComponents/appAlert";
 
@@ -73,6 +73,7 @@ export default function GptPrompt(props: {
     useState<gptPromptMultiResponseType>();
   const { fetchGptMultiRes, gptMultiRes } = useGptMultiApi();
   // const { handleAllLogAiApi } = useHandleAllLogAiAPI();
+  const {handleAllLogAiApi} = useHandleAllLogAiAPI();
 
   useEffect(() => {
     console.log(openedThread);
@@ -186,18 +187,18 @@ export default function GptPrompt(props: {
 
         fetchGptMultiRes(resData.id as string, userQuestion as string);
 
-        // handleAllLogAiApi({
-        //   question: userQuestion,
-        //   answer: parsedRes.slice(1, -1),
-        //   step: "GENAI_GPT",
-        //   fileName: "",
-        //   fileSize: 0,
-        //   reaction: "",
-        //   tokensIn: "",
-        //   tokensOut: "",
-        //   wordsIn: `${userQuestion.length}`,
-        //   wordsOut: `${parsedRes.slice(1, -1).length}`,
-        // });
+        handleAllLogAiApi({
+          question: userQuestion,
+          answer: parsedRes.answer,
+          step: "GENAI_GPT",
+          fileName: "",
+          fileSize: 0,
+          reaction: "",
+          tokensIn: "",
+          tokensOut: "",
+          wordsIn: `${userQuestion.length}`,
+          wordsOut: resData.response.answer.length,
+        });
       } else {
         alert("console");
         console.log(parsedRes);
