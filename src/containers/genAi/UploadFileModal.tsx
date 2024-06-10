@@ -5,6 +5,8 @@ import { errorAlert, successAlert } from "@/components/appComponents/appAlert";
 import uploadIcon from "@/assets/icons/uploadIcon.png";
 import { IoClose } from "react-icons/io5";
 import { conversationType, threadDataType } from "./type";
+import useHandleAllLogAiAPI from "@/components/hooks/logAi/handleAllLogAi";
+// import useHandleAllLogAiAPI from "@/components/hooks/logAi/handleAllLogAi";
 
 export default function UploadFileModal(props: {
   isOpen: boolean;
@@ -44,6 +46,8 @@ export default function UploadFileModal(props: {
   const [apiUrl, setApiUrl] = useState(
     "https://genaiservices-be.datapartners.ch/generate/upload_langqa/"
   );
+
+  const { handleAllLogAiApi } = useHandleAllLogAiAPI();
 
   const accessToken = sessionStorage.getItem("AccessToken");
 
@@ -136,6 +140,18 @@ export default function UploadFileModal(props: {
             // created_at: new Date().toISOString(),
           },
         ]);
+        handleAllLogAiApi({
+          question: "",
+          answer: data.response,
+          step: "GENAI_IMG2TXT",
+          fileName: file?.name,
+          fileSize: file?.size,
+          reaction: "",
+          tokensIn: "",
+          tokensOut: "",
+          wordsIn: "",
+          wordsOut: data.response.length,
+        });
       }
       successAlert(1000, "File uploaded successfully");
     } catch (error) {

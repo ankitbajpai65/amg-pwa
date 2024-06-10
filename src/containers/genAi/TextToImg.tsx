@@ -1,4 +1,3 @@
-// import useHandleAllLogAiAPI from "@/components/hooks/logAi/handleAllLogAi";
 import { useEffect, useRef, useState } from "react";
 import { IoArrowUpCircleSharp } from "react-icons/io5";
 import { FaPlus } from "react-icons/fa6";
@@ -10,6 +9,8 @@ import imgTxtIcon from "@/assets/icons/imgTxt.png";
 import { PiFileImage } from "react-icons/pi";
 import { BsDownload } from "react-icons/bs";
 import share from "@/assets/icons/share.png";
+import { BiSolidDislike } from "react-icons/bi";
+import { BiSolidLike } from "react-icons/bi";
 import { conversationType, threadDataType } from "./type";
 import {
   Select,
@@ -18,9 +19,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import userLogo from "@/assets/user.png";
-import logo from "@/assets/loghi-03.png";
+import userLogo from "@/assets/user2.png";
+import logo from "@/assets/logo.png";
 import Gallery from "./Gallery/Gallery";
+import useHandleAllLogAiAPI from "@/components/hooks/logAi/handleAllLogAi";
 import useDownloadImgApi from "@/components/hooks/genaiservices/txtToImg/useDownloadImgApi";
 import NewLoader from "@/components/appComponents/NewLoader";
 
@@ -63,9 +65,10 @@ export default function TextToImg(props: {
     model: "",
     quality: "",
   });
+  const [activeReaction, setActiveReaction] = useState<string | null>(null);
 
   const { isDownloadImgLoading, handleImageDownload } = useDownloadImgApi();
-  // const { handleAllLogAiApi } = useHandleAllLogAiAPI();
+  const { handleAllLogAiApi } = useHandleAllLogAiAPI();
 
   useEffect(() => {
     scrollToBottom();
@@ -157,42 +160,56 @@ export default function TextToImg(props: {
         "text_to_image"
       );
 
+      // setConversation((prev) => {
+      //   console.log(prev);
+      //   if (prev && prev.length > 0) {
+      //     return [
+      //       ...prev,
+      //       {
+      //         id: prev.length,
+      //         question: userQuestion,
+      //         answer: response.response?.image_url,
+      //         image_name: "",
+      //       },
+      //     ];
+      //   } else {
+      //     return [
+      //       {
+      //         id: 0,
+      //         question: userQuestion,
+      //         answer: response.response?.image_url,
+      //         image_name: "",
+      //       },
+      //     ];
+      //   }
+      // });
+
       setConversation((prev) => {
         console.log(prev);
-        if (prev && prev.length > 0) {
-          return [
-            ...prev,
-            {
-              id: prev.length,
-              question: userQuestion,
+        return prev.map((item) => {
+          console.log(`item.id = ${item.id} and prev.length = ${prev.length}`);
+          if (+item.id === prev.length - 1)
+            return {
+              ...item,
               answer: response.response?.image_url,
-              image_name: "",
-            },
-          ];
-        } else {
-          return [
-            {
-              id: 0,
-              question: userQuestion,
-              answer: response.response?.image_url,
-              image_name: "",
-            },
-          ];
-        }
+              created_at: new Date().toISOString(),
+            };
+          else return item;
+        });
       });
 
-      // handleAllLogAiApi({
-      //   question: response.response.prop,
-      //   answer: response.response?.image_url,
-      //   step: "GENAI_TXT2IMG",
-      //   fileName: "",
-      //   fileSize: 0,
-      //   reaction: "",
-      //   tokensIn: "",
-      //   tokensOut: "",
-      //   wordsIn: response.response.prop.length,
-      //   wordsOut: "",
-      // });
+      handleAllLogAiApi({
+        question: response.response.prop,
+        answer: response.response?.image_url,
+        step: "GENAI_TXT2IMG",
+        fileName: "",
+        fileSize: 0,
+        reaction: "",
+        tokensIn: "",
+        tokensOut: "",
+        wordsIn: response.response.prop.length,
+        wordsOut: "",
+      });
     } catch (error) {
       console.log("Error generating image from text:", error);
     } finally {
@@ -218,6 +235,27 @@ export default function TextToImg(props: {
       setIsUploadModalOpen && setIsUploadModalOpen(true);
     else
       setConversation([{ id: +"", question: "", answer: "", image_name: "" }]);
+  }
+
+  function handleUpateReactions(reaction: string) {
+    if (reaction === "OK") setActiveReaction("upvote");
+    else setActiveReaction("downvote");
+
+    handleAllLogAiApi({
+      question: userQuestion ?? conversation[conversation.length - 1].question,
+      answer: conversation[conversation.length - 1].answer,
+      step: "GENAI_TXT2IMG",
+      fileName: "",
+      fileSize: 0,
+      reaction: `${reaction === "OK" ? "OK" : "KO"}`,
+      tokensIn: "",
+      tokensOut: "",
+      wordsIn: `${
+        userQuestion.length ??
+        conversation[conversation.length - 1].question.length
+      }`,
+      wordsOut: conversation[conversation.length - 1].answer.length.toString(),
+    });
   }
 
   return (
@@ -253,8 +291,8 @@ export default function TextToImg(props: {
                   <div key={index} className="flex flex-col">
                     {item.question && (
                       <>
-                        <div className={`flex items-center mt-4 gap-1`}>
-                          <div className="h-14 w-14">
+                        <div className={`flex items-center mt-4 gap-2 my-3`}>
+                          <div className="h-8 w-8">
                             <img
                               src={userLogo}
                               alt=""
@@ -271,18 +309,14 @@ export default function TextToImg(props: {
                     {item.answer && (
                       <>
                         {/* <div className="flex justify-between items-center"> */}
-                          <div className="flex items-center gap-0.25">
-                            <div className="h-14 w-14">
-                              <img
-                                src={logo}
-                                alt=""
-                                className="h-full w-full"
-                              />
-                            </div>
-                            <div className="text-lg font-semibold">
-                              GenAI Space
-                            </div>
+                        <div className="flex items-center gap-2 my-3">
+                          <div className="h-8 w-8">
+                            <img src={logo} alt="" className="h-full w-full" />
                           </div>
+                          <div className="text-lg font-semibold">
+                            GenAI Space
+                          </div>
+                        </div>
                         {/* </div> */}
 
                         <div className="min-h-[200px] w-full">
@@ -297,14 +331,48 @@ export default function TextToImg(props: {
                           )}
                         </div>
                         <button
-                            onClick={() => handleImageDownload(item.answer)}
-                            className="h-10 w-10 ml-3 flex justify-center items-center bg-gray-200 hover:bg-red-200 rounded-full p-2"
-                          >
-                            <BsDownload size={20} className="text-red-600"/>
-                          </button>
+                          onClick={() => handleImageDownload(item.answer)}
+                          className="h-10 w-10 ml-3 flex justify-center items-center bg-gray-200 hover:bg-red-200 rounded-full p-2"
+                        >
+                          <BsDownload size={20} className="text-red-600" />
+                        </button>
                       </>
                     )}
                     <div ref={scrollContainerRef}></div>
+
+                    {index === conversation.length - 1 &&
+                      conversation[conversation.length - 1].answer &&
+                      conversation[conversation.length - 1].answer !==
+                        "Loading..." && (
+                        <div className="flex gap-6 ml-4 mt-4">
+                          <button
+                            // ref={upvoteRef}
+                            onClick={() => handleUpateReactions("OK")}
+                          >
+                            <BiSolidLike
+                              size={20}
+                              className={
+                                activeReaction === "upvote"
+                                  ? "text-red-500"
+                                  : ""
+                              }
+                            />
+                          </button>
+                          <button
+                            // ref={downvoteRef}
+                            onClick={() => handleUpateReactions("KO")}
+                          >
+                            <BiSolidDislike
+                              size={20}
+                              className={
+                                activeReaction === "downvote"
+                                  ? "text-red-500"
+                                  : ""
+                              }
+                            />
+                          </button>
+                        </div>
+                      )}
                   </div>
                 ))}
             </div>
