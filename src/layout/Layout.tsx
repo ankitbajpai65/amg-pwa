@@ -69,11 +69,10 @@ function Layout() {
     }
   }, [trigger]);
 
-  useEffect(() => {
-    console.log("foreground Page Change");
-
-    getNotificationListApi();
-  }, []);
+  // useEffect(() => {
+  //   console.log("foreground Page Change");
+  //   getNotificationListApi();
+  // }, []);
 
   useEffect(() => {
     setBackgroundListnerControlFlag(false);
@@ -111,9 +110,10 @@ function Layout() {
   }, [userDetails]);
 
   useEffect(() => {
-    console.log("Foreground");
     if (trigger) {
+      console.log("Foreground");
       updateNotificationContext(triggerData);
+      getNotificationListApi();
       setTrigger(false);
     }
   }, [trigger]);

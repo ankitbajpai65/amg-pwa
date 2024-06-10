@@ -45,9 +45,9 @@ const Notifications = () => {
             return (
               <div
                 key={idx}
-                className="flex items-center justify-between gap-3"
+                className="flex items-center justify-between gap-3 border-b border-border-light-gray cursor-pointer"
               >
-                <div className="flex flex-col items-start justify-between px-8 py-3 border-b border-border-light-gray cursor-pointer">
+                <div className="flex flex-col items-start justify-between px-8 py-3">
                   <div className="flex items-center text-xs">{item.title}</div>
                   <div>{item.body}</div>
                 </div>
