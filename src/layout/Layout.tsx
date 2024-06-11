@@ -40,10 +40,10 @@ function Layout() {
     useGetNotificationFlagsApi();
   const { setNotificationFlag } = useNotificationFlagContext();
 
-  onMessage(messaging, (payload) => {
+  try{onMessage(messaging, (payload) => {
     console.log("yyo", payload);
-    if (payload.notification) {
-      const data = payload.notification;
+    if (payload.data) {
+      const data = payload.data;
       if (data?.title && data.body) {
         setTrigger(true);
         setTriggerData({
@@ -54,7 +54,8 @@ function Layout() {
         notificationToast(data.title, data.body, 2000);
       }
     }
-  });
+  })}
+  catch(e){console.log(e)}
 
   useEffect(() => {
     getNotificationFlagStatus();
