@@ -40,22 +40,25 @@ function Layout() {
     useGetNotificationFlagsApi();
   const { setNotificationFlag } = useNotificationFlagContext();
 
-  try{onMessage(messaging, (payload) => {
-    console.log("yyo", payload);
-    if (payload.data) {
-      const data = payload.data;
-      if (data?.title && data.body) {
-        setTrigger(true);
-        setTriggerData({
-          id: "new Notification",
-          title: data?.title,
-          body: data.body,
-        });
-        notificationToast(data.title, data.body, 2000);
+  try {
+    onMessage(messaging, (payload) => {
+      console.log("yyo", payload);
+      if (payload.data) {
+        const data = payload.data;
+        if (data?.title && data.body) {
+          setTrigger(true);
+          setTriggerData({
+            id: "new Notification",
+            title: data?.title,
+            body: data.body,
+          });
+          notificationToast(data.title, data.body, 2000);
+        }
       }
-    }
-  })}
-  catch(e){console.log(e)}
+    });
+  } catch (e) {
+    console.log(e);
+  }
 
   useEffect(() => {
     getNotificationFlagStatus();
@@ -112,6 +115,8 @@ function Layout() {
   useEffect(() => {
     setBackgroundListnerControlFlag(false);
     if (getNotificationListRes && getNotificationListRes?.length > 0) {
+      console.log("TRIGGER UPDATE COTEXT");
+      console.log(getNotificationListRes);
       const tempNotificationArray = getNotificationListRes.map((item) => {
         return {
           id: item.notificationID,
@@ -148,8 +153,8 @@ function Layout() {
     if (trigger) {
       console.log("Foreground");
       updateNotificationContext(triggerData);
-      getNotificationListApi();
       setTrigger(false);
+      getNotificationListApi();
     }
   }, [trigger]);
 
