@@ -2,7 +2,7 @@ import { createContext, useContext, useState } from "react";
 
 type notificaitonDataType =
   | {
-      id: number;
+      id: string;
       title: string;
       body: string;
     }[]

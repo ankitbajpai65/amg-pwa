@@ -55,6 +55,7 @@ import GptPrompt from "./containers/genAi/GptPrompt.tsx";
 // import ImgToText from "./containers/genAi/ImgToText.tsx";
 
 import NotificationProvider from "./lib/context/notificationContext.tsx";
+import NotificationFlagProvider from "./lib/context/notificationFlagContext.tsx";
 
 registerSW({ immediate: true });
 
@@ -210,15 +211,17 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <ToastContainer />
     <ThemeContextProvider>
       <UserDetailsProvider>
-        <NotificationProvider>
-          <PatientListProvider>
-            <MeetingListProvider>
-              <OperatorListProvider>
-                <RouterProvider router={router} />
-              </OperatorListProvider>
-            </MeetingListProvider>
-          </PatientListProvider>
-        </NotificationProvider>
+        <NotificationFlagProvider>
+          <NotificationProvider>
+            <PatientListProvider>
+              <MeetingListProvider>
+                <OperatorListProvider>
+                  <RouterProvider router={router} />
+                </OperatorListProvider>
+              </MeetingListProvider>
+            </PatientListProvider>
+          </NotificationProvider>
+        </NotificationFlagProvider>
       </UserDetailsProvider>
     </ThemeContextProvider>
   </React.StrictMode>

@@ -8,12 +8,18 @@ import useAmgStartApi from "@/components/hooks/AmgMS/useAmgStartApi.tsx";
 import { onMessage } from "firebase/messaging";
 import { messaging } from "../firebase.tsx";
 import useUpdateNotificationContext from "../components/hooks/updateNotificationContext/notif.tsx";
-// import { useNotificationContext } from "@/lib/context/notificationContext.tsx";
 import { notificationToast } from "@/components/appComponents/appAlert.tsx";
+import useGetNotificationListApi from "@/components/hooks/notificationAPI/notificationList/getNotificationList.tsx";
+import { useNotificationContext } from "@/lib/context/notificationContext.tsx";
+import useGetNotificationFlagsApi from "@/components/hooks/notificationAPI/notificationFlag/getNotificationFlagStatus";
+import { useNotificationFlagContext } from "@/lib/context/notificationFlagContext";
 
 function Layout() {
   const [trigger, setTrigger] = useState(false);
+  const [backgroundListnerControlFlag, setBackgroundListnerControlFlag] =
+    useState(true);
   const [triggerData, setTriggerData] = useState({
+    id: "",
     title: "",
     body: "",
   });
@@ -25,30 +31,102 @@ function Layout() {
 
   const { getUserDetails } = useAmgStartApi();
   const { updateNotificationContext } = useUpdateNotificationContext();
-  // const { notificationList } = useNotificationContext();
+  const { getNotificationListApi, getNotificationListRes } =
+    useGetNotificationListApi();
+  const { setNotificationList } = useNotificationContext();
 
   const userEmail = sessionStorage.getItem("email");
+  const { getNotificationFlagStatus, getNotificationFlagStatusRes } =
+    useGetNotificationFlagsApi();
+  const { setNotificationFlag } = useNotificationFlagContext();
 
-  onMessage(messaging, (payload) => {
-    console.log("yyo", payload);
-    if (payload.notification) {
-      const data = payload.notification;
-      if (data?.title && data.body) {
-        setTrigger(true);
-        setTriggerData({
-          title: data?.title,
-          body: data.body,
-        });
-        notificationToast(data.title, data.body, 2000);
+  try {
+    onMessage(messaging, (payload) => {
+      console.log("yyo", payload);
+      if (payload.data) {
+        const data = payload.data;
+        if (data?.title && data.body) {
+          setTrigger(true);
+          setTriggerData({
+            id: "new Notification",
+            title: data?.title,
+            body: data.body,
+          });
+          notificationToast(data.title, data.body, 2000);
+        }
       }
+    });
+  } catch (e) {
+    console.log(e);
+  }
+
+  useEffect(() => {
+    getNotificationFlagStatus();
+  }, []);
+
+  // const navigate = useNavigate();
+
+  useEffect(() => {
+    if (getNotificationFlagStatusRes?.status === 200) {
+      setNotificationFlag(() => ({
+        newServiceFlagEmail:
+          getNotificationFlagStatusRes.response.chat_email === "true"
+            ? true
+            : false,
+        newServiceFlagPush:
+          getNotificationFlagStatusRes.response.chat_push === "true"
+            ? true
+            : false,
+        generalFlagEmail:
+          getNotificationFlagStatusRes.response.general_email === "true"
+            ? true
+            : false,
+        generalFlagPush:
+          getNotificationFlagStatusRes.response.general_push === "true"
+            ? true
+            : false,
+      }));
     }
-  });
+  }, [getNotificationFlagStatusRes]);
 
   useEffect(() => {
     navigator.serviceWorker.ready.then((regisation) => {
       regisation.getNotifications().then((notif) => console.log(notif));
     });
   }, []);
+
+  useEffect(() => {
+    if (backgroundListnerControlFlag || trigger) {
+      document.addEventListener("visibilitychange", () => {
+        if (document.visibilityState === "visible") {
+          console.log("Background Listner");
+          console.log(document.visibilityState);
+          getNotificationListApi();
+        }
+      });
+    }
+  }, [trigger]);
+
+  useEffect(() => {
+    console.log("foreground Page Change");
+    getNotificationListApi();
+  }, []);
+
+  useEffect(() => {
+    setBackgroundListnerControlFlag(false);
+    if (getNotificationListRes && getNotificationListRes?.length > 0) {
+      console.log("TRIGGER UPDATE COTEXT");
+      console.log(getNotificationListRes);
+      const tempNotificationArray = getNotificationListRes.map((item) => {
+        return {
+          id: item.notificationID,
+          title: item.notificationTitle,
+          body: item.notificationMsg,
+        };
+      });
+      setNotificationList(tempNotificationArray);
+    }
+  }, [getNotificationListRes]);
 
   useEffect(() => {
     const getLocalStorageTheme = localStorage.getItem("theme");
@@ -72,10 +150,11 @@ function Layout() {
   }, [userDetails]);
 
   useEffect(() => {
-    // console.log({ notificationList });
     if (trigger) {
+      console.log("Foreground");
       updateNotificationContext(triggerData);
       setTrigger(false);
+      getNotificationListApi();
     }
   }, [trigger]);
 

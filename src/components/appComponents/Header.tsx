@@ -8,7 +8,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import NativeIcons from "./NativeIcons";
 import { useNotificationContext } from "@/lib/context/notificationContext";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 
 const Header = (props: { toggleSidebar?: () => void }) => {
   const navigate = useNavigate();
@@ -16,9 +16,9 @@ const Header = (props: { toggleSidebar?: () => void }) => {
   const { toggleSidebar } = props;
   const { notificationList } = useNotificationContext();
 
-  useEffect(() => {
-    console.log(notificationList);
-  }, [notificationList]);
+  // useEffect(() => {
+  //   console.log(notificationList);
+  // }, [notificationList]);
   return (
     <>
       <div className="bg-bg-header-gray px-2.5 py-2 flex items-center justify-between">
