@@ -2,7 +2,7 @@ import { warnAlert } from "@/components/appComponents/appAlert";
 import {
   Card,
   CardContent,
-  CardFooter,
+  // CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
