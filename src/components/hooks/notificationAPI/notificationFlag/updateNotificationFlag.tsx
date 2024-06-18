@@ -16,7 +16,7 @@ type reqBodyType = {
 
 type resDataType = {
   response: string;
-  status: 200;
+  status: number;
 };
 
 export default function useSetNotificationFlagsApi(): apidatatype {

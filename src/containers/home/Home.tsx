@@ -61,14 +61,12 @@ const cardsData = [
 ];
 
 const Home = () => {
-  const { setDeviceToken } = useDeviceTokenApi();
-
   const [printToken, setToken] = useState("");
 
   const { userDetails } = useUserDetails();
   const userEmail = sessionStorage.getItem("email");
 
-  // const navigate = useNavigate();
+  const { setDeviceToken } = useDeviceTokenApi();
 
   useEffect(() => {
     if ("serviceWorker" in navigator) {
