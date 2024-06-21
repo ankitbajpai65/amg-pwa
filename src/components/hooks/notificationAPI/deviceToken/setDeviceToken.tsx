@@ -1,5 +1,5 @@
 import axios, { AxiosError } from "axios";
-import { errorAlert } from "@/components/appComponents/appAlert";
+import { errorAlert, warnAlert } from "@/components/appComponents/appAlert";
 
 export default function useDeviceTokenApi() {
   // const url = "http://127.0.0.1:8000/getToken/";
@@ -15,6 +15,9 @@ export default function useDeviceTokenApi() {
         });
         const res = urlRes.data;
         console.log(res);
+        if (res.status === 200) {
+          warnAlert(1000, res.response);
+        }
       } catch (e) {
         console.error(e, "setDeviceToken");
         const error = e as Error | AxiosError;
