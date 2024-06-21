@@ -69,6 +69,7 @@ const Home = () => {
   const { setDeviceToken } = useDeviceTokenApi();
 
   useEffect(() => {
+    requestPermission();
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
         // Register the service worker as soon as the app loads
@@ -87,7 +88,6 @@ const Home = () => {
           });
       });
     }
-    requestPermission();
   }, []);
 
   const requestPermission = async () => {
