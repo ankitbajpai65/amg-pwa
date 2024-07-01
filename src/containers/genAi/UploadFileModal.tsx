@@ -14,7 +14,9 @@ export default function UploadFileModal(props: {
   file: File | undefined;
   setFile: React.Dispatch<File | undefined> | undefined;
   serviceType: string;
-  setConversation: React.Dispatch<React.SetStateAction<conversationType>>;
+  setConversation: React.Dispatch<
+    React.SetStateAction<conversationType>
+  >;
   setOpenedThread?: React.Dispatch<
     React.SetStateAction<threadDataType | undefined>
   >;
@@ -111,7 +113,7 @@ export default function UploadFileModal(props: {
             question: file.name,
             answer: "Ask me a question now",
             image_name: "",
-            // created_at: new Date().toISOString(),
+            created_at: new Date().toISOString(),
           },
         ]);
       } else if (serviceType === "image_to_text" && updateThreadArray) {
@@ -128,10 +130,12 @@ export default function UploadFileModal(props: {
           setOpenedThread({
             _id: data.id,
             service: "image_to_text",
+            created_at: new Date().toISOString(),
             data: [
               {
                 response: data.response,
                 image_path: data.image_path,
+                created_at: new Date().toISOString(),
               },
             ],
           });
@@ -141,7 +145,7 @@ export default function UploadFileModal(props: {
             question: data.image_path,
             answer: data.response,
             image_name: data.Image_name,
-            // created_at: new Date().toISOString(),
+            created_at: new Date().toISOString(),
           },
         ]);
         handleAllLogAiApi({

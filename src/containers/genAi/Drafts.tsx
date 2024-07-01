@@ -13,7 +13,7 @@ const Drafts = (props: {
   return (
     <div
       onClick={() => onClick(response, label)}
-      className={`w-1/3 p-3 rounded-md text-xs flex flex-col cursor-pointer ${
+      className={`w-4/5 p-3 rounded-md text-xs flex flex-col cursor-pointer ${
         isSelected ? "bg-red-200" : "bg-zinc-100"
       }`}
     >

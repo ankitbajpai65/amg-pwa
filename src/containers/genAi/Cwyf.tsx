@@ -56,8 +56,8 @@ export default function Cwyf(props: {
   const accessToken = sessionStorage.getItem("AccessToken");
   const [userQuestion, setUserQuestion] = useState("");
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
-  const [conversation, setConversation] = useState([
-    { id: 0, question: "", answer: "", image_name: "" },
+  const [conversation, setConversation] = useState<conversationType>([
+    { id: 0, question: "", answer: "", image_name: "", created_at: "" },
   ]);
   const [showGallery, setShowGallery] = useState<boolean>(false);
   const [uploadedFileId, setUploadFileId] = useState<string>("");
@@ -77,7 +77,9 @@ export default function Cwyf(props: {
             question: item.question,
             answer: item.answer,
             image_name: "",
-            // created_at: "",
+            created_at: item.created_at
+              ? item.created_at
+              : openedThread.created_at || "",
           })
         );
         setConversation(newConversation);
@@ -88,7 +90,9 @@ export default function Cwyf(props: {
             question: item.question || "",
             answer: item.answer || "",
             image_name: item.image_name || "",
-            // created_at: item.created_at || "",
+            created_at: item.created_at
+              ? item.created_at
+              : openedThread.created_at || "",
           })
         );
         setConversation(newConversation);
@@ -114,6 +118,32 @@ export default function Cwyf(props: {
       });
     }
   };
+
+  function formatDate(inputDate: string) {
+    // Parse the input date string
+    const date = new Date(inputDate);
+    const today = new Date();
+
+    // Check if the date is today
+    if (date.toDateString() === today.toDateString()) {
+      const hours = ("0" + date.getHours()).slice(-2);
+      const minutes = ("0" + date.getMinutes()).slice(-2);
+      return `Ogge alle ${hours}:${minutes}`;
+    }
+
+    // Get day, month, year, and time
+    const day = date.getDate();
+    const month = date.toLocaleString("default", { month: "long" });
+    const year = date.getFullYear();
+    const hours = ("0" + date.getHours()).slice(-2);
+    const minutes = ("0" + date.getMinutes()).slice(-2);
+
+    // Format the date
+    const formattedDate = `${day} ${month}, ${year} ${hours}:${minutes}`;
+
+    // console.log("formattedDate", formattedDate);
+    return formattedDate;
+  }
 
   async function handleChatWithFile(
     e: React.FormEvent<HTMLFormElement>,
@@ -205,6 +235,7 @@ export default function Cwyf(props: {
     if (setOpenedThread)
       setOpenedThread({
         _id: "",
+        created_at: new Date().toISOString(),
         service: serviceType,
       });
 
@@ -215,7 +246,9 @@ export default function Cwyf(props: {
     )
       setIsUploadModalOpen && setIsUploadModalOpen(true);
     else
-      setConversation([{ id: +"", question: "", answer: "", image_name: "" }]);
+      setConversation([
+        { id: +"", question: "", answer: "", image_name: "", created_at: "" },
+      ]);
   }
 
   function handleOpenFile() {
@@ -312,6 +345,9 @@ export default function Cwyf(props: {
                             />
                           </div>
                           <div className="text-lg font-semibold">User</div>
+                          {item.created_at
+                            ? formatDate(item.created_at)
+                            : formatDate(openedThread?.created_at ?? "")}
                         </div>
                         {index === 0 && (
                           <div
@@ -336,6 +372,9 @@ export default function Cwyf(props: {
                           <div className="text-lg font-semibold mt-2">
                             GenAI Space
                           </div>
+                          {item.created_at
+                            ? formatDate(item.created_at)
+                            : formatDate(openedThread?.created_at ?? "")}
                         </div>
                         {/* </div> */}
                         <div className="self-start px-2 py-1 bg-neutral-100 dark:bg-neutral-600 border border-border-light-gray rounded-md mr-8">

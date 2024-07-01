@@ -58,7 +58,7 @@ export default function ImgToText(props: {
   ]);
   const [showGallery, setShowGallery] = useState<boolean>(false);
   const [activeReaction, setActiveReaction] = useState<string | null>(null);
-  const [flag,setFlag] = useState<boolean>(false);
+  const [flag, setFlag] = useState<boolean>(false);
 
   const { handleAllLogAiApi } = useHandleAllLogAiAPI();
 
@@ -71,7 +71,7 @@ export default function ImgToText(props: {
           question: item.prop ?? item.question ?? "",
           answer: item.image_url ?? item.answer ?? "",
           image_name: item.image_name ?? "",
-          // created_at: item.created_at ?? "",
+          created_at: item.created_at ?? "",
         })
       );
       setConversation(newConversation);
@@ -100,6 +100,32 @@ export default function ImgToText(props: {
     }
   };
 
+  function formatDate(inputDate: string) {
+    // Parse the input date string
+    const date = new Date(inputDate);
+    const today = new Date();
+
+    // Check if the date is today
+    if (date.toDateString() === today.toDateString()) {
+      const hours = ("0" + date.getHours()).slice(-2);
+      const minutes = ("0" + date.getMinutes()).slice(-2);
+      return `Ogge alle ${hours}:${minutes}`;
+    }
+
+    // Get day, month, year, and time
+    const day = date.getDate();
+    const month = date.toLocaleString("default", { month: "long" });
+    const year = date.getFullYear();
+    const hours = ("0" + date.getHours()).slice(-2);
+    const minutes = ("0" + date.getMinutes()).slice(-2);
+
+    // Format the date
+    const formattedDate = `${day} ${month}, ${year} ${hours}:${minutes}`;
+
+    // console.log("formattedDate", formattedDate);
+    return formattedDate;
+  }
+
   function handleCreateNewThread(serviceType: string) {
     console.log("handleCreateNewThread runs", serviceType);
     if (handleNewThread) handleNewThread(null, serviceType);
@@ -107,6 +133,7 @@ export default function ImgToText(props: {
     if (setOpenedThread)
       setOpenedThread({
         _id: "",
+        created_at: new Date().toISOString(),
         service: serviceType,
       });
 
@@ -208,6 +235,11 @@ export default function ImgToText(props: {
                               />
                             </div>
                             <div className="text-lg font-semibold">User</div>
+                            {openedThread.created_at && (
+                              <p className="mr-4 ml-16">
+                                {formatDate(openedThread.created_at)}
+                              </p>
+                            )}
                           </div>
                           <div className="min-h-[200px] w-full">
                             <img
@@ -236,6 +268,11 @@ export default function ImgToText(props: {
                             <div className="text-lg font-semibold mt-2">
                               GenAI Space
                             </div>
+                            {openedThread.created_at && (
+                              <p className="mr-4 ml-16">
+                                {formatDate(openedThread.created_at)}
+                              </p>
+                            )}
                           </div>
                           {/* </div> */}
                           <div className="self-start px-2 py-1 bg-neutral-100 dark:bg-neutral-600 border border-border-light-gray rounded-md mr-8">
@@ -266,7 +303,8 @@ export default function ImgToText(props: {
                     {(openedThread.data[0].response ||
                       openedThread.data[0].answer) &&
                       (openedThread.data[0].response !== "Loading..." ||
-                        openedThread.data[0].answer !== "Loading...") && flag&& (
+                        openedThread.data[0].answer !== "Loading...") &&
+                      flag && (
                         <div className="flex gap-6 ml-2 mt-4">
                           <button
                             // ref={upvoteRef}
