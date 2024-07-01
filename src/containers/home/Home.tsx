@@ -69,6 +69,7 @@ const Home = () => {
   const { setDeviceToken } = useDeviceTokenApi();
 
   useEffect(() => {
+    requestPermission();
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
         // Register the service worker as soon as the app loads
@@ -81,32 +82,67 @@ const Home = () => {
               "Service Worker registered with scope:",
               registration.scope
             );
+            if (registration.installing) {
+              console.log("Service worker installing");
+            } else if (registration.waiting) {
+              console.log("Service worker installed");
+            } else if (registration.active) {
+              console.log("Service worker active");
+            }
+            // Include below mentioned validations
+            if (!("PushManager" in window)) {
+              console.log("Push messaging isn't supported.");
+              return;
+            }
+            //
+            if (Notification.permission === "denied") {
+              console.log("The user has blocked notifications.");
+              return;
+            }
           })
           .catch((err) => {
             console.log("Service worker registration failed, error:", err);
           });
       });
     }
-    requestPermission();
   }, []);
 
   const requestPermission = async () => {
-    console.log("YOYO");
-    const permission = await Notification.requestPermission();
-    if (permission === "granted") {
-      const token = await getToken(messaging, {
-        vapidKey:
-          "BJiGpffy-15nEOP6tGHpaPE7JEqkdcdPKXEZ7ZABEyRGDllvIFMjv6cOi3m2oBDXq5r7fUa58Fq0lFZiScuWj7k",
-      });
-      console.log(token, userEmail);
-      setToken(token);
-      if (token) console.log(printToken);
-      setDeviceToken({
-        token: token,
-      });
-    } else if (permission === "denied") {
-      warnAlert(2000, "You have denied notification permissions!!");
+    console.log("YOYO-REQ");
+    if (typeof window !== "undefined" && "serviceWorker" in navigator) {
+      const permission = await Notification.requestPermission();
+      if (permission === "granted") {
+        const token = await getToken(messaging, {
+          vapidKey:
+            "BJiGpffy-15nEOP6tGHpaPE7JEqkdcdPKXEZ7ZABEyRGDllvIFMjv6cOi3m2oBDXq5r7fUa58Fq0lFZiScuWj7k",
+        }).catch(async (err) => {
+          const error =
+            "AbortError: Failed to execute 'subscribe' on 'PushManager': Subscription failed - no active Service Worker";
+          if (err.toString() === error) {
+            const token = await getToken(messaging, {
+              vapidKey:
+                "BJiGpffy-15nEOP6tGHpaPE7JEqkdcdPKXEZ7ZABEyRGDllvIFMjv6cOi3m2oBDXq5r7fUa58Fq0lFZiScuWj7k",
+            });
+            return token;
+          } else {
+            throw err;
+          }
+        });
+        if (token) {
+          setToken(token);
+          console.log(":::currentToken1", token);
+          setDeviceToken({
+            token: token,
+          });
+        } else {
+          console.log("No registration token available.");
+          requestPermission();
+        }
+      } else if (permission === "denied") {
+        warnAlert(2000, "You have denied notification permissions!!");
+      }
     }
+    console.log(":::currentToken2", printToken, userEmail);
   };
 
   // const handleCardClick = (card: {

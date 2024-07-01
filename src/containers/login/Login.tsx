@@ -10,6 +10,8 @@ import useSendMailApi from "@/components/hooks/AmgMS/useSendMailApi";
 import Loader from "@/components/appComponents/Loader";
 import { inputStyle, primaryBtnStyle } from "@/lib/cssTailwind";
 import useLoginApi from "@/components/hooks/useLoginApi";
+import { IoEyeOutline } from "react-icons/io5";
+import { IoEyeOffOutline } from "react-icons/io5";
 
 type Inputs = {
   email: string;
@@ -23,6 +25,7 @@ const Login = () => {
     password: "",
   });
   const [loaderVisible, setLoaderVisible] = useState(false);
+  const [passwordVisible, setPasswordVisible] = useState(false);
   const { userDetails, setUserDetails } = useUserDetails();
   const { getUserLoginRes, getUserLogin } = useLoginApi();
   const { getSendMailAPI } = useSendMailApi();
@@ -192,18 +195,29 @@ const Login = () => {
                 onChange={(e) => handleInputChange(e)}
               />
             </div>
-            <div className="mb-2 flex flex-col">
+            <div className="mb-2 flex items-center">
               {/* <label htmlFor="password" className="pr-2 font-semibold">
                 Password
               </label> */}
               <input
-                className={`${inputStyle}`}
-                type="password"
+                className={`bg-bg-input-gray p-3 rounded-l-md outline-0 w-full`}
+                type={passwordVisible ? "text" : "password"}
                 id="password"
                 name="password"
                 placeholder="Password"
                 onChange={(e) => handleInputChange(e)}
               ></input>
+              <button
+                className="bg-bg-input-gray px-3 py-3.5 rounded-r-md outline-0"
+                onClick={() => setPasswordVisible(!passwordVisible)}
+                type="button"
+              >
+                {passwordVisible ? (
+                  <IoEyeOutline size={20} />
+                ) : (
+                  <IoEyeOffOutline size={20} />
+                )}
+              </button>
             </div>
           </div>
           <button className={`${primaryBtnStyle} w-full`} type="submit">
