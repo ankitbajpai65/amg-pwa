@@ -55,8 +55,8 @@ export default function TextToImg(props: {
   const accessToken = sessionStorage.getItem("AccessToken");
   const [userQuestion, setUserQuestion] = useState("");
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
-  const [conversation, setConversation] = useState([
-    { id: 0, question: "", answer: "", image_name: "" },
+  const [conversation, setConversation] = useState<conversationType>([
+    { id: 0, question: "", answer: "", image_name: "", created_at: "" },
   ]);
   const [isInputFieldDisable, setIsInputFieldDisable] =
     useState<boolean>(false);
@@ -97,11 +97,38 @@ export default function TextToImg(props: {
           question: item.prop ?? item.question ?? "",
           answer: item.image_url ?? item.answer ?? "",
           image_name: "",
+          created_at: item.created_at ?? openedThread.created_at,
         })
       );
       setConversation(newConversation);
     }
   }, [openedThread]);
+
+  function formatDate(inputDate: string) {
+    // Parse the input date string
+    const date = new Date(inputDate);
+    const today = new Date();
+
+    // Check if the date is today
+    if (date.toDateString() === today.toDateString()) {
+      const hours = ("0" + date.getHours()).slice(-2);
+      const minutes = ("0" + date.getMinutes()).slice(-2);
+      return `Ogge alle ${hours}:${minutes}`;
+    }
+
+    // Get day, month, year, and time
+    const day = date.getDate();
+    const month = date.toLocaleString("default", { month: "long" });
+    const year = date.getFullYear();
+    const hours = ("0" + date.getHours()).slice(-2);
+    const minutes = ("0" + date.getMinutes()).slice(-2);
+
+    // Format the date
+    const formattedDate = `${day} ${month}, ${year} ${hours}:${minutes}`;
+
+    // console.log("formattedDate", formattedDate);
+    return formattedDate;
+  }
 
   const handleGenerateImageFromText = async (
     e: React.FormEvent<HTMLFormElement>
@@ -134,6 +161,7 @@ export default function TextToImg(props: {
             question: userQuestion,
             answer: "Loading...",
             image_name: "",
+            created_at: new Date().toISOString(),
           },
         ];
       } else {
@@ -143,6 +171,7 @@ export default function TextToImg(props: {
             question: userQuestion,
             answer: "Loading...",
             image_name: "",
+            created_at: new Date().toISOString(),
           },
         ];
       }
@@ -235,6 +264,7 @@ export default function TextToImg(props: {
     if (setOpenedThread)
       setOpenedThread({
         _id: "",
+        created_at: new Date().toISOString(),
         service: serviceType,
       });
 
@@ -245,7 +275,9 @@ export default function TextToImg(props: {
     )
       setIsUploadModalOpen && setIsUploadModalOpen(true);
     else
-      setConversation([{ id: +"", question: "", answer: "", image_name: "" }]);
+      setConversation([
+        { id: +"", question: "", answer: "", image_name: "", created_at: "" },
+      ]);
   }
 
   function handleUpateReactions(reaction: string) {
@@ -311,6 +343,11 @@ export default function TextToImg(props: {
                             />
                           </div>
                           <div className="text-lg font-semibold">User</div>
+                          <p className="mr-4 ml-16">
+                            {item.created_at
+                              ? formatDate(item.created_at)
+                              : formatDate(openedThread?.created_at)}
+                          </p>
                         </div>
                         <div className="self-start px-2 py-1 my-2 bg-blue-600 border rounded-md text-white">
                           {item.question}
@@ -327,6 +364,11 @@ export default function TextToImg(props: {
                           <div className="text-lg font-semibold">
                             GenAI Space
                           </div>
+                          <p className="mr-4 ml-16">
+                            {item.created_at
+                              ? formatDate(item.created_at)
+                              : formatDate(openedThread?.created_at)}
+                          </p>
                         </div>
                         {/* </div> */}
 

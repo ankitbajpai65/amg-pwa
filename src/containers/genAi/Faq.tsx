@@ -121,6 +121,7 @@ export default function Faq(props: {
     if (setOpenedThread)
       setOpenedThread({
         _id: "",
+        created_at: new Date().toISOString(),
         service: serviceType,
       });
 
@@ -234,7 +235,7 @@ export default function Faq(props: {
                         onClick={() => handleFaqDownload(openedThread?._id)}
                         className="h-10 w-10 flex justify-center items-center bg-gray-200 hover:bg-red-200 rounded-full p-2"
                       >
-                        <BsDownload size={20} className="text-red-600"/>
+                        <BsDownload size={20} className="text-red-600" />
                       </button>
                     </div>
                     {faqResponse &&

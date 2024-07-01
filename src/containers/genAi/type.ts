@@ -12,17 +12,19 @@ export type threadDataType = {
     file_path?: string | null;
     image_path?: string | null;
     embeddings_path?: string | null;
+    created_at?: string | null;
     qa?:
       | {
           question: string;
           answer: string;
+          created_at?: string;
         }[]
       | null;
     json_file?: string | null;
   }[];
   service: string;
   user_id?: string;
-  created_at?: string;
+  created_at: string;
   updated_at?: string;
 };
 
@@ -31,7 +33,7 @@ export type conversationType = {
   question: string;
   answer: string;
   image_name: string;
-  // created_at?: string;
+  created_at?: string|undefined;
 }[];
 
 export type groupByDateType = {
@@ -53,4 +55,3 @@ export type gptPromptMultiResponseType = {
   status: string;
   status_code: number;
 };
-

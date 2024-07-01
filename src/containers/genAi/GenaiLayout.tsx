@@ -104,11 +104,13 @@ function GenaiLayout() {
     const newThread = (service: string) => ({
       _id: "",
       service: service,
+      created_at: new Date().toISOString(),
       data: [
         {
           id: 0,
           question: "New Thread",
           answer: "",
+          created_at: new Date().toISOString(),
         },
       ],
     });
@@ -152,6 +154,7 @@ function GenaiLayout() {
                 {
                   question: chatQues,
                   answer: chatAns,
+                  created_at: new Date().toISOString(),
                 },
               ],
             };
@@ -176,6 +179,7 @@ function GenaiLayout() {
                   question: chatQues,
                   answer: chatAns,
                   image_url: fileUrl,
+                  created_at: new Date().toISOString(),
                 },
               ],
             };
@@ -193,6 +197,7 @@ function GenaiLayout() {
                   file_name: null,
                   image_path: null,
                   embeddings_path: null,
+                  created_at: new Date().toISOString(),
                   qa:
                     item.data && item.data[0].qa
                       ? [
@@ -200,12 +205,14 @@ function GenaiLayout() {
                           {
                             question: chatQues,
                             answer: chatAns,
+                            created_at: new Date().toISOString(),
                           },
                         ]
                       : [
                           {
                             question: chatQues,
                             answer: chatAns,
+                            created_at: new Date().toISOString(),
                           },
                         ],
                   json_file: null,

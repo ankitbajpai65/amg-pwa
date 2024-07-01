@@ -75,6 +75,7 @@ const Sidebar = forwardRef<
             handleNewThread(null, "propchat");
             setOpenedThread({
               _id: "",
+              created_at: new Date().toISOString(),
               service: "propchat",
             });
             // setConversation([{ id: +"", question: "", answer: "", image_name: "" }]);
