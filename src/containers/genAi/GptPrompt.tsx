@@ -131,7 +131,7 @@ export default function GptPrompt(props: {
     if (date.toDateString() === today.toDateString()) {
       const hours = ("0" + date.getHours()).slice(-2);
       const minutes = ("0" + date.getMinutes()).slice(-2);
-      return `Ogge alle ${hours}:${minutes}`;
+      return `Oggi alle ${hours}:${minutes}`;
     }
 
     // Get day, month, year, and time
@@ -264,7 +264,9 @@ export default function GptPrompt(props: {
     )
       setIsUploadModalOpen && setIsUploadModalOpen(true);
     else
-      setConversation([{ id: +"", question: "", answer: "", image_name: "",created_at:"" }]);
+      setConversation([
+        { id: +"", question: "", answer: "", image_name: "", created_at: "" },
+      ]);
   }
 
   const handleDraftsSelection = (question: string, response: string) => {
@@ -394,10 +396,7 @@ export default function GptPrompt(props: {
               </p>
             </div>
           ) : (
-            <div
-              style={{ width: "85%", margin: "auto" }}
-              className="grow py-1 px-2 overflow-auto text-ellipsis flex"
-            >
+            <div className="w-full sm:w-[85%] grow py-1 px-2 overflow-auto text-ellipsis flex sm:m-auto">
               <div className="p-2 mt-auto w-full">
                 <div
                   className="flex justify-between fixed top-20 right-0"
@@ -415,23 +414,26 @@ export default function GptPrompt(props: {
                   <div key={index} className="flex flex-col">
                     {item.question && (
                       <>
-                        <div className={`flex items-center mt-4 gap-2 my-3`}>
-                          <div className="h-8 w-8">
-                            <img
-                              src={userLogo}
-                              alt=""
-                              className="h-full w-full"
-                            />
+                        <div
+                          className={`flex items-center justify-between sm:justify-normal sm:gap-20 my-3`}
+                        >
+                          <div className="flex items-center gap-2">
+                            <div className="h-8 w-8">
+                              <img
+                                src={userLogo}
+                                alt=""
+                                className="h-full w-full"
+                              />
+                            </div>
+                            <div className="text-md sm:text-lg font-semibold">
+                              User
+                            </div>
                           </div>
-                          <div className="text-lg font-semibold">User</div>
-                          {/* {item.created_at && ( */}
-                          <p className="mr-4 ml-16">
-                            {/* {formatDate(item.created_at)} */}
+                          <p className="text-sm sm:text-base">
                             {item.created_at
                               ? formatDate(item.created_at)
                               : formatDate(openedThread?.created_at)}
                           </p>
-                          {/* )} */}
                         </div>
                         <div className="self-start px-2 py-1 my-2 bg-blue-600 border rounded-md text-white">
                           {item.question}
@@ -497,23 +499,26 @@ export default function GptPrompt(props: {
 
                     {item.answer && (
                       <>
-                        {/* <div className="flex justify-between"> */}
-                        <div className="flex items-center gap-2 my-3">
-                          <div className="h-8 w-8">
-                            <img src={logo} alt="" className="h-full w-full" />
+                        <div className="flex items-center justify-between sm:justify-normal sm:gap-20">
+                          <div className="flex items-center gap-2 my-3">
+                            <div className="h-8 w-8">
+                              <img
+                                src={logo}
+                                alt=""
+                                className="h-full w-full"
+                              />
+                            </div>
+                            <div className="text-md sm:text-lg font-semibold">
+                              GenAI Space
+                            </div>
                           </div>
-                          <div className="text-lg font-semibold">
-                            GenAI Space
-                          </div>
-                          {/* {item.created_at && ( */}
-                          <p className="mr-4 ml-16">
+                          <p className="text-sm sm:text-base">
                             {item.created_at
                               ? formatDate(item.created_at)
                               : formatDate(openedThread?.created_at)}
                           </p>
-                          {/* )} */}
                         </div>
-                        {/* </div> */}
+
                         <div className="self-start px-2 py-1 bg-neutral-100 dark:bg-neutral-600 border border-border-light-gray rounded-md mr-8">
                           <ReactMarkdown children={item.answer}></ReactMarkdown>
                         </div>
@@ -564,7 +569,6 @@ export default function GptPrompt(props: {
                         </div>
                       )}
                   </div>
-                  // </div>
                 ))}
               </div>
             </div>

@@ -109,7 +109,7 @@ export default function ImgToText(props: {
     if (date.toDateString() === today.toDateString()) {
       const hours = ("0" + date.getHours()).slice(-2);
       const minutes = ("0" + date.getMinutes()).slice(-2);
-      return `Ogge alle ${hours}:${minutes}`;
+      return `Oggi alle ${hours}:${minutes}`;
     }
 
     // Get day, month, year, and time
@@ -204,10 +204,7 @@ export default function ImgToText(props: {
           ) : (
             openedThread &&
             openedThread.data && (
-              <div
-                style={{ width: "85%", margin: "auto" }}
-                className="grow py-1 overflow-auto text-ellipsis flex relative"
-              >
+              <div className="w-full sm:w-[85%] grow py-1 px-2 overflow-auto text-ellipsis flex sm:m-auto">
                 <div
                   className="flex justify-between fixed top-20 right-0"
                   style={{ width: "82%" }}
@@ -226,17 +223,23 @@ export default function ImgToText(props: {
                       openedThread?.data[0] &&
                       openedThread._id && (
                         <>
-                          <div className={`flex items-center mt-4 gap-2 my-3`}>
-                            <div className="h-8 w-8">
-                              <img
-                                src={userLogo}
-                                alt=""
-                                className="h-full w-full"
-                              />
+                          <div
+                            className={`flex items-center justify-between sm:justify-normal sm:gap-20 my-3 mt-4`}
+                          >
+                            <div className={`flex items-center gap-2`}>
+                              <div className="h-8 w-8">
+                                <img
+                                  src={userLogo}
+                                  alt=""
+                                  className="h-full w-full"
+                                />
+                              </div>
+                              <div className="text-md sm:text-lg font-semibold">
+                                User
+                              </div>
                             </div>
-                            <div className="text-lg font-semibold">User</div>
                             {openedThread.created_at && (
-                              <p className="mr-4 ml-16">
+                              <p className="text-sm sm:text-base">
                                 {formatDate(openedThread.created_at)}
                               </p>
                             )}
@@ -256,25 +259,28 @@ export default function ImgToText(props: {
                       openedThread?.data[0] &&
                       openedThread._id && (
                         <>
-                          {/* <div className="flex justify-between"> */}
-                          <div className="flex items-center gap-2 my-3">
-                            <div className="h-8 w-8">
-                              <img
-                                src={logo}
-                                alt=""
-                                className="h-full w-full"
-                              />
-                            </div>
-                            <div className="text-lg font-semibold mt-2">
-                              GenAI Space
+                          <div
+                            className={`flex items-center justify-between sm:justify-normal sm:gap-20 my-3 mt-4`}
+                          >
+                            <div className="flex items-center gap-2 my-3">
+                              <div className="h-8 w-8">
+                                <img
+                                  src={logo}
+                                  alt=""
+                                  className="h-full w-full"
+                                />
+                              </div>
+                              <div className="text-md sm:text-lg font-semibold mt-2">
+                                GenAI Space
+                              </div>
                             </div>
                             {openedThread.created_at && (
-                              <p className="mr-4 ml-16">
+                              <p className="text-sm sm:text-base">
                                 {formatDate(openedThread.created_at)}
                               </p>
                             )}
                           </div>
-                          {/* </div> */}
+
                           <div className="self-start px-2 py-1 bg-neutral-100 dark:bg-neutral-600 border border-border-light-gray rounded-md mr-8">
                             <ReactMarkdown
                               children={

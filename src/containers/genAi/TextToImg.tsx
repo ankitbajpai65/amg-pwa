@@ -113,7 +113,7 @@ export default function TextToImg(props: {
     if (date.toDateString() === today.toDateString()) {
       const hours = ("0" + date.getHours()).slice(-2);
       const minutes = ("0" + date.getMinutes()).slice(-2);
-      return `Ogge alle ${hours}:${minutes}`;
+      return `Oggi alle ${hours}:${minutes}`;
     }
 
     // Get day, month, year, and time
@@ -334,16 +334,20 @@ export default function TextToImg(props: {
                   <div key={index} className="flex flex-col">
                     {item.question && (
                       <>
-                        <div className={`flex items-center mt-4 gap-2 my-3`}>
-                          <div className="h-8 w-8">
-                            <img
-                              src={userLogo}
-                              alt=""
-                              className="h-full w-full"
-                            />
+                        <div className="flex items-center justify-between sm:justify-normal sm:gap-20">
+                          <div className={`flex items-center mt-4 gap-2 my-3`}>
+                            <div className="h-8 w-8">
+                              <img
+                                src={userLogo}
+                                alt=""
+                                className="h-full w-full"
+                              />
+                            </div>
+                            <div className="text-md sm:text-lg font-semibold">
+                              User
+                            </div>
                           </div>
-                          <div className="text-lg font-semibold">User</div>
-                          <p className="mr-4 ml-16">
+                          <p className="text-sm sm:text-base">
                             {item.created_at
                               ? formatDate(item.created_at)
                               : formatDate(openedThread?.created_at)}
@@ -356,21 +360,25 @@ export default function TextToImg(props: {
                     )}
                     {item.answer && (
                       <>
-                        {/* <div className="flex justify-between items-center"> */}
-                        <div className="flex items-center gap-2 my-3">
-                          <div className="h-8 w-8">
-                            <img src={logo} alt="" className="h-full w-full" />
+                        <div className="flex items-center justify-between sm:justify-normal sm:gap-20">
+                          <div className="flex items-center gap-2 my-3">
+                            <div className="h-8 w-8">
+                              <img
+                                src={logo}
+                                alt=""
+                                className="h-full w-full"
+                              />
+                            </div>
+                            <div className="text-md sm:text-lg font-semibold">
+                              GenAI Space
+                            </div>
                           </div>
-                          <div className="text-lg font-semibold">
-                            GenAI Space
-                          </div>
-                          <p className="mr-4 ml-16">
+                          <p className="text-sm sm:text-base">
                             {item.created_at
                               ? formatDate(item.created_at)
                               : formatDate(openedThread?.created_at)}
                           </p>
                         </div>
-                        {/* </div> */}
 
                         <div className="min-h-[200px] w-full">
                           {item.answer.startsWith("http") ? (
