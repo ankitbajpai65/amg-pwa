@@ -2,11 +2,10 @@ import { useEffect } from "react";
 import Login from "./containers/login/Login";
 import { useThemeContext } from "./lib/context/themeContext";
 // import Home from "./containers/home/Home";
-import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 // import { GoogleOAuthProvider } from "@react-oauth/google";
 
 function App() {
-  const navigate = useNavigate();
   const root = document.querySelector(":root");
   const { theme, setTheme } = useThemeContext();
 
@@ -25,15 +24,11 @@ function App() {
     // console.log(import.meta.env.VITE_GOOGLE_CLIENT_ID);
   }, [theme]);
 
-  if (isLoggedIn) {
-    navigate("home/");
-    return null; // Return null to avoid rendering anything while redirecting
-  }
-
   return (
     <div className="w-full h-full">
       {/* <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID as string}> */}
-      <Login />
+      {/* <Login /> */}
+      {!isLoggedIn ? <Login /> : <Navigate to="home/" replace={true} />}
       {/* </GoogleOAuthProvider> */}
     </div>
   );
