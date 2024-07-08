@@ -1,11 +1,14 @@
 import { useEffect } from "react";
 import Login from "./containers/login/Login";
 import { useThemeContext } from "./lib/context/themeContext";
+import Home from "./containers/home/Home";
 // import { GoogleOAuthProvider } from "@react-oauth/google";
 
 function App() {
   const root = document.querySelector(":root");
   const { theme, setTheme } = useThemeContext();
+
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
 
   useEffect(() => {
     const getLocalStorageTheme = localStorage.getItem("theme");
@@ -23,7 +26,7 @@ function App() {
   return (
     <div className="w-full h-full">
       {/* <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID as string}> */}
-        <Login />
+      {isLoggedIn ? <Home /> : <Login />}
       {/* </GoogleOAuthProvider> */}
     </div>
   );
