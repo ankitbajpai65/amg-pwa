@@ -3,7 +3,6 @@ import axios, { AxiosError } from "axios";
 import { userDetailsType } from "@/lib/types";
 import { useUserDetails } from "@/lib/context/userDetailsContext";
 import { errorAlert } from "@/components/appComponents/appAlert";
-// import { useNavigate } from "react-router-dom";
 
 type apidatatype = {
   apiUserDetails: userDetailsType | undefined;
@@ -16,13 +15,8 @@ type apidatatype = {
 export default function useAmgStartApi(): apidatatype {
   const [data, setData] = useState<userDetailsType | undefined>();
   const { setUserDetails } = useUserDetails();
-  // const navigate = useNavigate();
 
   const url = "https://amg.datapartners.ch/Amg/ws/AMG_WS/AMG_start/";
-  //   {
-  //     "customer": "cust01",
-  //     "user": "gg@dp.com",
-  //   }
 
   const getUserDetails = async (reqBody: {
     emailId: string;

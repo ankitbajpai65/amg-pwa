@@ -84,8 +84,8 @@ const Login = () => {
           }
         } else {
           navigate("/");
-          sessionStorage.removeItem("isLoggedIn");
-          sessionStorage.removeItem("email");
+          localStorage.removeItem("isLoggedIn");
+          localStorage.removeItem("email");
           errorAlert(2000, "LogIn Error");
           setUserDetails(null);
         }

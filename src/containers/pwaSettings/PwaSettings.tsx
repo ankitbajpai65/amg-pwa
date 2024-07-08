@@ -24,8 +24,8 @@ const PwaSettings = () => {
 
   const handleLogout = () => {
     navigate("/");
-    sessionStorage.removeItem("isLoggedIn");
-    sessionStorage.removeItem("email");
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("email");
     setUserDetails(null);
   };
   return (

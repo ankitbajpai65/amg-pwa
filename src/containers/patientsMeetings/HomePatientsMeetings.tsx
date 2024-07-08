@@ -30,7 +30,7 @@ export default function HomePatientsMeetings() {
   useEffect(() => {
     if (getPatientsListRes?.status === "I") {
       setPatientAuthFlag(() => true);
-      sessionStorage.setItem(
+      localStorage.setItem(
         "patientDetails",
         JSON.stringify({
           patientId: patientList?.patients[0].id,

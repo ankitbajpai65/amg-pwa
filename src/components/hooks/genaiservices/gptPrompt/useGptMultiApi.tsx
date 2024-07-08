@@ -7,7 +7,7 @@ const url = "https://genaiservices-be.datapartners.ch";
 
 export default function useGptMultiApi() {
   const [data, setData] = useState();
-  const accessToken = sessionStorage.getItem("AccessToken");
+  const accessToken = localStorage.getItem("AccessToken");
 
   const fetchGptMultiRes = async (tid: string,prop: string) => {
     try {

@@ -10,7 +10,7 @@ import { FaLaptopCode } from "react-icons/fa";
 const Footer = () => {
   const navigate = useNavigate();
   const handleClick = () => {
-    if (sessionStorage.getItem("isLoggedIn") === "true") {
+    if (localStorage.getItem("isLoggedIn") === "true") {
       navigate(`/pwa/home`);
       // navigate("/pwa/genaiservices/gpt-prompt");
     }

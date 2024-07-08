@@ -35,7 +35,7 @@ function Layout() {
     useGetNotificationListApi();
   const { setNotificationList } = useNotificationContext();
 
-  const userEmail = sessionStorage.getItem("email");
+  const userEmail = localStorage.getItem("email");
   const { getNotificationFlagStatus, getNotificationFlagStatusRes } =
     useGetNotificationFlagsApi();
   const { setNotificationFlag } = useNotificationFlagContext();

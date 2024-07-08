@@ -13,7 +13,7 @@ const url = "https://genaiservices-be.datapartners.ch";
 export default function useDeleteThreadApi() {
   //   const [data, setData] = useState<resBodyType>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const accessToken = sessionStorage.getItem("AccessToken");
+  const accessToken = localStorage.getItem("AccessToken");
 
   const deleteThread = async (
     e: React.MouseEvent<SVGElement, MouseEvent>,

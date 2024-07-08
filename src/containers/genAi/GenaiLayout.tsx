@@ -24,7 +24,7 @@ function GenaiLayout() {
   const { getUserDetails } = useAmgStartApi();
   const { fetchUserThreadRes, fetchUsersThread, isLoading } = useUserHistory();
 
-  const userEmail = sessionStorage.getItem("email");
+  const userEmail = localStorage.getItem("email");
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -36,7 +36,7 @@ function GenaiLayout() {
   >();
   const [openedThread, setOpenedThread] = useState<threadDataType>();
 
-  const accessToken = sessionStorage.getItem("AccessToken");
+  const accessToken = localStorage.getItem("AccessToken");
 
   useEffect(() => {
     if (accessToken) fetchUsersThread();

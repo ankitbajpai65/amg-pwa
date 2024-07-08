@@ -53,7 +53,7 @@ export default function Cwyf(props: {
     threadArray,
     updateThreadArray,
   } = props;
-  const accessToken = sessionStorage.getItem("AccessToken");
+  const accessToken = localStorage.getItem("AccessToken");
   const [userQuestion, setUserQuestion] = useState("");
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   const [conversation, setConversation] = useState<conversationType>([

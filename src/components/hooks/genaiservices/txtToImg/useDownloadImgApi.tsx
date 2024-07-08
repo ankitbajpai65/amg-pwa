@@ -5,7 +5,7 @@ const BASE_URL = "https://genaiservices-be.datapartners.ch";
 export default function useDownloadImgApi() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const accessToken = sessionStorage.getItem("AccessToken");
+  const accessToken = localStorage.getItem("AccessToken");
 
   async function handleImageDownload(fileUrl: string) {
     try {

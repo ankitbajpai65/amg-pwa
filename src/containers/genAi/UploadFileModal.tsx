@@ -53,7 +53,7 @@ export default function UploadFileModal(props: {
 
   const { handleAllLogAiApi } = useHandleAllLogAiAPI();
 
-  const accessToken = sessionStorage.getItem("AccessToken");
+  const accessToken = localStorage.getItem("AccessToken");
 
   let uploadButtonText: string;
 

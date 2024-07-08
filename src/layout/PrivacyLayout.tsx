@@ -11,7 +11,7 @@ function PrivacyLayout() {
   const { userDetails } = useUserDetails();
 
   const { getUserDetails } = useAmgStartApi();
-  const userEmail = sessionStorage.getItem("email");
+  const userEmail = localStorage.getItem("email");
 
   useEffect(() => {
     const getLocalStorageTheme = localStorage.getItem("theme");

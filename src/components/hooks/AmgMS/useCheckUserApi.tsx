@@ -43,8 +43,8 @@ export default function useCheckUserApi(): apidatatype {
         setData(() => resData);
         console.log(resData);
         if (resData?.status === true) {
-          sessionStorage.setItem("isLoggedIn", "true");
-          sessionStorage.setItem("email", reqBody.user);
+          localStorage.setItem("isLoggedIn", "true");
+          localStorage.setItem("email", reqBody.user);
           // getUserDetails(reqBody.user);
           getUserDetails({
             emailId: reqBody.user as string,
@@ -53,7 +53,7 @@ export default function useCheckUserApi(): apidatatype {
         } else if (resData?.status === 400) {
           errorAlert(5000, resData?.title);
         } else {
-          sessionStorage.setItem("isLoggedIn", "false");
+          localStorage.setItem("isLoggedIn", "false");
           errorAlert(5000, resData?.error);
         }
       } catch (e) {

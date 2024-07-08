@@ -22,7 +22,7 @@ export default function useDeleteNotificationsApi(): apidatatype {
   const url = "https://genaiservices-be.datapartners.ch";
 
   const deleteNotification = async (reqBody: reqBodyType) => {
-    const accessToken = sessionStorage.getItem("AccessToken");
+    const accessToken = localStorage.getItem("AccessToken");
     axios.defaults.headers.common["Authorization"] = accessToken;
     if (reqBody.notificationId) {
       try {

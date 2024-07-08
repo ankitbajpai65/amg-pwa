@@ -19,7 +19,7 @@ export default function useGetNotificationListApi(): apidatatype {
   const url = "https://genaiservices-be.datapartners.ch";
 
   const getNotificationListApi = async () => {
-    const accessToken = sessionStorage.getItem("AccessToken");
+    const accessToken = localStorage.getItem("AccessToken");
     axios.defaults.headers.common["Authorization"] = accessToken;
 
     try {

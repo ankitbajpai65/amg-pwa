@@ -23,7 +23,7 @@ export default function useGetNotificationFlagsApi(): apidatatype {
   const url = "https://genaiservices-be.datapartners.ch";
 
   const getNotificationFlagStatus = async () => {
-    const accessToken = sessionStorage.getItem("AccessToken");
+    const accessToken = localStorage.getItem("AccessToken");
     axios.defaults.headers.common["Authorization"] = accessToken;
 
     try {
