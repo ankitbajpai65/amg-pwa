@@ -45,9 +45,9 @@ export default function useLoginApi() {
           });
           // localStorage.setItem("userEmail", reqBody.userEmail);
           // localStorage.setItem("AccessToken", resData.token);
-          sessionStorage.setItem("isLoggedIn", "true");
-          sessionStorage.setItem("email", reqBody.userEmail);
-          sessionStorage.setItem("AccessToken", resData.token);
+          localStorage.setItem("isLoggedIn", "true");
+          localStorage.setItem("email", reqBody.userEmail);
+          localStorage.setItem("AccessToken", resData.token);
         } else {
           errorAlert(3000, resData?.error);
         }

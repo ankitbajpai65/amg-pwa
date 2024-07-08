@@ -63,7 +63,7 @@ export default function Faq(props: {
   const { handleAllLogAiApi } = useHandleAllLogAiAPI();
   const { isDownloadFaqLoading, handleFaqDownload } = useDownloadFaqApi();
 
-  const accessToken = sessionStorage.getItem("AccessToken");
+  const accessToken = localStorage.getItem("AccessToken");
 
   const url = "https://genaiservices-be.datapartners.ch";
 

@@ -60,8 +60,8 @@ export default function useAmgUsersApi(): apidatatype {
             errorAlert(1000, "Policy Acceptance Failed");
           } else {
             errorAlert(1000, "Update Failed");
-            sessionStorage.removeItem("isLoggedIn");
-            sessionStorage.removeItem("email");
+            localStorage.removeItem("isLoggedIn");
+            localStorage.removeItem("email");
             setUserDetails(null);
           }
         }

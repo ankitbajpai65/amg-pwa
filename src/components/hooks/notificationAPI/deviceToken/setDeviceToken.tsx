@@ -6,7 +6,7 @@ export default function useDeviceTokenApi() {
   const url = "https://genaiservices-be.datapartners.ch";
 
   const setDeviceToken = async (reqBody: { token: string }) => {
-    const accessToken = sessionStorage.getItem("AccessToken");
+    const accessToken = localStorage.getItem("AccessToken");
     axios.defaults.headers.common["Authorization"] = accessToken;
     if (reqBody) {
       try {

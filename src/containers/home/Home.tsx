@@ -64,7 +64,7 @@ const Home = () => {
   const [printToken, setToken] = useState("");
 
   const { userDetails } = useUserDetails();
-  const userEmail = sessionStorage.getItem("email");
+  const userEmail = localStorage.getItem("email");
 
   const { setDeviceToken } = useDeviceTokenApi();
 

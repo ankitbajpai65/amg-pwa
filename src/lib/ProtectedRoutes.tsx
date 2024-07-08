@@ -6,7 +6,7 @@ import { Navigate } from "react-router-dom";
 export const ProtectedRoutes: React.FC<{ children: JSX.Element }> = ({
   children,
 }) => {
-const user = sessionStorage.getItem("isLoggedIn");
+const user = localStorage.getItem("isLoggedIn");
   if (user === "true") {
     return children;
   } else {
