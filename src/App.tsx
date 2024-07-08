@@ -28,7 +28,7 @@ function App() {
     <div className="w-full h-full">
       {/* <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID as string}> */}
       {/* <Login /> */}
-      {!isLoggedIn ? <Login /> : <Navigate to="home/" replace={true} />}
+      {!isLoggedIn ? <Login /> : <Navigate to="/pwa/home/" replace={true} />}
       {/* </GoogleOAuthProvider> */}
     </div>
   );
