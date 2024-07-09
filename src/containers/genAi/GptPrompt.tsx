@@ -460,40 +460,41 @@ export default function GptPrompt(props: {
                             />
                           </button>
 
-                          {showOtherDrafts && (
-                            <div className="flex gap-1 sm:gap-4 sm:px-8">
-                              {/* {["gemini_res", "groq_res", "duck_res"].map( */}
-                              {["duck_res"].map((res, index) => {
-                                // const label = `Draft ${index + 1}`;
-                                const label = `Result from Wikipedia`;
-                                const response =
-                                  gptMultiResponses.response[
-                                    res as keyof typeof gptMultiResponses.response
-                                  ];
-                                const isSelected =
-                                  conversation[conversation.length - 1]
-                                    .answer === response;
+                          {showOtherDrafts &&
+                            gptMultiResponses.response.duck_res && (
+                              <div className="flex gap-1 sm:gap-4 sm:px-8">
+                                {/* {["gemini_res", "groq_res", "duck_res"].map( */}
+                                {["duck_res"].map((res, index) => {
+                                  // const label = `Draft ${index + 1}`;
+                                  const label = `Result from Wikipedia`;
+                                  const response =
+                                    gptMultiResponses.response[
+                                      res as keyof typeof gptMultiResponses.response
+                                    ];
+                                  const isSelected =
+                                    conversation[conversation.length - 1]
+                                      .answer === response;
 
-                                return (
-                                  <Drafts
-                                    key={index}
-                                    response={response}
-                                    label={label}
-                                    isSelected={isSelected}
-                                    onClick={() =>
-                                      handleDraftsSelection(
-                                        conversation[conversation.length - 1]
-                                          .question,
-                                        gptMultiResponses.response[
-                                          res as keyof typeof gptMultiResponses.response
-                                        ]
-                                      )
-                                    }
-                                  />
-                                );
-                              })}
-                            </div>
-                          )}
+                                  return (
+                                    <Drafts
+                                      key={index}
+                                      response={response}
+                                      label={label}
+                                      isSelected={isSelected}
+                                      onClick={() =>
+                                        handleDraftsSelection(
+                                          conversation[conversation.length - 1]
+                                            .question,
+                                          gptMultiResponses.response[
+                                            res as keyof typeof gptMultiResponses.response
+                                          ]
+                                        )
+                                      }
+                                    />
+                                  );
+                                })}
+                              </div>
+                            )}
                         </div>
                       )}
 
