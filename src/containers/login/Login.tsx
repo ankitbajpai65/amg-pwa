@@ -124,6 +124,7 @@ const Login = () => {
         password: loginData.password,
         // customer: formType === "Privato" ? "AMGDEMO" : inputCustomerValue,
         customer: "AMGDEMO",
+        serverType: "DEV",
       });
       setLoaderVisible(true);
     } else {

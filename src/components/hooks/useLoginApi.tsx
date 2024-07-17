@@ -22,6 +22,7 @@ export default function useLoginApi() {
     userEmail: string;
     password: string;
     customer: string;
+    serverType: string;
   }) => {
     console.log("getUserLogin runs");
 
@@ -33,6 +34,7 @@ export default function useLoginApi() {
           user: reqBody.userEmail,
           pass: reqBody.password,
           customer: reqBody.customer,
+          serverType: reqBody.serverType,
         });
         const resData = res.data;
         console.log(resData);
