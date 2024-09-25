@@ -24,18 +24,8 @@ type resDataType = {
 
 export default function useSendMailApi(): apidatatype {
   const [data, setData] = useState<resDataType | undefined>();
-  // const { userDetails } = useUserDetails();
   const url = "https://amg.datapartners.ch/Amg/ws/PIP_Ws/InvioMail/InvioFast";
-  const urlSMS = "https://amg.datapartners.ch/Amg/ws/PIP_Ws/InvioSms/InvioFas";
-  //   {
-  //   "customer":"AMGDEMO",
-  //   "from":"noreply@datapartners.ch",
-  //   "to":"email@dp.ch",
-  //   "cc":"",
-  //   "sub":"invio pin",
-  //   "body":"12321",
-  //   "sendType":"MAIL"
-  // }
+  const urlSMS = "https://amg.datapartners.ch/Amg/ws/PIP_Ws/InvioSms/InvioFast";
 
   const getSendMailAPI = async (reqBody: reqBodyType) => {
     if (reqBody) {
