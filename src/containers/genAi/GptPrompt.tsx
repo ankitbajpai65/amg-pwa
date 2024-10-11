@@ -396,7 +396,7 @@ export default function GptPrompt(props: {
               </p>
             </div>
           ) : (
-            <div className="w-full sm:w-[85%] grow py-1 px-2 overflow-auto text-ellipsis flex sm:m-auto">
+            <div className="scroll-container w-full sm:w-[85%] grow py-1 px-2 overflow-auto text-ellipsis flex sm:m-auto">
               <div className="p-2 mt-auto w-full">
                 <div
                   className="flex justify-between fixed top-20 right-0"

@@ -1,7 +1,11 @@
-
 import { useEffect, useState } from "react";
 import { errorAlert } from "@/components/appComponents/appAlert";
-import { useJsApiLoader, GoogleMap, MarkerF, CircleF } from "@react-google-maps/api";
+import {
+  useJsApiLoader,
+  GoogleMap,
+  MarkerF,
+  CircleF,
+} from "@react-google-maps/api";
 
 const PwaMap = () => {
   const [userPos, setUserPos] = useState({ lat: 51.505, lng: -0.09 });
@@ -31,8 +35,6 @@ const PwaMap = () => {
       }
     }
   }, []);
-
-
 
   return (
     <div id="map" className="w-full h-full flex flex-col">

@@ -95,8 +95,6 @@ html,body{
 }
 
 
-
-
 /*! input number arrow remove  */
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
@@ -113,4 +111,35 @@ input[type=number] {
 ol {
   list-style: decimal;
   padding-left: 2rem;
+}
+
+/* For Webkit browsers (Chrome, Safari, etc.) */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 8px; 
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background-color: #dcdcdc; 
+  border-radius: 10px;
+}
+
+.scroll-container {
+  overflow-y: auto;
+  scrollbar-width: thin; 
+  scrollbar-color: #bcbcbc transparent; 
+}
+
+.scroll-container::-webkit-scrollbar {
+  opacity: 0;
+  transition: opacity 0.3s; /* Smooth transition */
+}
+
+.scroll-container:hover::-webkit-scrollbar {
+  display: block; 
+}
+
+.scroll-container::-webkit-scrollbar {
+  display: none;
 }
