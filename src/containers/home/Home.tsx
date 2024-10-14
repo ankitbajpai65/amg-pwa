@@ -173,7 +173,7 @@ const Home = () => {
     <div className="h-full p-2">
       <div className="h-full flex items-center justify-center px-4 py-2 text-lg font-semibold">
         <h1 className="text-4xl mb-8">
-          Welcome {userDetails?.startList.users[0].nickName},
+          Geetings {userDetails?.startList.users[0].nickName}
         </h1>
       </div>
       <div className="p-2 flex justify-center flex-wrap gap-5 mobile:max-sm:gap-1 mobile:max-sm:p-1">

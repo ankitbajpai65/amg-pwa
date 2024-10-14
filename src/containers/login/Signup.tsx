@@ -9,23 +9,27 @@ import { IoEyeOffOutline } from "react-icons/io5";
 import useAuthApi from "@/components/hooks/useAuthApi";
 
 type Inputs = {
+  name: string;
   email: string;
+  mobile: string;
   password: string;
 };
 
-const Login = () => {
+const Signup = () => {
   const navigate = useNavigate();
-  const [loginData, setLoginData] = useState<Inputs>({
+  const [signupData, setSignupData] = useState<Inputs>({
+    name: "",
     email: "",
+    mobile: "",
     password: "",
   });
   const [passwordVisible, setPasswordVisible] = useState(false);
 
-  const { loading, login } = useAuthApi();
+  const { loading, signup } = useAuthApi();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setLoginData((prev) => ({
+    setSignupData((prev) => ({
       ...prev,
       [name]: value,
     }));
@@ -35,14 +39,21 @@ const Login = () => {
     e.preventDefault();
     console.log("handleSubmit runs");
 
-    if (loginData.email && loginData.password) {
-      const res = await login(loginData);
+    if (
+      signupData.name &&
+      signupData.email &&
+      signupData.mobile &&
+      signupData.password
+    ) {
+      const res = await signup(signupData);
       console.log(res);
 
       if (res.status === 201) {
-        successAlert(1000, "User loggedin sucessfully!");
-        setLoginData({
+        successAlert(1000, "User signed up sucessfully!");
+        setSignupData({
+          name: "",
           email: "",
+          mobile: "",
           password: "",
         });
       } else if (res.status === 400) {
@@ -83,16 +94,34 @@ const Login = () => {
           <p>Inserisci il tuo codice utente e la password e premi Entra.</p>
         </div>
 
-        {/* Login form */}
+        {/* Signup form */}
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-3">
           <input
-            className={`${inputStyle} w-full`}
+            className={`${inputStyle}`}
+            type="name"
+            id="name"
+            name="name"
+            placeholder="Name"
+            value={signupData.name}
+            onChange={(e) => handleInputChange(e)}
+          />
+          <input
+            className={`${inputStyle}`}
             type="email"
             id="email"
             name="email"
             placeholder="Email"
-            value={loginData.email}
+            value={signupData.email}
+            onChange={(e) => handleInputChange(e)}
+          />
+          <input
+            className={`${inputStyle}`}
+            type="phone"
+            id="mobile"
+            name="mobile"
+            placeholder="Mobile"
+            value={signupData.mobile}
             onChange={(e) => handleInputChange(e)}
           />
           <div className="mb-2 flex items-center">
@@ -102,7 +131,7 @@ const Login = () => {
               id="password"
               name="password"
               placeholder="Password"
-              value={loginData.password}
+              value={signupData.password}
               onChange={(e) => handleInputChange(e)}
             />
             <button
@@ -131,36 +160,19 @@ const Login = () => {
           </button>
         </form>
 
-        <div className="flex items-center flex-col gap-2">
-          <span>
-            <span>Don't have an account?</span>
-            <button
-              onClick={() => navigate("/signup")}
-              className="ml-3 hover:underline hover:text-red-600"
-            >
-              Signup
-            </button>
-          </span>
-          <span className="flex">
-            <a
-              className="text-text-blue underline transition duration-150 ease-in-out hover:text-red-600 focus:text-red-600 active:text-red-700"
-              href="/changePassword"
-            >
-              Change Password
-            </a>
-            <p className="px-1">|</p>
-            <a
-              className="text-text-blue underline transition duration-150 ease-in-out
-        hover:text-red-600 focus:text-red-600 active:text-red-700"
-              href="/forgotPassword"
-            >
-              Forgot Password
-            </a>
-          </span>
+        <div className="text-center">
+          <span>Already have an account?</span>
+          <button
+            onClick={() => navigate("/")}
+            className="ml-3 hover:underline hover:text-red-600"
+          >
+            Login
+          </button>
         </div>
       </div>
+
       {/* body---------- */}
     </div>
   );
 };
-export default Login;
+export default Signup;
