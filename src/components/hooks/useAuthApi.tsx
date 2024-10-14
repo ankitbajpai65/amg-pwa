@@ -59,10 +59,53 @@ const useAuthApi = () => {
     }
   };
 
+  const logout = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch(`${url}/auth/pwa_logout_user/`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const res = await response.json();
+      return res;
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const forgetPassword = async (email: string) => {
+    setLoading(true);
+    try {
+      const response = await fetch(`${url}/auth/pwa_forget_password/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email,
+        }),
+      });
+
+      const res = await response.json();
+      return res;
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return {
     loading,
     signup,
     login,
+    logout,
+    forgetPassword,
   };
 };
 

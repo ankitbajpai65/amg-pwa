@@ -1,15 +1,19 @@
 import { useEffect, useState } from "react";
 import image from "../../../assets/loghi-03.png";
 import { errorAlert } from "@/components/appComponents/appAlert";
-import useCreatePassApi from "@/components/hooks/AmgMS/useCreatePassApi";
+// import useCreatePassApi from "@/components/hooks/AmgMS/useCreatePassApi";
 import { primaryBtnStyle } from "@/lib/cssTailwind";
 import BodyBackBtn from "@/components/appComponents/BodyBackBtn";
+import useAuthApi from "@/components/hooks/useAuthApi";
+import Loader from "@/components/appComponents/Loader";
 
 const ForgotPass = () => {
-  const { getCreatePassStatus } = useCreatePassApi();
+  // const { getCreatePassStatus } = useCreatePassApi();
   const root = document.querySelector(":root");
   const [userData, setUserData] = useState<string>("");
   const [submitBtnDisable, setSubmitBtnDisable] = useState<boolean>(true);
+
+  const { loading, forgetPassword } = useAuthApi();
 
   useEffect(() => {
     const value = localStorage.getItem("theme");
@@ -28,15 +32,13 @@ const ForgotPass = () => {
     setUserData(() => e.target.value);
   };
 
-  const handleSubmit = (e: React.SyntheticEvent) => {
+  const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
+
     if (userData !== "") {
-      getCreatePassStatus({
-        user: userData,
-      });
-    } else {
-      errorAlert(3000, "Empty Input fields");
-    }
+      const res = await forgetPassword(userData);
+      console.log(res);
+    } else errorAlert(1000, "Please provide the email!");
   };
 
   return (
@@ -82,12 +84,16 @@ const ForgotPass = () => {
             </div>
             <div className="w-full">
               <button
+                disabled={loading}
                 className={`${primaryBtnStyle} hover:border hover:border-black focus:bg-red-500 ${
                   submitBtnDisable && "opacity-25"
                 }`}
                 type="submit"
               >
                 Confirm
+                <span className="px-2">
+                  <Loader status={loading} size={4} />
+                </span>
               </button>
             </div>
           </form>
