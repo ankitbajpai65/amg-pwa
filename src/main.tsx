@@ -24,7 +24,7 @@ import QrCodeScan from "./containers/qrCodeScan/QrCodeScan.tsx";
 import ScanNow from "./containers/qrCodeScan/ScanNow.tsx";
 import UploadScan from "./containers/qrCodeScan/UploadScan.tsx";
 import PwaMap from "./containers/map/PwaMap.tsx";
-import PrivacyDisplayOnly from "./containers/privacyPolicy/PrivacyDisplayOnly.tsx";
+// import PrivacyDisplayOnly from "./containers/privacyPolicy/PrivacyDisplayOnly.tsx";
 import AiBot from "./containers/aibot/AiBot.tsx";
 // import ChatWithYourFiles from "./containers/genAi/chatwithyourfiles/ChatWithYourFiles.tsx";
 // import Gpt_prompt from "./containers/genAi/gpt-prompt/Gpt_prompt.tsx";
@@ -122,7 +122,7 @@ const router = createBrowserRouter(
           path="privacy&security/privacyDisplay/"
           element={
             <ProtectedRoutes>
-              <PrivacyDisplayOnly />
+              <PrivacyPolicy />
             </ProtectedRoutes>
           }
         />

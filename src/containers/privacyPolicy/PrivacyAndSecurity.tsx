@@ -30,15 +30,6 @@ const PrivacyAndSecurity = () => {
             <label htmlFor="faceId">Use Face ID for access</label>
             <Switch id="faceId" name="faceId" />
           </div>
-          <div className="flex justify-between">
-            <div className="pr-24">
-              <label htmlFor="safetyLock">Automatic safety lock</label>
-              <p className="text-xs text-text-light-gray">
-                Face ID is required after 10 minutes of inactivity
-              </p>
-            </div>
-            <Switch id="safetyLock" name="safetyLock" />
-          </div>
           <div className="flex items-center justify-between py-3">
             <div className="flex items-center text-lg">
               <p>Change your email address</p>
@@ -59,8 +50,8 @@ const PrivacyAndSecurity = () => {
           </div>
           {/* Show full name and image toggle */}
           <div className="flex justify-between">
-            <label htmlFor="faceId">Show full name and image</label>
-            <Switch id="faceId" name="faceId" />
+            <label htmlFor="fullName">Show full name and image</label>
+            <Switch id="fullName" name="fullName" />
           </div>
           {/* Privacy Policy link */}
           <div className="flex items-center justify-between py-3">
