@@ -39,12 +39,14 @@ const Login = () => {
       const res = await login(loginData);
       console.log(res);
 
-      if (res.status === 201) {
+      if (res.status === 200) {
         successAlert(1000, "User loggedin sucessfully!");
         setLoginData({
           email: "",
           password: "",
         });
+
+        navigate("/pwa/home");
       } else if (res.status === 400) {
         errorAlert(1000, res.response.error);
       }

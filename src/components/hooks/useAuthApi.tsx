@@ -51,6 +51,12 @@ const useAuthApi = () => {
       });
 
       const res = await response.json();
+
+      if (res.status === 200) {
+        localStorage.setItem("isLoggedIn", "true");
+        localStorage.setItem("email", reqBody.email);
+        localStorage.setItem("AccessToken", res.token);
+      }
       return res;
     } catch (error) {
       console.log(error);

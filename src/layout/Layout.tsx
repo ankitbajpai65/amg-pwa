@@ -70,19 +70,19 @@ function Layout() {
     if (getNotificationFlagStatusRes?.status === 200) {
       setNotificationFlag(() => ({
         newServiceFlagEmail:
-          getNotificationFlagStatusRes.response.chat_email === "true"
+          getNotificationFlagStatusRes?.response?.chat_email === "true"
             ? true
             : false,
         newServiceFlagPush:
-          getNotificationFlagStatusRes.response.chat_push === "true"
+          getNotificationFlagStatusRes?.response?.chat_push === "true"
             ? true
             : false,
         generalFlagEmail:
-          getNotificationFlagStatusRes.response.general_email === "true"
+          getNotificationFlagStatusRes?.response?.general_email === "true"
             ? true
             : false,
         generalFlagPush:
-          getNotificationFlagStatusRes.response.general_push === "true"
+          getNotificationFlagStatusRes?.response?.general_push === "true"
             ? true
             : false,
       }));
