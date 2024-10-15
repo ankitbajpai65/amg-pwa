@@ -144,13 +144,13 @@ const Login = () => {
             </button>
           </span>
           <span className="flex">
-            <a
+            {/* <a
               className="text-text-blue underline transition duration-150 ease-in-out hover:text-red-600 focus:text-red-600 active:text-red-700"
               href="/changePassword"
             >
               Change Password
             </a>
-            <p className="px-1">|</p>
+            <p className="px-1">|</p> */}
             <a
               className="text-text-blue underline transition duration-150 ease-in-out
         hover:text-red-600 focus:text-red-600 active:text-red-700"

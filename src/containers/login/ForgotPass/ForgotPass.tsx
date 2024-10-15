@@ -1,17 +1,20 @@
 import { useEffect, useState } from "react";
 import image from "../../../assets/loghi-03.png";
-import { errorAlert } from "@/components/appComponents/appAlert";
+import { errorAlert, successAlert } from "@/components/appComponents/appAlert";
 // import useCreatePassApi from "@/components/hooks/AmgMS/useCreatePassApi";
-import { primaryBtnStyle } from "@/lib/cssTailwind";
+import { inputStyle, primaryBtnStyle } from "@/lib/cssTailwind";
 import BodyBackBtn from "@/components/appComponents/BodyBackBtn";
 import useAuthApi from "@/components/hooks/useAuthApi";
 import Loader from "@/components/appComponents/Loader";
+import Modal from "@/components/appComponents/Modal";
+import { useNavigate } from "react-router-dom";
 
 const ForgotPass = () => {
   // const { getCreatePassStatus } = useCreatePassApi();
   const root = document.querySelector(":root");
   const [userData, setUserData] = useState<string>("");
   const [submitBtnDisable, setSubmitBtnDisable] = useState<boolean>(true);
+  const [isOtpSend, setIsOtpSend] = useState(false);
 
   const { loading, forgetPassword } = useAuthApi();
 
@@ -38,8 +41,16 @@ const ForgotPass = () => {
     if (userData !== "") {
       const res = await forgetPassword(userData);
       console.log(res);
+
+      if (res.startsWith("sent the passcode to")) setIsOtpSend(true);
     } else errorAlert(1000, "Please provide the email!");
   };
+
+  if (isOtpSend) {
+    return (
+      <ChangePasswordModal isOtpSend={isOtpSend} setIsOtpSend={setIsOtpSend} />
+    );
+  }
 
   return (
     <div className="flex flex-col w-full h-full">
@@ -103,4 +114,92 @@ const ForgotPass = () => {
     </div>
   );
 };
+
+const ChangePasswordModal = (props: {
+  isOtpSend: boolean;
+  setIsOtpSend: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
+  const { isOtpSend } = props;
+  const navigate = useNavigate();
+  const [inputDetails, setInputDetails] = useState({
+    email: "",
+    otp: "",
+    newPassword: "",
+  });
+  const { loading, verifyOtp } = useAuthApi();
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // e.preventDefault();
+    const { name, value } = e.target;
+    setInputDetails((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    if (inputDetails.email && inputDetails.otp && inputDetails.newPassword) {
+      const res = await verifyOtp(inputDetails);
+      console.log(res);
+
+      if (res === "password changed succesfully") {
+        successAlert(1000, "Password changed successfully!");
+        navigate("/");
+      }
+    } else {
+      errorAlert(1000, "Please fill all fields!");
+    }
+  };
+
+  return (
+    <Modal isOpen={isOtpSend}>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-3 w-[90%]">
+        <h1 className="text-center text-2xl font-semibold mb-6">
+          Create New Password
+        </h1>
+        <input
+          className={`${inputStyle}`}
+          type="email"
+          id="email"
+          name="email"
+          placeholder="Email"
+          value={inputDetails.email}
+          onChange={(e) => handleInputChange(e)}
+        />
+        <input
+          className={`${inputStyle}`}
+          type="text"
+          id="otp"
+          name="otp"
+          placeholder="OTP"
+          value={inputDetails.otp}
+          onChange={(e) => handleInputChange(e)}
+        />
+        <input
+          className={`${inputStyle}`}
+          type="password"
+          id="newPassword"
+          name="newPassword"
+          placeholder="New Password"
+          value={inputDetails.newPassword}
+          onChange={(e) => handleInputChange(e)}
+        />
+        <button
+          className={`${primaryBtnStyle} w-full mt-5 ${
+            loading ? "bg-text-red" : "bg-red-200"
+          }`}
+          type="submit"
+          disabled={loading}
+        >
+          Entra
+          <span className="px-2">
+            <Loader status={loading} size={4} />
+          </span>
+        </button>
+      </form>
+    </Modal>
+  );
+};
+
 export default ForgotPass;

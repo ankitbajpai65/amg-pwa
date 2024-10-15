@@ -28,13 +28,14 @@ const PwaSettings = () => {
 
   const handleLogout = async () => {
     // navigate("/");
-    // localStorage.removeItem("isLoggedIn");
-    // localStorage.removeItem("email");
     // setUserDetails(null);
-
+    
     const res = await logout();
     if (res.status === 200) {
       successAlert(1000, "Logged out successfully!");
+      // localStorage.removeItem("isLoggedIn");
+      // localStorage.removeItem("email");
+      // localStorage.removeItem("email");
       navigate("/");
     }
   };
