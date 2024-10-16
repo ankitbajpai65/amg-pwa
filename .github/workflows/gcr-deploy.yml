@@ -32,15 +32,15 @@ jobs:
         with:
           context: .
           push: true
-          tags: gcr.io/$PROJECT_ID/$SERVICE_NAME:latest
+          tags: gcr.io/amg-pwa-v1/amg-pwa-v2:latest
           build-args: |
             HTTP_PORT=3000
 
       - name: Deploy to Cloud Run
         uses: google-github-actions/deploy-cloudrun@main
         with:
-          image: gcr.io/$PROJECT_ID/$SERVICE_NAME:latest
-          service: $SERVICE_NAME
-          region: $RUN_REGION
+          image: gcr.io/amg-pwa-v1/amg-pwa-v2:latest
+          service: amg-pwa-v2
+          region: us-central1
           platform: managed
           allow-unauthenticated: true
