@@ -107,7 +107,7 @@ const router = createBrowserRouter(
         element={
           <ProtectedRoutes>
             <Layout />
-          </ProtectedRoutes>
+           </ProtectedRoutes>
         }
       >
         <Route

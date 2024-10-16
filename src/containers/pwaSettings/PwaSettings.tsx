@@ -19,32 +19,31 @@ import {
 import useAuthApi from "@/components/hooks/useAuthApi";
 import Loader from "@/components/appComponents/Loader";
 import { successAlert } from "@/components/appComponents/appAlert";
+import { useTranslation } from "react-i18next";
 
 const PwaSettings = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
-  // const { setUserDetails } = useUserDetails();
   const { loading, logout } = useAuthApi();
 
   const handleLogout = async () => {
-    // navigate("/");
-    // setUserDetails(null);
-
     const res = await logout();
     if (res.status === 200) {
       successAlert(1000, "Logged out successfully!");
-      // localStorage.removeItem("isLoggedIn");
-      // localStorage.removeItem("email");
-      // localStorage.removeItem("email");
       navigate("/");
+      localStorage.removeItem("isLoggedIn");
+      localStorage.removeItem("email");
+      localStorage.removeItem("userName");
+      localStorage.removeItem("userMobile");
     }
   };
 
   return (
     <div>
       <div className="py-4 px-5 text-text-blue">
-        <p className="text-lg font-semibold">Settings</p>
-        <p>Change your settings and information.</p>
+        <p className="text-lg font-semibold">{t("settings.title")}</p>
+        <p>{t("settings.desc")}</p>
       </div>
       <div>
         <div
@@ -53,7 +52,7 @@ const PwaSettings = () => {
         >
           <div className="flex items-center text-lg">
             <FaUser style={{ marginRight: "8px" }} size={20} />
-            <p>Profile</p>
+            <p>{t("settings.options.profile")}</p>
           </div>
           <div>
             <IoIosArrowForward />
@@ -77,7 +76,7 @@ const PwaSettings = () => {
         >
           <div className="flex items-center text-lg">
             <MdPrivacyTip style={{ marginRight: "8px" }} size={20} />
-            <p>Privacy and Security</p>
+            <p>{t("settings.options.privacySecurity")}</p>
           </div>
           <div>
             <IoIosArrowForward />
@@ -89,7 +88,7 @@ const PwaSettings = () => {
         >
           <div className="flex items-center text-lg">
             <IoMdNotifications style={{ marginRight: "8px" }} size={20} />
-            <p>Notifications</p>
+            <p>{t("settings.options.notifications")}</p>
           </div>
           <div>
             <IoIosArrowForward />
@@ -101,7 +100,7 @@ const PwaSettings = () => {
         >
           <div className="flex items-center text-lg">
             <IoHelpCircle style={{ marginRight: "8px" }} size={20} />
-            <p>Help And Support</p>
+            <p>{t("settings.options.help")}</p>
           </div>
           <div>
             <IoIosArrowForward />
@@ -114,7 +113,7 @@ const PwaSettings = () => {
               <div className="flex items-center justify-between">
                 <div className="flex items-center text-lg">
                   <RiLogoutBoxFill style={{ marginRight: "8px" }} size={20} />
-                  <p>Logout</p>
+                  <p>{t("settings.options.logout")}</p>
                 </div>
                 <div>
                   <IoIosArrowForward />
@@ -124,11 +123,11 @@ const PwaSettings = () => {
 
             <DialogContent className="border rounded-md bg-white">
               <DialogHeader>
-                <h1>Logout</h1>
+                <h1>{t("settings.options.logout")}</h1>
               </DialogHeader>
 
               <DialogDescription>
-                Do you want to log out of your account?
+                {t("settings.logout.message")}
               </DialogDescription>
               <DialogFooter className="flex-row justify-center">
                 <DialogClose>
@@ -136,7 +135,7 @@ const PwaSettings = () => {
                     onClick={() => handleLogout()}
                     className="bg-text-red text-white rounded-md text-l p-1 m-2 px-2"
                   >
-                    Logout
+                    {t("settings.logout.title")}
                     <span className="px-2">
                       <Loader status={loading} size={4} />
                     </span>
@@ -144,7 +143,7 @@ const PwaSettings = () => {
                 </DialogClose>
                 <DialogClose>
                   <button className="bg-white text-text-blue border border-text-blue rounded-md text-l p-1 m-2 px-2">
-                    Cancel
+                    {t("settings.logout.btn2")}
                   </button>
                 </DialogClose>
               </DialogFooter>

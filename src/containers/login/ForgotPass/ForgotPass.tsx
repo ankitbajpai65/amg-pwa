@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
 import image from "../../../assets/loghi-03.png";
 import { errorAlert, successAlert } from "@/components/appComponents/appAlert";
-// import useCreatePassApi from "@/components/hooks/AmgMS/useCreatePassApi";
 import { inputStyle, primaryBtnStyle } from "@/lib/cssTailwind";
 import BodyBackBtn from "@/components/appComponents/BodyBackBtn";
 import useAuthApi from "@/components/hooks/useAuthApi";
 import Loader from "@/components/appComponents/Loader";
 import Modal from "@/components/appComponents/Modal";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const ForgotPass = () => {
-  // const { getCreatePassStatus } = useCreatePassApi();
+  const { t } = useTranslation();
   const root = document.querySelector(":root");
   const [userData, setUserData] = useState<string>("");
   const [submitBtnDisable, setSubmitBtnDisable] = useState<boolean>(true);
@@ -75,14 +75,14 @@ const ForgotPass = () => {
         {/* <hr className="my-2 h-0.5 border-t-0 bg-neutral-100 opacity-100 dark:opacity-50" /> */}
         <div className="p-5">
           <div>
-            <p className="font-bold text-xl">Forgot Password</p>
-            <p>Reset your password in few steps.</p>
+            <p className="font-bold text-xl">{t("forgetPassword.title")}</p>
+            <p>{t("forgetPassword.caption")}</p>
           </div>
           <form onSubmit={handleSubmit}>
             <div className="w-full p-2 mt-10">
               <div className="mb-1 flex flex-col ">
                 <label htmlFor="email" className="pr-2 font-semibold">
-                  Email
+                  {t("forgetPassword.newPassword.email")}
                 </label>
                 <input
                   className="rounded p-1 px-2 border border-border-dark-gray hover:border-yellow-500 focus:outline-none focus:border-blue-500 dark:text-black"
@@ -101,7 +101,7 @@ const ForgotPass = () => {
                 }`}
                 type="submit"
               >
-                Confirm
+                {t("forgetPassword.button")}
                 <span className="px-2">
                   <Loader status={loading} size={4} />
                 </span>
@@ -120,6 +120,7 @@ const ChangePasswordModal = (props: {
   setIsOtpSend: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const { isOtpSend } = props;
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [inputDetails, setInputDetails] = useState({
     email: "",
@@ -156,14 +157,14 @@ const ChangePasswordModal = (props: {
     <Modal isOpen={isOtpSend}>
       <form onSubmit={handleSubmit} className="flex flex-col gap-3 w-[90%]">
         <h1 className="text-center text-2xl font-semibold mb-6">
-          Create New Password
+          {t("forgetPassword.newPassword.heading")}
         </h1>
         <input
           className={`${inputStyle}`}
           type="email"
           id="email"
           name="email"
-          placeholder="Email"
+          placeholder={t("forgetPassword.newPassword.heading")}
           value={inputDetails.email}
           onChange={(e) => handleInputChange(e)}
         />
@@ -172,7 +173,7 @@ const ChangePasswordModal = (props: {
           type="text"
           id="otp"
           name="otp"
-          placeholder="OTP"
+          placeholder={t("forgetPassword.newPassword.otp")}
           value={inputDetails.otp}
           onChange={(e) => handleInputChange(e)}
         />
@@ -181,7 +182,7 @@ const ChangePasswordModal = (props: {
           type="password"
           id="newPassword"
           name="newPassword"
-          placeholder="New Password"
+          placeholder={t("forgetPassword.newPassword.newPassword")}
           value={inputDetails.newPassword}
           onChange={(e) => handleInputChange(e)}
         />
@@ -192,7 +193,7 @@ const ChangePasswordModal = (props: {
           type="submit"
           disabled={loading}
         >
-          Entra
+          {t("forgetPassword.newPassword.button")}
           <span className="px-2">
             <Loader status={loading} size={4} />
           </span>

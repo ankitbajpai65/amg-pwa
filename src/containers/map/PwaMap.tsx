@@ -6,10 +6,13 @@ import {
   MarkerF,
   CircleF,
 } from "@react-google-maps/api";
+import { useTranslation } from "react-i18next";
 
 const PwaMap = () => {
+  const { t } = useTranslation();
   const [userPos, setUserPos] = useState({ lat: 51.505, lng: -0.09 });
   const [locAcc, setLocAcc] = useState<number>(0);
+
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
   });
@@ -39,8 +42,8 @@ const PwaMap = () => {
   return (
     <div id="map" className="w-full h-full flex flex-col">
       <div className="py-4 px-5 text-text-blue">
-        <p className="text-lg font-semibold">Map</p>
-        <p>Use the map to locate each landmark and destination.</p>
+        <p className="text-lg font-semibold">{t("map.title")}</p>
+        <p>{t("map.caption")}</p>
       </div>
       {isLoaded ? (
         <div className="grow">

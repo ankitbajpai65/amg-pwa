@@ -7,6 +7,7 @@ import { inputStyle, primaryBtnStyle } from "@/lib/cssTailwind";
 import { IoEyeOutline } from "react-icons/io5";
 import { IoEyeOffOutline } from "react-icons/io5";
 import useAuthApi from "@/components/hooks/useAuthApi";
+import { useTranslation } from "react-i18next";
 
 type Inputs = {
   name: string;
@@ -17,6 +18,7 @@ type Inputs = {
 
 const Signup = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [signupData, setSignupData] = useState<Inputs>({
     name: "",
     email: "",
@@ -102,7 +104,7 @@ const Signup = () => {
             type="name"
             id="name"
             name="name"
-            placeholder="Name"
+            placeholder={t("signup.name")}
             value={signupData.name}
             onChange={(e) => handleInputChange(e)}
           />
@@ -111,7 +113,7 @@ const Signup = () => {
             type="email"
             id="email"
             name="email"
-            placeholder="Email"
+            placeholder={t("signup.email")}
             value={signupData.email}
             onChange={(e) => handleInputChange(e)}
           />
@@ -120,7 +122,7 @@ const Signup = () => {
             type="phone"
             id="mobile"
             name="mobile"
-            placeholder="Mobile"
+            placeholder={t("signup.mobile")}
             value={signupData.mobile}
             onChange={(e) => handleInputChange(e)}
           />
@@ -130,7 +132,7 @@ const Signup = () => {
               type={passwordVisible ? "text" : "password"}
               id="password"
               name="password"
-              placeholder="Password"
+              placeholder={t("signup.password")}
               value={signupData.password}
               onChange={(e) => handleInputChange(e)}
             />
@@ -153,7 +155,7 @@ const Signup = () => {
             type="submit"
             disabled={loading}
           >
-            Entra
+            {t("signup.btn1")}
             <span className="px-2">
               <Loader status={loading} size={4} />
             </span>
@@ -161,12 +163,12 @@ const Signup = () => {
         </form>
 
         <div className="text-center">
-          <span>Already have an account?</span>
+          <span>{t("signup.text")}</span>
           <button
             onClick={() => navigate("/")}
             className="ml-3 hover:underline hover:text-red-600"
           >
-            Login
+            {t("signup.btn2")}
           </button>
         </div>
       </div>
