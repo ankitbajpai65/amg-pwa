@@ -136,9 +136,11 @@ const PwaSettings = () => {
                     className="bg-text-red text-white rounded-md text-l p-1 m-2 px-2"
                   >
                     {t("settings.logout.title")}
-                    <span className="px-2">
-                      <Loader status={loading} size={4} />
-                    </span>
+                    {loading && (
+                      <span className="px-2">
+                        <Loader status={loading} size={4} />
+                      </span>
+                    )}
                   </button>
                 </DialogClose>
                 <DialogClose>

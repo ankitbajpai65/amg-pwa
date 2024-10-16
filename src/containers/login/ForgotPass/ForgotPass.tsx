@@ -8,6 +8,7 @@ import Loader from "@/components/appComponents/Loader";
 import Modal from "@/components/appComponents/Modal";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { validateEmail } from "@/utils";
 
 const ForgotPass = () => {
   const { t } = useTranslation();
@@ -37,6 +38,11 @@ const ForgotPass = () => {
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
+
+    if (!validateEmail(userData)) {
+      errorAlert(1000, "Please enter a valid email!");
+      return;
+    }
 
     if (userData !== "") {
       const res = await forgetPassword(userData);
@@ -140,6 +146,12 @@ const ChangePasswordModal = (props: {
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
+
+    if (!validateEmail(inputDetails.email)) {
+      errorAlert(1000, "Please enter a valid email!");
+      return;
+    }
+
     if (inputDetails.email && inputDetails.otp && inputDetails.newPassword) {
       const res = await verifyOtp(inputDetails);
       console.log(res);

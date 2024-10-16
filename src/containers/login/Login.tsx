@@ -8,6 +8,7 @@ import { IoEyeOutline } from "react-icons/io5";
 import { IoEyeOffOutline } from "react-icons/io5";
 import useAuthApi from "@/components/hooks/useAuthApi";
 import { useTranslation } from "react-i18next";
+import { validateEmail } from "@/utils";
 
 type Inputs = {
   email: string;
@@ -35,7 +36,11 @@ const Login = () => {
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    console.log("handleSubmit runs");
+
+    if (!validateEmail(loginData.email)) {
+      errorAlert(1000, "Please enter a valid email!");
+      return;
+    }
 
     if (loginData.email && loginData.password) {
       const res = await login(loginData);

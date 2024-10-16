@@ -35,7 +35,10 @@ const UserProfile = () => {
         <p className="w-fit border rounded-full p-1 px-2 m-1 text-white bg-text-red text-xs">
           {userName![0].toUpperCase()}
         </p>
-        <p>{userName}</p>
+        <p>
+          {userName![0].toUpperCase()}
+          {userName?.slice(1)}
+        </p>
       </div>
       <>
         <form>
@@ -51,7 +54,7 @@ const UserProfile = () => {
                   id="name"
                   readOnly
                   // value={profileData.name}
-                  value={userName!}
+                  value={`${userName![0].toUpperCase()}${userName?.slice(1)}`}
                   aria-readonly
                   // onChange={(e) => handleInputChange(e)}
                 />

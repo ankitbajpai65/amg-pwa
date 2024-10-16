@@ -8,6 +8,7 @@ import { IoEyeOutline } from "react-icons/io5";
 import { IoEyeOffOutline } from "react-icons/io5";
 import useAuthApi from "@/components/hooks/useAuthApi";
 import { useTranslation } from "react-i18next";
+import { validateEmail, validateName, validatePhone } from "@/utils";
 
 type Inputs = {
   name: string;
@@ -40,6 +41,20 @@ const Signup = () => {
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     console.log("handleSubmit runs");
+
+    if (!validateName(signupData.name)) {
+      errorAlert(1000, "Please enter a valid name!");
+      return;
+    }
+    if (!validateEmail(signupData.email)) {
+      errorAlert(1000, "Please enter a valid email!");
+      return;
+    }
+
+    if (!validatePhone(signupData.mobile)) {
+      errorAlert(1000, "Please enter a valid mobile number!");
+      return;
+    }
 
     if (
       signupData.name &&
