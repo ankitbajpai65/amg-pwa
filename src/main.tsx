@@ -57,6 +57,8 @@ import GptPrompt from "./containers/genAi/GptPrompt.tsx";
 import NotificationProvider from "./lib/context/notificationContext.tsx";
 import NotificationFlagProvider from "./lib/context/notificationFlagContext.tsx";
 import Signup from "./containers/login/Signup.tsx";
+import { I18nextProvider } from "react-i18next";
+import i18n from "./i18n.ts";
 
 registerSW({ immediate: true });
 
@@ -210,21 +212,23 @@ const router = createBrowserRouter(
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <ToastContainer />
-    <ThemeContextProvider>
-      <UserDetailsProvider>
-        <NotificationFlagProvider>
-          <NotificationProvider>
-            <PatientListProvider>
-              <MeetingListProvider>
-                <OperatorListProvider>
-                  <RouterProvider router={router} />
-                </OperatorListProvider>
-              </MeetingListProvider>
-            </PatientListProvider>
-          </NotificationProvider>
-        </NotificationFlagProvider>
-      </UserDetailsProvider>
-    </ThemeContextProvider>
+    <I18nextProvider i18n={i18n}>
+      <ToastContainer />
+      <ThemeContextProvider>
+        <UserDetailsProvider>
+          <NotificationFlagProvider>
+            <NotificationProvider>
+              <PatientListProvider>
+                <MeetingListProvider>
+                  <OperatorListProvider>
+                    <RouterProvider router={router} />
+                  </OperatorListProvider>
+                </MeetingListProvider>
+              </PatientListProvider>
+            </NotificationProvider>
+          </NotificationFlagProvider>
+        </UserDetailsProvider>
+      </ThemeContextProvider>
+    </I18nextProvider>
   </React.StrictMode>
 );

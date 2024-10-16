@@ -1,184 +1,40 @@
 import { useEffect, useState } from "react";
 import { Switch } from "@/components/ui/switch";
-// import { useThemeContext } from "@/lib/context/themeContext";
-// import { useUserDetails } from "@/lib/context/userDetailsContext";
-// import useAmgUsersApi from "@/components/hooks/AmgMS/useAmgUsersApi";
-// import { useNavigate } from "react-router-dom";
 import BodyBackBtn from "@/components/appComponents/BodyBackBtn";
-// import { primaryBtnStyle } from "@/lib/cssTailwind";
-
-// type Inputs = {
-//   name: string;
-//   nickName: string;
-//   phone: string;
-//   phone2: string;
-//   phoneCell: string;
-//   language: string;
-//   theme: string;
-// };
 
 const UserProfile = () => {
-  // const navigate = useNavigate();
-  // const { userUpdateRes, setUserUpdate } = useAmgUsersApi();
   const [themeState, setThemeState] = useState<boolean>(
     localStorage.getItem("theme") === "dark"
   );
   const root = document.querySelector(":root");
-  // const { setTheme } = useThemeContext();
-  // const { userDetails, setUserDetails } = useUserDetails();
-  // const [btnDisabled, setBtnDisabled] = useState(true);
-
   const userEmail = localStorage.getItem("email");
   const userName = localStorage.getItem("userName");
   const userMobile = localStorage.getItem("userMobile");
-
-  // const [profileData, setProfileData] = useState<Inputs>({
-  //   name: userDetails?.startList.users[0].description
-  //     ? userDetails?.startList.users[0].description
-  //     : "",
-  //   nickName: userDetails?.startList.users[0].nickName
-  //     ? userDetails?.startList.users[0].nickName
-  //     : "",
-  //   phone: userDetails?.startList.users[0].phone
-  //     ? userDetails?.startList.users[0].phone
-  //     : "",
-  //   phone2: userDetails?.startList.users[0].phone2
-  //     ? userDetails?.startList.users[0].phone2
-  //     : "",
-  //   phoneCell: userDetails?.startList.users[0].phoneCell
-  //     ? userDetails?.startList.users[0].phoneCell
-  //     : "",
-  //   language: userDetails?.startList.users[0].language
-  //     ? userDetails?.startList.users[0].language
-  //     : "",
-  //   theme: userDetails?.startList.users[0].darkLight ?? "",
-  // });
 
   useEffect(() => {
     handleSetTheme();
   }, [themeState]);
 
-  // useEffect(() => {
-  //   if (userDetails) {
-  //     setProfileData({
-  //       name: userDetails?.startList.users[0].description ?? "",
-  //       nickName: userDetails?.startList.users[0].nickName
-  //         ? userDetails?.startList.users[0].nickName
-  //         : "",
-  //       phone: userDetails?.startList.users[0].phone
-  //         ? userDetails?.startList.users[0].phone
-  //         : "",
-  //       phone2: userDetails?.startList.users[0].phone2
-  //         ? userDetails?.startList.users[0].phone2
-  //         : "",
-  //       phoneCell: userDetails?.startList.users[0].phoneCell
-  //         ? userDetails?.startList.users[0].phoneCell
-  //         : "",
-  //       language: userDetails?.startList.users[0].language
-  //         ? userDetails?.startList.users[0].language
-  //         : "",
-  //       theme: userDetails?.startList.users[0].darkLight ?? "",
-  //     });
-  //   }
-  //   if (userDetails?.startList.users[0].darkLight) {
-  //     setThemeState(
-  //       userDetails?.startList.users[0].darkLight === "dark" ? true : false
-  //     );
-  //     localStorage.setItem("theme", themeState ? "dark" : "light");
-  //   } else {
-  //     localStorage.setItem("theme", themeState ? "dark" : "light");
-  //     setTheme(themeState ? "dark" : "light");
-  //   }
-  // }, [userDetails]);
-
-  // useEffect(() => {
-  //   if (userUpdateRes) {
-  //     updateUserDetailsContext();
-  //     navigate(`/pwa/home`);
-  //   }
-  // }, [userUpdateRes]);
-
-  // const handleSubmit = async (e: React.SyntheticEvent) => {
-  //   e.preventDefault();
-
-  //   await setUserUpdate({
-  //     user: userDetails?.startList.users[0].email as string,
-  //     key: `email|'${userDetails?.startList.users[0].email}'`,
-  //     data: `description;nickName;phone;phone2;phoneCell;language;darkLight|'${profileData.name}';'${profileData.nickName}';'${profileData.phone}';'${profileData.phone2}';'${profileData.phoneCell}';'${profileData.language}';'${profileData.theme}';`,
-  //   });
-  //   setBtnDisabled(true);
-  // };
-
   const handleSetTheme = () => {
     if (themeState === true) root?.classList.add("dark");
     else root?.classList.remove("dark");
-    // setProfileData((prev) => ({
-    //   ...prev,
-    //   theme: themeState ? "dark" : "light",
-    // }));
   };
-
-  // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   if (e.target.name === "language") {
-  //     setProfileData((prev) => ({
-  //       ...prev,
-  //       [e.target.name]: e.target.value,
-  //     }));
-  //   } else {
-  //     setProfileData((prev) => ({
-  //       ...prev,
-  //       [e.target.id]: e.target.value,
-  //     }));
-  //   }
-  //   setBtnDisabled(false);
-  // };
-
-  // const updateUserDetailsContext = () => {
-  //   if (userUpdateRes?.status === "I") {
-  //     //!type error couldnt resolve.
-  //     // @ts-expect-error abba dabba jabba
-  //     setUserDetails((prev) => {
-  //       if (prev) {
-  //         return {
-  //           ...prev,
-  //           startList: {
-  //             ...prev.startList,
-  //             users: [
-  //               {
-  //                 description: profileData.name,
-  //                 email: prev.startList.users[0].email,
-  //                 nickName: profileData.nickName,
-  //                 language: profileData.language,
-  //                 privacyDate: prev.startList.users[0].privacyDate,
-  //                 phone: profileData.phone,
-  //                 phone2: profileData.phone2,
-  //                 phoneCell: profileData.phoneCell,
-  //                 darkLight: profileData.theme,
-  //               },
-  //             ],
-  //           },
-  //         };
-  //       }
-  //     });
-  //   }
-  // };
 
   return (
     <div>
       <BodyBackBtn btnText="Profile" />
       <div className="py-4 px-5 text-text-blue">
-        <p className="text-lg font-semibold">Profile</p>
+        {/* <p className="text-lg font-semibold">Profile</p>
         <p>
           In this section you can edit all your personal and contact
           information.
-        </p>
+        </p> */}
       </div>
       <div className="flex items-center px-5">
-        <p className="text-2xl w-fit border rounded-full p-1 px-2 m-1 bg-gray-100 text-white bg-text-red text-xs">
+        <p className="w-fit border rounded-full p-1 px-2 m-1 text-white bg-text-red text-xs">
           {/* {profileData.nickName.slice(0, 1).toUpperCase()} */}
           {userName![0].toUpperCase()}
         </p>
-        {/* <p>{userDetails?.startList.users[0].email}</p> */}
         <p>{userEmail}</p>
       </div>
       <>

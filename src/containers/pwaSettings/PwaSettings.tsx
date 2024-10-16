@@ -1,5 +1,5 @@
 import { FaUser } from "react-icons/fa";
-import { RiLockPasswordFill } from "react-icons/ri";
+// import { RiLockPasswordFill } from "react-icons/ri";
 import { IoIosArrowForward } from "react-icons/io";
 import { RiLogoutBoxFill } from "react-icons/ri";
 import { MdPrivacyTip } from "react-icons/md";
@@ -29,7 +29,7 @@ const PwaSettings = () => {
   const handleLogout = async () => {
     // navigate("/");
     // setUserDetails(null);
-    
+
     const res = await logout();
     if (res.status === 200) {
       successAlert(1000, "Logged out successfully!");
@@ -59,7 +59,7 @@ const PwaSettings = () => {
             <IoIosArrowForward />
           </div>
         </div>
-        <div
+        {/* <div
           className="flex items-center justify-between px-8 py-3 border-b border-border-light-gray cursor-pointer"
           onClick={() => navigate("/changePassword")}
         >
@@ -70,7 +70,7 @@ const PwaSettings = () => {
           <div>
             <IoIosArrowForward />
           </div>
-        </div>
+        </div> */}
         <div
           className="flex items-center justify-between px-8 py-3 border-b border-border-light-gray cursor-pointer"
           onClick={() => navigate("/pwa/privacy&security")}

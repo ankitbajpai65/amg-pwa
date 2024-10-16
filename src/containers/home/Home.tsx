@@ -12,6 +12,7 @@ import { getToken } from "firebase/messaging";
 import { useEffect, useState } from "react";
 // import { useNavigate } from "react-router-dom";
 import useDeviceTokenApi from "@/components/hooks/notificationAPI/deviceToken/setDeviceToken";
+import { useTranslation } from "react-i18next";
 
 // const cardsData = [
 //   {
@@ -67,6 +68,7 @@ const Home = () => {
   const userEmail = localStorage.getItem("email");
 
   const { setDeviceToken } = useDeviceTokenApi();
+  const { t } = useTranslation();
 
   useEffect(() => {
     requestPermission();
@@ -174,7 +176,8 @@ const Home = () => {
       <div className="h-full flex items-center justify-center px-4 py-2 text-lg font-semibold">
         <h1 className="text-4xl mb-8">
           {/* Geetings {userDetails?.startList.users[0].nickName} */}
-          Geetings ankit
+          {/* Geetings ankit */}
+          {t("greet")}
         </h1>
       </div>
       <div className="p-2 flex justify-center flex-wrap gap-5 mobile:max-sm:gap-1 mobile:max-sm:p-1">
