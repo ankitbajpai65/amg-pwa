@@ -27,18 +27,20 @@ jobs:
       - name: Configure docker for GCP
         run: gcloud auth configure-docker          
 
-      - name: Build & Push
-        run: |-
-          gcloud builds submit \
-            --quiet \
-            --tag "gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA"
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: gcr.io/$PROJECT_ID/$SERVICE_NAME:latest
+          build-args: |
+            HTTP_PORT=3000
 
-      # Deploy image to Cloud Run
-      - name: Deploy GCR
-        run: |-
-          gcloud run deploy "$SERVICE_NAME" \
-            --quiet \
-            --region "$RUN_REGION" \
-            --image "gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA" \
-            --platform "managed" \
-            --allow-unauthenticated
+      - name: Deploy to Cloud Run
+        uses: google-github-actions/deploy-cloudrun@main
+        with:
+          image: gcr.io/$PROJECT_ID/$SERVICE_NAME:latest
+          service: $SERVICE_NAME
+          region: $RUN_REGION
+          platform: managed
+          allow-unauthenticated: true
