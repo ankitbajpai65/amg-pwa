@@ -24,8 +24,6 @@ export default function useLoginApi() {
     customer: string;
     serverType: string;
   }) => {
-    console.log("getUserLogin runs");
-
     console.log(reqBody);
 
     try {

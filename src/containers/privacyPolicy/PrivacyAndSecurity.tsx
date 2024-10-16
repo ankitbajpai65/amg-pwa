@@ -1,14 +1,55 @@
 import BodyBackBtn from "@/components/appComponents/BodyBackBtn";
+import NewLoader from "@/components/appComponents/NewLoader";
+import useUserDetailsApi from "@/components/hooks/useUserDetailsApi";
 import { Switch } from "@/components/ui/switch";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { IoIosArrowForward } from "react-icons/io";
 import { MdOutlineSecurity } from "react-icons/md";
 import { MdPrivacyTip } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
+type userPrivacyDetailsType = {
+  faceId: boolean;
+  fullName: boolean;
+  personalizedEmail: boolean;
+  pushNotifications: boolean;
+  advertisingPlat: boolean;
+};
+
 const PrivacyAndSecurity = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+
+  const { loading, getUserDetails } = useUserDetailsApi();
+
+  const [userPrivacyDetails, setUserPrivacyDetails] =
+    useState<userPrivacyDetailsType>();
+
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      const res = await getUserDetails();
+      console.log(res);
+
+      setUserPrivacyDetails({
+        faceId: true,
+        fullName: true,
+        personalizedEmail: true,
+        pushNotifications: true,
+        advertisingPlat: true,
+      });
+    };
+    fetchUserDetails();
+  }, []);
+
+  const handleSwitchChange = (field: keyof userPrivacyDetailsType) => {
+    setUserPrivacyDetails((prevDetails) => ({
+      ...prevDetails,
+      [field]: !prevDetails[field],
+    }));
+  };
+
+  if (loading) return <NewLoader />;
 
   return (
     <>
@@ -34,7 +75,12 @@ const PrivacyAndSecurity = () => {
             <label htmlFor="faceId">
               {t("settings.privacySecurity.section2.text1")}
             </label>
-            <Switch id="faceId" name="faceId" />
+            <Switch
+              id="faceId"
+              name="faceId"
+              checked={userPrivacyDetails?.faceId}
+              onCheckedChange={() => handleSwitchChange("faceId")}
+            />
           </div>
           <div className="flex items-center justify-between py-3">
             <div className="flex items-center text-lg">
@@ -45,6 +91,7 @@ const PrivacyAndSecurity = () => {
             </div>
           </div>
         </div>
+
         {/* Privacy settings */}
         <div className="mb-2 py-3 flex flex-col">
           <div className="text-text-light-gray py-2">
@@ -54,13 +101,20 @@ const PrivacyAndSecurity = () => {
             </div>
             <hr className="my-2 h-[0.5px] mx-0 px-0 border-t-0 bg-border-light-gray opacity-100 dark:opacity-50" />
           </div>
+
           {/* Show full name and image toggle */}
           <div className="flex justify-between">
             <label htmlFor="fullName">
               {t("settings.privacySecurity.section3.text1")}
             </label>
-            <Switch id="fullName" name="fullName" />
+            <Switch
+              id="fullName"
+              name="fullName"
+              checked={userPrivacyDetails?.fullName}
+              onCheckedChange={() => handleSwitchChange("fullName")}
+            />
           </div>
+
           {/* Privacy Policy link */}
           <div className="flex items-center justify-between py-3">
             <div className="flex items-center text-lg">
@@ -75,6 +129,7 @@ const PrivacyAndSecurity = () => {
             </div>
           </div>
         </div>
+
         {/* Marketing settings */}
         <div className="mb-2 py-3 flex flex-col">
           <div className="text-text-light-gray py-2">
@@ -86,14 +141,19 @@ const PrivacyAndSecurity = () => {
           </div>
           <div className="flex justify-between py-3">
             <div className="pr-14">
-              <label htmlFor="safetyLock">
+              <label htmlFor="personalizedEmail">
                 {t("settings.privacySecurity.section4.subTitle1")}
               </label>
               <p className="text-xs text-text-light-gray">
                 {t("settings.privacySecurity.section4.subDesc1")}
               </p>
             </div>
-            <Switch id="safetyLock" name="safetyLock" />
+            <Switch
+              id="personalizedEmail"
+              name="personalizedEmail"
+              checked={userPrivacyDetails?.personalizedEmail}
+              onCheckedChange={() => handleSwitchChange("personalizedEmail")}
+            />
           </div>
           <div className="flex justify-between py-3">
             <div className="pr-14">
@@ -104,7 +164,12 @@ const PrivacyAndSecurity = () => {
                 {t("settings.privacySecurity.section4.subDesc2")}
               </p>
             </div>
-            <Switch id="safetyLock" name="safetyLock" />
+            <Switch
+              id="pushNotifications"
+              name="pushNotifications"
+              checked={userPrivacyDetails?.pushNotifications}
+              onCheckedChange={() => handleSwitchChange("pushNotifications")}
+            />
           </div>
           <div className="flex justify-between py-3">
             <div className="pr-14">
@@ -115,7 +180,12 @@ const PrivacyAndSecurity = () => {
                 {t("settings.privacySecurity.section4.subDesc1")}
               </p>
             </div>
-            <Switch id="safetyLock" name="safetyLock" />
+            <Switch
+              id="advertisingPlat"
+              name="advertisingPlat"
+              checked={userPrivacyDetails?.advertisingPlat}
+              onCheckedChange={() => handleSwitchChange("advertisingPlat")}
+            />
           </div>
         </div>
       </div>
