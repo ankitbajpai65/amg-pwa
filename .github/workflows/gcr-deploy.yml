@@ -3,7 +3,7 @@ name: Google Cloud Run Deploy
 on:
   push:
     branches:
-      - master
+      - main
 
 env:
   PROJECT_ID: ${{ secrets.GCR_PROJECT }}
@@ -17,7 +17,7 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@main
-        
+
       - name: Setup gcloud CLI
         uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:
