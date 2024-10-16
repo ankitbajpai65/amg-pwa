@@ -56,6 +56,7 @@ import GptPrompt from "./containers/genAi/GptPrompt.tsx";
 
 import NotificationProvider from "./lib/context/notificationContext.tsx";
 import NotificationFlagProvider from "./lib/context/notificationFlagContext.tsx";
+import Signup from "./containers/login/Signup.tsx";
 
 registerSW({ immediate: true });
 
@@ -63,6 +64,7 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/">
       <Route path="" element={<App />} />
+      <Route path="signup" element={<Signup />} />
       <Route path="changePassword" element={<ChangePass />} />
       <Route path="forgotPassword" element={<ForgotPass />} />
       <Route

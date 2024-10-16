@@ -8,7 +8,7 @@ import { warnAlert } from "@/components/appComponents/appAlert";
 // } from "@/components/ui/card";
 import { messaging } from "@/firebase";
 import { getToken } from "firebase/messaging";
-import { useUserDetails } from "@/lib/context/userDetailsContext";
+// import { useUserDetails } from "@/lib/context/userDetailsContext";
 import { useEffect, useState } from "react";
 // import { useNavigate } from "react-router-dom";
 import useDeviceTokenApi from "@/components/hooks/notificationAPI/deviceToken/setDeviceToken";
@@ -63,7 +63,7 @@ import useDeviceTokenApi from "@/components/hooks/notificationAPI/deviceToken/se
 const Home = () => {
   const [printToken, setToken] = useState("");
 
-  const { userDetails } = useUserDetails();
+  // const { userDetails } = useUserDetails();
   const userEmail = localStorage.getItem("email");
 
   const { setDeviceToken } = useDeviceTokenApi();
@@ -173,7 +173,8 @@ const Home = () => {
     <div className="h-full p-2">
       <div className="h-full flex items-center justify-center px-4 py-2 text-lg font-semibold">
         <h1 className="text-4xl mb-8">
-          Welcome {userDetails?.startList.users[0].nickName},
+          {/* Geetings {userDetails?.startList.users[0].nickName} */}
+          Geetings ankit
         </h1>
       </div>
       <div className="p-2 flex justify-center flex-wrap gap-5 mobile:max-sm:gap-1 mobile:max-sm:p-1">

@@ -1,11 +1,12 @@
-import { useUserDetails } from "@/lib/context/userDetailsContext";
+// import { useUserDetails } from "@/lib/context/userDetailsContext";
 import useAmgLogsAiApi from "./useAmgLogsAiApi";
 
 const useHandleAllLogAiAPI = () => {
   const { getLogsAiStatus } = useAmgLogsAiApi();
-  const { userDetails } = useUserDetails();
+  // const { userDetails } = useUserDetails();
 
-  const userEmail = userDetails?.startList.users[0].email as string;
+  // const userEmail = userDetails?.startList.users[0].email as string;
+  const userEmail = localStorage.getItem("email");
   function handleAllLogAiApi(props: {
     question: string;
     answer: string;
@@ -18,11 +19,9 @@ const useHandleAllLogAiAPI = () => {
     wordsIn: string;
     wordsOut: string;
   }) {
-    
-
     try {
       getLogsAiStatus({
-        userEmail: userEmail,
+        userEmail: userEmail ?? "",
         question: props.question,
         answer: props.answer,
         result: props.reaction,
