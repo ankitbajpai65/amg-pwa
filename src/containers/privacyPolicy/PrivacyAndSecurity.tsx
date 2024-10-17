@@ -43,8 +43,10 @@ const PrivacyAndSecurity = () => {
   }, []);
 
   const handleSwitchChange = (field: keyof userPrivacyDetailsType) => {
+    //@ts-ignore
     setUserPrivacyDetails((prevDetails) => ({
       ...prevDetails,
+      //@ts-ignore
       [field]: !prevDetails[field],
     }));
   };
@@ -53,7 +55,7 @@ const PrivacyAndSecurity = () => {
 
   return (
     <>
-      <BodyBackBtn btnText="Privacy and Security" />
+      <BodyBackBtn btnText={t("settings.privacySecurity.section1.title")} />
       {/* body---------- */}
       <div className="py-4 px-5 text-text-blue">
         <p className="text-lg font-semibold">

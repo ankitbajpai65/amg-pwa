@@ -2,6 +2,7 @@ import Loader from "@/components/appComponents/Loader";
 import useDeleteNotificationsApi from "@/components/hooks/notificationAPI/notificationList/deleteNotification";
 import { useNotificationContext } from "@/lib/context/notificationContext";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { MdDeleteForever } from "react-icons/md";
 
 const Notifications = () => {
@@ -9,6 +10,7 @@ const Notifications = () => {
   const [loaderVisible, setLoaderVisible] = useState(false);
 
   const { notificationList, setNotificationList } = useNotificationContext();
+  const { t } = useTranslation();
 
   const { deleteNotification, deleteNotificationRes } =
     useDeleteNotificationsApi();
@@ -39,7 +41,7 @@ const Notifications = () => {
   return (
     <div className="h-full px-2">
       <div className="py-4 px-5 text-text-blue">
-        <p className="text-lg font-semibold">Notifications</p>
+        <p className="text-lg font-semibold">{t("settings.notifications.title")}</p>
         {/* <p>Change your settings and information.</p> */}
       </div>
       <div className="px-5 py-1">
