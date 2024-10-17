@@ -1,11 +1,8 @@
 import { FaHome } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
-// import { CiBarcode } from "react-icons/ci";
 import { MdDocumentScanner } from "react-icons/md";
-// import { FaCalendarDay } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import { FaLaptopCode } from "react-icons/fa";
-// import { HiMiniChatBubbleBottomCenterText } from "react-icons/hi2";
 
 const Footer = () => {
   const navigate = useNavigate();
@@ -23,25 +20,14 @@ const Footer = () => {
             <FaHome size={20} onClick={() => handleClick()} title="Home" />
             <p className="text-xs">Home</p>
           </div>
-          {/* <div className="flex flex-col items-center">
-            <FaCalendarDay
-              style={{ paddingRight: "5px" }}
-              size={20}
-              title="Map"
-              onClick={() => navigate("/pwa/calendar")}
-            />
-            <p className="text-xs">Calendar</p>
-          </div> */}
+
           <div className="flex flex-col items-center">
             <FaLaptopCode
-              // style={{ paddingRight: "5px"}}
               size={20}
               title="Scanner"
               onClick={() => navigate("/pwa/genaiservices/gpt-prompt")}
-              // onClick={() => navigate(`/pwa/home`)}
             />
-            {/* <p className="text-xs">Gpt Prompt</p> */}
-            <p className="text-xs">EasyDAI</p>
+            <p className="text-xs">GenAISpace</p>
           </div>
           <div className="flex flex-col items-center">
             <FaLocationDot
@@ -59,23 +45,8 @@ const Footer = () => {
               title="Scanner"
               onClick={() => navigate("/pwa/qrScan")}
             />
-            {/* <CiBarcode
-              style={{ paddingRight: "5px" }}
-              size={25}
-              title="Scanner"
-              onClick={() => navigate("/pwa/qrScan")}
-            /> */}
             <p className="text-xs">Scan</p>
           </div>
-          {/* <div className="flex flex-col items-center">
-            <HiMiniChatBubbleBottomCenterText
-              style={{ paddingRight: "5px" }}
-              size={25}
-              title="Scanner"
-              onClick={() => navigate("/pwa/gen-ai/chat-with-your-files")}
-            />
-            <p className="text-xs">File Chat</p>
-          </div> */}
         </div>
       </div>
     </>
