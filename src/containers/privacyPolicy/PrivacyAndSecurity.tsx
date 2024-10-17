@@ -8,6 +8,7 @@ import { IoIosArrowForward } from "react-icons/io";
 import { MdOutlineSecurity } from "react-icons/md";
 import { MdPrivacyTip } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import ChangeEmailModal from "./ChangeEmailModal";
 
 type userPrivacyDetailsType = {
   faceId: boolean;
@@ -25,6 +26,8 @@ const PrivacyAndSecurity = () => {
 
   const [userPrivacyDetails, setUserPrivacyDetails] =
     useState<userPrivacyDetailsType>();
+  const [changeEmailModalOpen, setChangeEmailModalOpen] =
+    useState<boolean>(false);
 
   useEffect(() => {
     const fetchUserDetails = async () => {
@@ -74,6 +77,8 @@ const PrivacyAndSecurity = () => {
   };
 
   if (loading) return <NewLoader />;
+  if (changeEmailModalOpen)
+    return <ChangeEmailModal isOpen={changeEmailModalOpen} />;
 
   return (
     <>
@@ -106,7 +111,10 @@ const PrivacyAndSecurity = () => {
               onCheckedChange={() => handleSwitchChange("faceId")}
             />
           </div>
-          <div className="flex items-center justify-between py-3">
+          <div
+            onClick={() => setChangeEmailModalOpen(true)}
+            className="flex items-center justify-between py-3"
+          >
             <div className="flex items-center text-lg">
               <p>{t("settings.privacySecurity.section2.text2")}</p>
             </div>

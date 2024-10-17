@@ -61,10 +61,35 @@ const useUserDetailsApi = () => {
     }
   };
 
+  const changeEmail = async (oldEmail: string, newEmail: string) => {
+    setLoading(true);
+    try {
+      const response = await fetch(`${url}/auth/pwa_change_email/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: accessToken as string,
+        },
+        body: JSON.stringify({
+          old_Email: oldEmail,
+          new_Email: newEmail,
+        }),
+      });
+
+      const res = await response.json();
+      return res;
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return {
     loading,
     getUserDetails,
     updatePrivacyDetails,
+    changeEmail,
   };
 };
 
