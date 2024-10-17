@@ -1,4 +1,5 @@
 {
+  "greetings":"Greetings",
   "settings": {
     "title": "Settings",
     "desc": "Change your settings and information.",
