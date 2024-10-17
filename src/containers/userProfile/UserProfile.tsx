@@ -33,7 +33,7 @@ const UserProfile = () => {
       </div>
       <div className="flex items-center px-5">
         <p className="w-fit border rounded-full p-1 px-2 m-1 text-white bg-text-red text-xs">
-          {userName![0].toUpperCase()}
+          {userName && userName![0].toUpperCase()}
         </p>
         <p>
           {userName![0].toUpperCase()}

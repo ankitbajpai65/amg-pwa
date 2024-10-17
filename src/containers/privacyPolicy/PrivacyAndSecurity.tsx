@@ -148,15 +148,14 @@ const PrivacyAndSecurity = () => {
           </div>
 
           {/* Privacy Policy link */}
-          <div className="flex items-center justify-between py-3">
+          <div
+            onClick={() => navigate("/pwa/privacy&security/privacy")}
+            className="flex items-center justify-between py-3"
+          >
             <div className="flex items-center text-lg">
               <p>{t("settings.privacySecurity.section3.text2")}</p>
             </div>
-            <div
-              onClick={() => {
-                navigate("/pwa/privacy&security/privacyDisplay");
-              }}
-            >
+            <div>
               <IoIosArrowForward />
             </div>
           </div>

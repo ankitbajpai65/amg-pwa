@@ -1,6 +1,10 @@
 import { useEffect } from "react";
+import { IoMdArrowRoundBack } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
 
 const PrivacyPolicy = () => {
+  const navigate = useNavigate();
+
   useEffect(() => {
     const script = document.createElement("script");
     script.src = "https://cdn.iubenda.com/iubenda.js";
@@ -14,6 +18,12 @@ const PrivacyPolicy = () => {
 
   return (
     <div className="container mx-auto p-8">
+      <button
+        onClick={() => navigate("/pwa/privacy&security")}
+        className="bg-zinc-200 p-2 rounded-full -ml-4"
+      >
+        <IoMdArrowRoundBack />
+      </button>
       <h1 className="text-2xl text-center font-bold mb-6">
         PRIVACY POLICY SITO INTERNET
       </h1>
