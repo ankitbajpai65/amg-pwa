@@ -11,7 +11,6 @@ import NativeIcons from "./NativeIcons";
 import { useNotificationContext } from "@/lib/context/notificationContext";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
-// import { useEffect } from "react";
 
 const Header = (props: { toggleSidebar?: () => void }) => {
   const navigate = useNavigate();

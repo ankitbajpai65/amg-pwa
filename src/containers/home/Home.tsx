@@ -3,6 +3,7 @@ import { messaging } from "@/firebase";
 import { getToken } from "firebase/messaging";
 import { useEffect, useState } from "react";
 import useDeviceTokenApi from "@/components/hooks/notificationAPI/deviceToken/setDeviceToken";
+import { useTranslation } from "react-i18next";
 
 const Home = () => {
   const [printToken, setToken] = useState("");
@@ -11,7 +12,7 @@ const Home = () => {
   const userName = localStorage.getItem("userName");
 
   const { setDeviceToken } = useDeviceTokenApi();
-  // const { t } = useTranslation();
+  const { t } = useTranslation();
 
   useEffect(() => {
     requestPermission();
@@ -93,7 +94,9 @@ const Home = () => {
   return (
     <div className="h-full p-2">
       <div className="h-full flex items-center justify-center px-4 py-2 text-lg font-semibold">
-        <h1 className="text-4xl mb-8">Geetings {userName}</h1>
+        <h1 className="text-center text-4xl mb-8">
+          {t("greetings")} {userName}
+        </h1>
       </div>
       <div className="p-2 flex justify-center flex-wrap gap-5 mobile:max-sm:gap-1 mobile:max-sm:p-1"></div>
     </div>
