@@ -29,8 +29,8 @@ const UserProfile = () => {
   // const [btnDisabled, setBtnDisabled] = useState(true);
 
   const userEmail = localStorage.getItem("email");
-  const userName = localStorage.getItem("userName") ?? "ankit bajpai";
-  const userMobile = localStorage.getItem("userMobile") ?? 555555;
+  const userName = localStorage.getItem("userName");
+  const userMobile = localStorage.getItem("userMobile");
 
   // const [profileData, setProfileData] = useState<Inputs>({
   //   name: userDetails?.startList.users[0].description
@@ -176,7 +176,7 @@ const UserProfile = () => {
       <div className="flex items-center px-5">
         <p className="text-2xl w-fit border rounded-full p-1 px-2 m-1 bg-gray-100 text-white bg-text-red text-xs">
           {/* {profileData.nickName.slice(0, 1).toUpperCase()} */}
-          {userName[0].toUpperCase()}
+          {userName![0].toUpperCase()}
         </p>
         {/* <p>{userDetails?.startList.users[0].email}</p> */}
         <p>{userEmail}</p>
@@ -196,7 +196,7 @@ const UserProfile = () => {
                   id="name"
                   readOnly
                   // value={profileData.name}
-                  value={userName}
+                  value={userName!}
                   aria-readonly
                   // onChange={(e) => handleInputChange(e)}
                 />
@@ -225,7 +225,7 @@ const UserProfile = () => {
                   id="phone"
                   readOnly
                   // value={profileData.phone}
-                  value={userMobile}
+                  value={userMobile!}
                   // onChange={(e) => handleInputChange(e)}
                 ></input>
               </div>

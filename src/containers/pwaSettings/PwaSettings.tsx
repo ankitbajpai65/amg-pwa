@@ -6,7 +6,7 @@ import { MdPrivacyTip } from "react-icons/md";
 import { IoMdNotifications } from "react-icons/io";
 import { IoHelpCircle } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
-import { useUserDetails } from "@/lib/context/userDetailsContext";
+// import { useUserDetails } from "@/lib/context/userDetailsContext";
 import {
   Dialog,
   DialogContent,
@@ -16,18 +16,30 @@ import {
   DialogTrigger,
   DialogDescription,
 } from "@/components/ui/dialog";
+import useAuthApi from "@/components/hooks/useAuthApi";
+import Loader from "@/components/appComponents/Loader";
+import { successAlert } from "@/components/appComponents/appAlert";
 
 const PwaSettings = () => {
   const navigate = useNavigate();
 
-  const { setUserDetails } = useUserDetails();
+  // const { setUserDetails } = useUserDetails();
+  const { loading, logout } = useAuthApi();
 
-  const handleLogout = () => {
-    navigate("/");
-    localStorage.removeItem("isLoggedIn");
-    localStorage.removeItem("email");
-    setUserDetails(null);
+  const handleLogout = async () => {
+    // navigate("/");
+    // setUserDetails(null);
+    
+    const res = await logout();
+    if (res.status === 200) {
+      successAlert(1000, "Logged out successfully!");
+      // localStorage.removeItem("isLoggedIn");
+      // localStorage.removeItem("email");
+      // localStorage.removeItem("email");
+      navigate("/");
+    }
   };
+
   return (
     <div>
       <div className="py-4 px-5 text-text-blue">
@@ -125,6 +137,9 @@ const PwaSettings = () => {
                     className="bg-text-red text-white rounded-md text-l p-1 m-2 px-2"
                   >
                     Logout
+                    <span className="px-2">
+                      <Loader status={loading} size={4} />
+                    </span>
                   </button>
                 </DialogClose>
                 <DialogClose>

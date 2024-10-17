@@ -56,7 +56,78 @@ const useAuthApi = () => {
         localStorage.setItem("isLoggedIn", "true");
         localStorage.setItem("email", reqBody.email);
         localStorage.setItem("AccessToken", res.token);
+        localStorage.setItem("userName", res.user_name);
+        localStorage.setItem("userMobile", res.phone_number);
       }
+      return res;
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const logout = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch(`${url}/auth/pwa_logout_user/`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const res = await response.json();
+      return res;
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const forgetPassword = async (email: string) => {
+    setLoading(true);
+    try {
+      const response = await fetch(`${url}/auth/pwa_forget_password/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email,
+        }),
+      });
+
+      const res = await response.json();
+      return res;
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const verifyOtp = async (reqBody: {
+    email: string;
+    otp: string;
+    newPassword: string;
+  }) => {
+    setLoading(true);
+    try {
+      const response = await fetch(`${url}/auth/pwa_forget_verify_otp/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: reqBody.email,
+          passcode: reqBody.otp,
+          new_password: reqBody.newPassword,
+        }),
+      });
+
+      const res = await response.json();
       return res;
     } catch (error) {
       console.log(error);
@@ -69,6 +140,9 @@ const useAuthApi = () => {
     loading,
     signup,
     login,
+    logout,
+    forgetPassword,
+    verifyOtp,
   };
 };
 
