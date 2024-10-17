@@ -1,7 +1,9 @@
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
 const QrCodeScan = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
     <div className="flex flex-col h-full justify-center grow">
@@ -11,7 +13,7 @@ const QrCodeScan = () => {
       focus:bg-red-500 active:bg-red-700"
         onClick={() => navigate("/pwa/qrScan/uploadScan")}
       >
-        Upload
+        {t("scan.btn1")}
       </button>
       <button
         className="rounded-md text-xl bg-text-red py-2 px-4 m-2 border text-white
@@ -19,7 +21,7 @@ const QrCodeScan = () => {
       focus:bg-red-500 active:bg-red-700"
         onClick={() => navigate("/pwa/qrScan/scanNow")}
       >
-        Scan Now
+        {t("scan.btn2")}
       </button>
     </div>
   );

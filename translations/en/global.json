@@ -1,0 +1,117 @@
+{
+  "settings": {
+    "title": "Settings",
+    "desc": "Change your settings and information.",
+    "options": {
+      "profile": "Profile",
+      "passwordChange": "Change Password",
+      "privacySecurity": "Privacy and Security",
+      "notifications": "Notifications",
+      "help": "Help and Support",
+      "logout": "Logout"
+    },
+    "profile": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "mode": "Dark Mode"
+    },
+    "privacySecurity": {
+      "section1": {
+        "title": "Privacy and Security",
+        "desc": "Manage your privacy preferences, security marketing and more."
+      },
+      "section2": {
+        "title": "Security",
+        "text1": "Use Face ID for access",
+        "text2": "Change Email Address"
+      },
+      "section3": {
+        "title": "Privacy",
+        "text1": "Show full name and image",
+        "text2": "Privacy Policy"
+      },
+      "section4": {
+        "title": "Marketing",
+        "subTitle1": "Personalized emails",
+        "subDesc1": "I authorize GenAi Space to send me emails about products, services and offers that may be of interest to me.",
+        "subTitle2": "Custom push notifications",
+        "subDesc2": "I authorize GenAi Space to send me push notifications about products, services and offers that may be of interest to me.",
+        "subTitle3": "Advertising platforms and social media",
+        "subDesc3": "I authorize GenAi Space to share my data (name, email, and app events) with social and promotional platforms for advertising purposes and to conduct analytics."
+      }
+    },
+    "notifications": {
+      "title": "Notifications",
+      "caption": "Choose what to be updated on.",
+      "caption2": "Notifications about new services",
+      "email": "Email",
+      "push": "Push",
+      "btn": "Save Edits"
+    },
+    "help": {
+      "title": "Help and Support",
+      "caption": "Find suggestions and answers to your doubts and questions.",
+      "section1": {
+        "title": "Get Started"
+      },
+      "section2": {
+        "title": "What is a Copilot"
+      },
+      "section3": {
+        "title": "Help and FAQ",
+        "faq": {
+          "title": "Frequently asked questions",
+          "caption": "Here you will find the most common questions with all the answers.",
+          "question": "Question"
+        }
+      }
+    },
+    "logout": {
+      "title": "Logout",
+      "message": "Do you want to log out of your account?",
+      "btn1": "Logout",
+      "btn2": "Cancel"
+    }
+  },
+  "map": {
+    "title": "Map",
+    "caption": "Use the map to locate each landmark and destination."
+  },
+  "scan": {
+    "btn1": "Upload",
+    "btn2": "Scan Now"
+  },
+  "genai": {
+    "text": "Ask me anything"
+  },
+  "signup": {
+    "name": "Name",
+    "email": "Email",
+    "mobile": "Mobile",
+    "password": "Password",
+    "text": "Already have an account?",
+    "btn1": "Submit",
+    "btn2": "Login"
+  },
+  "login":{
+    "email": "Email",
+    "password": "Password",
+    "text1": "Don't have an account?",
+    "text2": "Forget Password",
+    "btn1": "Login",
+    "btn2": "Signup"
+  },
+  "forgetPassword": {
+    "title": "Forget Password",
+    "caption": "Reset your password in few steps.",
+    "button": "Confirm",
+    "newPassword": {
+      "heading": "Create New Password",
+      "email": "Email",
+      "otp": "OTP",
+      "newPassword": "New Password",
+      "button": "Submit"
+    }
+  }
+}

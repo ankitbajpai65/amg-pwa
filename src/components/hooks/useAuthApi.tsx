@@ -3,6 +3,7 @@ import { useState } from "react";
 const url = "https://genaiservices-be.datapartners.ch";
 
 const useAuthApi = () => {
+  const accessToken = localStorage.getItem("AccessToken");
   const [loading, setLoading] = useState<boolean>(false);
 
   const signup = async (reqBody: {
@@ -74,6 +75,7 @@ const useAuthApi = () => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          Authorization: accessToken as string,
         },
       });
 
@@ -93,6 +95,7 @@ const useAuthApi = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: accessToken as string,
         },
         body: JSON.stringify({
           email: email,

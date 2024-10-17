@@ -5,6 +5,7 @@ import { Switch } from "@/components/ui/switch";
 import { useNotificationFlagContext } from "@/lib/context/notificationFlagContext";
 import { primaryBtnStyle } from "@/lib/cssTailwind";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const NotificationSetting = () => {
   const { notificationFlag, setNotificationFlag } =
@@ -20,49 +21,13 @@ const NotificationSetting = () => {
     generalFlagEmail: notificationFlag?.generalFlagEmail ?? false,
     generalFlagPush: notificationFlag?.generalFlagPush ?? false,
   });
-
+  const { t } = useTranslation();
   const [changeControlFlag, setChangeControlFlag] = useState(false);
-
-  // const { getNotificationFlagStatusRes, getNotificationFlagStatus } =
-  //   useGetNotificationFlagsApi();
 
   const { setNotificationFlagStatus, setNotificationFlagStatusRes } =
     useSetNotificationFlagsApi();
 
   let timer: NodeJS.Timeout;
-
-  // useEffect(() => {
-  //   if (notificationFlag) {
-  //     setNotificationFlaglocal(() => notificationFlag);
-  //   }
-  // }, []);
-
-  // useEffect(() => {
-  //   getNotificationFlagStatus();
-  // }, []);
-
-  // useEffect(() => {
-  //   if (getNotificationFlagStatusRes?.status === 200) {
-  //     setNotificationFlag(() => ({
-  //       newServiceFlagEmail:
-  //         getNotificationFlagStatusRes.response.chat_email === "true"
-  //           ? true
-  //           : false,
-  //       newServiceFlagPush:
-  //         getNotificationFlagStatusRes.response.chat_push === "true"
-  //           ? true
-  //           : false,
-  //       generalFlagEmail:
-  //         getNotificationFlagStatusRes.response.general_email === "true"
-  //           ? true
-  //           : false,
-  //       generalFlagPush:
-  //         getNotificationFlagStatusRes.response.general_push === "true"
-  //           ? true
-  //           : false,
-  //     }));
-  //   }
-  // }, [getNotificationFlagStatusRes]);
 
   useEffect(() => {
     if (
@@ -116,24 +81,19 @@ const NotificationSetting = () => {
     <div>
       <BodyBackBtn btnText="Notifications" />
       <div className="py-4 px-5 text-text-blue">
-        <p className="text-lg font-semibold">Notifications</p>
-        <p>Choose what to be updated on.</p>
+        <p className="text-lg font-semibold">{t("settings.notifications.title")}</p>
+        <p>{t("settings.notifications.caption")}</p>
       </div>
       <div className="px-5 py-1">
-        {/* <div className="flex justify-between">
-          <label htmlFor="faceId">Use Face ID for access</label>
-          <Switch id="faceId" name="faceId" />
-        </div> */}
-        {/* Notifications about new services */}
         <div className="mb-2 py-3 flex flex-col">
           <div className="text-text-light-gray py-2">
             <div className="flex items-center">
-              <p>Notifications about new services</p>
+              <p>{t("settings.notifications.caption2")}</p>
             </div>
             <hr className="my-2 h-[0.5px] mx-0 px-0 border-t-0 bg-border-light-gray opacity-100 dark:opacity-50" />
           </div>
           <div className="flex justify-between py-1">
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email">{t("settings.notifications.email")}</label>
             <Switch
               id="email"
               name="email"
@@ -147,7 +107,7 @@ const NotificationSetting = () => {
             />
           </div>
           <div className="flex justify-between py-1">
-            <label htmlFor="push">Push</label>
+            <label htmlFor="push">{t("settings.notifications.push")}</label>
             <Switch
               id="push"
               name="push"
@@ -206,7 +166,7 @@ const NotificationSetting = () => {
             onClick={() => updateNotificationSettings()}
             disabled={!changeControlFlag}
           >
-            Save Edits
+            {t("settings.notifications.btn")}
           </button>
         </div>
       </div>

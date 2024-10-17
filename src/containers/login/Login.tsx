@@ -7,6 +7,8 @@ import { inputStyle, primaryBtnStyle } from "@/lib/cssTailwind";
 import { IoEyeOutline } from "react-icons/io5";
 import { IoEyeOffOutline } from "react-icons/io5";
 import useAuthApi from "@/components/hooks/useAuthApi";
+import { useTranslation } from "react-i18next";
+import { validateEmail } from "@/utils";
 
 type Inputs = {
   email: string;
@@ -15,6 +17,7 @@ type Inputs = {
 
 const Login = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [loginData, setLoginData] = useState<Inputs>({
     email: "",
     password: "",
@@ -33,7 +36,11 @@ const Login = () => {
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    console.log("handleSubmit runs");
+
+    if (!validateEmail(loginData.email)) {
+      errorAlert(1000, "Please enter a valid email!");
+      return;
+    }
 
     if (loginData.email && loginData.password) {
       const res = await login(loginData);
@@ -93,7 +100,7 @@ const Login = () => {
             type="email"
             id="email"
             name="email"
-            placeholder="Email"
+            placeholder={t("login.email")}
             value={loginData.email}
             onChange={(e) => handleInputChange(e)}
           />
@@ -103,7 +110,7 @@ const Login = () => {
               type={passwordVisible ? "text" : "password"}
               id="password"
               name="password"
-              placeholder="Password"
+              placeholder={t("login.password")}
               value={loginData.password}
               onChange={(e) => handleInputChange(e)}
             />
@@ -126,7 +133,7 @@ const Login = () => {
             type="submit"
             disabled={loading}
           >
-            Entra
+            {t("login.btn1")}
             <span className="px-2">
               <Loader status={loading} size={4} />
             </span>
@@ -135,28 +142,21 @@ const Login = () => {
 
         <div className="flex items-center flex-col gap-2">
           <span>
-            <span>Don't have an account?</span>
+            <span>{t("login.text1")}</span>
             <button
               onClick={() => navigate("/signup")}
               className="ml-3 hover:underline hover:text-red-600"
             >
-              Signup
+              {t("login.btn2")}
             </button>
           </span>
           <span className="flex">
-            {/* <a
-              className="text-text-blue underline transition duration-150 ease-in-out hover:text-red-600 focus:text-red-600 active:text-red-700"
-              href="/changePassword"
-            >
-              Change Password
-            </a>
-            <p className="px-1">|</p> */}
             <a
               className="text-text-blue underline transition duration-150 ease-in-out
         hover:text-red-600 focus:text-red-600 active:text-red-700"
               href="/forgotPassword"
             >
-              Forgot Password
+              {t("login.text2")}
             </a>
           </span>
         </div>
