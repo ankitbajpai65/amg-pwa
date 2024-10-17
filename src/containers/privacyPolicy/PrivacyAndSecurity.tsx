@@ -21,7 +21,7 @@ const PrivacyAndSecurity = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
-  const { loading, getUserDetails } = useUserDetailsApi();
+  const { loading, getUserDetails, updatePrivacyDetails } = useUserDetailsApi();
 
   const [userPrivacyDetails, setUserPrivacyDetails] =
     useState<userPrivacyDetailsType>();
@@ -29,26 +29,48 @@ const PrivacyAndSecurity = () => {
   useEffect(() => {
     const fetchUserDetails = async () => {
       const res = await getUserDetails();
-      console.log(res);
+      console.log(res.response.privacy_policy);
 
       setUserPrivacyDetails({
-        faceId: true,
-        fullName: true,
-        personalizedEmail: true,
-        pushNotifications: true,
-        advertisingPlat: true,
+        faceId: res.response.privacy_policy.Use_Face_ID_for_access,
+        fullName: res.response.privacy_policy.Show_full_name_and_image,
+        personalizedEmail: res.response.privacy_policy.Personalized_emails,
+        pushNotifications:
+          res.response.privacy_policy.Custom_push_notifications,
+        advertisingPlat:
+          res.response.privacy_policy.Advertising_platforms_and_social_media,
       });
     };
     fetchUserDetails();
   }, []);
 
-  const handleSwitchChange = (field: keyof userPrivacyDetailsType) => {
-    //@ts-ignore
-    setUserPrivacyDetails((prevDetails) => ({
-      ...prevDetails,
-      //@ts-ignore
-      [field]: !prevDetails[field],
-    }));
+  const handleSwitchChange = async (field: keyof userPrivacyDetailsType) => {
+    console.log("handleSwitchChange runs", field);
+
+    // @ts-ignore
+    setUserPrivacyDetails((prevDetails) => {
+      const updatedDetails = {
+        ...prevDetails,
+        // @ts-ignore
+        [field]: !prevDetails[field],
+      };
+
+      const reqBody = {
+        faceId: updatedDetails?.faceId,
+        fullName: updatedDetails?.fullName,
+        personalizedEmail: updatedDetails?.personalizedEmail,
+        pushNotifications: updatedDetails?.pushNotifications,
+        advertisingPlat: updatedDetails?.advertisingPlat,
+      };
+
+      updatePrivacyDetails(reqBody)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.error("Error updating privacy details:", err);
+        });
+    });
   };
 
   if (loading) return <NewLoader />;

@@ -26,24 +26,30 @@ const useUserDetailsApi = () => {
     }
   };
 
-  const updatePrivacyDetails = async () => {
-    const reqBody = {
-      Show_full_name_and_image: true,
-      Use_Face_ID_for_access: true,
-      Personalized_emails: true,
-      Custom_push_notifications: true,
-      Advertising_platforms_and_social_media: true,
-    };
-    
-    setLoading(true);
+  const updatePrivacyDetails = async (reqBody: {
+    faceId?: boolean;
+    fullName?: boolean;
+    personalizedEmail?: boolean;
+    pushNotifications?: boolean;
+    advertisingPlat?: boolean;
+  }) => {
+    // setLoading(true);
+    console.log(reqBody);
+
     try {
-      const response = await fetch(`${url}/pwa/user_details/`, {
+      const response = await fetch(`${url}/pwa/privacy_details/`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
           Authorization: accessToken as string,
         },
-        body: JSON.stringify(reqBody),
+        body: JSON.stringify({
+          Show_full_name_and_image: reqBody.fullName,
+          Use_Face_ID_for_access: reqBody.faceId,
+          Personalized_emails: reqBody.personalizedEmail,
+          Custom_push_notifications: reqBody.pushNotifications,
+          Advertising_platforms_and_social_media: reqBody.advertisingPlat,
+        }),
       });
 
       const res = await response.json();
@@ -51,7 +57,7 @@ const useUserDetailsApi = () => {
     } catch (error) {
       console.log(error);
     } finally {
-      setLoading(false);
+      // setLoading(false);
     }
   };
 
