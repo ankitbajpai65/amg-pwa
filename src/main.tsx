@@ -19,7 +19,7 @@ import ThemeContextProvider from "./lib/context/themeContext.tsx";
 import PrivacyPolicy from "./containers/privacyPolicy/PrivacyPolicy.tsx";
 import UserDetailsProvider from "./lib/context/userDetailsContext.tsx";
 import UserProfile from "./containers/userProfile/UserProfile.tsx";
-import PrivacyPolicy2 from "./containers/privacyPolicy/PrivacyPolicy2.tsx";
+// import PrivacyPolicy2 from "./containers/privacyPolicy/PrivacyPolicy2.tsx";
 import QrCodeScan from "./containers/qrCodeScan/QrCodeScan.tsx";
 import ScanNow from "./containers/qrCodeScan/ScanNow.tsx";
 import UploadScan from "./containers/qrCodeScan/UploadScan.tsx";
@@ -85,22 +85,22 @@ const router = createBrowserRouter(
           </ProtectedRoutes>
         }
       >
-        <Route
+        {/* <Route
           path="privacy/"
           element={
             <ProtectedRoutes>
               <PrivacyPolicy />
             </ProtectedRoutes>
           }
-        />
-        <Route
+        /> */}
+        {/* <Route
           path="privacy2/"
           element={
             <ProtectedRoutes>
               <PrivacyPolicy2 />
             </ProtectedRoutes>
           }
-        />
+        /> */}
       </Route>
       <Route
         path="pwa/"
@@ -121,7 +121,7 @@ const router = createBrowserRouter(
 
         <Route path="privacy&security/" element={<PrivacyAndSecurity />} />
         <Route
-          path="privacy&security/privacyDisplay/"
+          path="privacy&security/privacy"
           element={
             <ProtectedRoutes>
               <PrivacyPolicy />

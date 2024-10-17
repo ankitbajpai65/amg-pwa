@@ -3,22 +3,30 @@ import msgIcon from "../../assets/icons/msg icon.png";
 import notificationIcon from "../../assets/icons/Notifications icon.png";
 import settingsIcon from "../../assets/icons/Settings icon.png";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { MdLanguage } from "react-icons/md";
 
 import { useLocation, useNavigate } from "react-router-dom";
 
 import NativeIcons from "./NativeIcons";
 import { useNotificationContext } from "@/lib/context/notificationContext";
+import { useTranslation } from "react-i18next";
+import { useState } from "react";
 // import { useEffect } from "react";
 
 const Header = (props: { toggleSidebar?: () => void }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { i18n } = useTranslation();
   const { toggleSidebar } = props;
   const { notificationList } = useNotificationContext();
 
-  // useEffect(() => {
-  //   console.log(notificationList);
-  // }, [notificationList]);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const changeLanguage = (lng: string) => {
+    i18n.changeLanguage(lng);
+    setIsDropdownOpen(false);
+  };
+
   return (
     <>
       <div className="bg-bg-header-gray px-2.5 py-2 flex items-center justify-between">
@@ -66,6 +74,35 @@ const Header = (props: { toggleSidebar?: () => void }) => {
               </div>
             )}
           </button>
+
+          <div
+            className="relative"
+            onMouseEnter={() => setIsDropdownOpen(true)}
+            onMouseLeave={() => setIsDropdownOpen(false)}
+          >
+            <button>
+              <MdLanguage size={18} className="mt-2" />
+            </button>
+
+            {isDropdownOpen && (
+              <div className="absolute top-6 right-0 mt-2 bg-white border border-gray-300 rounded-md shadow-lg z-10">
+                <ul className="py-1 text-gray-700">
+                  <li
+                    className="px-6 py-2 hover:bg-gray-100 cursor-pointer text-center"
+                    onClick={() => changeLanguage("en")}
+                  >
+                    en
+                  </li>
+                  <li
+                    className="px-6 py-2 hover:bg-gray-100 cursor-pointer text-center"
+                    onClick={() => changeLanguage("it")}
+                  >
+                    it
+                  </li>
+                </ul>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </>

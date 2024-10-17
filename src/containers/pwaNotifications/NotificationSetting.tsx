@@ -79,9 +79,11 @@ const NotificationSetting = () => {
 
   return (
     <div>
-      <BodyBackBtn btnText="Notifications" />
+      <BodyBackBtn btnText={t("settings.notifications.title")} />
       <div className="py-4 px-5 text-text-blue">
-        <p className="text-lg font-semibold">{t("settings.notifications.title")}</p>
+        <p className="text-lg font-semibold">
+          {t("settings.notifications.title")}
+        </p>
         <p>{t("settings.notifications.caption")}</p>
       </div>
       <div className="px-5 py-1">

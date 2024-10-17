@@ -1,3 +1,108 @@
 {
-  "greet": "Bienvenido ankit"
+  "settings": {
+    "title": "Impostazioni",
+    "desc": "Modifica impostazioni e informazioni",
+    "options": {
+      "profile": "Profilo",
+      "passwordChange": "Cambia password",
+      "privacySecurity": "Privacy e Sicurezza",
+      "notifications": "Notifiche",
+      "help": "Assistenza e Supporto",
+      "logout": "Esci"
+    },
+    "profile": {
+      "name": "Nome",
+      "email": "Email",
+      "phone": "Telefono",
+      "mode": "Dark Mode"
+    },
+    "privacySecurity": {
+      "section1": {
+        "title": "Privacy e Sicurezza",
+        "desc": "Gestisci le tue preferenze privacy, marketing e sicurezza"
+      },
+      "section2": {
+        "title": "Sicurezza",
+        "text1": "Usa Face ID per accedere",
+        "text2": "Cambia l'indirizzo email"
+      },
+      "section3": {
+        "title": "Privacy",
+        "text1": "Mostra nome e immagine completi",
+        "text2": "Privacy Policy"
+      },
+      "section4": {
+        "title": "Marketing",
+        "subTitle1": "Email personalizzati",
+        "subDesc1": "Autorizzo GenAi Space a inviarmi email riguardo a prodotti, servizi e offerte che potrebbero essere di mio interesse.",
+        "subTitle2": "Notifiche push personalizzate",
+        "subDesc2": "Autorizzo GenAi Space a inviarmi notifiche push riguardo a prodotti, servizi e offerte che potrebbero essere di mio interesse.",
+        "subTitle3": "Piattaforme ads e social media",
+        "subDesc3": "Autorizzo GenAi Space a condividere i miei dati (nome, email ed eventi dell'app) con piattaforme social e promozionali per scopi pubblicitari e per condurre analisi."
+      }
+    },
+    "notifications": {
+      "title": "Notifiche",
+      "caption": "Scegli su cosa essere aggiornato.",
+      "caption2": "Notifiche sui nuovi servizi",
+      "email": "Email",
+      "push": "Attività Push"
+    },
+    "help": {
+      "title": "Assistenza e Supporto",
+      "caption": "Trova suggerimenti e risposte alle tue domande.",
+      "section1": {
+        "title": "Inizziamo"
+      },
+      "section2": {
+        "title": "Cos'è il Copilot"
+      },
+      "section3": {
+        "title": "Supporto e FAQ",
+        "faq": {
+          "title": "Domande frequenti",
+          "caption": "Trova le risposte alle tue domande",
+          "question": "Domande"
+        }
+      }
+    },
+    "logout": {
+      "title": "Esci",
+      "message": "Vuoi uscire dal tuo account?",
+      "btn1": "Esci",
+      "btn2": "Cancella"
+    }
+  },
+  "map": {
+    "title": "Mappa",
+    "caption": "Utilizza la mappa per individuare ogni punto di riferimento e destinazione."
+  },
+  "scan": {
+    "btn1": "Carica",
+    "btn2": "Scanssiona"
+  },
+  "genai": {
+    "text": "Fai una domanda"
+  },
+  "signup": {
+    "name": "Nome",
+    "email": "Email",
+    "mobile": "Telefono",
+    "password": "Password",
+    "text": "Hai già un account?",
+    "btn1": "Invia",
+    "btn2": "Login"
+  },
+  "forgetPassword": {
+    "title": "Password dimenticata",
+    "caption": "Genera una nuova password",
+    "button": "Conferma",
+    "newPassword": {
+      "heading": "Crea una nuova password",
+      "email": "Email",
+      "otp": "OTP",
+      "newPassword": "Nuova password",
+      "button": "Invia"
+    }
+  }
 }
